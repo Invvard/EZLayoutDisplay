@@ -12,7 +12,6 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
-using InvvardDev.ErgodoxLayoutDisplay.Model;
 
 namespace InvvardDev.ErgodoxLayoutDisplay.ViewModel
 {
@@ -31,11 +30,11 @@ namespace InvvardDev.ErgodoxLayoutDisplay.ViewModel
 
             if (ViewModelBase.IsInDesignModeStatic)
             {
-                SimpleIoc.Default.Register<IDataService, Design.DesignDataService>();
+                //SimpleIoc.Default.Register<IDataService, Design.DesignDataService>();
             }
             else
             {
-                SimpleIoc.Default.Register<IDataService, DataService>();
+                //SimpleIoc.Default.Register<IDataService, DataService>();
             }
 
             SimpleIoc.Default.Register<MainViewModel>();
@@ -47,13 +46,7 @@ namespace InvvardDev.ErgodoxLayoutDisplay.ViewModel
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
             "CA1822:MarkMembersAsStatic",
             Justification = "This non-static member is needed for data binding purposes.")]
-        public MainViewModel Main
-        {
-            get
-            {
-                return ServiceLocator.Current.GetInstance<MainViewModel>();
-            }
-        }
+        public MainViewModel Main => ServiceLocator.Current.GetInstance<MainViewModel>();
 
         /// <summary>
         /// Cleans up all the resources.
