@@ -9,12 +9,11 @@ namespace InvvardDev.ErgodoxLayoutDisplay.Desktop
     /// </summary>
     public partial class App : Application
     {
-        private TaskbarIcon _notifyIcon;
-
         static App()
         {
             DispatcherHelper.Initialize();
         }
+        private TaskbarIcon _notifyIcon;
 
         protected override void OnStartup(StartupEventArgs e)
         {

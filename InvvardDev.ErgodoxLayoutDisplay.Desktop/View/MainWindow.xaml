@@ -8,8 +8,8 @@
         Height="300"
         Width="300"
         Title="Ergodox Layout Display"
-        DataContext="{Binding Main, Source={StaticResource Locator}}">
-    
+        DataContext="{Binding Main, Source={StaticResource Locator}}" WindowStartupLocation="CenterScreen">
+
     <Grid x:Name="LayoutRoot">
 
     </Grid>
