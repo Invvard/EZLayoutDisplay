@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Input;
+using InvvardDev.ErgodoxLayoutDisplay.Desktop.View;
 
 namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.ViewModel
 {
