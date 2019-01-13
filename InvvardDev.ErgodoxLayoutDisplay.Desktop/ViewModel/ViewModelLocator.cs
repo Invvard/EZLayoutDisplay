@@ -11,6 +11,8 @@
 
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
+using InvvardDev.ErgodoxLayoutDisplay.Desktop.Service.Implementation;
+using InvvardDev.ErgodoxLayoutDisplay.Desktop.Service.Interface;
 using Microsoft.Practices.ServiceLocation;
 
 namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.ViewModel
@@ -30,11 +32,11 @@ namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.ViewModel
 
             if (ViewModelBase.IsInDesignModeStatic)
             {
-                //SimpleIoc.Default.Register<IDataService, Design.DesignDataService>();
+                SimpleIoc.Default.Register<IKeyboardListenerService, Design.DesignKeyboardListenerService>();
             }
             else
             {
-                //SimpleIoc.Default.Register<IDataService, DataService>();
+                SimpleIoc.Default.Register<IKeyboardListenerService, KeyboardListenerService>();
             }
 
             SimpleIoc.Default.Register<MainViewModel>();

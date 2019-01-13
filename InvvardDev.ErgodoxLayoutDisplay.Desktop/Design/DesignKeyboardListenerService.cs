@@ -2,7 +2,7 @@
 
 namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.Design
 {
-    public class DesignKeyboardListener : IKeyboardListener
+    public class DesignKeyboardListenerService : IKeyboardListenerService
     {
         
     }
