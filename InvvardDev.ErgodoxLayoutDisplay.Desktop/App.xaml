@@ -5,13 +5,18 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:ignore="http://www.galasoft.ch/ignore"
 			 xmlns:viewModel="clr-namespace:InvvardDev.ErgodoxLayoutDisplay.Desktop.ViewModel"
-			 StartupUri="MainWindow.xaml"
+             ShutdownMode="OnExplicitShutdown"
              mc:Ignorable="d ignore">
-    
+
     <Application.Resources>
-        <!--Global View Model Locator-->
-        <viewModel:ViewModelLocator x:Key="Locator"
-                             d:IsDataSource="True" />
+        <ResourceDictionary>
+            <!--Global View Model Locator-->
+            <viewModel:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Skins/MainSkin.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
     </Application.Resources>
     
 </Application>
