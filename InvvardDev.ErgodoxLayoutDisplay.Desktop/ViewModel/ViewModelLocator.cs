@@ -32,7 +32,7 @@ namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.ViewModel
 
             if (ViewModelBase.IsInDesignModeStatic)
             {
-                SimpleIoc.Default.Register<IKeyboardListenerService, Design.DesignKeyboardListenerService>();
+                //SimpleIoc.Default.Register<IKeyboardListenerService, Design.DesignKeyboardListenerService>();
             }
             else
             {
@@ -40,6 +40,7 @@ namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.ViewModel
             }
 
             SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<NotifyIconViewModel>();
         }
 
         /// <summary>
@@ -49,12 +50,15 @@ namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.ViewModel
             "CA1822:MarkMembersAsStatic",
             Justification = "This non-static member is needed for data binding purposes.")]
         public MainViewModel Main => ServiceLocator.Current.GetInstance<MainViewModel>();
+
+
         
         /// <summary>
         /// Cleans up all the resources.
         /// </summary>
         public static void Cleanup()
         {
+            //SimpleIoc.Default.GetInstance<IKeyboardListenerService>()?.Dispose();
         }
     }
 }
