@@ -1,4 +1,8 @@
-﻿using GalaSoft.MvvmLight;
+﻿using System.Windows;
+using System.Windows.Input;
+using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.CommandWpf;
+using InvvardDev.ErgodoxLayoutDisplay.Desktop.View;
 
 namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.ViewModel
 {
@@ -16,7 +20,7 @@ namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.ViewModel
         public MainViewModel()
         {
         }
-
+        
         ////public override void Cleanup()
         ////{
         ////    // Clean up if needed
