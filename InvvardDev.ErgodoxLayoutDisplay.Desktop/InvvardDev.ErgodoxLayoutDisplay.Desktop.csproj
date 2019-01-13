@@ -77,6 +77,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Design\DesignKeyboardListenerService.cs" />
+    <Compile Include="Helper\KeyboardHookManagerSingleton.cs" />
+    <Compile Include="Service\Implementation\KeyboardListenerService.cs" />
+    <Compile Include="Service\Interface\IKeyboardListenerService.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\NotifyIconViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
@@ -126,7 +130,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Design\" />
     <Folder Include="Model\" />
   </ItemGroup>
   <ItemGroup>
