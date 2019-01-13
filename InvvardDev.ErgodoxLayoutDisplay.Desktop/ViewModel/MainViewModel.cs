@@ -1,8 +1,4 @@
-﻿using System.Windows;
-using System.Windows.Input;
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.CommandWpf;
-using InvvardDev.ErgodoxLayoutDisplay.Desktop.View;
+﻿using GalaSoft.MvvmLight;
 
 namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.ViewModel
 {
