@@ -38,6 +38,7 @@ namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.ViewModel
             }
 
             SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<NotifyIconViewModel>();
         }
 
         /// <summary>
@@ -47,6 +48,8 @@ namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.ViewModel
             "CA1822:MarkMembersAsStatic",
             Justification = "This non-static member is needed for data binding purposes.")]
         public MainViewModel Main => ServiceLocator.Current.GetInstance<MainViewModel>();
+
+        public NotifyIconViewModel NotifyIcon => ServiceLocator.Current.GetInstance<NotifyIconViewModel>();
 
         /// <summary>
         /// Cleans up all the resources.

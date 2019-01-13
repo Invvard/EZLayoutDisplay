@@ -10,14 +10,6 @@
         Title="Ergodox Layout Display"
         DataContext="{Binding Main, Source={StaticResource Locator}}">
     
-    <Window.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Skins/MainSkin.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Window.Resources>
-
     <Grid x:Name="LayoutRoot">
 
     </Grid>
