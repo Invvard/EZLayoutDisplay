@@ -9,7 +9,6 @@ namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.ViewModel
     public class NotifyIconViewModel : ViewModelBase
     {
         private ICommand _showWindowCommand;
-        private ICommand _hideWindowCommand;
         private ICommand _exitCommand;
 
         /// <summary>
@@ -17,19 +16,14 @@ namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.ViewModel
         /// </summary>
         public ICommand ShowWindowCommand =>
             _showWindowCommand
-            ?? (_showWindowCommand = new RelayCommand(() => {
-                                                          Application.Current.MainWindow = new MainWindow();
-                                                          Application.Current.MainWindow.Show();
-                                                      },
-                                                      () => Application.Current.MainWindow == null));
-
-        /// <summary>
-        /// Hides the main window. This command is only enabled if a window is open.
-        /// </summary>
-        public ICommand HideWindowCommand =>
-            _hideWindowCommand
-            ?? (_hideWindowCommand = new RelayCommand(() => Application.Current.MainWindow.Close(),
-                                                      () => Application.Current.MainWindow != null));
+            ?? (_showWindowCommand = new RelayCommand(() =>
+            {
+                if (Application.Current.MainWindow == null)
+                {
+                    Application.Current.MainWindow = new MainWindow();
+                }
+                Application.Current.MainWindow.Show();
+            }));
 
         /// <summary>
         /// Shuts down the application.
