@@ -7,10 +7,11 @@
         mc:Ignorable="d ignore"
         Height="300"
         Width="300"
-        Title="Ergodox Layout Display"
-        DataContext="{Binding Main, Source={StaticResource Locator}}" WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        DataContext="{Binding Main, Source={StaticResource Locator}}"
+        Title="{Binding WelcomeTitle}">
 
     <Grid x:Name="LayoutRoot">
-        <Label Content="{Binding WelcomeTitle}"></Label>
+        
     </Grid>
 </Window>
