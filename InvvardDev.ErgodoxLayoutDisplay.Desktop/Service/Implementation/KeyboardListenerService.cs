@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Windows;
 using InvvardDev.ErgodoxLayoutDisplay.Desktop.Helper;
 using InvvardDev.ErgodoxLayoutDisplay.Desktop.Service.Interface;
@@ -8,7 +9,7 @@ namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.Service.Implementation
 {
     public class KeyboardListenerService : IKeyboardListenerService
     {
-        private KeyboardHookManager _hook;
+        private readonly KeyboardHookManager _hook;
 
         public KeyboardListenerService()
         {
@@ -32,8 +33,18 @@ namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.Service.Implementation
 
         public void Dispose()
         {
-            _hook.UnregisterAll();
-            _hook.Stop();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        // The bulk of the clean-up code is implemented in Dispose(bool)
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _hook.UnregisterAll();
+                _hook.Stop();
+            }
         }
     }
 }
