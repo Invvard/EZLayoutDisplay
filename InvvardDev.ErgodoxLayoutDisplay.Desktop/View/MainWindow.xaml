@@ -11,6 +11,6 @@
         DataContext="{Binding Main, Source={StaticResource Locator}}" WindowStartupLocation="CenterScreen">
 
     <Grid x:Name="LayoutRoot">
-
+        <Label Content="{Binding WelcomeTitle}"></Label>
     </Grid>
 </Window>
