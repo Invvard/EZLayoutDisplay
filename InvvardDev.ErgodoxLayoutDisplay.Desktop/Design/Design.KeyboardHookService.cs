@@ -1,5 +1,5 @@
 ﻿using System.Diagnostics;
-using InvvardDev.ErgodoxLayoutDisplay.Desktop.Service.Interface;
+using InvvardDev.ErgodoxLayoutDisplay.Desktop.Model.Service.Interface;
 using NonInvasiveKeyboardHookLibrary;
 
 namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.Design
@@ -16,7 +16,7 @@ namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.Design
             Dispose(true);
         }
 
-        public void Dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
             Debug.WriteLine("Disposing the Design.KeyboardHookService");
         }

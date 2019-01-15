@@ -1,7 +1,7 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
-using InvvardDev.ErgodoxLayoutDisplay.Desktop.Service.Implementation;
-using InvvardDev.ErgodoxLayoutDisplay.Desktop.Service.Interface;
+using InvvardDev.ErgodoxLayoutDisplay.Desktop.Model.Service.Implementation;
+using InvvardDev.ErgodoxLayoutDisplay.Desktop.Model.Service.Interface;
 using Microsoft.Practices.ServiceLocation;
 
 namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.ViewModel
