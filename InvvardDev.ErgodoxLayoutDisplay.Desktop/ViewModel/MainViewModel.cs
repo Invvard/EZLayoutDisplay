@@ -23,9 +23,9 @@ namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.ViewModel
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
-        public MainViewModel(IKeyboardHookService keyboardHookService)
+        public MainViewModel()
         {
-            _keyboardHookService = keyboardHookService;
+            //_keyboardHookService = keyboardHookService;
         }
 
         /// <summary>
