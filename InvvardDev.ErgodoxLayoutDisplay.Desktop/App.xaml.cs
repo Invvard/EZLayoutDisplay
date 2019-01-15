@@ -1,7 +1,6 @@
 ﻿using System.Windows;
 using GalaSoft.MvvmLight.Threading;
 using Hardcodet.Wpf.TaskbarNotification;
-using InvvardDev.ErgodoxLayoutDisplay.Desktop.Service.Implementation;
 using InvvardDev.ErgodoxLayoutDisplay.Desktop.Service.Interface;
 
 namespace InvvardDev.ErgodoxLayoutDisplay.Desktop
@@ -17,7 +16,7 @@ namespace InvvardDev.ErgodoxLayoutDisplay.Desktop
         public App()
         {
             DispatcherHelper.Initialize();
-            _keyboardListenerService = new KeyboardListenerService();
+            //_keyboardListenerService = new KeyboardListenerService();
         }
 
         protected override void OnStartup(StartupEventArgs e)
@@ -30,7 +29,7 @@ namespace InvvardDev.ErgodoxLayoutDisplay.Desktop
 
         protected override void OnExit(ExitEventArgs e)
         {
-            _keyboardListenerService.Dispose();
+            //_keyboardListenerService.Dispose();
             _notifyIcon.Dispose(); //the icon would clean up automatically, but this is cleaner
             base.OnExit(e);
         }

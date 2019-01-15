@@ -28,7 +28,6 @@ namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.Service.Implementation
         {
             Debug.Write("On passe ici !");
             var test = MessageBox.Show("Salut", "Ca va ?", MessageBoxButton.OK);
-
         }
 
         public void Dispose()

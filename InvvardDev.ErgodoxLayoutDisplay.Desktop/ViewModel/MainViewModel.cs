@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight;
+using InvvardDev.ErgodoxLayoutDisplay.Desktop.Service.Interface;
 
 namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.ViewModel
 {
@@ -11,6 +12,7 @@ namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.ViewModel
     public class MainViewModel : ViewModelBase
     {
         private string _welcomeTitle = string.Empty;
+        private IKeyboardListenerService _keyboardListenerService;
 
         /// <summary>
         /// Gets the WelcomeTitle property.
@@ -25,8 +27,9 @@ namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.ViewModel
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
-        public MainViewModel()
+        public MainViewModel(IKeyboardListenerService keyboardListenerService)
         {
+            _keyboardListenerService = keyboardListenerService;
             WelcomeTitle = "Ergodox Layout Display";
         }
         
