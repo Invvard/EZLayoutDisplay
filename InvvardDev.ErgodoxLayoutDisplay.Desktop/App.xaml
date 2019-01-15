@@ -6,6 +6,7 @@
 			 xmlns:ignore="http://www.galasoft.ch/ignore"
 			 xmlns:viewModel="clr-namespace:InvvardDev.ErgodoxLayoutDisplay.Desktop.ViewModel"
              ShutdownMode="OnExplicitShutdown"
+             StartupUri="View/MainWindow.xaml"
              mc:Ignorable="d ignore">
 
     <Application.Resources>
