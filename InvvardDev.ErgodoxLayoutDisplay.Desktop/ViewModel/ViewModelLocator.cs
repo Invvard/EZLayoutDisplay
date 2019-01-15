@@ -25,7 +25,7 @@ namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.ViewModel
             }
             else
             {
-                SimpleIoc.Default.Register<IKeyboardHookService, KeyboardHookService>();
+                SimpleIoc.Default.Register<IKeyboardHookService, KeyboardHookService>(true);
             }
 
             SimpleIoc.Default.Register<MainViewModel>();
@@ -44,7 +44,7 @@ namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.ViewModel
         /// </summary>
         public static void Cleanup()
         {
-            
+            SimpleIoc.Default.GetInstance<IKeyboardHookService>()?.Dispose();
         }
     }
 }
