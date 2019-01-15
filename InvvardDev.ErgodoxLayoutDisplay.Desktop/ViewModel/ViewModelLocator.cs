@@ -1,16 +1,7 @@
-﻿/*
-  In App.xaml:
-  <Application.Resources>
-      <vm:ViewModelLocatorTemplate xmlns:vm="clr-namespace:InvvardDev.ErgodoxLayoutDisplay.ViewModel"
-                                   x:Key="Locator" />
-  </Application.Resources>
-  
-  In the View:
-  DataContext="{Binding Source={StaticResource Locator}, Path=ViewModelName}"
-*/
-
-using GalaSoft.MvvmLight;
+﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
+using InvvardDev.ErgodoxLayoutDisplay.Desktop.Service.Implementation;
+using InvvardDev.ErgodoxLayoutDisplay.Desktop.Service.Interface;
 using Microsoft.Practices.ServiceLocation;
 
 namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.ViewModel
@@ -30,11 +21,11 @@ namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.ViewModel
 
             if (ViewModelBase.IsInDesignModeStatic)
             {
-                //SimpleIoc.Default.Register<IDataService, Design.DesignDataService>();
+                SimpleIoc.Default.Register<IKeyboardHookService, Design.KeyboardHookService>();
             }
             else
             {
-                //SimpleIoc.Default.Register<IDataService, DataService>();
+                SimpleIoc.Default.Register<IKeyboardHookService, KeyboardHookService>();
             }
 
             SimpleIoc.Default.Register<MainViewModel>();
@@ -53,6 +44,7 @@ namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.ViewModel
         /// </summary>
         public static void Cleanup()
         {
+            
         }
     }
 }

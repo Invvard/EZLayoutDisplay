@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
+using InvvardDev.ErgodoxLayoutDisplay.Desktop.Service.Interface;
 using InvvardDev.ErgodoxLayoutDisplay.Desktop.View;
 
 namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.ViewModel
@@ -17,11 +18,14 @@ namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.ViewModel
         private ICommand _showWindowCommand;
         private ICommand _exitCommand;
 
+        private IKeyboardHookService _keyboardHookService;
+
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
-        public MainViewModel()
+        public MainViewModel(IKeyboardHookService keyboardHookService)
         {
+            _keyboardHookService = keyboardHookService;
         }
 
         /// <summary>

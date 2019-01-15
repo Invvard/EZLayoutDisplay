@@ -1,13 +1,11 @@
-﻿using System.Windows;
-using GalaSoft.MvvmLight.Threading;
-using Hardcodet.Wpf.TaskbarNotification;
+﻿using GalaSoft.MvvmLight.Threading;
 
 namespace InvvardDev.ErgodoxLayoutDisplay.Desktop
 {
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
-    public partial class App : Application
+    public partial class App
     {
         static App()
         {
