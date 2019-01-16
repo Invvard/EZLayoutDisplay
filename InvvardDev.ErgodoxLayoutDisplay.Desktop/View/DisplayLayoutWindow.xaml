@@ -6,6 +6,8 @@
         xmlns:local="clr-namespace:InvvardDev.ErgodoxLayoutDisplay.Desktop.View"
         mc:Ignorable="d"
         Title="{Binding WindowTitle}" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen"
+        ShowInTaskbar="False"
         DataContext="{Binding DisplayLayout, Source={StaticResource Locator}}">
     <Grid>
         

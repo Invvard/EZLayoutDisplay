@@ -20,6 +20,6 @@
             IconSource="/Skins/Images/tray_base.ico"
             ContextMenu="{StaticResource SysTrayMenu}"
             MenuActivation="RightClick"
-            LeftClickCommand="{Binding ShowWindowCommand}"/>
+            LeftClickCommand="{Binding ShowLayoutWindowCommand}"/>
     </Grid>
 </Window>

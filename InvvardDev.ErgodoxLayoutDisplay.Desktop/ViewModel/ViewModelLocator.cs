@@ -25,6 +25,7 @@ namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.ViewModel
             }
             else
             {
+                SimpleIoc.Default.Register<IWindowService, WindowService>();
                 SimpleIoc.Default.Register<IKeyboardHookService, KeyboardHookService>(true);
             }
 
