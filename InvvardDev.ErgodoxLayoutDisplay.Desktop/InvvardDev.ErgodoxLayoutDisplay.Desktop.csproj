@@ -77,7 +77,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Design\Design.KeyboardHookService.cs" />
+    <Compile Include="Design\KeyboardHookService.cs" />
     <Compile Include="Model\Service\Implementation\KeyboardHookService.cs" />
     <Compile Include="Model\Service\Implementation\WindowService.cs" />
     <Compile Include="Model\Service\Interface\IKeyboardHookService.cs" />
