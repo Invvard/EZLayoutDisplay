@@ -84,6 +84,7 @@
     <Compile Include="Model\Service\Interface\IWindowService.cs" />
     <Compile Include="ViewModel\DisplayLayoutViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
