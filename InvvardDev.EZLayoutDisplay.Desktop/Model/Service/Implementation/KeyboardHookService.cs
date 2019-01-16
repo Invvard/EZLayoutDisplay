@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Windows;
-using InvvardDev.ErgodoxLayoutDisplay.Desktop.Model.Service.Interface;
-using InvvardDev.ErgodoxLayoutDisplay.Desktop.View;
+using InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Interface;
+using InvvardDev.EZLayoutDisplay.Desktop.View;
 using NonInvasiveKeyboardHookLibrary;
 
-namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.Model.Service.Implementation
+namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
 {
     public class KeyboardHookService : IKeyboardHookService
     {

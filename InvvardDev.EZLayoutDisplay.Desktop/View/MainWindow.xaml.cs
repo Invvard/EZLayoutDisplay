@@ -1,7 +1,7 @@
 ﻿using System.Windows;
-using InvvardDev.ErgodoxLayoutDisplay.Desktop.ViewModel;
+using InvvardDev.EZLayoutDisplay.Desktop.ViewModel;
 
-namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.View
+namespace InvvardDev.EZLayoutDisplay.Desktop.View
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

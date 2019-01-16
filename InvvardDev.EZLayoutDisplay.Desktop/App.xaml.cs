@@ -1,6 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Threading;
 
-namespace InvvardDev.ErgodoxLayoutDisplay.Desktop
+namespace InvvardDev.EZLayoutDisplay.Desktop
 {
     /// <summary>
     /// Interaction logic for App.xaml

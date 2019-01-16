@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.View
+namespace InvvardDev.EZLayoutDisplay.Desktop.View
 {
     /// <summary>
     /// Interaction logic for SettingsWindow.xaml

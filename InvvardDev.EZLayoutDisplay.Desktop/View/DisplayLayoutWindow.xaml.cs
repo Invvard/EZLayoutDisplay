@@ -1,4 +1,4 @@
-﻿namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.View
+﻿namespace InvvardDev.EZLayoutDisplay.Desktop.View
 {
     /// <summary>
     /// Interaction logic for DisplayLayout.xaml

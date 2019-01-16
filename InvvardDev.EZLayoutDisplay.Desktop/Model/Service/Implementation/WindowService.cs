@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
-using InvvardDev.ErgodoxLayoutDisplay.Desktop.Model.Service.Interface;
+using InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Interface;
 
-namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.Model.Service.Implementation
+namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
 {
     public class WindowService: IWindowService
     {

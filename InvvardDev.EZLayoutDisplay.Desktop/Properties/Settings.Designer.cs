@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.Properties {
+namespace InvvardDev.EZLayoutDisplay.Desktop.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

@@ -2,10 +2,10 @@
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
-using InvvardDev.ErgodoxLayoutDisplay.Desktop.Model.Service.Interface;
-using InvvardDev.ErgodoxLayoutDisplay.Desktop.View;
+using InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Interface;
+using InvvardDev.EZLayoutDisplay.Desktop.View;
 
-namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.ViewModel
+namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 {
     /// <summary>
     /// This class contains properties that the main View can data bind to.
