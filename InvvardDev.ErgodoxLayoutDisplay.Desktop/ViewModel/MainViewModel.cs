@@ -1,5 +1,8 @@
-﻿using GalaSoft.MvvmLight;
-using InvvardDev.ErgodoxLayoutDisplay.Desktop.Service.Interface;
+﻿using System.Windows;
+using System.Windows.Input;
+using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.CommandWpf;
+using InvvardDev.ErgodoxLayoutDisplay.Desktop.View;
 
 namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.ViewModel
 {
@@ -11,26 +14,11 @@ namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.ViewModel
     /// </summary>
     public class MainViewModel : ViewModelBase
     {
-        private string _welcomeTitle = string.Empty;
-        private IKeyboardListenerService _keyboardListenerService;
-
-        /// <summary>
-        /// Gets the WelcomeTitle property.
-        /// Changes to that property's value raise the PropertyChanged event. 
-        /// </summary>
-        public string WelcomeTitle
-        {
-            get => _welcomeTitle;
-            set => Set(ref _welcomeTitle, value);
-        }
-
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
-        public MainViewModel(IKeyboardListenerService keyboardListenerService)
+        public MainViewModel()
         {
-            _keyboardListenerService = keyboardListenerService;
-            WelcomeTitle = "Ergodox Layout Display";
         }
         
         ////public override void Cleanup()
