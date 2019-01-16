@@ -15,10 +15,41 @@ namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.ViewModel
     /// </summary>
     public class MainViewModel : ViewModelBase
     {
-        private ICommand _showLayoutWindowCommand;
+        #region Fields
+
+        private ICommand _showLayoutCommand;
+        private ICommand _showSettingsCommand;
         private ICommand _exitCommand;
 
-        private IWindowService _windowService;
+        private readonly IWindowService _windowService;
+
+        private string _trayMenuShowLayoutCommandLabel;
+        private string _trayMenuShowSettingsCommandLabel;
+        private string _trayMenuExitCommandLabel;
+
+        #endregion
+
+        #region Public properties
+
+        public string TrayMenuShowLayoutCommandLabel
+        {
+            get => _trayMenuShowLayoutCommandLabel;
+            set => Set(ref _trayMenuShowLayoutCommandLabel, value);
+        }
+
+        public string TrayMenuShowSettingsCommandLabel
+        {
+            get => _trayMenuShowSettingsCommandLabel;
+            set => Set(ref _trayMenuShowSettingsCommandLabel, value);
+        }
+
+        public string TrayMenuShowExitCommandLabel
+        {
+            get => _trayMenuExitCommandLabel;
+            set => Set(ref _trayMenuExitCommandLabel, value);
+        }
+
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
@@ -26,16 +57,35 @@ namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.ViewModel
         public MainViewModel(IWindowService windowService)
         {
             _windowService = windowService;
+
+            SetLabelUi();
+        }
+
+        private void SetLabelUi()
+        {
+            TrayMenuShowLayoutCommandLabel = "Show Layout";
+            TrayMenuShowSettingsCommandLabel = "Settings";
+            TrayMenuShowExitCommandLabel = "Exit";
         }
 
         /// <summary>
-        /// Shows a window, if none is already open.
+        /// Shows the Layout window.
         /// </summary>
-        public ICommand ShowLayoutWindowCommand =>
-            _showLayoutWindowCommand
-            ?? (_showLayoutWindowCommand = new RelayCommand(() =>
+        public ICommand ShowLayoutCommand =>
+            _showLayoutCommand
+            ?? (_showLayoutCommand = new RelayCommand(() =>
                                                       {
                                                           _windowService.ShowWindow<DisplayLayoutWindow>();
+                                                      }));
+
+        /// <summary>
+        /// Shows the Settings Window.
+        /// </summary>
+        public ICommand ShowSettingsCommand =>
+            _showSettingsCommand
+            ?? (_showSettingsCommand = new RelayCommand(() =>
+                                                      {
+                                                          _windowService.ShowWindow<SettingsWindow>();
                                                       }));
 
         /// <summary>
