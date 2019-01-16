@@ -9,7 +9,7 @@ namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.ViewModel
         public string WindowTitle
         {
             get => _windowTitle;
-            set { Set(() => WindowTitle, ref _windowTitle, value); }
+            set => Set(ref _windowTitle, value);
         }
 
         public DisplayLayoutViewModel()
