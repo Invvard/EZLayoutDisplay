@@ -1,6 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 
-namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.ViewModel
+namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 {
     public class SettingsViewModel : ViewModelBase
     {

@@ -1,10 +1,10 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
-using InvvardDev.ErgodoxLayoutDisplay.Desktop.Model.Service.Implementation;
-using InvvardDev.ErgodoxLayoutDisplay.Desktop.Model.Service.Interface;
+using InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation;
+using InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Interface;
 using Microsoft.Practices.ServiceLocation;
 
-namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.ViewModel
+namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 {
     /// <summary>
     /// This class contains static references to all the view models in the

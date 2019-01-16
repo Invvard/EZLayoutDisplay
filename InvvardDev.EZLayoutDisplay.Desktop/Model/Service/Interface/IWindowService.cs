@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.Model.Service.Interface
+namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Interface
 {
     public interface IWindowService
     {
