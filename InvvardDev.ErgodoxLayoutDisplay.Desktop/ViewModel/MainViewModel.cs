@@ -2,7 +2,6 @@
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
-using InvvardDev.ErgodoxLayoutDisplay.Desktop.Model.Service.Interface;
 using InvvardDev.ErgodoxLayoutDisplay.Desktop.View;
 
 namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.ViewModel
@@ -33,9 +32,9 @@ namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.ViewModel
             _showWindowCommand
             ?? (_showWindowCommand = new RelayCommand(() =>
                                                       {
-                                                          if (Application.Current.MainWindow == null)
+                                                          if (!(Application.Current.MainWindow is DisplayLayoutWindow))
                                                           {
-                                                              Application.Current.MainWindow = new MainWindow();
+                                                              Application.Current.MainWindow = new DisplayLayoutWindow();
                                                           }
                                                           Application.Current.MainWindow.Show();
                                                       }));
