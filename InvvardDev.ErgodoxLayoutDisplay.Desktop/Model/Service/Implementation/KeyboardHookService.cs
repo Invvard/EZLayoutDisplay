@@ -12,7 +12,7 @@ namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.Model.Service.Implementation
         private bool disposed;
         private static KeyboardHookManager _hook;
 
-        private IWindowService _windowService;
+        private readonly IWindowService _windowService;
 
         public static KeyboardHookManager Hook => _hook ?? (_hook = new KeyboardHookManager());
 
