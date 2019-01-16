@@ -4,13 +4,22 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ignore="http://www.galasoft.ch/ignore"
+        xmlns:tb="http://www.hardcodet.net/taskbar"
         mc:Ignorable="d ignore"
-        Height="300"
-        Width="300"
-        Title="Ergodox Layout Display"
-        DataContext="{Binding Main, Source={StaticResource Locator}}" WindowStartupLocation="CenterScreen">
+        Height="100"
+        Width="100"
+        Visibility="Hidden"
+        ShowInTaskbar="False"
+        WindowStartupLocation="CenterScreen"
+        DataContext="{Binding Main, Source={StaticResource Locator}}">
 
     <Grid x:Name="LayoutRoot">
-
+        <tb:TaskbarIcon 
+            Visibility="Visible"
+            ToolTipText="Double-click for window, right-click for menu"
+            IconSource="/Skins/Images/tray_base.ico"
+            ContextMenu="{StaticResource SysTrayMenu}"
+            MenuActivation="RightClick"
+            PopupActivation="LeftClick" />
     </Grid>
 </Window>
