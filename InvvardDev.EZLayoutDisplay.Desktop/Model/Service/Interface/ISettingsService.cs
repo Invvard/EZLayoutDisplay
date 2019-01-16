@@ -2,6 +2,6 @@
 {
     public interface ISettingsService
     {
-        
+        void UpdateKey(string key, string value);
     }
 }
