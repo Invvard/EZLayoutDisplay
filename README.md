@@ -1,1 +1,1 @@
-# ErgodoxLayoutDisplay
+# EZ Layout Display
