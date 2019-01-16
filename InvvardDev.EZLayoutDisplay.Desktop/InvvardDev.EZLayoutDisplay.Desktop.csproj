@@ -79,8 +79,10 @@
     </ApplicationDefinition>
     <Compile Include="Design\KeyboardHookService.cs" />
     <Compile Include="Model\Service\Implementation\KeyboardHookService.cs" />
+    <Compile Include="Model\Service\Implementation\SettingsService.cs" />
     <Compile Include="Model\Service\Implementation\WindowService.cs" />
     <Compile Include="Model\Service\Interface\IKeyboardHookService.cs" />
+    <Compile Include="Model\Service\Interface\ISettingsService.cs" />
     <Compile Include="Model\Service\Interface\IWindowService.cs" />
     <Compile Include="ViewModel\DisplayLayoutViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
