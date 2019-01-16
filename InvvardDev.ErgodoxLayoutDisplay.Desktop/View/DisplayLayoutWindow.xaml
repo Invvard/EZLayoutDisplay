@@ -1,11 +1,11 @@
-﻿<Window x:Class="InvvardDev.ErgodoxLayoutDisplay.Desktop.View.DisplayLayout"
+﻿<Window x:Class="InvvardDev.ErgodoxLayoutDisplay.Desktop.View.DisplayLayoutWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InvvardDev.ErgodoxLayoutDisplay.Desktop.View"
         mc:Ignorable="d"
-        Title="DisplayLayout" Height="450" Width="800"
+        Title="{Binding WindowTitle}" Height="450" Width="800"
         DataContext="{Binding DisplayLayout, Source={StaticResource Locator}}">
     <Grid>
         
