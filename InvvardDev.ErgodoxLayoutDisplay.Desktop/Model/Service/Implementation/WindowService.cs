@@ -20,9 +20,17 @@ namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.Model.Service.Implementation
             if (!_windows.ContainsKey(windowKey))
             {
                 _windows.Add(windowKey, new T());
+                _windows[windowKey].Closing += WindowService_Closing;
             }
 
             _windows[windowKey].Show();
+        }
+
+        private void WindowService_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            var windowKey = sender.GetType().ToString();
+
+            if (_windows.ContainsKey(windowKey)) { _windows.Remove(windowKey); }
         }
     }
 }
