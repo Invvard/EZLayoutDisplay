@@ -34,5 +34,17 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Properties {
                 this["ErgodoxLayoutUrl"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string HotkeyShowLayout {
+            get {
+                return ((string)(this["HotkeyShowLayout"]));
+            }
+            set {
+                this["HotkeyShowLayout"] = value;
+            }
+        }
     }
 }
