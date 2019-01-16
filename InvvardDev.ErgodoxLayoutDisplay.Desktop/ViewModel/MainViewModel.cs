@@ -15,7 +15,7 @@ namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.ViewModel
     /// </summary>
     public class MainViewModel : ViewModelBase
     {
-        private ICommand _showWindowCommand;
+        private ICommand _showLayoutWindowCommand;
         private ICommand _exitCommand;
 
         private IWindowService _windowService;
@@ -31,9 +31,9 @@ namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.ViewModel
         /// <summary>
         /// Shows a window, if none is already open.
         /// </summary>
-        public ICommand ShowWindowCommand =>
-            _showWindowCommand
-            ?? (_showWindowCommand = new RelayCommand(() =>
+        public ICommand ShowLayoutWindowCommand =>
+            _showLayoutWindowCommand
+            ?? (_showLayoutWindowCommand = new RelayCommand(() =>
                                                       {
                                                           _windowService.ShowWindow<DisplayLayoutWindow>();
                                                       }));
