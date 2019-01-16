@@ -1,19 +1,25 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Windows;
 using InvvardDev.ErgodoxLayoutDisplay.Desktop.Model.Service.Interface;
+using InvvardDev.ErgodoxLayoutDisplay.Desktop.View;
 using NonInvasiveKeyboardHookLibrary;
 
 namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.Model.Service.Implementation
 {
     public class KeyboardHookService : IKeyboardHookService
     {
-        bool disposed;
+        private bool disposed;
         private static KeyboardHookManager _hook;
+
+        private IWindowService _windowService;
 
         public static KeyboardHookManager Hook => _hook ?? (_hook = new KeyboardHookManager());
 
-        public KeyboardHookService()
+        public KeyboardHookService(IWindowService windowService)
         {
+            _windowService = windowService;
+
             InitKeyboardHook();
         }
 
@@ -25,7 +31,9 @@ namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.Model.Service.Implementation
 
         private void DisplayLayout()
         {
-            Debug.WriteLine("On passe par là !");
+            Application.Current.Dispatcher.Invoke(delegate {
+                                                      _windowService.ShowWindow<DisplayLayoutWindow>();
+                                                  });
         }
 
         public void RegisterHotkey(ModifierKeys modifiers, int keyCode)
