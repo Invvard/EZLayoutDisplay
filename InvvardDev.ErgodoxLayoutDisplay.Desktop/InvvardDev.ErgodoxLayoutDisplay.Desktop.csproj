@@ -79,7 +79,9 @@
     </ApplicationDefinition>
     <Compile Include="Design\Design.KeyboardHookService.cs" />
     <Compile Include="Model\Service\Implementation\KeyboardHookService.cs" />
+    <Compile Include="Model\Service\Implementation\WindowService.cs" />
     <Compile Include="Model\Service\Interface\IKeyboardHookService.cs" />
+    <Compile Include="Model\Service\Interface\IWindowService.cs" />
     <Compile Include="ViewModel\DisplayLayoutViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
