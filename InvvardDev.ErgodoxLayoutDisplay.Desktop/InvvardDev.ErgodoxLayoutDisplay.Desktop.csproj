@@ -77,14 +77,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Design\Design.KeyboardHookService.cs" />
+    <Compile Include="Design\KeyboardHookService.cs" />
     <Compile Include="Model\Service\Implementation\KeyboardHookService.cs" />
     <Compile Include="Model\Service\Implementation\WindowService.cs" />
     <Compile Include="Model\Service\Interface\IKeyboardHookService.cs" />
     <Compile Include="Model\Service\Interface\IWindowService.cs" />
     <Compile Include="ViewModel\DisplayLayoutViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="View\SettingsWindow.xaml.cs">
+      <DependentUpon>SettingsWindow.xaml</DependentUpon>
+    </Compile>
     <Page Include="View\DisplayLayoutWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -107,6 +111,10 @@
     <Page Include="Skins\MainSkin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SettingsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

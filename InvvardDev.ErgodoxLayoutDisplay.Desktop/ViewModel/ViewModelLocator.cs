@@ -31,6 +31,7 @@ namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.ViewModel
 
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<DisplayLayoutViewModel>();
+            SimpleIoc.Default.Register<SettingsViewModel>();
         }
 
         /// <summary>
@@ -42,6 +43,7 @@ namespace InvvardDev.ErgodoxLayoutDisplay.Desktop.ViewModel
         public MainViewModel Main => ServiceLocator.Current.GetInstance<MainViewModel>();
 
         public DisplayLayoutViewModel DisplayLayout => ServiceLocator.Current.GetInstance<DisplayLayoutViewModel>();
+        public SettingsViewModel Settings => ServiceLocator.Current.GetInstance<SettingsViewModel>();
         
         /// <summary>
         /// Cleans up all the resources.

@@ -13,6 +13,25 @@
         WindowStartupLocation="CenterScreen"
         DataContext="{Binding Main, Source={StaticResource Locator}}">
 
+    <Window.Resources>
+        <ResourceDictionary>
+
+            <!-- The taskbar context menu - the first row is a dummy to show off simple data binding -->
+            <!--
+                The "shared" directive is needed if we reopen the sample window a few times - WPF will otherwise
+                reuse the same context menu (which is a resource) again (which will have its DataContext set to the old TaskbarIcon)
+            -->
+            <ContextMenu x:Shared="false" x:Key="SysTrayMenu">
+                <MenuItem Header="{Binding TrayMenuShowLayoutCommandLabel}" Command="{Binding ShowLayoutCommand}"/>
+                <Separator />
+                <MenuItem Header="{Binding TrayMenuShowSettingsCommandLabel}" Command="{Binding ShowSettingsCommand}" />
+                <Separator />
+                <MenuItem Header="{Binding TrayMenuShowExitCommandLabel}" Command="{Binding ExitApplicationCommand}" />
+            </ContextMenu>
+
+        </ResourceDictionary>
+    </Window.Resources>
+
     <Grid x:Name="LayoutRoot">
         <tb:TaskbarIcon 
             Visibility="Visible"
@@ -20,6 +39,6 @@
             IconSource="/Skins/Images/tray_base.ico"
             ContextMenu="{StaticResource SysTrayMenu}"
             MenuActivation="RightClick"
-            LeftClickCommand="{Binding ShowLayoutWindowCommand}"/>
+            LeftClickCommand="{Binding ShowLayoutCommand}"/>
     </Grid>
 </Window>
