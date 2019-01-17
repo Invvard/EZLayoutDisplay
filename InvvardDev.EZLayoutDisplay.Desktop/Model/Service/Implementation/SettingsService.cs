@@ -12,9 +12,18 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
             _settings = settings;
         }
 
-        public void UpdateKey(string key, string value)
+        /// <inheritdoc />
+        public void UpdateSetting(string key, string value)
         {
-            
+            _settings[key] = value;
+        }
+
+        /// <inheritdoc/>
+        public string GetSetting(string key)
+        {
+            var settingValue = _settings[key]?.ToString();
+
+            return settingValue;
         }
     }
 }
