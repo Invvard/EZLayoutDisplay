@@ -25,5 +25,13 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
 
             return settingValue;
         }
+
+        public Hotkey GetHotKeyShowLayout()
+        {
+            var setting = GetSetting("HotkeyShowLayout");
+            var hotkey = new Hotkey();;
+
+            return hotkey;
+        }
     }
 }
