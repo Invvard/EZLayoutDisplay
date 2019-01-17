@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Windows.Documents;
+﻿using System;
+using System.Collections.Generic;
 using NonInvasiveKeyboardHookLibrary;
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.Model
 {
+    [Serializable]
     public class Hotkey
     {
         /// <summary>
