@@ -13,12 +13,14 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
         private static KeyboardHookManager _hook;
 
         private readonly IWindowService _windowService;
+        private readonly ISettingsService _settingsService;
 
         public static KeyboardHookManager Hook => _hook ?? (_hook = new KeyboardHookManager());
 
-        public KeyboardHookService(IWindowService windowService)
+        public KeyboardHookService(IWindowService windowService, ISettingsService settingsService)
         {
             _windowService = windowService;
+            _settingsService = settingsService;
 
             InitKeyboardHook();
         }
@@ -26,6 +28,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
         private void InitKeyboardHook()
         {
             Hook.Start();
+
+            var hotkeyShowLayout = _settingsService.GetHotKeyShowLayout();
             RegisterHotkey(ModifierKeys.Control | ModifierKeys.Alt, 0x60);
         }
 
