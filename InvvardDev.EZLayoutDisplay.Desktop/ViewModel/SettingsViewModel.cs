@@ -42,7 +42,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
             WindowTitle = "Settings";
             TbLayoutUrlText = "Configurator URL to your layout :";
-            TxtLayoutUrlText = "https://configure.ergodox-ez.com/layouts/default/latest/0";
+            TxtLayoutUrlText = _settingsService.GetSetting("ErgodoxLayoutUrl");
             BtnOkText = "OK";
         }
     }
