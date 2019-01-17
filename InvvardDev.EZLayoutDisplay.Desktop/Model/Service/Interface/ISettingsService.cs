@@ -15,5 +15,11 @@
         /// <param name="key">Key to target.</param>
         /// <returns>The wanted value.</returns>
         string GetSetting(string key);
+
+        /// <summary>
+        /// Gets the Show Layout Hotkey.
+        /// </summary>
+        /// <returns>The hotkey from Settings.</returns>
+        Hotkey GetHotKeyShowLayout();
     }
 }

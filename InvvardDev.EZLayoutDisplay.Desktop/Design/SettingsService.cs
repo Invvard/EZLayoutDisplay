@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using InvvardDev.EZLayoutDisplay.Desktop.Model;
 using InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Interface;
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.Design
@@ -23,6 +24,13 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Design
             Debug.WriteLine($"Get {key} setting : {value}");
 
             return value;
+        }
+
+        public Hotkey GetHotKeyShowLayout()
+        {
+            var hotkey = new Hotkey();
+
+            return hotkey;
         }
     }
 }
