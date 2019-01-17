@@ -78,6 +78,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Design\KeyboardHookService.cs" />
+    <Compile Include="Design\SettingsService.cs" />
     <Compile Include="Model\Service\Implementation\KeyboardHookService.cs" />
     <Compile Include="Model\Service\Implementation\SettingsService.cs" />
     <Compile Include="Model\Service\Implementation\WindowService.cs" />
