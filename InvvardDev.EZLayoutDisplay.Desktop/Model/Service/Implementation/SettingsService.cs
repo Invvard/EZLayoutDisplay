@@ -44,9 +44,9 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
 
         #region Constructor
 
-        public SettingsService(Settings settings)
+        public SettingsService()
         {
-            _settings = settings;
+            //_settings = settings;
         }
 
         #endregion

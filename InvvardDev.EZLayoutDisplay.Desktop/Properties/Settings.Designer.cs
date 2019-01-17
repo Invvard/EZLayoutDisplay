@@ -25,7 +25,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://configure.ergodox-ez.com/layouts/default/latest/0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Pouet")]
         public string ErgodoxLayoutUrl {
             get {
                 return ((string)(this["ErgodoxLayoutUrl"]));
@@ -37,7 +37,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("test")]
         public string HotkeyShowLayout {
             get {
                 return ((string)(this["HotkeyShowLayout"]));
