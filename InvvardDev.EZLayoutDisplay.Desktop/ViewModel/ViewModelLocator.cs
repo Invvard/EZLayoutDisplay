@@ -28,7 +28,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             {
                 SimpleIoc.Default.Register<IWindowService, WindowService>();
                 SimpleIoc.Default.Register<IKeyboardHookService, KeyboardHookService>(true);
-                SimpleIoc.Default.Register<ISettingsService>(() => new SettingsService(Properties.Settings.Default));
+                SimpleIoc.Default.Register<ISettingsService, SettingsService>();
             }
 
             SimpleIoc.Default.Register<MainViewModel>();
@@ -45,6 +45,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         public MainViewModel Main => ServiceLocator.Current.GetInstance<MainViewModel>();
 
         public DisplayLayoutViewModel DisplayLayout => ServiceLocator.Current.GetInstance<DisplayLayoutViewModel>();
+
         public SettingsViewModel Settings => ServiceLocator.Current.GetInstance<SettingsViewModel>();
         
         /// <summary>

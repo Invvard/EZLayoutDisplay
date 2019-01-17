@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Interface
+﻿namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Interface
 {
     public interface ISettingsService
     {
