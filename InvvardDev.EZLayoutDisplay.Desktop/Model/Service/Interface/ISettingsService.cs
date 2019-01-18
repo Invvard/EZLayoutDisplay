@@ -11,5 +11,10 @@
         /// Gets or sets the Ergodox Layout URL.
         /// </summary>
         string ErgodoxLayoutUrl { get; set; }
+
+        /// <summary>
+        /// Saves all settings to file.
+        /// </summary>
+        void Save();
     }
 }
