@@ -23,6 +23,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
             if (ViewModelBase.IsInDesignModeStatic)
             {
+                SimpleIoc.Default.Register<IWindowService, Design.WindowService>();
                 SimpleIoc.Default.Register<IKeyboardHookService, Design.KeyboardHookService>();
                 SimpleIoc.Default.Register<ISettingsService, Design.SettingsService>();
             }

@@ -19,5 +19,10 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Design
         {
             Debug.WriteLine("Settings saved.");
         }
+
+        public void Cancel()
+        {
+            Debug.WriteLine("Settings canceled.");
+        }
     }
 }
