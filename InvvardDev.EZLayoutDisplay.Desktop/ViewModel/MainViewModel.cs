@@ -51,22 +51,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         #endregion
 
-        /// <summary>
-        /// Initializes a new instance of the MainViewModel class.
-        /// </summary>
-        public MainViewModel(IWindowService windowService)
-        {
-            _windowService = windowService;
-
-            SetLabelUi();
-        }
-
-        private void SetLabelUi()
-        {
-            TrayMenuShowLayoutCommandLabel = "Show Layout";
-            TrayMenuShowSettingsCommandLabel = "Settings";
-            TrayMenuShowExitCommandLabel = "Exit";
-        }
+        #region Relay commands
 
         /// <summary>
         /// Shows the Layout window.
@@ -84,9 +69,9 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         public ICommand ShowSettingsCommand =>
             _showSettingsCommand
             ?? (_showSettingsCommand = new RelayCommand(() =>
-                                                      {
-                                                          _windowService.ShowWindow<SettingsWindow>();
-                                                      }));
+                                                        {
+                                                            _windowService.ShowWindow<SettingsWindow>();
+                                                        }));
 
         /// <summary>
         /// Shuts down the application.
@@ -94,6 +79,25 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         public ICommand ExitApplicationCommand =>
             _exitCommand
             ?? (_exitCommand = new RelayCommand(() => Application.Current.Shutdown()));
+
+        #endregion
+
+        /// <summary>
+        /// Initializes a new instance of the MainViewModel class.
+        /// </summary>
+        public MainViewModel(IWindowService windowService)
+        {
+            _windowService = windowService;
+
+            SetLabelUi();
+        }
+
+        private void SetLabelUi()
+        {
+            TrayMenuShowLayoutCommandLabel = "Show Layout";
+            TrayMenuShowSettingsCommandLabel = "Settings";
+            TrayMenuShowExitCommandLabel = "Exit";
+        }
 
         ////public override void Cleanup()
         ////{
