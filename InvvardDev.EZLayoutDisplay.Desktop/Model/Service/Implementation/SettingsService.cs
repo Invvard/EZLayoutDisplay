@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.Configuration;
 using InvvardDev.EZLayoutDisplay.Desktop.Model.Enum;
 using InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Interface;
 using InvvardDev.EZLayoutDisplay.Desktop.Properties;
@@ -20,7 +19,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
         /// <summary>
         /// Gets or sets the HotkeyShowLayout setting.
         /// </summary>
-        private Hotkey HotkeyShowLayout
+        public Hotkey HotkeyShowLayout
         {
             get
             {
@@ -32,9 +31,9 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
         }
 
         /// <summary>
-        /// Gets or sets the HotkeyShowLayout setting.
+        /// Gets or sets the ErgodoxLayoutUrl setting.
         /// </summary>
-        private string ErgodoxLayoutUrl
+        public string ErgodoxLayoutUrl
         {
             get => (string)_settings[SettingsName.ErgodoxLayoutUrl];
             set => _settings[SettingsName.ErgodoxLayoutUrl] = value;

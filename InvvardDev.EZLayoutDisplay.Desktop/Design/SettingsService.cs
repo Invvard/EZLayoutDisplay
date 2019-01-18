@@ -5,18 +5,13 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Design
 {
     public class SettingsService : ISettingsService
     {
-        public Hotkey GetHotKeyShowLayout()
+        public Hotkey HotkeyShowLayout { get; set; }
+        public string ErgodoxLayoutUrl { get; set; }
+
+        public SettingsService()
         {
-            var hotkey = new Hotkey(0x60);
-
-            return hotkey;
-        }
-
-        public string GetErgodoxLayoutUrl()
-        {
-            var url = "https://configure.ergodox-ez.com/layouts/default/latest/0";
-
-            return url;
+            HotkeyShowLayout = new Hotkey(0x60);
+            ErgodoxLayoutUrl = "https://configure.ergodox-ez.com/layouts/default/latest/0";
         }
     }
 }
