@@ -11,12 +11,7 @@
         /// Gets or sets the ErgodoxLayoutUrl setting.
         /// </summary>
         string ErgodoxLayoutUrl { get; set; }
-
-        /// <summary>
-        /// Indicates if settings need to be saved.
-        /// </summary>
-        bool IsDirty { get; }
-
+        
         /// <summary>
         /// Saves all settings to file.
         /// </summary>

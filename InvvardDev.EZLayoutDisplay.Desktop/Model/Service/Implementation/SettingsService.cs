@@ -44,9 +44,6 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
             set
             {
                 var setting = _hotkeyConverter.ConvertToString(value);
-                if (setting != null && (string)_settings[SettingsName.HotkeyShowLayout] == setting) return;
-
-                IsDirty = true;
                 _settings[SettingsName.HotkeyShowLayout] = setting;
             }
         }
@@ -55,13 +52,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
         public string ErgodoxLayoutUrl
         {
             get => (string)_settings[SettingsName.ErgodoxLayoutUrl];
-            set
-            {
-                if ((string)_settings[SettingsName.ErgodoxLayoutUrl] == value) return;
-
-                IsDirty = true;
-                _settings[SettingsName.ErgodoxLayoutUrl] = value;
-            }
+            set => _settings[SettingsName.ErgodoxLayoutUrl] = value;
         }
 
         /// <inheritdoc />
