@@ -33,7 +33,10 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         public string TxtLayoutUrlText
         {
             get => _txtLayoutUrlText;
-            set => Set(ref _txtLayoutUrlText, value);
+            set
+            {
+                Set(ref _txtLayoutUrlText, value);
+            }
         }
 
         public SettingsViewModel(ISettingsService settingsService)
@@ -42,7 +45,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
             WindowTitle = "Settings";
             TbLayoutUrlText = "Configurator URL to your layout :";
-            TxtLayoutUrlText = _settingsService.GetErgodoxLayoutUrl();
+            TxtLayoutUrlText = _settingsService.ErgodoxLayoutUrl;
             BtnOkText = "OK";
         }
     }

@@ -3,15 +3,13 @@
     public interface ISettingsService
     {
         /// <summary>
-        /// Gets the Show Layout Hotkey.
+        /// Gets or sets the Hotkey Show Layout.
         /// </summary>
-        /// <returns>The hotkey from Settings.</returns>
-        Hotkey GetHotKeyShowLayout();
-        
+        Hotkey HotkeyShowLayout { get; set; }
+
         /// <summary>
-        /// Gets the Ergodox Layout URL.
+        /// Gets or sets the Ergodox Layout URL.
         /// </summary>
-        /// <returns>The URL to the Ergodox Layout.</returns>
-        string GetErgodoxLayoutUrl();
+        string ErgodoxLayoutUrl { get; set; }
     }
 }
