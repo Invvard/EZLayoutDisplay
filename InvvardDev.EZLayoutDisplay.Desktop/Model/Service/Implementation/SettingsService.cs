@@ -6,7 +6,7 @@ using InvvardDev.EZLayoutDisplay.Desktop.Properties;
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
 {
-    internal class SettingsService : ApplicationSettingsBase, ISettingsService
+    public class SettingsService : ApplicationSettingsBase, ISettingsService
     {
         #region Fields
 
