@@ -13,10 +13,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Design
         {
             HotkeyShowLayout = new Hotkey(0x60);
             ErgodoxLayoutUrl = "https://configure.ergodox-ez.com/layouts/default/latest/0";
-            IsDirty = true;
         }
-
-        public bool IsDirty { get; }
 
         public void Save()
         {
