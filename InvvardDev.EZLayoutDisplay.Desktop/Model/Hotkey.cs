@@ -1,10 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
+using System.Configuration;
+using InvvardDev.EZLayoutDisplay.Desktop.Helper;
 using NonInvasiveKeyboardHookLibrary;
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.Model
 {
-    [Serializable]
+    [TypeConverter(typeof(HotkeyConverter))]
+    [SettingsSerializeAs(SettingsSerializeAs.String)]
     public class Hotkey
     {
         /// <summary>
@@ -15,6 +18,13 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
         /// <summary>
         /// Gets or sets the complementary key code.
         /// </summary>
-        public string KeyCode { get; set; }
+        public int KeyCode { get; set; }
+
+        public Hotkey(int keyCode, params ModifierKeys[] modifiers)
+        {
+            KeyCode = keyCode;
+            ModifierKeys = new List<ModifierKeys>();
+            ModifierKeys.AddRange(modifiers);
+        }
     }
 }
