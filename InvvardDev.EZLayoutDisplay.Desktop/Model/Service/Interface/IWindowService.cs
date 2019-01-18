@@ -6,5 +6,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Interface
     {
         void ShowWindow<T>()
             where T : Window, new();
+
+        void CloseWindow<T>();
     }
 }

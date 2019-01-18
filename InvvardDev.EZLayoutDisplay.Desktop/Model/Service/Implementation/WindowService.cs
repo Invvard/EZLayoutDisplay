@@ -26,6 +26,16 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
             _windows[windowKey].Show();
         }
 
+        public void CloseWindow<T>()
+        {
+            var windowKey = typeof(T).ToString();
+
+            if (_windows.ContainsKey(windowKey))
+            {
+                _windows[windowKey].Close();
+            }
+        }
+
         private void WindowService_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             var windowKey = sender.GetType().ToString();
