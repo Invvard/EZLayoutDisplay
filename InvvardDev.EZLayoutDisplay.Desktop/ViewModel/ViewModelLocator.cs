@@ -1,8 +1,10 @@
-﻿using GalaSoft.MvvmLight;
+﻿using CommonServiceLocator;
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation;
 using InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Interface;
-using Microsoft.Practices.ServiceLocation;
+using KeyboardHookService = InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation.KeyboardHookService;
+using SettingsService = InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation.SettingsService;
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 {
@@ -27,8 +29,9 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             else
             {
                 SimpleIoc.Default.Register<IWindowService, WindowService>();
+                SimpleIoc.Default.Register<ISettingsService>(() => new SettingsService(Properties.Settings.Default));
                 SimpleIoc.Default.Register<IKeyboardHookService, KeyboardHookService>(true);
-                SimpleIoc.Default.Register<ISettingsService, SettingsService>();
+                
             }
 
             SimpleIoc.Default.Register<MainViewModel>();
