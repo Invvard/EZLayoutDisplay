@@ -13,11 +13,13 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private readonly ISettingsService _settingsService;
         private readonly IWindowService _windowService;
 
-        private ICommand _saveSettingsCommand;
+        private ICommand _applySettingsCommand;
+        private ICommand _closeSettingsCommand;
         private ICommand _cancelSettingsCommand;
 
         private string _windowTitle;
-        private string _btnOkText;
+        private string _btnApplyText;
+        private string _btnCloseText;
         private string _btnCancelText;
         private string _tbLayoutUrlText;
         private string _txtLayoutUrlText;
@@ -27,12 +29,25 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         #region Relay commands
 
         /// <summary>
-        /// Saves the settings.
+        /// Applies the settings.
         /// </summary>
-        public ICommand SaveSettingsCommand =>
-            _saveSettingsCommand
-            ?? (_saveSettingsCommand = new RelayCommand(() => {
+        public ICommand ApplySettingsCommand =>
+            _applySettingsCommand
+            ?? (_applySettingsCommand = new RelayCommand(() => {
                                                             _settingsService.Save();
+                                                        },
+                                                         () => _settingsService.IsDirty));
+
+        /// <summary>
+        /// Closes the settings window.
+        /// </summary>
+        public ICommand CloseSettingsCommand =>
+            _closeSettingsCommand
+            ?? (_closeSettingsCommand = new RelayCommand(() => {
+                                                             if (_settingsService.IsDirty)
+                                                             {
+                                                                 _settingsService.Save();
+                                                             }
                                                             _windowService.CloseWindow<SettingsWindow>();
                                                         }));
 
@@ -44,7 +59,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             ?? (_cancelSettingsCommand = new RelayCommand(() => {
                                                               _settingsService.Cancel();
                                                               TxtLayoutUrlText = _settingsService.ErgodoxLayoutUrl;
-                                                          }));
+                                                          },
+                                                          () => _settingsService.IsDirty));
 
         #endregion
 
@@ -56,10 +72,16 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             set => Set(ref _windowTitle, value);
         }
 
-        public string BtnOkText
+        public string BtnApplyText
         {
-            get => _btnOkText;
-            set => Set(ref _btnOkText, value);
+            get => _btnApplyText;
+            set => Set(ref _btnApplyText, value);
+        }
+
+        public string BtnCloseText
+        {
+            get => _btnCloseText;
+            set => Set(ref _btnCloseText, value);
         }
 
         public string BtnCancelText
@@ -94,7 +116,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             WindowTitle = "Settings";
             TbLayoutUrlText = "Configurator URL to your layout :";
             TxtLayoutUrlText = _settingsService.ErgodoxLayoutUrl;
-            BtnOkText = "OK";
+            BtnApplyText = "Apply";
+            BtnCloseText = "Close";
             BtnCancelText = "Cancel";
         }
     }
