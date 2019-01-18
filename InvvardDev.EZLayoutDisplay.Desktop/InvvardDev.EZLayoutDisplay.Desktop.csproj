@@ -82,6 +82,7 @@
     </ApplicationDefinition>
     <Compile Include="Design\KeyboardHookService.cs" />
     <Compile Include="Design\SettingsService.cs" />
+    <Compile Include="Design\WindowService.cs" />
     <Compile Include="Helper\EnumerationExtensions.cs" />
     <Compile Include="Helper\HotkeyConverter.cs" />
     <Compile Include="Model\Enum\SettingsName.cs" />
