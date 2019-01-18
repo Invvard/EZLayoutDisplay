@@ -14,33 +14,6 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
 
         #endregion
 
-        #region Properties
-
-        /// <summary>
-        /// Gets or sets the HotkeyShowLayout setting.
-        /// </summary>
-        public Hotkey HotkeyShowLayout
-        {
-            get
-            {
-                var hotkey = _hotkeyConverter.ConvertFromString((string)_settings[SettingsName.HotkeyShowLayout]) as Hotkey;
-
-                return hotkey;
-            }
-            set => _settings[SettingsName.HotkeyShowLayout] = value;
-        }
-
-        /// <summary>
-        /// Gets or sets the ErgodoxLayoutUrl setting.
-        /// </summary>
-        public string ErgodoxLayoutUrl
-        {
-            get => (string)_settings[SettingsName.ErgodoxLayoutUrl];
-            set => _settings[SettingsName.ErgodoxLayoutUrl] = value;
-        }
-
-        #endregion
-
         #region Constructor
 
         public SettingsService(Settings settings)
@@ -57,32 +30,57 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
 
         #region ISettingService implementation
 
-        /// <inheritdoc />
-        public Hotkey GetHotKeyShowLayout()
-        {
-            var hotkey = HotkeyShowLayout;
+        #region Properties
 
-            return hotkey;
+        /// <inheritdoc />
+        public Hotkey HotkeyShowLayout
+        {
+            get
+            {
+                var hotkey = _hotkeyConverter.ConvertFromString((string)_settings[SettingsName.HotkeyShowLayout]) as Hotkey;
+
+                return hotkey;
+            }
+            set
+            {
+                var setting = _hotkeyConverter.ConvertToString(value);
+                if (setting != null && (string)_settings[SettingsName.HotkeyShowLayout] == setting) return;
+
+                IsDirty = true;
+                _settings[SettingsName.HotkeyShowLayout] = setting;
+            }
         }
 
         /// <inheritdoc />
-        public string GetErgodoxLayoutUrl()
+        public string ErgodoxLayoutUrl
         {
-            var url = ErgodoxLayoutUrl;
+            get => (string)_settings[SettingsName.ErgodoxLayoutUrl];
+            set
+            {
+                if ((string)_settings[SettingsName.ErgodoxLayoutUrl] == value) return;
 
-            return url;
+                IsDirty = true;
+                _settings[SettingsName.ErgodoxLayoutUrl] = value;
+            }
         }
+
+        /// <inheritdoc />
+        public bool IsDirty { get; private set; }
+
+        #endregion
 
         /// <inheritdoc />
         public void Save()
         {
             _settings.Save();
+            IsDirty = false;
         }
 
         /// <inheritdoc />
         public void Cancel()
         {
             _settings.Reload();
+            IsDirty = false;
         }
 
         #endregion
