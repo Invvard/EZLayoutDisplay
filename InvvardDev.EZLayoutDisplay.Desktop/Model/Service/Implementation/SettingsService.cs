@@ -73,9 +73,16 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
             return url;
         }
 
+        /// <inheritdoc />
         public void Save()
         {
             _settings.Save();
+        }
+
+        /// <inheritdoc />
+        public void Cancel()
+        {
+            _settings.Reload();
         }
 
         #endregion
