@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.ComponentModel;
 using System.Configuration;
 using InvvardDev.EZLayoutDisplay.Desktop.Model.Enum;
 using InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Interface;
@@ -6,11 +6,12 @@ using InvvardDev.EZLayoutDisplay.Desktop.Properties;
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
 {
-    public class SettingsService : ApplicationSettingsBase, ISettingsService
+    public class SettingsService : ISettingsService
     {
         #region Fields
 
         private readonly Settings _settings;
+        private readonly TypeConverter _hotkeyConverter;
 
         #endregion
 
@@ -19,34 +20,34 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
         /// <summary>
         /// Gets or sets the HotkeyShowLayout setting.
         /// </summary>
-        [ UserScopedSetting ]
-        [ SettingsSerializeAs(SettingsSerializeAs.Xml) ]
-        [ DefaultSettingValue("") ]
         private Hotkey HotkeyShowLayout
         {
-            get => (Hotkey) this[SettingsName.HotkeyShowLayout];
-            set => this[SettingsName.HotkeyShowLayout] = value;
+            get
+            {
+                var hotkey = _hotkeyConverter.ConvertFromString((string)_settings[SettingsName.HotkeyShowLayout]) as Hotkey;
+
+                return hotkey;
+            }
+            set => _settings[SettingsName.HotkeyShowLayout] = value;
         }
 
         /// <summary>
         /// Gets or sets the HotkeyShowLayout setting.
         /// </summary>
-        [ UserScopedSetting ]
-        [ SettingsSerializeAs(SettingsSerializeAs.Xml) ]
-        [ DefaultSettingValue("https://configure.ergodox-ez.com/layouts/default/latest/0") ]
         private string ErgodoxLayoutUrl
         {
-            get => (string) this[SettingsName.ErgodoxLayoutUrl];
-            set => this[SettingsName.ErgodoxLayoutUrl] = value;
+            get => (string)_settings[SettingsName.ErgodoxLayoutUrl];
+            set => _settings[SettingsName.ErgodoxLayoutUrl] = value;
         }
 
         #endregion
 
         #region Constructor
 
-        public SettingsService()
+        public SettingsService(Settings settings)
         {
-            //_settings = settings;
+            _settings = settings;
+            _hotkeyConverter = TypeDescriptor.GetConverter(typeof(Hotkey));
         }
 
         #endregion

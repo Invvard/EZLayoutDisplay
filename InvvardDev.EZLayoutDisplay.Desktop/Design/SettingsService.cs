@@ -1,5 +1,4 @@
-﻿using System;
-using InvvardDev.EZLayoutDisplay.Desktop.Model;
+﻿using InvvardDev.EZLayoutDisplay.Desktop.Model;
 using InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Interface;
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.Design
@@ -8,7 +7,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Design
     {
         public Hotkey GetHotKeyShowLayout()
         {
-            var hotkey = new Hotkey();
+            var hotkey = new Hotkey(0x60);
 
             return hotkey;
         }
