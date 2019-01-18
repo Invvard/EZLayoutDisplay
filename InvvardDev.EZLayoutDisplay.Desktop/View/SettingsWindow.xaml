@@ -5,10 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InvvardDev.EZLayoutDisplay.Desktop.View"
         mc:Ignorable="d"
-        Title="{Binding WindowTitle}" Height="450" Width="800"
+        Title="{Binding WindowTitle}" Height="450" Width="609"
         WindowStartupLocation="CenterScreen"
         DataContext="{Binding Settings, Source={StaticResource Locator}}">
-    <Grid>
-        
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Margin="5,7.02" TextWrapping="Wrap" Text="{Binding TbLayoutUrlText}" TextAlignment="Right" />
+        <TextBox TextWrapping="NoWrap" Text="{Binding TxtLayoutUrlText}" Grid.Column="1" Grid.Row="0" Margin="5,5,0,5"/>
+        <Grid VerticalAlignment="Top" Grid.Row="1" Grid.ColumnSpan="2" Height="0"/>
+        <Button Content="{Binding BtnOkText}" Width="75" HorizontalAlignment="Right" Grid.Row="2" Grid.Column="1" Margin="0,0,0,0"/>
+
     </Grid>
 </Window>

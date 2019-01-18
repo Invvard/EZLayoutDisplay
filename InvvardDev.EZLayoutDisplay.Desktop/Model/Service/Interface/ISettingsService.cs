@@ -2,6 +2,14 @@
 {
     public interface ISettingsService
     {
-        void UpdateKey(string key, string value);
+        /// <summary>
+        /// Gets or sets the Hotkey Show Layout.
+        /// </summary>
+        Hotkey HotkeyShowLayout { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Ergodox Layout URL.
+        /// </summary>
+        string ErgodoxLayoutUrl { get; set; }
     }
 }

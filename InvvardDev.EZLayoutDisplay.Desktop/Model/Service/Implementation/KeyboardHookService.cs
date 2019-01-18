@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Windows;
+using InvvardDev.EZLayoutDisplay.Desktop.Helper;
 using InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Interface;
 using InvvardDev.EZLayoutDisplay.Desktop.View;
 using NonInvasiveKeyboardHookLibrary;
@@ -13,12 +15,14 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
         private static KeyboardHookManager _hook;
 
         private readonly IWindowService _windowService;
+        private readonly ISettingsService _settingsService;
 
         public static KeyboardHookManager Hook => _hook ?? (_hook = new KeyboardHookManager());
 
-        public KeyboardHookService(IWindowService windowService)
+        public KeyboardHookService(IWindowService windowService, ISettingsService settingsService)
         {
             _windowService = windowService;
+            _settingsService = settingsService;
 
             InitKeyboardHook();
         }
@@ -26,7 +30,34 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
         private void InitKeyboardHook()
         {
             Hook.Start();
-            RegisterHotkey(ModifierKeys.Control | ModifierKeys.Alt, 0x60);
+
+            var hotkeyShowLayout = _settingsService.HotkeyShowLayout;
+
+            switch (hotkeyShowLayout.ModifierKeys.Count)
+            {
+                case 0:
+                    Hook.RegisterHotkey(hotkeyShowLayout.KeyCode, DisplayLayout);
+                    break;
+                case 1:
+                    Hook.RegisterHotkey(hotkeyShowLayout.ModifierKeys.First(), hotkeyShowLayout.KeyCode, DisplayLayout);
+                    break;
+                default:
+                    var sumModifierKeys = SumModifiers(hotkeyShowLayout);
+                    Hook.RegisterHotkey(sumModifierKeys, hotkeyShowLayout.KeyCode, DisplayLayout);
+                    break;
+            }
+        }
+
+        private static ModifierKeys SumModifiers(Hotkey hotkeyShowLayout)
+        {
+            var sumModifierKeys = hotkeyShowLayout.ModifierKeys[0];
+
+            for (int i = 1; i < hotkeyShowLayout.ModifierKeys.Count; i++)
+            {
+                sumModifierKeys.Add(hotkeyShowLayout.ModifierKeys[i]);
+            }
+
+            return sumModifierKeys;
         }
 
         private void DisplayLayout()
@@ -39,6 +70,11 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
         public void RegisterHotkey(ModifierKeys modifiers, int keyCode)
         {
             Hook.RegisterHotkey(modifiers, keyCode, DisplayLayout);
+        }
+
+        public void RegisterHotkey(int keyCode)
+        {
+            Hook.RegisterHotkey(keyCode, DisplayLayout);
         }
 
         public void Dispose()
