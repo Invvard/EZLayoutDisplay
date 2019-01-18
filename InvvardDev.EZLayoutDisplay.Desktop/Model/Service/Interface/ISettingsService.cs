@@ -16,5 +16,10 @@
         /// Saves all settings to file.
         /// </summary>
         void Save();
+
+        /// <summary>
+        /// Cancel settings edition.
+        /// </summary>
+        void Cancel();
     }
 }
