@@ -2,6 +2,7 @@
 using InvvardDev.EZLayoutDisplay.Desktop.Model.Enum;
 using InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Interface;
 using InvvardDev.EZLayoutDisplay.Desktop.Properties;
+using Newtonsoft.Json;
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
 {
@@ -37,7 +38,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
         {
             get
             {
-                var hotkey = _hotkeyConverter.ConvertFromString((string)_settings[SettingsName.HotkeyShowLayout]) as Hotkey;
+                var hotkey = JsonConvert.DeserializeObject<Hotkey>((string) _settings[SettingsName.HotkeyShowLayout]);
 
                 return hotkey;
             }

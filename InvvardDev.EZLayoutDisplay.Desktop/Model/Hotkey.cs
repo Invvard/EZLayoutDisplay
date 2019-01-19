@@ -1,23 +1,17 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel;
-using System.Configuration;
-using System.Linq;
 using InvvardDev.EZLayoutDisplay.Desktop.Helper;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using NonInvasiveKeyboardHookLibrary;
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.Model
 {
-    [TypeConverter(typeof(HotkeyConverter))]
-    [SettingsSerializeAs(SettingsSerializeAs.String)]
     public class Hotkey
     {
         /// <summary>
         /// Gets or sets the list of <see cref="ModifierKeys"/>.
         /// </summary>
         [JsonProperty("modifiers")]
-        [JsonConverter(typeof(StringEnumConverter))]
+        //[JsonConverter(typeof(ModifiersConverter))]
         public List<ModifierKeys> ModifierKeys { get; set; }
 
         /// <summary>
@@ -31,6 +25,11 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
             KeyCode = keyCode;
             ModifierKeys = new List<ModifierKeys>();
             ModifierKeys.AddRange(modifiers);
+        }
+
+        public Hotkey()
+        {
+            
         }
     }
 }
