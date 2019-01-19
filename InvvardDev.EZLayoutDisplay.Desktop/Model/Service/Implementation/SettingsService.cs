@@ -14,33 +14,6 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
 
         #endregion
 
-        #region Properties
-
-        /// <summary>
-        /// Gets or sets the HotkeyShowLayout setting.
-        /// </summary>
-        public Hotkey HotkeyShowLayout
-        {
-            get
-            {
-                var hotkey = _hotkeyConverter.ConvertFromString((string)_settings[SettingsName.HotkeyShowLayout]) as Hotkey;
-
-                return hotkey;
-            }
-            set => _settings[SettingsName.HotkeyShowLayout] = value;
-        }
-
-        /// <summary>
-        /// Gets or sets the ErgodoxLayoutUrl setting.
-        /// </summary>
-        public string ErgodoxLayoutUrl
-        {
-            get => (string)_settings[SettingsName.ErgodoxLayoutUrl];
-            set => _settings[SettingsName.ErgodoxLayoutUrl] = value;
-        }
-
-        #endregion
-
         #region Constructor
 
         public SettingsService(Settings settings)
@@ -57,21 +30,32 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
 
         #region ISettingService implementation
 
-        /// <inheritdoc />
-        public Hotkey GetHotKeyShowLayout()
-        {
-            var hotkey = HotkeyShowLayout;
+        #region Properties
 
-            return hotkey;
+        /// <inheritdoc />
+        public Hotkey HotkeyShowLayout
+        {
+            get
+            {
+                var hotkey = _hotkeyConverter.ConvertFromString((string)_settings[SettingsName.HotkeyShowLayout]) as Hotkey;
+
+                return hotkey;
+            }
+            set
+            {
+                var setting = _hotkeyConverter.ConvertToString(value);
+                _settings[SettingsName.HotkeyShowLayout] = setting;
+            }
         }
 
         /// <inheritdoc />
-        public string GetErgodoxLayoutUrl()
+        public string ErgodoxLayoutUrl
         {
-            var url = ErgodoxLayoutUrl;
-
-            return url;
+            get => (string)_settings[SettingsName.ErgodoxLayoutUrl];
+            set => _settings[SettingsName.ErgodoxLayoutUrl] = value;
         }
+
+        #endregion
 
         /// <inheritdoc />
         public void Save()
