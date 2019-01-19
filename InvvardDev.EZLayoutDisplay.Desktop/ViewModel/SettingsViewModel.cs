@@ -137,7 +137,10 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         private void CloseSettingsWindow()
         {
-            SaveSettings();
+            if (IsDirty())
+            {
+                SaveSettings();
+            }
             _windowService.CloseWindow<SettingsWindow>();
         }
 
