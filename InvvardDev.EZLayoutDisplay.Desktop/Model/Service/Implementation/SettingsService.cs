@@ -55,23 +55,18 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
             set => _settings[SettingsName.ErgodoxLayoutUrl] = value;
         }
 
-        /// <inheritdoc />
-        public bool IsDirty { get; private set; }
-
         #endregion
 
         /// <inheritdoc />
         public void Save()
         {
             _settings.Save();
-            IsDirty = false;
         }
 
         /// <inheritdoc />
         public void Cancel()
         {
             _settings.Reload();
-            IsDirty = false;
         }
 
         #endregion
