@@ -3,13 +3,22 @@ using System.ComponentModel;
 using System.Globalization;
 using InvvardDev.EZLayoutDisplay.Desktop.Model;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using NonInvasiveKeyboardHookLibrary;
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
 {
-    [ TypeConverter(typeof(HotkeyConverter)) ]
     public class HotkeyConverter : TypeConverter
     {
+        private readonly JsonSerializerSettings jsonSerializerSettings;
+
+        public HotkeyConverter()
+        {
+            jsonSerializerSettings = new JsonSerializerSettings {
+                                                                    ContractResolver = new CustomContractResolver()
+                                                                };
+        }
+
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
         {
             if (sourceType == typeof(string)) { return true; }
@@ -24,7 +33,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
             var setting = value.ToString();
 
             var hotkey = !string.IsNullOrWhiteSpace(setting)
-                             ? JsonConvert.DeserializeObject<Hotkey>(setting)
+                             ? JsonConvert.DeserializeObject<Hotkey>(setting, jsonSerializerSettings)
                              : new Hotkey(0x60, ModifierKeys.Control, ModifierKeys.Alt);
 
             return hotkey;
@@ -34,9 +43,21 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
         {
             if (destinationType != typeof(string)) return base.ConvertTo(context, culture, value, destinationType);
 
-            var hotkeySetting = JsonConvert.SerializeObject(value);
+            var hotkeySetting = JsonConvert.SerializeObject(value, jsonSerializerSettings);
 
             return hotkeySetting;
+        }
+    }
+
+    internal class CustomContractResolver : DefaultContractResolver
+    {
+        protected override JsonContract CreateContract(Type objectType)
+        {
+            var contract = typeof(Hotkey).IsAssignableFrom(objectType)
+                               ? CreateObjectContract(objectType)
+                               : base.CreateContract(objectType);
+
+            return contract;
         }
     }
 }
