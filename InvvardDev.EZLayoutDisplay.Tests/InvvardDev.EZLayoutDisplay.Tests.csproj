@@ -76,6 +76,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DisplayLayoutViewModelTest.cs" />
     <Compile Include="MainViewModelTest.cs" />
     <Compile Include="SettingsViewModelTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
