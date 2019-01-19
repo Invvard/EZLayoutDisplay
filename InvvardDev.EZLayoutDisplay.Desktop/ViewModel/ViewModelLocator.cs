@@ -26,13 +26,15 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
                 SimpleIoc.Default.Register<IWindowService, Design.WindowService>();
                 SimpleIoc.Default.Register<IKeyboardHookService, Design.KeyboardHookService>();
                 SimpleIoc.Default.Register<ISettingsService, Design.SettingsService>();
+                SimpleIoc.Default.Register<IApplicationService, Design.ApplicationService>();
             }
             else
             {
                 SimpleIoc.Default.Register<IWindowService, WindowService>();
                 SimpleIoc.Default.Register<ISettingsService>(() => new SettingsService(Properties.Settings.Default));
                 SimpleIoc.Default.Register<IKeyboardHookService, KeyboardHookService>(true);
-                
+                SimpleIoc.Default.Register<IApplicationService, ApplicationService>();
+
             }
 
             SimpleIoc.Default.Register<MainViewModel>();

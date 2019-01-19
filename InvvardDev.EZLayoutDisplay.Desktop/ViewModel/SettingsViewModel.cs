@@ -101,10 +101,10 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             _settingsService = settingsService;
             _windowService = windowService;
 
-            InitializeText();
+            SetLabelUi();
         }
 
-        private void InitializeText()
+        private void SetLabelUi()
         {
             WindowTitle = "Settings";
             TbLayoutUrlText = "Configurator URL to your layout :";
