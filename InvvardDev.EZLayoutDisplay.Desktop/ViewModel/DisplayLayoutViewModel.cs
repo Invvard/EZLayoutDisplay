@@ -14,6 +14,11 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         public DisplayLayoutViewModel()
         {
+            SetLabelUi();
+        }
+
+        private void SetLabelUi()
+        {
             WindowTitle = "Ergodox Layout";
         }
     }
