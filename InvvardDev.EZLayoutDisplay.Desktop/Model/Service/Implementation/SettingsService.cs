@@ -1,17 +1,24 @@
-﻿using System.ComponentModel;
+﻿using System.Windows.Forms;
+using System.Windows.Input;
 using InvvardDev.EZLayoutDisplay.Desktop.Model.Enum;
 using InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Interface;
 using InvvardDev.EZLayoutDisplay.Desktop.Properties;
 using Newtonsoft.Json;
+using ModifierKeys = NonInvasiveKeyboardHookLibrary.ModifierKeys;
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
 {
     public class SettingsService : ISettingsService
     {
+        #region Constants
+
+        private readonly Hotkey _defaultHotkey;
+
+        #endregion
+
         #region Fields
 
         private readonly Settings _settings;
-        private readonly TypeConverter _hotkeyConverter;
 
         #endregion
 
@@ -20,7 +27,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
         public SettingsService(Settings settings)
         {
             _settings = settings;
-            _hotkeyConverter = TypeDescriptor.GetConverter(typeof(Hotkey));
+            _defaultHotkey = new Hotkey(Keys.Space, ModifierKeys.Alt, ModifierKeys.Control, ModifierKeys.Shift, ModifierKeys.WindowsKey);
         }
 
         #endregion
@@ -38,12 +45,19 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
         {
             get
             {
-                var setting = (string) _settings[SettingsName.HotkeyShowLayout];
+                Hotkey hotkey;
+                try
+                {
+                    var setting = (string)_settings[SettingsName.HotkeyShowLayout];
 
-                if (string.IsNullOrWhiteSpace(setting)) { setting = "{\"modifiers\":[0,1],\"keycode\":96}"; }
-
-                var hotkey = JsonConvert.DeserializeObject<Hotkey>(setting);
-
+                    hotkey = string.IsNullOrWhiteSpace(setting)
+                                 ? _defaultHotkey
+                                 : JsonConvert.DeserializeObject<Hotkey>(setting);
+                }
+                catch (System.Exception)
+                {
+                    hotkey = _defaultHotkey;
+                }
                 return hotkey;
             }
             set

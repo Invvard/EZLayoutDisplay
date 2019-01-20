@@ -6,7 +6,7 @@
       <Value Profile="(Default)">https://configure.ergodox-ez.com/layouts/default/latest/0</Value>
     </Setting>
     <Setting Name="HotkeyShowLayout" Type="System.String" Scope="User">
-      <Value Profile="(Default)">{"modifiers":[0,1],"keycode":96}</Value>
+      <Value Profile="(Default)">{"modifiers":[0,1,2,3],"keycode":32}</Value>
     </Setting>
   </Settings>
 </SettingsFile>
