@@ -22,11 +22,12 @@ namespace InvvardDev.EZLayoutDisplay.Tests
 
             //Assert
             Assert.Equal("Settings", settingsViewModel.WindowTitle);
-            Assert.Equal("Configurator URL to your layout :", settingsViewModel.TbLayoutUrlText);
-            Assert.Equal("Apply", settingsViewModel.BtnApplyText);
-            Assert.Equal("Close", settingsViewModel.BtnCloseText);
-            Assert.Equal("Cancel", settingsViewModel.BtnCancelText);
-            Assert.Equal(tbContentInitial, settingsViewModel.TxtLayoutUrlText);
+            Assert.Equal("Configurator URL to your layout :", settingsViewModel.TbLayoutUrlLabel);
+            Assert.Equal("Apply", settingsViewModel.BtnApplyLabel);
+            Assert.Equal("Close", settingsViewModel.BtnCloseLabel);
+            Assert.Equal("Cancel", settingsViewModel.BtnCancelLabel);
+            Assert.Equal(tbContentInitial, settingsViewModel.TxtLayoutUrlContent);
+            Assert.Equal("Hotkey to display layout", settingsViewModel.TbHotkeyLabel);
         }
 
         [ Theory ]
@@ -41,7 +42,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests
 
             //Act
             var settingsViewModel = new SettingsViewModel(settingsService.Object, windowService.Object);
-            settingsViewModel.TxtLayoutUrlText = newValue;
+            settingsViewModel.TxtLayoutUrlContent = newValue;
 
             //Assert
             if (canExecute)
@@ -71,7 +72,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests
 
             //Act
             var settingsViewModel = new SettingsViewModel(settingsService.Object, windowService.Object) {
-                                                                                                            TxtLayoutUrlText = tbContentNewValue
+                                                                                                            TxtLayoutUrlContent = tbContentNewValue
                                                                                                         };
             settingsViewModel.ApplySettingsCommand.Execute(null);
 
@@ -95,7 +96,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests
 
             //Act
             var settingsViewModel = new SettingsViewModel(settingsService.Object, windowService.Object) {
-                                                                                                            TxtLayoutUrlText = tbContentNewValue
+                                                                                                            TxtLayoutUrlContent = tbContentNewValue
                                                                                                         };
             settingsViewModel.CancelSettingsCommand.Execute(null);
 
@@ -123,7 +124,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests
             //Act
             var settingsViewModel = new SettingsViewModel(settingsService.Object, windowService.Object);
 
-            if (mustSave) { settingsViewModel.TxtLayoutUrlText = tbContentNewValue; }
+            if (mustSave) { settingsViewModel.TxtLayoutUrlContent = tbContentNewValue; }
             settingsViewModel.CloseSettingsCommand.Execute(null);
 
             //Assert
