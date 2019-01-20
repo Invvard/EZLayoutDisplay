@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InvvardDev.EZLayoutDisplay.Desktop.View"
         mc:Ignorable="d"
-        Title="{Binding WindowTitle}" Height="450" Width="609"
+        Title="{Binding WindowTitle}" Width="600"
         WindowStartupLocation="CenterScreen"
-        DataContext="{Binding Settings, Source={StaticResource Locator}}">
+        DataContext="{Binding Settings, Source={StaticResource Locator}}" MinWidth="500" Height="220" ResizeMode="NoResize">
 
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -20,12 +20,39 @@
             <ColumnDefinition/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <TextBlock Margin="5,7.02" TextWrapping="Wrap" Text="{Binding TbLayoutUrlText}" TextAlignment="Right" />
-        <TextBox TextWrapping="NoWrap" Text="{Binding TxtLayoutUrlText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="0" Margin="5,5,0,5" Grid.ColumnSpan="2"/>
-        <Grid VerticalAlignment="Top" Grid.Row="1" Grid.Column="2" Height="0"/>
-        <Button Content="{Binding BtnCancelText}" HorizontalAlignment="Left" Width="75" d:LayoutOverrides="Height" Grid.Row="2" Command="{Binding CancelSettingsCommand, Mode=OneWay}"/>
-        <Button Content="{Binding BtnApplyText}" Width="75" d:LayoutOverrides="Height" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,0" Command="{Binding ApplySettingsCommand, Mode=OneWay}"/>
-        <Button Content="{Binding BtnCloseText}" Command="{Binding CloseSettingsCommand, Mode=OneWay}" Width="75" HorizontalAlignment="Right" Grid.Row="2" Grid.Column="2" Margin="5,0,0,0"/>
+        <Label Content="{Binding LayoutUrlLabel}" d:LayoutOverrides="Height" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <TextBox TextWrapping="NoWrap" Text="{Binding LayoutUrlContent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="0" Margin="5,5,0,5" Grid.ColumnSpan="2"/>
+        <Grid VerticalAlignment="Top" Grid.Row="1" Grid.ColumnSpan="3" Margin="0,5,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="266*"/>
+            </Grid.ColumnDefinitions>
+            <Label Content="{Binding HotkeyTitleLabel}" HorizontalAlignment="Left" Padding="5,5,5,0" d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin"/>
+            <Grid Grid.Row="1" Margin="5,0,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition Width="70"/>
+                </Grid.ColumnDefinitions>
+                <CheckBox Content="{Binding AltModifierLabel}" HorizontalAlignment="Left" d:LayoutOverrides="Height" VerticalAlignment="Center"/>
+                <CheckBox Content="{Binding CtrlModifierLabel}" HorizontalAlignment="Left" d:LayoutOverrides="Height" Grid.Column="1" VerticalAlignment="Center"/>
+                <CheckBox Content="{Binding ShiftModifierLabel}" HorizontalAlignment="Left" d:LayoutOverrides="Height" Grid.Row="1" VerticalAlignment="Center"/>
+                <CheckBox Content="{Binding WindowsModifierLabel}" HorizontalAlignment="Left" d:LayoutOverrides="Height" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center"/>
+            </Grid>
+            <Label Content="+" Grid.Row="1" Grid.Column="1" FontSize="30 " VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" Margin="0,0,0,-1" Padding="0,0,0,5"/>
+            <TextBox TextWrapping="Wrap" Text="{Binding DisplayLayoutHotkey.KeyCode, Converter={StaticResource keyCodeConverter}}" Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="80"/>
+        </Grid>
+        <Button Content="{Binding CancelCommandLabel}" HorizontalAlignment="Left" Width="75" d:LayoutOverrides="Height" Grid.Row="2" Command="{Binding CancelSettingsCommand, Mode=OneWay}"/>
+        <Button Content="{Binding ApplyCommandLabel}" Width="75" d:LayoutOverrides="Height" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,0" Command="{Binding ApplySettingsCommand, Mode=OneWay}"/>
+        <Button Content="{Binding CloseCommandLabel}" Command="{Binding CloseSettingsCommand, Mode=OneWay}" Width="75" HorizontalAlignment="Right" Grid.Row="2" Grid.Column="2" Margin="5,0,0,0"/>
 
     </Grid>
 </Window>

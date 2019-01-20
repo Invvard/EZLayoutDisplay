@@ -1,6 +1,7 @@
 ﻿using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using InvvardDev.EZLayoutDisplay.Desktop.Model;
 using InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Interface;
 using InvvardDev.EZLayoutDisplay.Desktop.View;
 
@@ -22,8 +23,14 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private string _closeCommandLabel;
         private string _cancelCommandLabel;
         private string _layoutUrlLabel;
-        private string _layoutUrlContent;
         private string _hotkeyTitleLabel;
+        private string _altModifierLabel;
+        private string _ctrlModifierLabel;
+        private string _shiftModifierLabel;
+        private string _windowsModifierLabel;
+
+        private string _layoutUrlContent;
+        private Hotkey _displayLayoutHotkey;
 
         #endregion
 
@@ -60,19 +67,19 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             set => Set(ref _windowTitle, value);
         }
 
-        public string BtnApplyLabel
+        public string ApplyCommandLabel
         {
             get => _applyCommandLabel;
             set => Set(ref _applyCommandLabel, value);
         }
 
-        public string BtnCloseLabel
+        public string CloseCommandLabel
         {
             get => _closeCommandLabel;
             set => Set(ref _closeCommandLabel, value);
         }
 
-        public string BtnCancelLabel
+        public string CancelCommandLabel
         {
             get => _cancelCommandLabel;
             set => Set(ref _cancelCommandLabel, value);
@@ -98,29 +105,69 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
                 if (Set(ref _layoutUrlContent, value)) { UpdateButtonCanExecute(); }
             }
         }
+        
+        public string AltModifierLabel
+        {
+            get => _altModifierLabel;
+            set => Set(ref _altModifierLabel, value);
+        }
+        
+        public string CtrlModifierLabel
+        {
+            get => _ctrlModifierLabel;
+            set => Set(ref _ctrlModifierLabel, value);
+        }
+        
+        public string ShiftModifierLabel
+        {
+            get => _shiftModifierLabel;
+            set => Set(ref _shiftModifierLabel, value);
+        }
+        
+        public string WindowsModifierLabel
+        {
+            get => _windowsModifierLabel;
+            set => Set(ref _windowsModifierLabel, value);
+        }
+
+        public Hotkey DisplayLayoutHotkey
+        {
+            get => _displayLayoutHotkey;
+            set => Set(ref _displayLayoutHotkey, value);
+        }
 
         #endregion
 
         #region Constructor
-        
+
         public SettingsViewModel(ISettingsService settingsService, IWindowService windowService)
         {
             _settingsService = settingsService;
             _windowService = windowService;
 
             SetLabelUi();
+
+            SetSettingControls();
         }
 
         private void SetLabelUi()
         {
             WindowTitle = "Settings";
             LayoutUrlLabel = "Configurator URL to your layout :";
-            BtnApplyLabel = "Apply";
-            BtnCloseLabel = "Close";
-            BtnCancelLabel = "Cancel";
+            ApplyCommandLabel = "Apply";
+            CloseCommandLabel = "Close";
+            CancelCommandLabel = "Cancel";
             HotkeyTitleLabel = "Hotkey to display layout";
+            AltModifierLabel = "ALT";
+            CtrlModifierLabel = "CTRL";
+            ShiftModifierLabel = "SHIFT";
+            WindowsModifierLabel = "Windows";
+        }
 
+        private void SetSettingControls()
+        {
             LayoutUrlContent = _settingsService.ErgodoxLayoutUrl;
+            DisplayLayoutHotkey = _settingsService.HotkeyShowLayout;
         }
 
         #endregion
@@ -130,6 +177,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private void SaveSettings()
         {
             _settingsService.ErgodoxLayoutUrl = LayoutUrlContent;
+            _settingsService.HotkeyShowLayout = DisplayLayoutHotkey;
 
             _settingsService.Save();
 
@@ -141,6 +189,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             _settingsService.Cancel();
 
             LayoutUrlContent = _settingsService.ErgodoxLayoutUrl;
+            DisplayLayoutHotkey = _settingsService.HotkeyShowLayout;
         }
 
         private void CloseSettingsWindow()
