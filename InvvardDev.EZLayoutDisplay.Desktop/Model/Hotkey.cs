@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using InvvardDev.EZLayoutDisplay.Desktop.Helper;
 using Newtonsoft.Json;
 using NonInvasiveKeyboardHookLibrary;
 
