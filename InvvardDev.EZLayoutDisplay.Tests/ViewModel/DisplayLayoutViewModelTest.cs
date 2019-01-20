@@ -1,7 +1,7 @@
 ﻿using InvvardDev.EZLayoutDisplay.Desktop.ViewModel;
 using Xunit;
 
-namespace InvvardDev.EZLayoutDisplay.Tests
+namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
 {
     public class DisplayLayoutViewModelTest
     {

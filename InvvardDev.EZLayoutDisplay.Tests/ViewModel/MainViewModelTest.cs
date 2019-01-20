@@ -4,7 +4,7 @@ using InvvardDev.EZLayoutDisplay.Desktop.ViewModel;
 using Moq;
 using Xunit;
 
-namespace InvvardDev.EZLayoutDisplay.Tests
+namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
 {
     public class MainViewModelTest
     {
