@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Linq;
 using System.Windows;
-using InvvardDev.EZLayoutDisplay.Desktop.Helper;
 using InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Interface;
 using InvvardDev.EZLayoutDisplay.Desktop.View;
 using NonInvasiveKeyboardHookLibrary;
@@ -11,13 +9,23 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
 {
     public class KeyboardHookService : IKeyboardHookService
     {
+        #region Fields
+
         private bool disposed;
         private static KeyboardHookManager _hook;
 
         private readonly IWindowService _windowService;
         private readonly ISettingsService _settingsService;
 
+        #endregion
+
+        #region Properties
+
         public static KeyboardHookManager Hook => _hook ?? (_hook = new KeyboardHookManager());
+
+        #endregion
+
+        #region Constructor
 
         public KeyboardHookService(IWindowService windowService, ISettingsService settingsService)
         {
@@ -48,6 +56,24 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
             }
         }
 
+        #endregion
+
+        #region IKeyboardHookService implementation
+
+        public void RegisterHotkey(ModifierKeys modifiers, int keyCode)
+        {
+            Hook.RegisterHotkey(modifiers, keyCode, DisplayLayout);
+        }
+
+        public void RegisterHotkey(int keyCode)
+        {
+            Hook.RegisterHotkey(keyCode, DisplayLayout);
+        }
+
+        #endregion
+
+        #region Private methods
+
         private static ModifierKeys SumModifiers(Hotkey hotkeyShowLayout)
         {
             var sumModifierKeys = hotkeyShowLayout.ModifierKeys[0];
@@ -62,20 +88,15 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
 
         private void DisplayLayout()
         {
-            Application.Current.Dispatcher.Invoke(delegate {
-                                                      _windowService.ShowWindow<DisplayLayoutWindow>();
-                                                  });
+            Application.Current.Dispatcher.Invoke(delegate
+            {
+                _windowService.ShowWindow<DisplayLayoutWindow>();
+            });
         }
 
-        public void RegisterHotkey(ModifierKeys modifiers, int keyCode)
-        {
-            Hook.RegisterHotkey(modifiers, keyCode, DisplayLayout);
-        }
+        #endregion
 
-        public void RegisterHotkey(int keyCode)
-        {
-            Hook.RegisterHotkey(keyCode, DisplayLayout);
-        }
+        #region IDispose implementation
 
         public void Dispose()
         {
@@ -95,6 +116,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
             }
 
             disposed = true;
-        }
+        } 
+
+        #endregion
     }
 }
