@@ -54,7 +54,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
 
             for (int i = 1; i < hotkeyShowLayout.ModifierKeys.Count; i++)
             {
-                sumModifierKeys.Add(hotkeyShowLayout.ModifierKeys[i]);
+                sumModifierKeys = sumModifierKeys | hotkeyShowLayout.ModifierKeys[i];
             }
 
             return sumModifierKeys;
