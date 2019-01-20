@@ -30,7 +30,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private string _windowsModifierLabel;
 
         private string _layoutUrlContent;
-        private Hotkey _displayLayoutHotkey;
+        private Hotkey _hotkeyDisplayLayout;
 
         #endregion
 
@@ -130,10 +130,10 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             set => Set(ref _windowsModifierLabel, value);
         }
 
-        public Hotkey DisplayLayoutHotkey
+        public Hotkey HotkeyShowLayout
         {
-            get => _displayLayoutHotkey;
-            set => Set(ref _displayLayoutHotkey, value);
+            get => _hotkeyDisplayLayout;
+            set => Set(ref _hotkeyDisplayLayout, value);
         }
 
         #endregion
@@ -167,7 +167,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private void SetSettingControls()
         {
             LayoutUrlContent = _settingsService.ErgodoxLayoutUrl;
-            DisplayLayoutHotkey = _settingsService.HotkeyShowLayout;
+            HotkeyShowLayout = _settingsService.HotkeyShowLayout;
         }
 
         #endregion
@@ -177,7 +177,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private void SaveSettings()
         {
             _settingsService.ErgodoxLayoutUrl = LayoutUrlContent;
-            _settingsService.HotkeyShowLayout = DisplayLayoutHotkey;
+            _settingsService.HotkeyShowLayout = HotkeyShowLayout;
 
             _settingsService.Save();
 
@@ -189,7 +189,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             _settingsService.Cancel();
 
             LayoutUrlContent = _settingsService.ErgodoxLayoutUrl;
-            DisplayLayoutHotkey = _settingsService.HotkeyShowLayout;
+            HotkeyShowLayout = _settingsService.HotkeyShowLayout;
         }
 
         private void CloseSettingsWindow()

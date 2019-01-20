@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Windows.Forms;
 using Newtonsoft.Json;
-using NonInvasiveKeyboardHookLibrary;
+using ModifierKeys = NonInvasiveKeyboardHookLibrary.ModifierKeys;
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.Model
 {
@@ -19,6 +20,9 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
         /// </summary>
         [JsonProperty("keycode")]
         public int KeyCode { get; set; }
+
+        public Hotkey(Keys key, params ModifierKeys[] modifiers) : this((int)key, modifiers)
+        { }
 
         public Hotkey(int keyCode, params ModifierKeys[] modifiers)
         {
