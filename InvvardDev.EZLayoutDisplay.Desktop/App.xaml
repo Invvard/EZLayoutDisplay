@@ -5,7 +5,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:ignore="http://www.galasoft.ch/ignore"
 			 xmlns:viewModel="clr-namespace:InvvardDev.EZLayoutDisplay.Desktop.ViewModel"
-             ShutdownMode="OnExplicitShutdown"
+			 xmlns:converter="clr-namespace:InvvardDev.EZLayoutDisplay.Desktop.View.Converter"
+			 ShutdownMode="OnExplicitShutdown"
              StartupUri="View/MainWindow.xaml"
              mc:Ignorable="d ignore">
 
@@ -13,6 +14,7 @@
         <ResourceDictionary>
             <!--Global View Model Locator-->
             <viewModel:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
+            <converter:KeyCodeToCharConverter x:Key="keyCodeConverter" />
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Skins/MainSkin.xaml" />
             </ResourceDictionary.MergedDictionaries>

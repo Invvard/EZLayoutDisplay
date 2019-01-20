@@ -1,17 +1,24 @@
-﻿using System.ComponentModel;
+﻿using System.Windows.Forms;
+using System.Windows.Input;
 using InvvardDev.EZLayoutDisplay.Desktop.Model.Enum;
 using InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Interface;
 using InvvardDev.EZLayoutDisplay.Desktop.Properties;
 using Newtonsoft.Json;
+using ModifierKeys = NonInvasiveKeyboardHookLibrary.ModifierKeys;
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
 {
     public class SettingsService : ISettingsService
     {
+        #region Constants
+
+        private readonly Hotkey _defaultHotkey;
+
+        #endregion
+
         #region Fields
 
         private readonly Settings _settings;
-        private readonly TypeConverter _hotkeyConverter;
 
         #endregion
 
@@ -20,7 +27,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
         public SettingsService(Settings settings)
         {
             _settings = settings;
-            _hotkeyConverter = TypeDescriptor.GetConverter(typeof(Hotkey));
+            _defaultHotkey = new Hotkey(Keys.Space, ModifierKeys.Alt, ModifierKeys.Control, ModifierKeys.Shift, ModifierKeys.WindowsKey);
         }
 
         #endregion
@@ -38,13 +45,24 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
         {
             get
             {
-                var hotkey = JsonConvert.DeserializeObject<Hotkey>((string) _settings[SettingsName.HotkeyShowLayout]);
+                Hotkey hotkey;
+                try
+                {
+                    var setting = (string)_settings[SettingsName.HotkeyShowLayout];
 
+                    hotkey = string.IsNullOrWhiteSpace(setting)
+                                 ? _defaultHotkey
+                                 : JsonConvert.DeserializeObject<Hotkey>(setting);
+                }
+                catch (System.Exception)
+                {
+                    hotkey = _defaultHotkey;
+                }
                 return hotkey;
             }
             set
             {
-                var setting = _hotkeyConverter.ConvertToString(value);
+                var setting = JsonConvert.SerializeObject(value);
                 _settings[SettingsName.HotkeyShowLayout] = setting;
             }
         }
@@ -52,7 +70,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
         /// <inheritdoc />
         public string ErgodoxLayoutUrl
         {
-            get => (string)_settings[SettingsName.ErgodoxLayoutUrl];
+            get => (string) _settings[SettingsName.ErgodoxLayoutUrl];
             set => _settings[SettingsName.ErgodoxLayoutUrl] = value;
         }
 
