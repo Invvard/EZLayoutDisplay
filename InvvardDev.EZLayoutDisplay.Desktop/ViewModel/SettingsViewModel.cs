@@ -18,12 +18,12 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private ICommand _cancelSettingsCommand;
 
         private string _windowTitle;
-        private string _btnApplyLabel;
-        private string _btnCloseLabel;
-        private string _btnCancelLabel;
-        private string _tbLayoutUrlLabel;
-        private string _txtLayoutUrlContent;
-        private string _tbHotkeyLabel;
+        private string _applyCommandLabel;
+        private string _closeCommandLabel;
+        private string _cancelCommandLabel;
+        private string _layoutUrlLabel;
+        private string _layoutUrlContent;
+        private string _hotkeyTitleLabel;
 
         #endregion
 
@@ -62,40 +62,40 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         public string BtnApplyLabel
         {
-            get => _btnApplyLabel;
-            set => Set(ref _btnApplyLabel, value);
+            get => _applyCommandLabel;
+            set => Set(ref _applyCommandLabel, value);
         }
 
         public string BtnCloseLabel
         {
-            get => _btnCloseLabel;
-            set => Set(ref _btnCloseLabel, value);
+            get => _closeCommandLabel;
+            set => Set(ref _closeCommandLabel, value);
         }
 
         public string BtnCancelLabel
         {
-            get => _btnCancelLabel;
-            set => Set(ref _btnCancelLabel, value);
+            get => _cancelCommandLabel;
+            set => Set(ref _cancelCommandLabel, value);
         }
 
-        public string TbLayoutUrlLabel
+        public string LayoutUrlLabel
         {
-            get => _tbLayoutUrlLabel;
-            set => Set(ref _tbLayoutUrlLabel, value);
+            get => _layoutUrlLabel;
+            set => Set(ref _layoutUrlLabel, value);
         }
 
-        public string TbHotkeyLabel
+        public string HotkeyTitleLabel
         {
-            get => _tbHotkeyLabel;
-            set => Set(ref _tbHotkeyLabel, value);
+            get => _hotkeyTitleLabel;
+            set => Set(ref _hotkeyTitleLabel, value);
         }
 
-        public string TxtLayoutUrlContent
+        public string LayoutUrlContent
         {
-            get => _txtLayoutUrlContent;
+            get => _layoutUrlContent;
             set
             {
-                if (Set(ref _txtLayoutUrlContent, value)) { UpdateButtonCanExecute(); }
+                if (Set(ref _layoutUrlContent, value)) { UpdateButtonCanExecute(); }
             }
         }
 
@@ -114,13 +114,13 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private void SetLabelUi()
         {
             WindowTitle = "Settings";
-            TbLayoutUrlLabel = "Configurator URL to your layout :";
+            LayoutUrlLabel = "Configurator URL to your layout :";
             BtnApplyLabel = "Apply";
             BtnCloseLabel = "Close";
             BtnCancelLabel = "Cancel";
-            TbHotkeyLabel = "Hotkey to display layout";
+            HotkeyTitleLabel = "Hotkey to display layout";
 
-            TxtLayoutUrlContent = _settingsService.ErgodoxLayoutUrl;
+            LayoutUrlContent = _settingsService.ErgodoxLayoutUrl;
         }
 
         #endregion
@@ -129,7 +129,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         private void SaveSettings()
         {
-            _settingsService.ErgodoxLayoutUrl = TxtLayoutUrlContent;
+            _settingsService.ErgodoxLayoutUrl = LayoutUrlContent;
 
             _settingsService.Save();
 
@@ -140,7 +140,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         {
             _settingsService.Cancel();
 
-            TxtLayoutUrlContent = _settingsService.ErgodoxLayoutUrl;
+            LayoutUrlContent = _settingsService.ErgodoxLayoutUrl;
         }
 
         private void CloseSettingsWindow()
@@ -160,7 +160,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         private bool IsDirty()
         {
-            var isDirty = _settingsService.ErgodoxLayoutUrl != _txtLayoutUrlContent;
+            var isDirty = _settingsService.ErgodoxLayoutUrl != _layoutUrlContent;
 
             return isDirty;
         }
