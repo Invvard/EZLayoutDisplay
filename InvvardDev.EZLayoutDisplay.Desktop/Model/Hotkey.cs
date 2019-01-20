@@ -4,6 +4,7 @@ using NonInvasiveKeyboardHookLibrary;
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.Model
 {
+    [JsonObject(MemberSerialization.OptIn)]
     public class Hotkey
     {
         /// <summary>
