@@ -23,11 +23,15 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             //Assert
             Assert.Equal("Settings", settingsViewModel.WindowTitle);
             Assert.Equal("Configurator URL to your layout :", settingsViewModel.LayoutUrlLabel);
-            Assert.Equal("Apply", settingsViewModel.BtnApplyLabel);
-            Assert.Equal("Close", settingsViewModel.BtnCloseLabel);
-            Assert.Equal("Cancel", settingsViewModel.BtnCancelLabel);
+            Assert.Equal("Apply", settingsViewModel.ApplyCommandLabel);
+            Assert.Equal("Close", settingsViewModel.CloseCommandLabel);
+            Assert.Equal("Cancel", settingsViewModel.CancelCommandLabel);
             Assert.Equal(tbContentInitial, settingsViewModel.LayoutUrlContent);
             Assert.Equal("Hotkey to display layout", settingsViewModel.HotkeyTitleLabel);
+            Assert.Equal("ALT", settingsViewModel.AltModifierLabel);
+            Assert.Equal("CTRL", settingsViewModel.CtrlModifierLabel);
+            Assert.Equal("SHIFT", settingsViewModel.ShiftModifierLabel);
+            Assert.Equal("Windows", settingsViewModel.WindowsModifierLabel);
         }
 
         [ Theory ]
