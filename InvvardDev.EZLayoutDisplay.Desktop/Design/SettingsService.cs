@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using InvvardDev.EZLayoutDisplay.Desktop.Model;
 using InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Interface;
+using NonInvasiveKeyboardHookLibrary;
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.Design
 {
@@ -11,7 +12,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Design
 
         public SettingsService()
         {
-            HotkeyShowLayout = new Hotkey(0x60);
+            HotkeyShowLayout = new Hotkey(0x60, ModifierKeys.Alt);
             ErgodoxLayoutUrl = "https://configure.ergodox-ez.com/layouts/default/latest/0";
         }
 
