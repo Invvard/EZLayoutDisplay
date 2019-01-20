@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Linq;
 using System.Windows;
-using InvvardDev.EZLayoutDisplay.Desktop.Helper;
 using InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Interface;
 using InvvardDev.EZLayoutDisplay.Desktop.View;
 using NonInvasiveKeyboardHookLibrary;
@@ -11,13 +9,23 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
 {
     public class KeyboardHookService : IKeyboardHookService
     {
+        #region Fields
+
         private bool disposed;
         private static KeyboardHookManager _hook;
 
         private readonly IWindowService _windowService;
         private readonly ISettingsService _settingsService;
 
+        #endregion
+
+        #region Properties
+
         public static KeyboardHookManager Hook => _hook ?? (_hook = new KeyboardHookManager());
+
+        #endregion
+
+        #region Constructor
 
         public KeyboardHookService(IWindowService windowService, ISettingsService settingsService)
         {
@@ -48,24 +56,9 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
             }
         }
 
-        private static ModifierKeys SumModifiers(Hotkey hotkeyShowLayout)
-        {
-            var sumModifierKeys = hotkeyShowLayout.ModifierKeys[0];
+        #endregion
 
-            for (int i = 1; i < hotkeyShowLayout.ModifierKeys.Count; i++)
-            {
-                sumModifierKeys.Add(hotkeyShowLayout.ModifierKeys[i]);
-            }
-
-            return sumModifierKeys;
-        }
-
-        private void DisplayLayout()
-        {
-            Application.Current.Dispatcher.Invoke(delegate {
-                                                      _windowService.ShowWindow<DisplayLayoutWindow>();
-                                                  });
-        }
+        #region IKeyboardHookService implementation
 
         public void RegisterHotkey(ModifierKeys modifiers, int keyCode)
         {
@@ -76,6 +69,34 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
         {
             Hook.RegisterHotkey(keyCode, DisplayLayout);
         }
+
+        #endregion
+
+        #region Private methods
+
+        private static ModifierKeys SumModifiers(Hotkey hotkeyShowLayout)
+        {
+            var sumModifierKeys = hotkeyShowLayout.ModifierKeys[0];
+
+            for (int i = 1; i < hotkeyShowLayout.ModifierKeys.Count; i++)
+            {
+                sumModifierKeys = sumModifierKeys | hotkeyShowLayout.ModifierKeys[i];
+            }
+
+            return sumModifierKeys;
+        }
+
+        private void DisplayLayout()
+        {
+            Application.Current.Dispatcher.Invoke(delegate
+            {
+                _windowService.ShowWindow<DisplayLayoutWindow>();
+            });
+        }
+
+        #endregion
+
+        #region IDispose implementation
 
         public void Dispose()
         {
@@ -95,6 +116,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
             }
 
             disposed = true;
-        }
+        } 
+
+        #endregion
     }
 }

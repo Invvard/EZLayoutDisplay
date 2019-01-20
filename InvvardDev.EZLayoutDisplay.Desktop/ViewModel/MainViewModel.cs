@@ -22,6 +22,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private ICommand _exitCommand;
 
         private readonly IWindowService _windowService;
+        private readonly IApplicationService _applicationService;
 
         private string _trayMenuShowLayoutCommandLabel;
         private string _trayMenuShowSettingsCommandLabel;
@@ -43,7 +44,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             set => Set(ref _trayMenuShowSettingsCommandLabel, value);
         }
 
-        public string TrayMenuShowExitCommandLabel
+        public string TrayMenuExitCommandLabel
         {
             get => _trayMenuExitCommandLabel;
             set => Set(ref _trayMenuExitCommandLabel, value);
@@ -56,38 +57,29 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         /// <summary>
         /// Shows the Layout window.
         /// </summary>
-        public ICommand ShowLayoutCommand =>
-            _showLayoutCommand
-            ?? (_showLayoutCommand = new RelayCommand(() =>
-                                                      {
-                                                          _windowService.ShowWindow<DisplayLayoutWindow>();
-                                                      }));
+        public ICommand ShowLayoutCommand => _showLayoutCommand ?? (_showLayoutCommand = new RelayCommand(ShowLayoutWindow));
 
         /// <summary>
         /// Shows the Settings Window.
         /// </summary>
-        public ICommand ShowSettingsCommand =>
-            _showSettingsCommand
-            ?? (_showSettingsCommand = new RelayCommand(() =>
-                                                        {
-                                                            _windowService.ShowWindow<SettingsWindow>();
-                                                        }));
+        public ICommand ShowSettingsCommand => _showSettingsCommand ?? (_showSettingsCommand = new RelayCommand(ShowSettingsWindow));
 
         /// <summary>
         /// Shuts down the application.
         /// </summary>
-        public ICommand ExitApplicationCommand =>
-            _exitCommand
-            ?? (_exitCommand = new RelayCommand(() => Application.Current.Shutdown()));
+        public ICommand ExitApplicationCommand => _exitCommand ?? (_exitCommand = new RelayCommand(ShutdownApplication));
 
         #endregion
+
+        #region Constructor
 
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
-        public MainViewModel(IWindowService windowService)
+        public MainViewModel(IWindowService windowService, IApplicationService applicationService)
         {
             _windowService = windowService;
+            _applicationService = applicationService;
 
             SetLabelUi();
         }
@@ -96,8 +88,29 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         {
             TrayMenuShowLayoutCommandLabel = "Show Layout";
             TrayMenuShowSettingsCommandLabel = "Settings";
-            TrayMenuShowExitCommandLabel = "Exit";
+            TrayMenuExitCommandLabel = "Exit";
         }
+
+        #endregion
+
+        #region Private methods
+
+        private void ShowLayoutWindow()
+        {
+            _windowService.ShowWindow<DisplayLayoutWindow>();
+        }
+
+        private void ShowSettingsWindow()
+        {
+            _windowService.ShowWindow<SettingsWindow>();
+        }
+
+        private void ShutdownApplication()
+        {
+            _applicationService.ShutdownApplication();
+        }
+
+        #endregion
 
         ////public override void Cleanup()
         ////{
