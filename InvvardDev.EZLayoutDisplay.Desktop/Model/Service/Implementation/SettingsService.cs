@@ -38,13 +38,17 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
         {
             get
             {
-                var hotkey = JsonConvert.DeserializeObject<Hotkey>((string) _settings[SettingsName.HotkeyShowLayout]);
+                var setting = (string) _settings[SettingsName.HotkeyShowLayout];
+
+                if (string.IsNullOrWhiteSpace(setting)) { setting = "{\"modifiers\":[0,1],\"keycode\":96}"; }
+
+                var hotkey = JsonConvert.DeserializeObject<Hotkey>(setting);
 
                 return hotkey;
             }
             set
             {
-                var setting = _hotkeyConverter.ConvertToString(value);
+                var setting = JsonConvert.SerializeObject(value);
                 _settings[SettingsName.HotkeyShowLayout] = setting;
             }
         }
@@ -52,7 +56,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
         /// <inheritdoc />
         public string ErgodoxLayoutUrl
         {
-            get => (string)_settings[SettingsName.ErgodoxLayoutUrl];
+            get => (string) _settings[SettingsName.ErgodoxLayoutUrl];
             set => _settings[SettingsName.ErgodoxLayoutUrl] = value;
         }
 
