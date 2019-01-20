@@ -26,7 +26,7 @@
                 <Separator />
                 <MenuItem Header="{Binding TrayMenuShowSettingsCommandLabel}" Command="{Binding ShowSettingsCommand}" />
                 <Separator />
-                <MenuItem Header="{Binding TrayMenuShowExitCommandLabel}" Command="{Binding ExitApplicationCommand}" />
+                <MenuItem Header="{Binding TrayMenuExitCommandLabel}" Command="{Binding ExitApplicationCommand}" />
             </ContextMenu>
 
         </ResourceDictionary>

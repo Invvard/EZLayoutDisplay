@@ -37,7 +37,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("{\"modifiers\":[0,1],\"keycode\":96}")]
         public string HotkeyShowLayout {
             get {
                 return ((string)(this["HotkeyShowLayout"]));

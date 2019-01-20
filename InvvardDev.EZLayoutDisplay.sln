@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.271
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvvardDev.EZLayoutDisplay.Desktop", "InvvardDev.EZLayoutDisplay.Desktop\InvvardDev.EZLayoutDisplay.Desktop.csproj", "{F12B94C1-40E4-429C-8EDE-5C410BE81FAF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvvardDev.EZLayoutDisplay.Tests", "InvvardDev.EZLayoutDisplay.Tests\InvvardDev.EZLayoutDisplay.Tests.csproj", "{82704A9A-B010-4A00-8CF4-00D33F4E23DF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{F12B94C1-40E4-429C-8EDE-5C410BE81FAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F12B94C1-40E4-429C-8EDE-5C410BE81FAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F12B94C1-40E4-429C-8EDE-5C410BE81FAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82704A9A-B010-4A00-8CF4-00D33F4E23DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82704A9A-B010-4A00-8CF4-00D33F4E23DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82704A9A-B010-4A00-8CF4-00D33F4E23DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82704A9A-B010-4A00-8CF4-00D33F4E23DF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

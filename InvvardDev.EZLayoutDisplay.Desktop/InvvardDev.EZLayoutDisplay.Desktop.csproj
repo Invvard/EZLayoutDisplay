@@ -80,16 +80,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Design\ApplicationService.cs" />
     <Compile Include="Design\KeyboardHookService.cs" />
     <Compile Include="Design\SettingsService.cs" />
     <Compile Include="Design\WindowService.cs" />
-    <Compile Include="Helper\EnumerationExtensions.cs" />
-    <Compile Include="Helper\HotkeyConverter.cs" />
     <Compile Include="Model\Enum\SettingsName.cs" />
     <Compile Include="Model\Hotkey.cs" />
+    <Compile Include="Model\Service\Implementation\ApplicationService.cs" />
     <Compile Include="Model\Service\Implementation\KeyboardHookService.cs" />
     <Compile Include="Model\Service\Implementation\SettingsService.cs" />
     <Compile Include="Model\Service\Implementation\WindowService.cs" />
+    <Compile Include="Model\Service\Interface\IApplicationService.cs" />
     <Compile Include="Model\Service\Interface\IKeyboardHookService.cs" />
     <Compile Include="Model\Service\Interface\ISettingsService.cs" />
     <Compile Include="Model\Service\Interface\IWindowService.cs" />
@@ -156,7 +157,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Helper\" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Skins\Images\tray_base.ico" />
   </ItemGroup>

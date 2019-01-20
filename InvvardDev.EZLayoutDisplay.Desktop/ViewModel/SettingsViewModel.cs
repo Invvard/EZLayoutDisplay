@@ -91,21 +91,31 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
                 if (Set(ref _txtLayoutUrlText, value)) { UpdateButtonCanExecute(); }
             }
         }
-        
+
         #endregion
 
+        #region Constructor
+        
         public SettingsViewModel(ISettingsService settingsService, IWindowService windowService)
         {
             _settingsService = settingsService;
             _windowService = windowService;
 
+            SetLabelUi();
+        }
+
+        private void SetLabelUi()
+        {
             WindowTitle = "Settings";
             TbLayoutUrlText = "Configurator URL to your layout :";
-            TxtLayoutUrlText = _settingsService.ErgodoxLayoutUrl;
             BtnApplyText = "Apply";
             BtnCloseText = "Close";
             BtnCancelText = "Cancel";
+
+            TxtLayoutUrlText = _settingsService.ErgodoxLayoutUrl;
         }
+
+        #endregion
 
         #region Private methods
 
@@ -127,7 +137,10 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         private void CloseSettingsWindow()
         {
-            SaveSettings();
+            if (IsDirty())
+            {
+                SaveSettings();
+            }
             _windowService.CloseWindow<SettingsWindow>();
         }
 
