@@ -90,7 +90,7 @@
     <Compile Include="Model\Hotkey.cs" />
     <Compile Include="Model\Key.cs" />
     <Compile Include="Model\Layer.cs" />
-    <Compile Include="Model\Layout.cs" />
+    <Compile Include="Model\ErgodoxLayout.cs" />
     <Compile Include="Model\Modifiers.cs" />
     <Compile Include="Model\Revision.cs" />
     <Compile Include="Model\Service\Implementation\ApplicationService.cs" />
