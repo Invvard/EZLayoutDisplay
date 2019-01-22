@@ -87,8 +87,9 @@
     <Compile Include="Design\SettingsService.cs" />
     <Compile Include="Design\WindowService.cs" />
     <Compile Include="Model\Enum\SettingsName.cs" />
+    <Compile Include="Model\EZLayout.cs" />
     <Compile Include="Model\Hotkey.cs" />
-    <Compile Include="Model\Key.cs" />
+    <Compile Include="Model\ErgodoxKey.cs" />
     <Compile Include="Model\Layer.cs" />
     <Compile Include="Model\ErgodoxLayout.cs" />
     <Compile Include="Model\Modifiers.cs" />

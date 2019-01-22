@@ -2,7 +2,7 @@
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.Model
 {
-    public class Key
+    public class ErgodoxKey
     {
         /// <summary>
         /// Gets or sets the supported OS name.
