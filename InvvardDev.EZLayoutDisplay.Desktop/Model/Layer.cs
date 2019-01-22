@@ -12,10 +12,10 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
         public string HashId { get; set; }
 
         /// <summary>
-        /// Gets or sets the layer's list of <see cref="ErgodoxKey"/>.
+        /// Gets or sets the layer's list of <see cref="Key"/>.
         /// </summary>
         [JsonProperty("keys")]
-        public List<ErgodoxKey> Keys { get; set; }
+        public List<Key> Keys { get; set; }
 
         /// <summary>
         /// Gets or sets the layer's position.
