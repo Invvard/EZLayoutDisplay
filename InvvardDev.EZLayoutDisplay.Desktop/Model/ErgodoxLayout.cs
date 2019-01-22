@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.Model
 {
-    public class Layout
+    public class ErgodoxLayout
     {
         /// <summary>
         /// Gets or sets the layout hash identifier.
