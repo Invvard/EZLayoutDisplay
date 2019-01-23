@@ -23,4 +23,16 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
         [JsonProperty("revisions")]
         public List<Revision> Revisions { get; set; }
     }
+
+    public class DataRoot
+    {
+        [JsonProperty("data")]
+        public ErgodoxLayoutRoot LayoutRoot { get; set; }
+    }
+
+    public class ErgodoxLayoutRoot
+    {
+        [JsonProperty("Layout")]
+        public ErgodoxLayout Layout { get; set; }
+    }
 }
