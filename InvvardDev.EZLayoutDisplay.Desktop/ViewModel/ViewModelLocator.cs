@@ -27,6 +27,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
                 SimpleIoc.Default.Register<IKeyboardHookService, Design.KeyboardHookService>();
                 SimpleIoc.Default.Register<ISettingsService, Design.SettingsService>();
                 SimpleIoc.Default.Register<IApplicationService, Design.ApplicationService>();
+                SimpleIoc.Default.Register<ILayoutService, Design.LayoutService>();
             }
             else
             {
@@ -34,6 +35,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
                 SimpleIoc.Default.Register<ISettingsService>(() => new SettingsService(Properties.Settings.Default));
                 SimpleIoc.Default.Register<IKeyboardHookService, KeyboardHookService>(true);
                 SimpleIoc.Default.Register<IApplicationService, ApplicationService>();
+                SimpleIoc.Default.Register<ILayoutService, LayoutService>();
 
             }
 

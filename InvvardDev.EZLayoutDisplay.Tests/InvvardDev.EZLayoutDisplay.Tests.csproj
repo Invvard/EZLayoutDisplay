@@ -82,6 +82,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Service\LayoutServiceTest.cs" />
     <Compile Include="ViewModel\DisplayLayoutViewModelTest.cs" />
     <Compile Include="ViewModel\MainViewModelTest.cs" />
     <Compile Include="ViewModel\SettingsViewModelTest.cs" />
