@@ -87,12 +87,15 @@
     <Compile Include="Design\LayoutService.cs" />
     <Compile Include="Design\SettingsService.cs" />
     <Compile Include="Design\WindowService.cs" />
-    <Compile Include="Model\Enum\KeyCategoryDetails.cs" />
+    <Compile Include="Model\KeyCategoryDetail.cs" />
+    <Compile Include="Model\Dictionary\KeyCategoryDictionary.cs" />
     <Compile Include="Model\Enum\KeyCategory.cs" />
+    <Compile Include="Model\Dictionary\KeyDefinitionDictionary.cs" />
     <Compile Include="Model\Enum\SettingsName.cs" />
     <Compile Include="Model\EZLayout.cs" />
     <Compile Include="Model\Hotkey.cs" />
     <Compile Include="Model\ErgodoxKey.cs" />
+    <Compile Include="Model\KeyDefinition.cs" />
     <Compile Include="Model\Layer.cs" />
     <Compile Include="Model\ErgodoxLayout.cs" />
     <Compile Include="Model\Modifiers.cs" />
@@ -162,6 +165,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="packages.config" />
+    <None Include="Properties\keyDefinitions.json" />
     <None Include="Properties\Settings.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
