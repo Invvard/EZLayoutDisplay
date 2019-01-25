@@ -16,5 +16,10 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Design
         {
             Debug.WriteLine($"Closes window {typeof(T)}");
         }
+
+        public void ShowModalDialog()
+        {
+            Debug.WriteLine("Opens a modal dialog");
+        }
     }
 }

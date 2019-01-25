@@ -13,6 +13,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
             _windows = new Dictionary<string, Window>();
         }
 
+        #region IWindowService implementation
+
         public void ShowWindow<T>()
             where T : Window, new()
         {
@@ -35,6 +37,13 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
                 _windows[windowKey].Close();
             }
         }
+
+        public void ShowModalDialog()
+        {
+            
+        }
+
+        #endregion
 
         private void WindowService_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
