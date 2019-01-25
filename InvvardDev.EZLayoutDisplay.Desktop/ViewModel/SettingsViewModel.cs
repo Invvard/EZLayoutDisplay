@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Text.RegularExpressions;
+using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using InvvardDev.EZLayoutDisplay.Desktop.Model;
@@ -13,8 +14,10 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         private readonly ISettingsService _settingsService;
         private readonly IWindowService _windowService;
+        private readonly ILayoutService _layoutService;
 
         private ICommand _applySettingsCommand;
+        private ICommand _updateLayoutCommand;
         private ICommand _closeSettingsCommand;
         private ICommand _cancelSettingsCommand;
 
@@ -49,6 +52,13 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         public ICommand ApplySettingsCommand =>
             _applySettingsCommand
             ?? (_applySettingsCommand = new RelayCommand(SaveSettings, IsDirty));
+
+        /// <summary>
+        /// Update the layout from Ergodox website.
+        /// </summary>
+        public ICommand UpdateLayoutCommand =>
+            _updateLayoutCommand
+            ?? (_updateLayoutCommand = new RelayCommand(UpdateLayout));
 
         /// <summary>
         /// Closes the settings window.
@@ -140,10 +150,11 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         #region Constructor
 
-        public SettingsViewModel(ISettingsService settingsService, IWindowService windowService)
+        public SettingsViewModel(ISettingsService settingsService, IWindowService windowService, ILayoutService layoutService)
         {
             _settingsService = settingsService;
             _windowService = windowService;
+            _layoutService = layoutService;
 
             SetLabelUi();
 
@@ -212,6 +223,26 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             var isDirty = _settingsService.ErgodoxLayoutUrl != _layoutUrlContent;
 
             return isDirty;
+        }
+
+        private void UpdateLayout()
+        {
+            var layoutHashId = ExtractLayoutHashId(LayoutUrlContent);
+            var ergodoxLayout = _layoutService.GetErgodoxLayout(layoutHashId);
+        }
+
+        private string ExtractLayoutHashId(string layoutUrl)
+        {
+            var layoutHashIdGroupName = "layoutHashId";
+            var pattern = $"https://configure.ergodox-ez.com/layouts/(?<{layoutHashIdGroupName}>default|[a-zA-Z0-9]{{4}})(?:/latest/[0-9])?";
+            var layoutHashId = "default";
+
+            var regex = new Regex(pattern);
+            var match = regex.Match(layoutUrl);
+
+            if (match.Success) { layoutHashId = match.Groups[layoutHashIdGroupName].Value; }
+
+            return layoutHashId;
         }
 
         #endregion
