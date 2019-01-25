@@ -46,5 +46,17 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Properties {
                 this["HotkeyShowLayout"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string EZLayout {
+            get {
+                return ((string)(this["EZLayout"]));
+            }
+            set {
+                this["EZLayout"] = value;
+            }
+        }
     }
 }
