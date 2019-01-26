@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Interface;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
 {
@@ -20,7 +17,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
         {
             if (string.IsNullOrWhiteSpace(layoutHashId))
             {
-                throw new ArgumentNullException(nameof(layoutHashId), $"{nameof(layoutHashId)} should not be null or empty.");
+                throw new ArgumentNullException(nameof(layoutHashId), "Layout hash ID was not found.");
             }
 
             DataRoot layout;
@@ -30,7 +27,12 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
                 var response = await client.PostAsync(GetLayoutRequestUri, new StringContent(body, Encoding.UTF8, "application/json"));
                 var result = await response.Content.ReadAsStringAsync();
 
-                layout = JsonConvert.DeserializeObject<DataRoot>(result); ;
+                layout = JsonConvert.DeserializeObject<DataRoot>(result);
+
+                if (layout?.LayoutRoot?.Layout == null)
+                {
+                    throw new ArgumentException(layoutHashId, $"Hash ID \"{layoutHashId}\" does not exist");
+                }
             }
 
             return layout.LayoutRoot.Layout;
