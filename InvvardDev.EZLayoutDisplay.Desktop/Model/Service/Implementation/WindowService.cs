@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Interface;
 
@@ -38,9 +39,11 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
             }
         }
 
-        public void ShowModalDialog()
+        public bool ShowWarning(string warningMessage)
         {
-            
+            var result = MessageBox.Show(warningMessage, "Warning", MessageBoxButton.OK, MessageBoxImage.Warning) == MessageBoxResult.OK;
+
+            return result;
         }
 
         #endregion
