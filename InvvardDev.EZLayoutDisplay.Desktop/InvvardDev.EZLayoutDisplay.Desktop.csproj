@@ -87,6 +87,7 @@
     <Compile Include="Design\LayoutService.cs" />
     <Compile Include="Design\SettingsService.cs" />
     <Compile Include="Design\WindowService.cs" />
+    <Compile Include="Helper\EZLayoutMaker.cs" />
     <Compile Include="Model\EZKey.cs" />
     <Compile Include="Model\EZLayout.cs" />
     <Compile Include="Model\KeyCategoryDetail.cs" />
@@ -98,7 +99,7 @@
     <Compile Include="Model\Hotkey.cs" />
     <Compile Include="Model\ErgodoxKey.cs" />
     <Compile Include="Model\KeyDefinition.cs" />
-    <Compile Include="Model\Layer.cs" />
+    <Compile Include="Model\ErgodoxLayer.cs" />
     <Compile Include="Model\ErgodoxLayout.cs" />
     <Compile Include="Model\Modifiers.cs" />
     <Compile Include="Model\Revision.cs" />
@@ -180,9 +181,7 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Helper\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Skins\Images\tray_base.ico" />
   </ItemGroup>

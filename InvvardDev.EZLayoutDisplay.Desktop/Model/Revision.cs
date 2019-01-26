@@ -18,9 +18,9 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
         public string Model { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of <see cref="Layer"/>.
+        /// Gets or sets the list of <see cref="ErgodoxLayer"/>.
         /// </summary>
         [JsonProperty("layers")]
-        public List<Layer> Layers { get; set; }
+        public List<ErgodoxLayer> Layers { get; set; }
     }
 }
