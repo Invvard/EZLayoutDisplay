@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Text.RegularExpressions;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -228,7 +229,13 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private void UpdateLayout()
         {
             var layoutHashId = ExtractLayoutHashId(LayoutUrlContent);
-            var ergodoxLayout = _layoutService.GetErgodoxLayout(layoutHashId);
+
+            try
+            {
+                var ergodoxLayout = _layoutService.GetErgodoxLayout(layoutHashId);
+            }
+            catch (ArgumentNullException anex) { throw; }
+            catch (ArgumentException aex) { _windowService.ShowWarning(aex.Message); }
         }
 
         private string ExtractLayoutHashId(string layoutUrl)

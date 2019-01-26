@@ -1,4 +1,5 @@
-﻿using InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Interface;
+﻿using System;
+using InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Interface;
 using InvvardDev.EZLayoutDisplay.Desktop.View;
 using InvvardDev.EZLayoutDisplay.Desktop.ViewModel;
 using Moq;
@@ -48,8 +49,8 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
 
             //Act
             var settingsViewModel = new SettingsViewModel(settingsService.Object, windowService.Object, mockLayoutService.Object) {
-                                                                                                            LayoutUrlContent = newValue
-                                                                                                        };
+                                                                                                                                      LayoutUrlContent = newValue
+                                                                                                                                  };
 
             //Assert
             if (canExecute)
@@ -80,8 +81,8 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
 
             //Act
             var settingsViewModel = new SettingsViewModel(settingsService.Object, windowService.Object, mockLayoutService.Object) {
-                                                                                                            LayoutUrlContent = tbContentNewValue
-                                                                                                        };
+                                                                                                                                      LayoutUrlContent = tbContentNewValue
+                                                                                                                                  };
             settingsViewModel.ApplySettingsCommand.Execute(null);
 
             //Assert
@@ -105,8 +106,8 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
 
             //Act
             var settingsViewModel = new SettingsViewModel(settingsService.Object, windowService.Object, mockLayoutService.Object) {
-                                                                                                            LayoutUrlContent = tbContentNewValue
-                                                                                                        };
+                                                                                                                                      LayoutUrlContent = tbContentNewValue
+                                                                                                                                  };
             settingsViewModel.CancelSettingsCommand.Execute(null);
 
             //Assert
@@ -182,6 +183,27 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
 
             //Assert
             mockLayoutService.Verify();
+        }
+
+        [ Fact ]
+        public void UpdateLayoutCommandExecute_ArgumentExceptionRaised()
+        {
+            // Arrange
+            var mockSettingsService = new Mock<ISettingsService>();
+            mockSettingsService.SetupProperty(s => s.ErgodoxLayoutUrl, "test");
+            var mockWindowService = new Mock<IWindowService>();
+            mockWindowService.Setup(w => w.ShowWarning(It.IsAny<string>())).Verifiable();
+            var mockLayoutService = new Mock<ILayoutService>();
+            mockLayoutService.Setup(l => l.GetErgodoxLayout(It.IsAny<string>())).Throws<ArgumentException>();
+
+            // Act
+            var settingsViewModel = new SettingsViewModel(mockSettingsService.Object, mockWindowService.Object, mockLayoutService.Object);
+
+            settingsViewModel.UpdateLayoutCommand.Execute(null);
+
+            // Assert
+            mockLayoutService.Verify();
+            mockWindowService.Verify();
         }
     }
 }
