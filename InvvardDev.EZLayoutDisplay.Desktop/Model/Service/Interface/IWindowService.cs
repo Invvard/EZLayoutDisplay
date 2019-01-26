@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Interface
 {
@@ -18,8 +19,10 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Interface
         void CloseWindow<T>();
 
         /// <summary>
-        /// Shows a modal window.
+        /// Shows a modal dialog that warns the user of something.
         /// </summary>
-        void ShowModalDialog();
+        /// <param name="warningMessage">The warning message to display.</param>
+        /// <returns><c>True</c> if user clicks on the OK button.</returns>
+        bool ShowWarning(string warningMessage);
     }
 }
