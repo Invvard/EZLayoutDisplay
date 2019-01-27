@@ -1,4 +1,6 @@
-﻿namespace InvvardDev.EZLayoutDisplay.Desktop.Model
+﻿using InvvardDev.EZLayoutDisplay.Desktop.Model.Enum;
+
+namespace InvvardDev.EZLayoutDisplay.Desktop.Model
 {
     public class EZKey
     {
@@ -21,5 +23,10 @@
         /// Gets or sets the key glowing color.
         /// </summary>
         public string Color { get; set; }
+
+        /// <summary>
+        /// Gets or sets the key category.
+        /// </summary>
+        public KeyCategory KeyCategory { get; set; }
     }
 }
