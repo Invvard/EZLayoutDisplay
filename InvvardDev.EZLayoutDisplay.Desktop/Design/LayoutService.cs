@@ -14,5 +14,13 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Design
 
             return await new Task<ErgodoxLayout>(() => new ErgodoxLayout());
         }
+
+        /// <inheritdoc />
+        public EZLayout PrepareEZLayout(ErgodoxLayout ergodoxLayout)
+        {
+            Debug.WriteLine("Layout prepared");
+
+            return new EZLayout();
+        }
     }
 }
