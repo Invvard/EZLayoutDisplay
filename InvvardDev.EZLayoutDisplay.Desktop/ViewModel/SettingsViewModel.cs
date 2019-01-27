@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.CommandWpf;
+using InvvardDev.EZLayoutDisplay.Desktop.Helper;
 using InvvardDev.EZLayoutDisplay.Desktop.Model;
 using InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Interface;
 using InvvardDev.EZLayoutDisplay.Desktop.View;
@@ -226,15 +228,16 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             return isDirty;
         }
 
-        private void UpdateLayout()
+        private async void UpdateLayout()
         {
             var layoutHashId = ExtractLayoutHashId(LayoutUrlContent);
 
             try
             {
-                var ergodoxLayout = _layoutService.GetErgodoxLayout(layoutHashId);
+                var ergodoxLayout = await _layoutService.GetErgodoxLayout(layoutHashId);
+                var ezLayout = _layoutService.PrepareEZLayout(ergodoxLayout);
             }
-            catch (ArgumentNullException anex) { throw; }
+            catch (ArgumentNullException) { throw; }
             catch (ArgumentException aex) { _windowService.ShowWarning(aex.Message); }
         }
 
