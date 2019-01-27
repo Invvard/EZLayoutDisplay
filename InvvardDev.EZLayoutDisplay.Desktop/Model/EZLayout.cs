@@ -18,5 +18,10 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
         /// Gets or sets the layout list of layers.
         /// </summary>
         public List<EZLayer> EZLayers { get; set; }
+
+        public EZLayout()
+        {
+            EZLayers = new List<EZLayer>();
+        }
     }
 }
