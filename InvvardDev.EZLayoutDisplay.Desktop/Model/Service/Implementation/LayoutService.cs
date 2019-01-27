@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using InvvardDev.EZLayoutDisplay.Desktop.Helper;
 using InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Interface;
 using Newtonsoft.Json;
 
@@ -36,6 +37,15 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
             }
 
             return layout.LayoutRoot.Layout;
+        }
+
+        /// <inheritdoc />
+        public EZLayout PrepareEZLayout(ErgodoxLayout ergodoxLayout)
+        {
+            var ezLayoutMaker = new EZLayoutMaker();
+            EZLayout ezLayout = ezLayoutMaker.PrepareEZLayout(ergodoxLayout);
+
+            return ezLayout;
         }
     }
 }
