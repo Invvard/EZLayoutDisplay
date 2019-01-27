@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using InvvardDev.EZLayoutDisplay.Desktop.Model;
 using InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Interface;
 using InvvardDev.EZLayoutDisplay.Desktop.View;
 using InvvardDev.EZLayoutDisplay.Desktop.ViewModel;
@@ -174,7 +177,8 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             mockSettingsService.SetupProperty(s => s.ErgodoxLayoutUrl, layoutUrl);
             var mockWindowService = new Mock<IWindowService>();
             var mockLayoutService = new Mock<ILayoutService>();
-            mockLayoutService.Setup(l => l.GetErgodoxLayout(expectedHashId)).Verifiable();
+            mockLayoutService.Setup(l => l.GetErgodoxLayout(expectedHashId)).Returns(Task.FromResult(It.IsAny<ErgodoxLayout>())).Verifiable();
+            mockLayoutService.Setup(l => l.PrepareEZLayout(It.IsAny<ErgodoxLayout>())).Verifiable();
 
             //Act
             var settingsViewModel = new SettingsViewModel(mockSettingsService.Object, mockWindowService.Object, mockLayoutService.Object);
