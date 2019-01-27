@@ -154,5 +154,38 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
             Assert.Equal(expectedLabel, keyResult.Label);
             Assert.Equal(expectedCategory, keyResult.KeyCategory);
         }
+
+        [Theory]
+        [InlineData("TG", "â TG 1", KeyCategory.Layer)] // Should display "❐ TG 1"
+        [InlineData("MO", "âŸ² MO 1", KeyCategory.Layer)] // Should display "⟲ MO 1"
+        [InlineData("OSL", "OSL 1", KeyCategory.Layer)]
+        [InlineData("TO", "TO 1", KeyCategory.Layer)]
+        [InlineData("TT", "TT 1", KeyCategory.Layer)]
+        [InlineData("LT", "LT â†’ 1", KeyCategory.LayerShortcuts)] // Should display "LT → 1"
+        public void PrepareEZLayout_KeyCategoryLayer(string expectedKeyCode, string expectedLabel, KeyCategory expectedCategory)
+        {
+            // Arrange
+            var ergodoxKey = new ErgodoxKey()
+                             {
+                                 GlowColor = "",
+                                 Code = expectedKeyCode,
+                                 Layer = 1
+                             };
+            ErgodoxLayout ergodoxLayout = InitializeDataTree();
+            ergodoxLayout.Revisions.First().Layers.First().Keys.Add(ergodoxKey);
+
+            EZLayout ezLayoutResult;
+
+            // Act
+            var ezLayoutMaker = new EZLayoutMaker();
+            ezLayoutResult = ezLayoutMaker.PrepareEZLayout(ergodoxLayout);
+
+            // Assert
+            Assert.Single(ezLayoutResult.EZLayers);
+            Assert.Single(ezLayoutResult.EZLayers.First().EZKeys);
+            var keyResult = ezLayoutResult.EZLayers.First().EZKeys.First();
+            Assert.Equal(expectedLabel, keyResult.Label);
+            Assert.Equal(expectedCategory, keyResult.KeyCategory);
+        }
     }
 }

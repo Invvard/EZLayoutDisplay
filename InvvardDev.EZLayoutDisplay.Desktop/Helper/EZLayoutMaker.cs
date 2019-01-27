@@ -67,32 +67,34 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
         private void PrepareKeyLabels(ErgodoxKey ergodoxKey, EZKey key)
         {
             KeyDefinition keyDefinition = GetKeyDefinition(ergodoxKey.Code);
+
+            /** Every category has a label, so no need to make a special case :
+             *
+             * KeyCategory.Autoshift
+             * KeyCategory.Digit
+             * KeyCategory.Letters
+             * KeyCategory.Fn
+             * KeyCategory.Fw
+             * KeyCategory.Lang
+             * KeyCategory.Modifier
+             * KeyCategory.Numpad
+             * KeyCategory.Punct
+             * KeyCategory.ShiftedPunct
+             * KeyCategory.System
+             *
+             **/
             key.KeyCategory = keyDefinition.KeyCategory;
+            key.Label = keyDefinition.Label;
+            key.SubLabel = "";
 
             switch (keyDefinition.KeyCategory)
             {
-                case KeyCategory.Autoshift:
-                case KeyCategory.Digit:
-                case KeyCategory.Letters:
-                case KeyCategory.Fn:
-                case KeyCategory.Fw:
-                case KeyCategory.Lang:
-                case KeyCategory.Modifier:
-                case KeyCategory.Numpad:
-                case KeyCategory.Punct:
-                case KeyCategory.ShiftedPunct:
-                case KeyCategory.System:
-                    key.Label = keyDefinition.Label;
-                    key.SubLabel = "";
-                    break;
                 case KeyCategory.DualFunction:
 
                     break;
                 case KeyCategory.Layer:
-
-                    break;
                 case KeyCategory.LayerShortcuts:
-
+                    key.Label = key.Label.Replace("${layer}", ergodoxKey.Layer.ToString());
                     break;
                 case KeyCategory.Media:
 
