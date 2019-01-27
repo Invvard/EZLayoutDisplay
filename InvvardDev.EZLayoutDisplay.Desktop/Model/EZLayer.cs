@@ -23,5 +23,10 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
         /// Gets or sets the layer color.
         /// </summary>
         public string Color { get; set; }
+
+        public EZLayer()
+        {
+            EZKeys = new List<EZKey>();
+        }
     }
 }
