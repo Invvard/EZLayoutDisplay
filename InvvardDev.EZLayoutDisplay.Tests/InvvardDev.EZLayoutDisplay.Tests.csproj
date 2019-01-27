@@ -82,6 +82,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helper\EZLayoutMakerTest.cs" />
     <Compile Include="Model\KeyDefinitionDictionaryTest.cs" />
     <Compile Include="Service\LayoutServiceTest.cs" />
     <Compile Include="ViewModel\DisplayLayoutViewModelTest.cs" />
