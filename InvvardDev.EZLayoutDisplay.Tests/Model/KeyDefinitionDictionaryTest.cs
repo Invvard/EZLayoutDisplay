@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using InvvardDev.EZLayoutDisplay.Desktop.Model;
-using InvvardDev.EZLayoutDisplay.Desktop.Model.Dictionary;
-using InvvardDev.EZLayoutDisplay.Desktop.Model.Enum;
+﻿using InvvardDev.EZLayoutDisplay.Desktop.Model.Dictionary;
 using Xunit;
 
 namespace InvvardDev.EZLayoutDisplay.Tests.Model
