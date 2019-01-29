@@ -128,6 +128,8 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
         [ InlineData("KC_LANG1", "LANG 1", KeyCategory.Lang) ]
         [ InlineData("KC_LSHIFT", "Shift", KeyCategory.Modifier) ]
         [ InlineData("KC_KP_0", "0", KeyCategory.Numpad) ]
+        [ InlineData("KC_TRANSPARENT", "", KeyCategory.Other) ]
+        [ InlineData("KC_PAUSE", "Pause", KeyCategory.Other) ]
         [ InlineData("KC_SCOLON", ";", KeyCategory.Punct) ]
         [ InlineData("KC_AT", "@", KeyCategory.ShiftedPunct) ]
         [ InlineData("KC_SYSTEM_POWER", "Power", KeyCategory.System) ]
@@ -161,7 +163,6 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
         [InlineData("OSL", "OSL 1", KeyCategory.Layer)]
         [InlineData("TO", "TO 1", KeyCategory.Layer)]
         [InlineData("TT", "TT 1", KeyCategory.Layer)]
-        [InlineData("LT", "LT â†’ 1", KeyCategory.LayerShortcuts)] // Should display "LT → 1"
         public void PrepareEZLayout_KeyCategoryLayer(string expectedKeyCode, string expectedLabel, KeyCategory expectedCategory)
         {
             // Arrange
@@ -185,6 +186,133 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
             Assert.Single(ezLayoutResult.EZLayers.First().EZKeys);
             var keyResult = ezLayoutResult.EZLayers.First().EZKeys.First();
             Assert.Equal(expectedLabel, keyResult.Label);
+            Assert.Equal(expectedCategory, keyResult.KeyCategory);
+        }
+
+        [Theory]
+        [InlineData("LT", "", "LT â†’ 1", "", KeyCategory.LayerShortcuts)] // Should display "LT → 1"
+        [InlineData("LT", "KC_0", "0", "LT â†’ 1", KeyCategory.LayerShortcuts)] // Should display "0LT → 1"
+        public void PrepareEZLayout_KeyCategoryLayerShortcut(string keyCode, string command, string expectedLabel, string expectedSubLabel, KeyCategory expectedCategory)
+        {
+            // Arrange
+            var ergodoxKey = new ErgodoxKey()
+                             {
+                                 GlowColor = "",
+                                 Code = keyCode,
+                                 Command = command,
+                                 Layer = 1
+                             };
+            ErgodoxLayout ergodoxLayout = InitializeDataTree();
+            ergodoxLayout.Revisions.First().Layers.First().Keys.Add(ergodoxKey);
+
+            EZLayout ezLayoutResult;
+
+            // Act
+            var ezLayoutMaker = new EZLayoutMaker();
+            ezLayoutResult = ezLayoutMaker.PrepareEZLayout(ergodoxLayout);
+
+            // Assert
+            Assert.Single(ezLayoutResult.EZLayers);
+            Assert.Single(ezLayoutResult.EZLayers.First().EZKeys);
+            var keyResult = ezLayoutResult.EZLayers.First().EZKeys.First();
+            Assert.Equal(expectedLabel, keyResult.Label);
+            Assert.Equal(expectedSubLabel, keyResult.SubLabel);
+            Assert.Equal(expectedCategory, keyResult.KeyCategory);
+        }
+
+        [Theory]
+        [InlineData("KC_AUDIO_MUTE", "Mute", "volume-off", KeyCategory.Media)]
+        [InlineData("KC_MEDIA_EJECT", "Eject", null, KeyCategory.Media)]
+        [InlineData("KC_MS_UP", "Move up", "mouse-up", KeyCategory.Mouse)]
+        [InlineData("KC_MS_BTN4", "Button 4", null, KeyCategory.Mouse)]
+        [InlineData("KC_APPLICATION", "Application", "list-alt", KeyCategory.Nav)]
+        [InlineData("KC_PGDOWN", "PgDn", null, KeyCategory.Nav)]
+        [InlineData("KC_BSPACE", "Backspace", "backspace", KeyCategory.Spacing)]
+        [InlineData("KC_ESCAPE", "Esc", null, KeyCategory.Spacing)]
+        [InlineData("RGB_MOD", "Animate", "air", KeyCategory.Shine)]
+        public void PrepareEZLayout_KeyCategoryWithGlyphs(string expectedKeyCode, string expectedLabel, string expectedGlyph, KeyCategory expectedCategory)
+        {
+            // Arrange
+            var ergodoxKey = new ErgodoxKey()
+                             {
+                                 GlowColor = "",
+                                 Code = expectedKeyCode
+                             };
+            ErgodoxLayout ergodoxLayout = InitializeDataTree();
+            ergodoxLayout.Revisions.First().Layers.First().Keys.Add(ergodoxKey);
+
+            EZLayout ezLayoutResult;
+
+            // Act
+            var ezLayoutMaker = new EZLayoutMaker();
+            ezLayoutResult = ezLayoutMaker.PrepareEZLayout(ergodoxLayout);
+
+            // Assert
+            Assert.Single(ezLayoutResult.EZLayers);
+            Assert.Single(ezLayoutResult.EZLayers.First().EZKeys);
+            var keyResult = ezLayoutResult.EZLayers.First().EZKeys.First();
+            Assert.Equal(expectedLabel, keyResult.Label);
+            Assert.Equal(expectedGlyph, keyResult.GlyphName);
+            Assert.Equal(expectedCategory, keyResult.KeyCategory);
+        }
+
+        [Theory]
+        [InlineData("ALL_T", "KC_6", "6", "Hyper", KeyCategory.DualFunction)]
+        [InlineData("ALL_T", "", "Hyper", "", KeyCategory.DualFunction)]
+        public void PrepareEZLayout_KeyCategoryDualFunction(string expectedKeyCode, string expectedCommand, string expectedLabel, string expectedSubLabel, KeyCategory expectedCategory)
+        {
+            // Arrange
+            var ergodoxKey = new ErgodoxKey()
+                             {
+                                 GlowColor = "",
+                                 Code = expectedKeyCode,
+                                 Command = expectedCommand
+                             };
+            ErgodoxLayout ergodoxLayout = InitializeDataTree();
+            ergodoxLayout.Revisions.First().Layers.First().Keys.Add(ergodoxKey);
+
+            EZLayout ezLayoutResult;
+
+            // Act
+            var ezLayoutMaker = new EZLayoutMaker();
+            ezLayoutResult = ezLayoutMaker.PrepareEZLayout(ergodoxLayout);
+
+            // Assert
+            Assert.Single(ezLayoutResult.EZLayers);
+            Assert.Single(ezLayoutResult.EZLayers.First().EZKeys);
+            var keyResult = ezLayoutResult.EZLayers.First().EZKeys.First();
+            Assert.Equal(expectedLabel, keyResult.Label);
+            Assert.Equal(expectedSubLabel, keyResult.SubLabel);
+            Assert.Equal(expectedCategory, keyResult.KeyCategory);
+        }
+
+        [Theory]
+        [InlineData("LALT", "KC_3", "Alt + 3", "", KeyCategory.Shortcuts)]
+        [InlineData("LALT", "", "Alt", "", KeyCategory.Shortcuts)]
+        public void PrepareEZLayout_KeyCategoryShortcuts(string keyCode, string command, string expectedLabel, string expectedSubLabel, KeyCategory expectedCategory)
+        {
+            // Arrange
+            var ergodoxKey = new ErgodoxKey()
+                             {
+                                 GlowColor = "",
+                                 Code = keyCode,
+                                 Command = command
+                             };
+            ErgodoxLayout ergodoxLayout = InitializeDataTree();
+            ergodoxLayout.Revisions.First().Layers.First().Keys.Add(ergodoxKey);
+
+            EZLayout ezLayoutResult;
+
+            // Act
+            var ezLayoutMaker = new EZLayoutMaker();
+            ezLayoutResult = ezLayoutMaker.PrepareEZLayout(ergodoxLayout);
+
+            // Assert
+            Assert.Single(ezLayoutResult.EZLayers);
+            Assert.Single(ezLayoutResult.EZLayers.First().EZKeys);
+            var keyResult = ezLayoutResult.EZLayers.First().EZKeys.First();
+            Assert.Equal(expectedLabel, keyResult.Label);
+            Assert.Equal(expectedSubLabel, keyResult.SubLabel);
             Assert.Equal(expectedCategory, keyResult.KeyCategory);
         }
     }
