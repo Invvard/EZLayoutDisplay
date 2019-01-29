@@ -44,12 +44,6 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
         public string GlyphName { get; private set; }
 
         /// <summary>
-        /// Gets the key hide label indicator (Default = false).
-        /// </summary>
-        [JsonProperty("hideLabel")]
-        public bool HideLabel { get; private set; }
-
-        /// <summary>
         /// Gets the key preceding key indicator (blocks the targeted layer).
         /// </summary>
         [JsonProperty("precedingKey")]
