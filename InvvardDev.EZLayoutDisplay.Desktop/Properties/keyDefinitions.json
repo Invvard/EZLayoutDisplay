@@ -188,73 +188,67 @@
   { "code": "KC_F24", "label": "F24", "category": "fn" },
   {
     "code": "TG",
-    "label": "❐ TG ${layer}",
+    "label": "❐ TG {0}",
     "category": "layer",
     "description": "Toggle layer: Switch to a given layer. Tap this key again to return to the current layer.",
     "precedingKey": true
   },
   {
     "code": "MO",
-    "label": "⟲ MO ${layer}",
+    "label": "⟲ MO {0}",
     "category": "layer",
-    "description":
-      "Momentary layer toggle: Activates the selected layer, but only as long as you keep this key pressed.",
+    "description": "Momentary layer toggle: Activates the selected layer, but only as long as you keep this key pressed.",
     "precedingKey": true
   },
   {
     "code": "OSL",
-    "label": "OSL ${layer}",
+    "label": "OSL {0}",
     "category": "layer",
-    "description":
-      "One-shot layer: Flips a layer on, but only for one keypress. Once you press a key in the new layer, the layer is then deactivated. You can keep the layer active by holding the key down.",
+    "description": "One-shot layer: Flips a layer on, but only for one keypress. Once you press a key in the new layer, the layer is then deactivated. You can keep the layer active by holding the key down.",
     "precedingKey": true
   },
   {
     "code": "TO",
-    "label": "TO ${layer}",
+    "label": "TO {0}",
     "category": "layer",
     "description": "Direct switch to a layer. Works for switching to lower layers as well."
   },
   {
     "code": "TT",
-    "label": "TT ${layer}",
+    "label": "TT {0}",
     "category": "layer",
-    "description":
-      "Layer Tap-Toggle. If you hold the key down, the layer becomes active, and then deactivates when you let go. And if you tap it, the layer simply becomes active (toggles on)."
+    "description": "Layer Tap-Toggle. If you hold the key down, the layer becomes active, and then deactivates when you let go. And if you tap it, the layer simply becomes active (toggles on)."
   },
   {
     "code": "LT",
-    "label": "LT → ${layer}",
+    "label": "LT → {0}",
     "category": "layerShortcuts",
     "description": "Momentary Layer Toggle: Switch to the selected layer when held, send the selected key when tapped",
     "command": "KC_NO",
     "precedingKey": true
   },
-  { "code": "KC_AUDIO_MUTE", "label": "Mute", "category": "media", "glyph": "volume-off", "hideLabel": true },
-  { "code": "KC_AUDIO_VOL_UP", "label": "Volume up", "category": "media", "glyph": "volume-up", "hideLabel": true },
+  { "code": "KC_AUDIO_MUTE", "label": "Mute", "category": "media", "glyph": "volume-off" },
+  { "code": "KC_AUDIO_VOL_UP", "label": "Volume up", "category": "media", "glyph": "volume-up" },
   {
     "code": "KC_AUDIO_VOL_DOWN",
     "label": "Volume down",
     "category": "media",
-    "glyph": "volume-down",
-    "hideLabel": true
+    "glyph": "volume-down"
   },
   {
     "code": "KC_MEDIA_NEXT_TRACK",
     "label": "Next",
     "category": "media",
-    "glyph": "step-forward",
-    "hideLabel": true
+    "glyph": "step-forward"
   },
   {
     "code": "KC_MEDIA_PREV_TRACK",
     "label": "Prev",
     "category": "media",
-    "glyph": "step-backward",
-    "hideLabel": true
+    "glyph": "step-backward"
   },
-  { "code": "KC_MEDIA_STOP", "label": "Stop", "category": "media", "glyph": "stop", "hideLabel": true },
-  { "code": "KC_MEDIA_PLAY_PAUSE", "label": "Play", "category": "media", "glyph": "play", "hideLabel": true },
+  { "code": "KC_MEDIA_STOP", "label": "Stop", "category": "media", "glyph": "stop" },
+  { "code": "KC_MEDIA_PLAY_PAUSE", "label": "Play", "category": "media", "glyph": "play" },
   { "code": "KC_MEDIA_EJECT", "label": "Eject", "category": "media" },
   { "code": "KC_MAIL", "label": "Mail", "category": "media" },
   { "code": "KC_CALCULATOR", "label": "Calc", "category": "media" },
@@ -292,13 +286,13 @@
   { "code": "MOD_RGUI", "label": "Meta", "category": "modifier" },
   { "code": "MOD_HYPR", "label": "Hyper", "category": "modifier" },
   { "code": "MOD_MEH", "label": "Meh", "category": "modifier" },
-  { "code": "KC_MS_UP", "label": "Move up", "category": "mouse", "glyph": "mouse-up", "hideLabel": true },
-  { "code": "KC_MS_DOWN", "label": "Move down", "category": "mouse", "glyph": "mouse-down", "hideLabel": true },
-  { "code": "KC_MS_LEFT", "label": "Move left", "category": "mouse", "glyph": "mouse-left", "hideLabel": true },
-  { "code": "KC_MS_RIGHT", "label": "Move right", "category": "mouse", "glyph": "mouse-right", "hideLabel": true },
-  { "code": "KC_MS_BTN1", "label": "Left click", "category": "mouse", "glyph": "left-click", "hideLabel": true },
-  { "code": "KC_MS_BTN2", "label": "Right click", "category": "mouse", "glyph": "right-click", "hideLabel": true },
-  { "code": "KC_MS_BTN3", "label": "Middle click", "category": "mouse", "glyph": "middle-click", "hideLabel": true },
+  { "code": "KC_MS_UP", "label": "Move up", "category": "mouse", "glyph": "mouse-up" },
+  { "code": "KC_MS_DOWN", "label": "Move down", "category": "mouse", "glyph": "mouse-down" },
+  { "code": "KC_MS_LEFT", "label": "Move left", "category": "mouse", "glyph": "mouse-left" },
+  { "code": "KC_MS_RIGHT", "label": "Move right", "category": "mouse", "glyph": "mouse-right" },
+  { "code": "KC_MS_BTN1", "label": "Left click", "category": "mouse", "glyph": "left-click" },
+  { "code": "KC_MS_BTN2", "label": "Right click", "category": "mouse", "glyph": "right-click" },
+  { "code": "KC_MS_BTN3", "label": "Middle click", "category": "mouse", "glyph": "middle-click" },
   { "code": "KC_MS_BTN4", "label": "Button 4", "category": "mouse" },
   { "code": "KC_MS_BTN5", "label": "Button 5", "category": "mouse" },
   { "code": "KC_MS_WH_UP", "label": "Wheel Up", "category": "mouse" },
@@ -308,10 +302,9 @@
   { "code": "KC_MS_ACCEL0", "label": "Acceleration 0", "category": "mouse" },
   { "code": "KC_MS_ACCEL1", "label": "Acceleration 1", "category": "mouse" },
   { "code": "KC_MS_ACCEL2", "label": "Acceleration 2", "category": "mouse" },
-  { "code": "KC_TRANSPARENT", "label": "", "category": "other", "hideLabel": true },
-  { "code": "KC_BSPACE", "label": "Backspace", "category": "spacing", "glyph": "backspace", "hideLabel": true },
+  { "code": "KC_BSPACE", "label": "Backspace", "category": "spacing", "glyph": "backspace" },
   { "code": "KC_TAB", "label": "Tab", "category": "spacing" },
-  { "code": "KC_ENTER", "label": "Enter", "category": "spacing", "glyph": "enter", "hideLabel": true },
+  { "code": "KC_ENTER", "label": "Enter", "category": "spacing", "glyph": "enter" },
   {
     "code": "LALT",
     "label": "Alt",
@@ -319,15 +312,13 @@
     "command": "KC_NO",
     "description": "Add a \"command\" and it becomes Alt+<\"command\">"
   },
-  { "code": "KC_PAUSE", "label": "Pause", "category": "other" },
   { "code": "KC_ESCAPE", "label": "Esc", "category": "spacing" },
   {
     "code": "KC_SPACE",
     "label": "Space",
     "category": "spacing",
     "glyph": "space",
-    "description": "Spacebar",
-    "hideLabel": true
+    "description": "Spacebar"
   },
   { "code": "KC_PGUP", "label": "PgUp", "category": "nav" },
   {
@@ -335,16 +326,15 @@
     "label": "Application",
     "category": "nav",
     "description": "Contextual menu",
-    "glyph": "list-alt",
-    "hideLabel": true
+    "glyph": "list-alt"
   },
   { "code": "KC_PGDOWN", "label": "PgDn", "category": "nav" },
   { "code": "KC_END", "label": "End", "category": "nav" },
   { "code": "KC_HOME", "label": "Home", "category": "nav" },
-  { "code": "KC_LEFT", "label": "Left arrow", "category": "nav", "glyph": "left-arrow", "hideLabel": true },
-  { "code": "KC_UP", "label": "Up arrow", "category": "nav", "glyph": "up-arrow", "hideLabel": true },
-  { "code": "KC_RIGHT", "label": "Right arrow", "category": "nav", "glyph": "right-arrow", "hideLabel": true },
-  { "code": "KC_DOWN", "label": "Down arrow", "category": "nav", "glyph": "down-arrow", "hideLabel": true },
+  { "code": "KC_LEFT", "label": "Left arrow", "category": "nav", "glyph": "left-arrow" },
+  { "code": "KC_UP", "label": "Up arrow", "category": "nav", "glyph": "up-arrow" },
+  { "code": "KC_RIGHT", "label": "Right arrow", "category": "nav", "glyph": "right-arrow" },
+  { "code": "KC_DOWN", "label": "Down arrow", "category": "nav", "glyph": "down-arrow" },
   {
     "code": "KC_PSCREEN",
     "label": "SysRq",
@@ -411,13 +401,15 @@
     "category": "punct",
     "description": "Non-US backslash and pipe"
   },
-  { "code": "KC_NO", "label": "None", "category": "other" },
   {
     "code": "RESET",
     "label": "Reset",
     "category": "fw",
     "description": "Resets the keyboard back to the Teensy bootloader, to flash new firmware."
   },
+  { "code": "KC_TRANSPARENT", "label": "", "category": "other" },
+  { "code": "KC_PAUSE", "label": "Pause", "category": "other" },
+  { "code": "KC_NO", "label": "None", "category": "other" },
   { "code": "KC_POWER", "label": "Power", "category": "other" },
   {
     "code": "KC_UNDO",
@@ -443,19 +435,6 @@
     "category": "other",
     "description": "For one-key Paste on Windows, use V modified by Ctrl"
   },
-  { "code": "KC_FIND", "label": "Find", "category": "other" },
-  { "code": "KC_LANG1", "label": "LANG 1", "category": "lang", "description": "Language 1 key for Asian languages" },
-  { "code": "KC_LANG2", "label": "LANG 2", "category": "lang", "description": "Language 2 key for Asian languages" },
-  { "code": "KC_LANG3", "label": "LANG 3", "category": "lang" },
-  { "code": "KC_LANG4", "label": "LANG 4", "category": "lang" },
-  { "code": "KC_LANG5", "label": "LANG 5", "category": "lang" },
-  { "code": "KC_LANG6", "label": "LANG 6", "category": "lang" },
-  { "code": "KC_LANG7", "label": "LANG 7", "category": "lang" },
-  { "code": "KC_LANG8", "label": "LANG 8", "category": "lang" },
-  { "code": "KC_LANG9", "label": "LANG 9", "category": "lang" },
-  { "code": "KC_SYSTEM_POWER", "label": "Power", "category": "system" },
-  { "code": "KC_SYSTEM_SLEEP", "label": "Sleep", "category": "system" },
-  { "code": "KC_SYSTEM_WAKE", "label": "Wake", "category": "system" },
   {
     "code": "KC_LSPO",
     "label": "Shift (",
@@ -470,6 +449,28 @@
     "description":
       "Space Cadet Shift: When held, acts as Shift; when tapped, sends \")\" (closing parentheses). Great for your right shift key."
   },
+  { "code": "KC_FIND", "label": "Find", "category": "other" },
+  { "code": "KC_INT1", "label": "Int 1", "category": "other" },
+  { "code": "KC_INT2", "label": "Int 2", "category": "other" },
+  { "code": "KC_INT3", "label": "Int 3 (yen)", "category": "other" },
+  { "code": "KC_INT4", "label": "Int 4", "category": "other" },
+  { "code": "KC_INT5", "label": "Int 5", "category": "other" },
+  { "code": "KC_INT6", "label": "Int 6", "category": "other" },
+  { "code": "KC_INT7", "label": "Int 7", "category": "other" },
+  { "code": "KC_INT8", "label": "Int 8", "category": "other" },
+  { "code": "KC_INT9", "label": "Int 9", "category": "other" },
+  { "code": "KC_LANG1", "label": "LANG 1", "category": "lang", "description": "Language 1 key for Asian languages" },
+  { "code": "KC_LANG2", "label": "LANG 2", "category": "lang", "description": "Language 2 key for Asian languages" },
+  { "code": "KC_LANG3", "label": "LANG 3", "category": "lang" },
+  { "code": "KC_LANG4", "label": "LANG 4", "category": "lang" },
+  { "code": "KC_LANG5", "label": "LANG 5", "category": "lang" },
+  { "code": "KC_LANG6", "label": "LANG 6", "category": "lang" },
+  { "code": "KC_LANG7", "label": "LANG 7", "category": "lang" },
+  { "code": "KC_LANG8", "label": "LANG 8", "category": "lang" },
+  { "code": "KC_LANG9", "label": "LANG 9", "category": "lang" },
+  { "code": "KC_SYSTEM_POWER", "label": "Power", "category": "system" },
+  { "code": "KC_SYSTEM_SLEEP", "label": "Sleep", "category": "system" },
+  { "code": "KC_SYSTEM_WAKE", "label": "Wake", "category": "system" },
   { "code": "KC_EXLM", "label": "!", "category": "shiftedPunct" },
   { "code": "KC_AT", "label": "@", "category": "shiftedPunct" },
   { "code": "KC_LCBR", "label": "{", "category": "shiftedPunct" },
@@ -573,34 +574,23 @@
   { "code": "DE_EURO", "label": "German €", "category": "nordic" },
   { "code": "DE_TILD", "label": "German ~", "category": "nordic" },
   { "code": "DE_PIPE", "label": "German |", "category": "nordic" },
-  { "code": "KC_INT1", "label": "Int 1", "category": "other" },
-  { "code": "KC_INT2", "label": "Int 2", "category": "other" },
-  { "code": "KC_INT3", "label": "Int 3 (yen)", "category": "other" },
-  { "code": "KC_INT4", "label": "Int 4", "category": "other" },
-  { "code": "KC_INT5", "label": "Int 5", "category": "other" },
-  { "code": "KC_INT6", "label": "Int 6", "category": "other" },
-  { "code": "KC_INT7", "label": "Int 7", "category": "other" },
-  { "code": "KC_INT8", "label": "Int 8", "category": "other" },
-  { "code": "KC_INT9", "label": "Int 9", "category": "other" },
   { "code": "MAGIC_TOGGLE_NKRO", "label": "NKRO", "category": "fw", "description": "Toggle N-Key Rollover mode" },
-  { "code": "RGB_MOD", "label": "Animate", "category": "shine", "glyph": "air", "hideLabel": true },
+  { "code": "RGB_MOD", "label": "Animate", "category": "shine", "glyph": "air" },
   {
     "code": "RGB_SLD",
     "label": "Stop animation",
     "category": "shine",
-    "glyph": "pause-circle-o",
-    "hideLabel": true
+    "glyph": "pause-circle-o"
   },
-  { "code": "RGB_VAI", "label": "Brightness +", "category": "shine", "glyph": "brightness-up", "hideLabel": true },
-  { "code": "RGB_VAD", "label": "Brightness -", "category": "shine", "glyph": "brightness-down", "hideLabel": true },
+  { "code": "RGB_VAI", "label": "Brightness +", "category": "shine", "glyph": "brightness-up" },
+  { "code": "RGB_VAD", "label": "Brightness -", "category": "shine", "glyph": "brightness-down" },
   {
     "code": "RGB_HUI",
     "label": "Hue +",
     "category": "shine",
-    "glyph": "hui",
-    "hideLabel": true
+    "glyph": "hui"
   },
-  { "code": "RGB_HUD", "label": "Hue -", "category": "shine", "glyph": "hud", "hideLabel": true },
-  { "code": "RGB_TOG", "label": "Toggle lighting", "category": "shine", "glyph": "toggle-on", "hideLabel": true },
-  { "code": "RGB", "label": "", "category": "shine", "glyph": "color-palette", "hideLabel": true }
+  { "code": "RGB_HUD", "label": "Hue -", "category": "shine", "glyph": "hud" },
+  { "code": "RGB_TOG", "label": "Toggle lighting", "category": "shine", "glyph": "toggle-on" },
+  { "code": "RGB", "label": "", "category": "shine", "glyph": "color-palette" }
 ]
