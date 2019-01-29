@@ -20,6 +20,11 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
         public string SubLabel { get; set; }
 
         /// <summary>
+        /// Gets or sets the Glyph name.
+        /// </summary>
+        public string GlyphName { get; set; }
+
+        /// <summary>
         /// Gets or sets the key glowing color.
         /// </summary>
         public string Color { get; set; }
@@ -28,5 +33,16 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
         /// Gets or sets the key category.
         /// </summary>
         public KeyCategory KeyCategory { get; set; }
+
+        /// <summary>
+        /// Gets or sets the indicator wether the <see cref="SubLabel"/>
+        /// is below or above <see cref="Label"/>.
+        /// </summary>
+        public bool IsSubLabelBelow { get; set; }
+
+        /// <summary>
+        /// Gets the indicator if <see cref="Label"/> must be displayed.
+        /// </summary>
+        public bool IsLabelDisplayed => string.IsNullOrWhiteSpace(GlyphName);
     }
 }
