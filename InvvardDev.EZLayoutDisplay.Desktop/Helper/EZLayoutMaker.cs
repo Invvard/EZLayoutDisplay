@@ -30,7 +30,6 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
                 ezLayout.EZLayers.Add(ezLayer);
             }
 
-
             return ezLayout;
         }
 
@@ -44,7 +43,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
 
             for (var index = 0 ; index < ergodoxLayer.Keys.Count ; index++)
             {
-                EZKey key = PrepareKey(ergodoxLayer.Keys[index], index);
+                EZKey key = PrepareKeyLabels(ergodoxLayer.Keys[index], index);
+
 
                 layer.EZKeys.Add(key);
             }
@@ -52,19 +52,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
             return layer;
         }
 
-        private EZKey PrepareKey(ErgodoxKey ergodoxKey, int index)
-        {
-            EZKey key = new EZKey {
-                                      Position = index,
-                                      Color = ergodoxKey.GlowColor
-                                  };
-
-            PrepareKeyLabels(ergodoxKey, key);
-
-            return key;
-        }
-
-        private void PrepareKeyLabels(ErgodoxKey ergodoxKey, EZKey key)
+        private EZKey PrepareKeyLabels(ErgodoxKey ergodoxKey, int keyIndex)
         {
             KeyDefinition keyDefinition = GetKeyDefinition(ergodoxKey.Code);
 
@@ -78,51 +66,57 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
              * KeyCategory.Lang
              * KeyCategory.Modifier
              * KeyCategory.Numpad
+             * KeyCategory.Other
              * KeyCategory.Punct
              * KeyCategory.ShiftedPunct
              * KeyCategory.System
              *
              **/
-            key.KeyCategory = keyDefinition.KeyCategory;
-            key.Label = keyDefinition.Label;
-            key.SubLabel = "";
+            EZKey key = new EZKey {
+                                      KeyCategory = keyDefinition.KeyCategory,
+                                      Label = keyDefinition.Label,
+                                      SubLabel = "",
+                                      Color = ergodoxKey.GlowColor
+                                  };
 
             switch (keyDefinition.KeyCategory)
             {
                 case KeyCategory.DualFunction:
+                    AddCommandLabel(ergodoxKey, key);
 
                     break;
                 case KeyCategory.Layer:
                 case KeyCategory.LayerShortcuts:
-                    key.Label = key.Label.Replace("${layer}", ergodoxKey.Layer.ToString());
+                    key.Label = string.Format(key.Label, ergodoxKey.Layer.ToString());
+                    AddCommandLabel(ergodoxKey, key);
+
                     break;
                 case KeyCategory.Media:
-
-                    break;
                 case KeyCategory.Mouse:
+                case KeyCategory.Nav:
+                case KeyCategory.Spacing:
+                case KeyCategory.Shine:
+                    key.GlyphName = keyDefinition.GlyphName;
 
                     break;
-                case KeyCategory.Nav:
+                case KeyCategory.Shortcuts:
+
+                    if (!string.IsNullOrWhiteSpace(ergodoxKey.Command))
+                    {
+                        var commandDefinition = GetKeyDefinition(ergodoxKey.Command);
+                        key.Label = $"{key.Label} + {commandDefinition.Label}";
+                    }
 
                     break;
                 case KeyCategory.Nordic:
 
                     break;
-                case KeyCategory.Other:
-
-                    break;
-                case KeyCategory.Shine:
-
-                    break;
-                case KeyCategory.Shortcuts:
-
-                    break;
-                case KeyCategory.Spacing:
-
-                    break;
                 default:
+
                     break;
             }
+
+            return key;
         }
 
         private KeyDefinition GetKeyDefinition(string ergodoxKeyCode)
@@ -130,6 +124,15 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
             var keyDefinition = _keyDefinitionDictionary.KeyDefinitions.First(k => k.KeyCode == ergodoxKeyCode);
 
             return keyDefinition;
+        }
+
+        private void AddCommandLabel(ErgodoxKey ergodoxKey, EZKey key)
+        {
+            if (string.IsNullOrWhiteSpace(ergodoxKey.Command)) return;
+
+            var commandDefinition = GetKeyDefinition(ergodoxKey.Command);
+            key.SubLabel = key.Label;
+            key.Label = commandDefinition.Label;
         }
     }
 }
