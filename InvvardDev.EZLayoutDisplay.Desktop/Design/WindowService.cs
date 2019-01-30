@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Windows;
 using InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Interface;
 
@@ -15,6 +16,13 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Design
         public void CloseWindow<T>()
         {
             Debug.WriteLine($"Closes window {typeof(T)}");
+        }
+
+        public bool ShowWarning(string warningMessage)
+        {
+            Debug.WriteLine($"Opens a warning dialog with \"{warningMessage}\"");
+
+            return true;
         }
     }
 }

@@ -8,5 +8,8 @@
     <Setting Name="HotkeyShowLayout" Type="System.String" Scope="User">
       <Value Profile="(Default)">{"modifiers":[0,1,2,4],"keycode":32}</Value>
     </Setting>
+    <Setting Name="EZLayout" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

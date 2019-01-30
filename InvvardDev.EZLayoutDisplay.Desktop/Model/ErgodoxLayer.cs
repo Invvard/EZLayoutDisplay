@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.Model
 {
-    public class Layer
+    public class ErgodoxLayer
     {
         /// <summary>
         /// Gets or sets the layer hash identifier.
