@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 using InvvardDev.EZLayoutDisplay.Desktop.Model;
-using InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Interface;
+using InvvardDev.EZLayoutDisplay.Desktop.Service.Interface;
 using NonInvasiveKeyboardHookLibrary;
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.Design

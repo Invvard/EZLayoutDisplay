@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using InvvardDev.EZLayoutDisplay.Desktop.Model;
-using InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation;
-using InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Interface;
+using InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation;
+using InvvardDev.EZLayoutDisplay.Desktop.Service.Interface;
 using Xunit;
 
 namespace InvvardDev.EZLayoutDisplay.Tests.Service

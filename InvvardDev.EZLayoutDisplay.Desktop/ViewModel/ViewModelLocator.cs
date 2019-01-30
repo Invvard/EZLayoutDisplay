@@ -1,10 +1,10 @@
 ﻿using CommonServiceLocator;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
-using InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation;
-using InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Interface;
-using KeyboardHookService = InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation.KeyboardHookService;
-using SettingsService = InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation.SettingsService;
+using InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation;
+using InvvardDev.EZLayoutDisplay.Desktop.Service.Interface;
+using KeyboardHookService = InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation.KeyboardHookService;
+using SettingsService = InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation.SettingsService;
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 {

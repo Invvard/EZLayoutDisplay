@@ -1,4 +1,4 @@
-﻿using InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Interface;
+﻿using InvvardDev.EZLayoutDisplay.Desktop.Service.Interface;
 using InvvardDev.EZLayoutDisplay.Desktop.View;
 using InvvardDev.EZLayoutDisplay.Desktop.ViewModel;
 using Moq;
