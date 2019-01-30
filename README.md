@@ -1,7 +1,7 @@
 # EZ Layout Display
 
 ### IT'S A BETA !
-I developed this app in my spare time and I've only tested it on my setup (Windows 10 Pro x64), so there will be bugs. Nothing catastrophic though : it's a .NET app so very little room to harm anything ;)
+I developed this app in my spare time and I've only tested it with my setup (Windows 10 Pro x64 + Ergodox EZ Glow), so there will be bugs. Nothing catastrophic though : it's a .NET app so there's very little room to harm anything ;)
 And there's no interaction whatsoever with your peripheral devices, even with the Ergodox.
 
 ## Presentation
@@ -18,4 +18,4 @@ The default Ergodox Layout is configured but you can change it very easily : jus
 
 ## Roadmap 
 Right now, settings and customisation are a bit scarce but I've a lot of ToDos and ideas to implement.
-Of course, your input(s) (ideas, contributions, thanks or even brand new Ergodox) are very much welcome !
+Of course, your input(s) (ideas, contributions, thanks or even a brand new Ergodox) are very much welcome !
