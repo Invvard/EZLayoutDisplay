@@ -1,7 +1,7 @@
 # EZ Layout Display
 
 ### IT'S A BETA !
-I developed this app in my spare time and I've only tested it on my setup (Windows 10 Pro x64), so there will be bugs. Nothing catastrophic though : it's a .NET app so very little room to harm anything ;)
+I developed this app in my spare time and I've only tested it with my setup (Windows 10 Pro x64 + Ergodox EZ Glow), so there will be bugs. Nothing catastrophic though : it's a .NET app so there's very little room to harm anything ;)
 And there's no interaction whatsoever with your peripheral devices, even with the Ergodox.
 
 ## Presentation
