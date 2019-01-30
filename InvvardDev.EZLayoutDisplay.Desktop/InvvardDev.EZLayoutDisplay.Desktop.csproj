@@ -89,8 +89,10 @@
     <Compile Include="Design\WindowService.cs" />
     <Compile Include="Helper\EZLayoutMaker.cs" />
     <Compile Include="Model\Dictionary\KeyModifierDictionary.cs" />
+    <Compile Include="Model\Enum\KeyModifier.cs" />
     <Compile Include="Model\EZKey.cs" />
     <Compile Include="Model\EZLayout.cs" />
+    <Compile Include="Model\EZModifier.cs" />
     <Compile Include="Model\KeyCategoryDetail.cs" />
     <Compile Include="Model\Dictionary\KeyCategoryDictionary.cs" />
     <Compile Include="Model\Enum\KeyCategory.cs" />
