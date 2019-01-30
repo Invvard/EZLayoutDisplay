@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Interface;
 
@@ -12,6 +13,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
         {
             _windows = new Dictionary<string, Window>();
         }
+
+        #region IWindowService implementation
 
         public void ShowWindow<T>()
             where T : Window, new()
@@ -35,6 +38,15 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
                 _windows[windowKey].Close();
             }
         }
+
+        public bool ShowWarning(string warningMessage)
+        {
+            var result = MessageBox.Show(warningMessage, "Warning", MessageBoxButton.OK, MessageBoxImage.Warning) == MessageBoxResult.OK;
+
+            return result;
+        }
+
+        #endregion
 
         private void WindowService_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {

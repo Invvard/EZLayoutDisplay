@@ -59,5 +59,15 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] keyDefinitions {
+            get {
+                object obj = ResourceManager.GetObject("keyDefinitions", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }

@@ -87,13 +87,24 @@
     <Compile Include="Design\LayoutService.cs" />
     <Compile Include="Design\SettingsService.cs" />
     <Compile Include="Design\WindowService.cs" />
-    <Compile Include="Model\Enum\SettingsName.cs" />
+    <Compile Include="Helper\EZLayoutMaker.cs" />
+    <Compile Include="Model\Dictionary\KeyModifierDictionary.cs" />
+    <Compile Include="Model\Enum\KeyModifier.cs" />
+    <Compile Include="Model\EZKey.cs" />
     <Compile Include="Model\EZLayout.cs" />
+    <Compile Include="Model\EZModifier.cs" />
+    <Compile Include="Model\KeyCategoryDetail.cs" />
+    <Compile Include="Model\Dictionary\KeyCategoryDictionary.cs" />
+    <Compile Include="Model\Enum\KeyCategory.cs" />
+    <Compile Include="Model\Dictionary\KeyDefinitionDictionary.cs" />
+    <Compile Include="Model\Enum\SettingsName.cs" />
+    <Compile Include="Model\EZLayer.cs" />
     <Compile Include="Model\Hotkey.cs" />
     <Compile Include="Model\ErgodoxKey.cs" />
-    <Compile Include="Model\Layer.cs" />
+    <Compile Include="Model\KeyDefinition.cs" />
+    <Compile Include="Model\ErgodoxLayer.cs" />
     <Compile Include="Model\ErgodoxLayout.cs" />
-    <Compile Include="Model\Modifiers.cs" />
+    <Compile Include="Model\ErgodoxModifiers.cs" />
     <Compile Include="Model\Revision.cs" />
     <Compile Include="Model\Service\Implementation\ApplicationService.cs" />
     <Compile Include="Model\Service\Implementation\KeyboardHookService.cs" />
@@ -160,6 +171,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="packages.config" />
+    <None Include="Properties\keyDefinitions.json" />
     <None Include="Properties\Settings.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -172,9 +184,7 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Helper\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Skins\Images\tray_base.ico" />
   </ItemGroup>
