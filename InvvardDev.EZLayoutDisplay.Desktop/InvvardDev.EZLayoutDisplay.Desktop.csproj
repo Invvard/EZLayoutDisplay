@@ -106,16 +106,16 @@
     <Compile Include="Model\ErgodoxLayout.cs" />
     <Compile Include="Model\ErgodoxModifiers.cs" />
     <Compile Include="Model\Revision.cs" />
-    <Compile Include="Model\Service\Implementation\ApplicationService.cs" />
-    <Compile Include="Model\Service\Implementation\KeyboardHookService.cs" />
-    <Compile Include="Model\Service\Implementation\LayoutService.cs" />
-    <Compile Include="Model\Service\Implementation\SettingsService.cs" />
-    <Compile Include="Model\Service\Implementation\WindowService.cs" />
-    <Compile Include="Model\Service\Interface\IApplicationService.cs" />
-    <Compile Include="Model\Service\Interface\IKeyboardHookService.cs" />
-    <Compile Include="Model\Service\Interface\ILayoutService.cs" />
-    <Compile Include="Model\Service\Interface\ISettingsService.cs" />
-    <Compile Include="Model\Service\Interface\IWindowService.cs" />
+    <Compile Include="Service\Implementation\ApplicationService.cs" />
+    <Compile Include="Service\Implementation\KeyboardHookService.cs" />
+    <Compile Include="Service\Implementation\LayoutService.cs" />
+    <Compile Include="Service\Implementation\SettingsService.cs" />
+    <Compile Include="Service\Implementation\WindowService.cs" />
+    <Compile Include="Service\Interface\IApplicationService.cs" />
+    <Compile Include="Service\Interface\IKeyboardHookService.cs" />
+    <Compile Include="Service\Interface\ILayoutService.cs" />
+    <Compile Include="Service\Interface\ISettingsService.cs" />
+    <Compile Include="Service\Interface\IWindowService.cs" />
     <Compile Include="ViewModel\DisplayLayoutViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />
@@ -184,7 +184,10 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Model\Service\Implementation\" />
+    <Folder Include="Model\Service\Interface\" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Skins\Images\tray_base.ico" />
   </ItemGroup>

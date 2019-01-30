@@ -1,7 +1,6 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 
-namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Interface
+namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Interface
 {
     public interface IWindowService
     {
