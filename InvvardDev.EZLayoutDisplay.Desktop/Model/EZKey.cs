@@ -36,9 +36,9 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
 
         /// <summary>
         /// Gets or sets the indicator wether the <see cref="SubLabel"/>
-        /// is below or above <see cref="Label"/>.
+        /// is above <see cref="Label"/>.
         /// </summary>
-        public bool IsSubLabelBelow { get; set; }
+        public bool IsSubLabelAbove { get; set; }
 
         /// <summary>
         /// Gets the indicator if <see cref="Label"/> must be displayed.
