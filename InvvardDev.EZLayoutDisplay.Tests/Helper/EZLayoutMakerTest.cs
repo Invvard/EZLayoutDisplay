@@ -1,18 +1,35 @@
 ﻿using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Text;
 using InvvardDev.EZLayoutDisplay.Desktop.Helper;
 using InvvardDev.EZLayoutDisplay.Desktop.Model;
 using InvvardDev.EZLayoutDisplay.Desktop.Model.Enum;
 using Xunit;
-using static System.Text.Encoding;
 using Assert = Xunit.Assert;
 
 namespace InvvardDev.EZLayoutDisplay.Tests.Helper
 {
     public class EZLayoutMakerTest
     {
+        private static ErgodoxLayout InitializeDataTree()
+        {
+            return new ErgodoxLayout {
+                                         Title = "",
+                                         HashId = "",
+                                         Revisions = new List<Revision> {
+                                                                            new Revision {
+                                                                                             Layers = new List<ErgodoxLayer> {
+                                                                                                                                 new ErgodoxLayer() {
+                                                                                                                                                        Color = "",
+                                                                                                                                                        Title = "",
+                                                                                                                                                        Position = 0,
+                                                                                                                                                        Keys = new List<ErgodoxKey>()
+                                                                                                                                                    }
+                                                                                                                             }
+                                                                                         }
+                                                                        }
+                                     };
+        }
+
         [ Theory ]
         [ InlineData("expectedTitle", "expectedHashId") ]
         public void PrepareEZLayout_InitializeEZLayout(string expectedTitle, string expectedHashId)
@@ -74,26 +91,6 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
             Assert.Equal(expectedColor, ezLayoutResult.EZLayers.First().Color);
         }
 
-        private static ErgodoxLayout InitializeDataTree()
-        {
-            return new ErgodoxLayout {
-                                         Title = "",
-                                         HashId = "",
-                                         Revisions = new List<Revision> {
-                                                                            new Revision {
-                                                                                             Layers = new List<ErgodoxLayer> {
-                                                                                                                                 new ErgodoxLayer() {
-                                                                                                                                                        Color = "",
-                                                                                                                                                        Title = "",
-                                                                                                                                                        Position = 0,
-                                                                                                                                                        Keys = new List<ErgodoxKey>()
-                                                                                                                                                    }
-                                                                                                                             }
-                                                                                         }
-                                                                        }
-                                     };
-        }
-
         [ Theory ]
         [ InlineData("KC_TRANSPARENT", "expectedColor", 0) ]
         public void PrepareEZLayout_InitializeEZKey(string expectedKeyCode, string expectedColor, int expectedIndex)
@@ -133,12 +130,12 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
         [ InlineData("KC_SCOLON", ";", KeyCategory.Punct) ]
         [ InlineData("KC_AT", "@", KeyCategory.ShiftedPunct) ]
         [ InlineData("KC_SYSTEM_POWER", "Power", KeyCategory.System) ]
-        public void PrepareEZLayout_KeyCategoryWithDirectLabel(string expectedKeyCode, string expectedLabel, KeyCategory expectedCategory)
+        public void PrepareEZLayout_KeyCategoryWithDirectLabel(string keyCode, string expectedLabel, KeyCategory expectedCategory)
         {
             // Arrange
             var ergodoxKey = new ErgodoxKey() {
                                                   GlowColor = "",
-                                                  Code = expectedKeyCode
+                                                  Code = keyCode
                                               };
             ErgodoxLayout ergodoxLayout = InitializeDataTree();
             ergodoxLayout.Revisions.First().Layers.First().Keys.Add(ergodoxKey);
@@ -157,21 +154,53 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
             Assert.Equal(expectedCategory, keyResult.KeyCategory);
         }
 
-        [Theory]
-        [InlineData("TG", "â TG 1", KeyCategory.Layer)] // Should display "❐ TG 1"
-        [InlineData("MO", "âŸ² MO 1", KeyCategory.Layer)] // Should display "⟲ MO 1"
-        [InlineData("OSL", "OSL 1", KeyCategory.Layer)]
-        [InlineData("TO", "TO 1", KeyCategory.Layer)]
-        [InlineData("TT", "TT 1", KeyCategory.Layer)]
-        public void PrepareEZLayout_KeyCategoryLayer(string expectedKeyCode, string expectedLabel, KeyCategory expectedCategory)
+        [ Theory ]
+        [ InlineData("KC_LALT", "MOD_LSFT", "Option", "", false, KeyCategory.Modifier) ]
+        [ InlineData("OSM", "", "OSM", "", false, KeyCategory.Modifier) ]
+        [ InlineData("OSM", "MOD_LSFT", "OSM", "Shift", true, KeyCategory.Modifier) ]
+        public void PrepareEZLayout_KeyCategoryOSM(string keyCode, string command, string expectedLabel, string expectedSubLabel, bool expectedIsSubLabelAbove, KeyCategory expectedCategory)
         {
             // Arrange
-            var ergodoxKey = new ErgodoxKey()
-                             {
-                                 GlowColor = "",
-                                 Code = expectedKeyCode,
-                                 Layer = 1
-                             };
+            var ergodoxKey = new ErgodoxKey() {
+                                                  GlowColor = "",
+                                                  Code = keyCode,
+                                                  Command = command,
+                                                  Layer = 1
+                                              };
+            ErgodoxLayout ergodoxLayout = InitializeDataTree();
+            ergodoxLayout.Revisions.First().Layers.First().Keys.Add(ergodoxKey);
+
+            EZLayout ezLayoutResult;
+
+            // Act
+            var ezLayoutMaker = new EZLayoutMaker();
+            ezLayoutResult = ezLayoutMaker.PrepareEZLayout(ergodoxLayout);
+
+            // Assert
+            Assert.Single(ezLayoutResult.EZLayers);
+            Assert.Single(ezLayoutResult.EZLayers.First().EZKeys);
+
+            var keyResult = ezLayoutResult.EZLayers.First().EZKeys.First();
+            Assert.Equal(expectedLabel, keyResult.Label);
+            Assert.Equal(expectedSubLabel, keyResult.SubLabel);
+            Assert.Equal(expectedIsSubLabelAbove, keyResult.IsSubLabelAbove);
+            Assert.Equal(expectedCategory, keyResult.KeyCategory);
+        }
+
+        [ Theory ]
+        [ InlineData("TG", "â TG 1", KeyCategory.Layer) ] // Should display "❐ TG 1"
+        [ InlineData("MO", "âŸ² MO 1", KeyCategory.Layer) ] // Should display "⟲ MO 1"
+        [ InlineData("OSL", "OSL 1", KeyCategory.Layer) ]
+        [ InlineData("TO", "TO 1", KeyCategory.Layer) ]
+        [ InlineData("TT", "TT 1", KeyCategory.Layer) ]
+        public void PrepareEZLayout_KeyCategoryLayer(string keyCode, string expectedLabel, KeyCategory expectedCategory)
+        {
+            // Arrange
+            var ergodoxKey = new ErgodoxKey() {
+                                                  GlowColor = "",
+                                                  Code = keyCode,
+                                                  Layer = 1
+                                              };
             ErgodoxLayout ergodoxLayout = InitializeDataTree();
             ergodoxLayout.Revisions.First().Layers.First().Keys.Add(ergodoxKey);
 
@@ -189,19 +218,18 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
             Assert.Equal(expectedCategory, keyResult.KeyCategory);
         }
 
-        [Theory]
-        [InlineData("LT", "", "LT â†’ 1", "", KeyCategory.LayerShortcuts)] // Should display "LT → 1"
-        [InlineData("LT", "KC_0", "0", "LT â†’ 1", KeyCategory.LayerShortcuts)] // Should display "0LT → 1"
+        [ Theory ]
+        [ InlineData("LT", "", "LT â†’ 1", "", KeyCategory.LayerShortcuts) ]      // Should display "LT → 1"
+        [ InlineData("LT", "KC_0", "0", "LT â†’ 1", KeyCategory.LayerShortcuts) ] // Should display "0LT → 1"
         public void PrepareEZLayout_KeyCategoryLayerShortcut(string keyCode, string command, string expectedLabel, string expectedSubLabel, KeyCategory expectedCategory)
         {
             // Arrange
-            var ergodoxKey = new ErgodoxKey()
-                             {
-                                 GlowColor = "",
-                                 Code = keyCode,
-                                 Command = command,
-                                 Layer = 1
-                             };
+            var ergodoxKey = new ErgodoxKey() {
+                                                  GlowColor = "",
+                                                  Code = keyCode,
+                                                  Command = command,
+                                                  Layer = 1
+                                              };
             ErgodoxLayout ergodoxLayout = InitializeDataTree();
             ergodoxLayout.Revisions.First().Layers.First().Keys.Add(ergodoxKey);
 
@@ -220,24 +248,23 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
             Assert.Equal(expectedCategory, keyResult.KeyCategory);
         }
 
-        [Theory]
-        [InlineData("KC_AUDIO_MUTE", "Mute", "volume-off", KeyCategory.Media)]
-        [InlineData("KC_MEDIA_EJECT", "Eject", null, KeyCategory.Media)]
-        [InlineData("KC_MS_UP", "Move up", "mouse-up", KeyCategory.Mouse)]
-        [InlineData("KC_MS_BTN4", "Button 4", null, KeyCategory.Mouse)]
-        [InlineData("KC_APPLICATION", "Application", "list-alt", KeyCategory.Nav)]
-        [InlineData("KC_PGDOWN", "PgDn", null, KeyCategory.Nav)]
-        [InlineData("KC_BSPACE", "Backspace", "backspace", KeyCategory.Spacing)]
-        [InlineData("KC_ESCAPE", "Esc", null, KeyCategory.Spacing)]
-        [InlineData("RGB_MOD", "Animate", "air", KeyCategory.Shine)]
-        public void PrepareEZLayout_KeyCategoryWithGlyphs(string expectedKeyCode, string expectedLabel, string expectedGlyph, KeyCategory expectedCategory)
+        [ Theory ]
+        [ InlineData("KC_AUDIO_MUTE", "Mute", "volume-off", false, KeyCategory.Media) ]
+        [ InlineData("KC_MEDIA_EJECT", "Eject", null, true, KeyCategory.Media) ]
+        [ InlineData("KC_MS_UP", "Move up", "mouse-up", false, KeyCategory.Mouse) ]
+        [ InlineData("KC_MS_BTN4", "Button 4", null, true, KeyCategory.Mouse) ]
+        [ InlineData("KC_APPLICATION", "Application", "list-alt", false, KeyCategory.Nav) ]
+        [ InlineData("KC_PGDOWN", "PgDn", null, true, KeyCategory.Nav) ]
+        [ InlineData("KC_BSPACE", "Backspace", "backspace", false, KeyCategory.Spacing) ]
+        [ InlineData("KC_ESCAPE", "Esc", null, true, KeyCategory.Spacing) ]
+        [ InlineData("RGB_MOD", "Animate", "air", false, KeyCategory.Shine) ]
+        public void PrepareEZLayout_KeyCategoryWithGlyphs(string keyCode, string expectedLabel, string expectedGlyph, bool expectedIsDisplayedLabel, KeyCategory expectedCategory)
         {
             // Arrange
-            var ergodoxKey = new ErgodoxKey()
-                             {
-                                 GlowColor = "",
-                                 Code = expectedKeyCode
-                             };
+            var ergodoxKey = new ErgodoxKey() {
+                                                  GlowColor = "",
+                                                  Code = keyCode
+                                              };
             ErgodoxLayout ergodoxLayout = InitializeDataTree();
             ergodoxLayout.Revisions.First().Layers.First().Keys.Add(ergodoxKey);
 
@@ -253,21 +280,21 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
             var keyResult = ezLayoutResult.EZLayers.First().EZKeys.First();
             Assert.Equal(expectedLabel, keyResult.Label);
             Assert.Equal(expectedGlyph, keyResult.GlyphName);
+            Assert.Equal(expectedIsDisplayedLabel, keyResult.IsLabelDisplayed);
             Assert.Equal(expectedCategory, keyResult.KeyCategory);
         }
 
-        [Theory]
-        [InlineData("ALL_T", "KC_6", "6", "Hyper", KeyCategory.DualFunction)]
-        [InlineData("ALL_T", "", "Hyper", "", KeyCategory.DualFunction)]
-        public void PrepareEZLayout_KeyCategoryDualFunction(string expectedKeyCode, string expectedCommand, string expectedLabel, string expectedSubLabel, KeyCategory expectedCategory)
+        [ Theory ]
+        [ InlineData("ALL_T", "KC_6", "6", "Hyper", KeyCategory.DualFunction) ]
+        [ InlineData("ALL_T", "", "Hyper", "", KeyCategory.DualFunction) ]
+        public void PrepareEZLayout_KeyCategoryDualFunction(string keyCode, string command, string expectedLabel, string expectedSubLabel, KeyCategory expectedCategory)
         {
             // Arrange
-            var ergodoxKey = new ErgodoxKey()
-                             {
-                                 GlowColor = "",
-                                 Code = expectedKeyCode,
-                                 Command = expectedCommand
-                             };
+            var ergodoxKey = new ErgodoxKey() {
+                                                  GlowColor = "",
+                                                  Code = keyCode,
+                                                  Command = command
+                                              };
             ErgodoxLayout ergodoxLayout = InitializeDataTree();
             ergodoxLayout.Revisions.First().Layers.First().Keys.Add(ergodoxKey);
 
@@ -286,18 +313,17 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
             Assert.Equal(expectedCategory, keyResult.KeyCategory);
         }
 
-        [Theory]
-        [InlineData("LALT", "KC_3", "Alt + 3", "", KeyCategory.Shortcuts)]
-        [InlineData("LALT", "", "Alt", "", KeyCategory.Shortcuts)]
+        [ Theory ]
+        [ InlineData("LALT", "KC_3", "Alt + 3", "", KeyCategory.Shortcuts) ]
+        [ InlineData("LALT", "", "Alt", "", KeyCategory.Shortcuts) ]
         public void PrepareEZLayout_KeyCategoryShortcuts(string keyCode, string command, string expectedLabel, string expectedSubLabel, KeyCategory expectedCategory)
         {
             // Arrange
-            var ergodoxKey = new ErgodoxKey()
-                             {
-                                 GlowColor = "",
-                                 Code = keyCode,
-                                 Command = command
-                             };
+            var ergodoxKey = new ErgodoxKey() {
+                                                  GlowColor = "",
+                                                  Code = keyCode,
+                                                  Command = command
+                                              };
             ErgodoxLayout ergodoxLayout = InitializeDataTree();
             ergodoxLayout.Revisions.First().Layers.First().Keys.Add(ergodoxKey);
 
@@ -314,6 +340,78 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
             Assert.Equal(expectedLabel, keyResult.Label);
             Assert.Equal(expectedSubLabel, keyResult.SubLabel);
             Assert.Equal(expectedCategory, keyResult.KeyCategory);
+        }
+
+        [ Theory ]
+        [ InlineData(false, false, false, false, false, false, false, false, "", false) ]
+        [ InlineData(true, false, false, false, false, false, false, false, "Alt", true) ]
+        [ InlineData(false, true, false, false, false, false, false, false, "Ctrl", true) ]
+        [ InlineData(false, false, true, false, false, false, false, false, "Shift", true) ]
+        [ InlineData(false, false, false, true, false, false, false, false, "Win", true) ]
+        [ InlineData(false, false, false, false, true, false, false, false, "Alt", true) ]
+        [ InlineData(false, false, false, false, false, true, false, false, "Ctrl", true) ]
+        [ InlineData(false, false, false, false, false, false, true, false, "Shift", true) ]
+        [ InlineData(false, false, false, false, false, false, false, true, "Win", true) ]
+        [ InlineData(true, true, false, false, false, false, false, false, "ALT+CTL", true) ]
+        [ InlineData(true, false, true, false, false, false, false, false, "ALT+SFT", true) ]
+        [ InlineData(true, false, false, true, false, false, false, false, "ALT+WIN", true) ]
+        [ InlineData(false, false, false, false, true, true, false, false, "ALT+CTL", true) ]
+        [ InlineData(false, false, false, false, true, false, true, false, "ALT+SFT", true) ]
+        [ InlineData(false, false, false, false, true, false, false, true, "ALT+WIN", true) ]
+        [ InlineData(false, true, false, false, true, false, false, false, "CTL+ALT", true) ]
+        [ InlineData(false, false, false, true, true, false, false, false, "WIN+ALT", true) ]
+        [ InlineData(false, true, false, true, true, false, false, false, "C+W+A", true) ]
+        [ InlineData(false, true, false, false, true, false, false, true, "C+A+W", true) ]
+        [ InlineData(false, true, true, false, false, false, false, true, "C+S+W", true) ]
+        [ InlineData(false, true, false, true, false, false, true, false, "C+W+S", true) ]
+        [ InlineData(false, true, true, true, false, false, false, false, "C+W+S", true) ]
+        [ InlineData(true, true, true, true, false, false, false, false, "A+C+W+S", true) ]
+        [ InlineData(false, false, false, false, true, true, true, true, "A+C+W+S", true) ]
+        [ InlineData(true, false, true, false, false, true, false, true, "A+S+C+W", true) ]
+        [ InlineData(false, true, false, true, true, false, true, false, "C+W+A+S", true) ]
+        public void PrepareEZLayout_ProcessModifiers(bool   leftAlt,
+                                                     bool   leftCtrl,
+                                                     bool   leftShift,
+                                                     bool   leftWin,
+                                                     bool   rightAlt,
+                                                     bool   rightCtrl,
+                                                     bool   rightShift,
+                                                     bool   rightWin,
+                                                     string expectedSubLabel,
+                                                     bool   expectedIsSubLabelAbove)
+        {
+            // Arrange
+            var modifiers = new ErgodoxModifiers {
+                                                     LeftAlt = leftAlt,
+                                                     LeftCtrl = leftCtrl,
+                                                     LeftShift = leftShift,
+                                                     LeftWin = leftWin,
+                                                     RightAlt = rightAlt,
+                                                     RightCtrl = rightCtrl,
+                                                     RightShift = rightShift,
+                                                     RightWin = rightWin
+                                                 };
+            var ergodoxKey = new ErgodoxKey() {
+                                                  GlowColor = "",
+                                                  Code = "KC_A",
+                                                  Modifiers = modifiers
+                                              };
+            ErgodoxLayout ergodoxLayout = InitializeDataTree();
+            ergodoxLayout.Revisions.First().Layers.First().Keys.Add(ergodoxKey);
+
+            EZLayout ezLayoutResult;
+
+            // Act
+            var ezLayoutMaker = new EZLayoutMaker();
+            ezLayoutResult = ezLayoutMaker.PrepareEZLayout(ergodoxLayout);
+
+            // Assert
+            Assert.Single(ezLayoutResult.EZLayers);
+            Assert.Single(ezLayoutResult.EZLayers.First().EZKeys);
+            var keyResult = ezLayoutResult.EZLayers.First().EZKeys.First();
+            Assert.Equal("A", keyResult.Label);
+            Assert.Equal(expectedSubLabel, keyResult.SubLabel);
+            Assert.Equal(expectedIsSubLabelAbove, keyResult.IsSubLabelAbove);
         }
     }
 }

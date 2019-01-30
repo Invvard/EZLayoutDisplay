@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using InvvardDev.EZLayoutDisplay.Desktop.Model;
 using InvvardDev.EZLayoutDisplay.Desktop.Model.Dictionary;
@@ -45,7 +46,6 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
             {
                 EZKey key = PrepareKeyLabels(ergodoxLayer.Keys[index], index);
 
-
                 layer.EZKeys.Add(key);
             }
 
@@ -82,13 +82,25 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
             switch (keyDefinition.KeyCategory)
             {
                 case KeyCategory.DualFunction:
+
                     AddCommandLabel(ergodoxKey, key);
 
                     break;
                 case KeyCategory.Layer:
                 case KeyCategory.LayerShortcuts:
+
                     key.Label = string.Format(key.Label, ergodoxKey.Layer.ToString());
                     AddCommandLabel(ergodoxKey, key);
+
+                    break;
+                case KeyCategory.Modifier:
+
+                    if (ergodoxKey.Code == "OSM" && !string.IsNullOrWhiteSpace(ergodoxKey.Command))
+                    {
+                        var commandDefinition = GetKeyDefinition(ergodoxKey.Command);
+                        key.SubLabel = commandDefinition.Label;
+                        key.IsSubLabelAbove = true;
+                    }
 
                     break;
                 case KeyCategory.Media:
@@ -116,6 +128,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
                     break;
             }
 
+            ProcessModifiers(ergodoxKey, key);
+
             return key;
         }
 
@@ -133,6 +147,78 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
             var commandDefinition = GetKeyDefinition(ergodoxKey.Command);
             key.SubLabel = key.Label;
             key.Label = commandDefinition.Label;
+        }
+
+        private void ProcessModifiers(ErgodoxKey ergodoxKey, EZKey key)
+        {
+            if (ergodoxKey.Modifiers == null) return;
+
+            var mods = GetModifiersApplied(ergodoxKey.Modifiers);
+
+            if (!mods.Any()) return;
+
+            key.SubLabel = AggregateModifierLabels(mods);
+            key.IsSubLabelAbove = true;
+        }
+
+        private string AggregateModifierLabels(List<EZModifier> mods)
+        {
+            var subLabel = "";
+            switch (mods.Count)
+            {
+                case 1:
+                    subLabel = mods.First().Labels[EZModifier.LabelSize.Large];
+                    break;
+                case 2:
+                    subLabel = mods.Select(m => m.Labels[EZModifier.LabelSize.Medium]).Aggregate((seed, inc) => $"{seed}+{inc}");
+                    break;
+                default:
+                    subLabel = mods.Select(m => m.Labels[EZModifier.LabelSize.Small]).Aggregate((seed, inc) => $"{seed}+{inc}");
+                    break;
+            }
+
+            return subLabel;
+        }
+
+        private List<EZModifier> GetModifiersApplied(ErgodoxModifiers ergodoxModifiers)
+        {
+            var keyModifiers = new KeyModifierDictionary();
+            var mods = new List<EZModifier>();
+
+            if (ergodoxModifiers.LeftAlt)
+            {
+                mods.Add(keyModifiers.EZModifiers.First(m => m.KeyModifier == KeyModifier.LeftAlt));
+            }
+            if (ergodoxModifiers.LeftCtrl)
+            {
+                mods.Add(keyModifiers.EZModifiers.First(m => m.KeyModifier == KeyModifier.LeftCtrl));
+            }
+            if (ergodoxModifiers.LeftShift)
+            {
+                mods.Add(keyModifiers.EZModifiers.First(m => m.KeyModifier == KeyModifier.LeftShift));
+            }
+            if (ergodoxModifiers.LeftWin)
+            {
+                mods.Add(keyModifiers.EZModifiers.First(m => m.KeyModifier == KeyModifier.LeftWin));
+            }
+            if (ergodoxModifiers.RightAlt)
+            {
+                mods.Add(keyModifiers.EZModifiers.First(m => m.KeyModifier == KeyModifier.RightAlt));
+            }
+            if (ergodoxModifiers.RightCtrl)
+            {
+                mods.Add(keyModifiers.EZModifiers.First(m => m.KeyModifier == KeyModifier.RightCtrl));
+            }
+            if (ergodoxModifiers.RightShift)
+            {
+                mods.Add(keyModifiers.EZModifiers.First(m => m.KeyModifier == KeyModifier.RightShift));
+            }
+            if (ergodoxModifiers.RightWin)
+            {
+                mods.Add(keyModifiers.EZModifiers.First(m => m.KeyModifier == KeyModifier.RightWin));
+            }
+
+            return mods.OrderBy(m => m.Index).ToList();
         }
     }
 }
