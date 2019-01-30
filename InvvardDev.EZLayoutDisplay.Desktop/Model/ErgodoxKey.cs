@@ -44,6 +44,6 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
         /// Gets or sets the modifiers.
         /// </summary>
         [JsonProperty("modifiers", NullValueHandling = NullValueHandling.Ignore)]
-        public Modifiers Modifiers { get; set; }
+        public ErgodoxModifiers Modifiers { get; set; }
     }
 }
