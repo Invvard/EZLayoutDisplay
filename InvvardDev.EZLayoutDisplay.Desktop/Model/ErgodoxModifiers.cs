@@ -2,7 +2,7 @@
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.Model
 {
-    public class Modifiers
+    public class ErgodoxModifiers
     {
         /// <summary>
         /// Gets or sets the Left Alt modifier indicator.
