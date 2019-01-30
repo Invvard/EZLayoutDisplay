@@ -2,7 +2,7 @@
 using InvvardDev.EZLayoutDisplay.Desktop.Service.Interface;
 using NonInvasiveKeyboardHookLibrary;
 
-namespace InvvardDev.EZLayoutDisplay.Desktop.Design
+namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Design
 {
     public class KeyboardHookService : IKeyboardHookService
     {

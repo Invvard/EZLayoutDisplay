@@ -82,11 +82,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Design\ApplicationService.cs" />
-    <Compile Include="Design\KeyboardHookService.cs" />
-    <Compile Include="Design\LayoutService.cs" />
-    <Compile Include="Design\SettingsService.cs" />
-    <Compile Include="Design\WindowService.cs" />
+    <Compile Include="Service\Design\ApplicationService.cs" />
+    <Compile Include="Service\Design\KeyboardHookService.cs" />
+    <Compile Include="Service\Design\LayoutService.cs" />
+    <Compile Include="Service\Design\SettingsService.cs" />
+    <Compile Include="Service\Design\WindowService.cs" />
     <Compile Include="Helper\EZLayoutMaker.cs" />
     <Compile Include="Model\Dictionary\KeyModifierDictionary.cs" />
     <Compile Include="Model\Enum\KeyModifier.cs" />
