@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
+using InvvardDev.EZLayoutDisplay.Desktop.Model;
 
-namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Interface
+namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Interface
 {
     public interface ILayoutService
     {

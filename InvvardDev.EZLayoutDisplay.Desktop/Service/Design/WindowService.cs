@@ -1,9 +1,8 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Windows;
-using InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Interface;
+using InvvardDev.EZLayoutDisplay.Desktop.Service.Interface;
 
-namespace InvvardDev.EZLayoutDisplay.Desktop.Design
+namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Design
 {
     public class WindowService : IWindowService
     {

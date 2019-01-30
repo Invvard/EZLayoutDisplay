@@ -1,7 +1,7 @@
 ﻿using System.Windows;
-using InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Interface;
+using InvvardDev.EZLayoutDisplay.Desktop.Service.Interface;
 
-namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Service.Implementation
+namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
 {
     public class ApplicationService : IApplicationService
     {
