@@ -18,4 +18,4 @@ The default Ergodox Layout is configured but you can change it very easily : jus
 
 ## Roadmap 
 Right now, settings and customisation are a bit scarce but I've a lot of ToDos and ideas to implement.
-Of course, your input(s) (ideas, contributions, thanks or even brand new Ergodox) are very much welcome !
+Of course, your input(s) (ideas, contributions, thanks or even a brand new Ergodox) are very much welcome !
