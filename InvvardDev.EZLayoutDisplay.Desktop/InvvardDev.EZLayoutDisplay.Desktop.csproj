@@ -184,10 +184,7 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\Service\Implementation\" />
-    <Folder Include="Model\Service\Interface\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Skins\Images\tray_base.ico" />
   </ItemGroup>
