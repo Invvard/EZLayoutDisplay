@@ -161,64 +161,51 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
             key.IsSubLabelAbove = true;
         }
 
-        private string AggregateModifierLabels(List<EZModifier> mods)
-        {
-            var subLabel = "";
-            switch (mods.Count)
-            {
-                case 1:
-                    subLabel = mods.First().Labels[EZModifier.LabelSize.Large];
-                    break;
-                case 2:
-                    subLabel = mods.Select(m => m.Labels[EZModifier.LabelSize.Medium]).Aggregate((seed, inc) => $"{seed}+{inc}");
-                    break;
-                default:
-                    subLabel = mods.Select(m => m.Labels[EZModifier.LabelSize.Small]).Aggregate((seed, inc) => $"{seed}+{inc}");
-                    break;
-            }
-
-            return subLabel;
-        }
-
         private List<EZModifier> GetModifiersApplied(ErgodoxModifiers ergodoxModifiers)
         {
             var keyModifiers = new KeyModifierDictionary();
             var mods = new List<EZModifier>();
 
-            if (ergodoxModifiers.LeftAlt)
-            {
-                mods.Add(keyModifiers.EZModifiers.First(m => m.KeyModifier == KeyModifier.LeftAlt));
-            }
-            if (ergodoxModifiers.LeftCtrl)
-            {
-                mods.Add(keyModifiers.EZModifiers.First(m => m.KeyModifier == KeyModifier.LeftCtrl));
-            }
-            if (ergodoxModifiers.LeftShift)
-            {
-                mods.Add(keyModifiers.EZModifiers.First(m => m.KeyModifier == KeyModifier.LeftShift));
-            }
-            if (ergodoxModifiers.LeftWin)
-            {
-                mods.Add(keyModifiers.EZModifiers.First(m => m.KeyModifier == KeyModifier.LeftWin));
-            }
-            if (ergodoxModifiers.RightAlt)
-            {
-                mods.Add(keyModifiers.EZModifiers.First(m => m.KeyModifier == KeyModifier.RightAlt));
-            }
-            if (ergodoxModifiers.RightCtrl)
-            {
-                mods.Add(keyModifiers.EZModifiers.First(m => m.KeyModifier == KeyModifier.RightCtrl));
-            }
-            if (ergodoxModifiers.RightShift)
-            {
-                mods.Add(keyModifiers.EZModifiers.First(m => m.KeyModifier == KeyModifier.RightShift));
-            }
-            if (ergodoxModifiers.RightWin)
-            {
-                mods.Add(keyModifiers.EZModifiers.First(m => m.KeyModifier == KeyModifier.RightWin));
-            }
+            if (ergodoxModifiers.LeftAlt) { mods.Add(keyModifiers.EZModifiers.First(m => m.KeyModifier == KeyModifier.LeftAlt)); }
+
+            if (ergodoxModifiers.LeftCtrl) { mods.Add(keyModifiers.EZModifiers.First(m => m.KeyModifier == KeyModifier.LeftCtrl)); }
+
+            if (ergodoxModifiers.LeftShift) { mods.Add(keyModifiers.EZModifiers.First(m => m.KeyModifier == KeyModifier.LeftShift)); }
+
+            if (ergodoxModifiers.LeftWin) { mods.Add(keyModifiers.EZModifiers.First(m => m.KeyModifier == KeyModifier.LeftWin)); }
+
+            if (ergodoxModifiers.RightAlt) { mods.Add(keyModifiers.EZModifiers.First(m => m.KeyModifier == KeyModifier.RightAlt)); }
+
+            if (ergodoxModifiers.RightCtrl) { mods.Add(keyModifiers.EZModifiers.First(m => m.KeyModifier == KeyModifier.RightCtrl)); }
+
+            if (ergodoxModifiers.RightShift) { mods.Add(keyModifiers.EZModifiers.First(m => m.KeyModifier == KeyModifier.RightShift)); }
+
+            if (ergodoxModifiers.RightWin) { mods.Add(keyModifiers.EZModifiers.First(m => m.KeyModifier == KeyModifier.RightWin)); }
 
             return mods.OrderBy(m => m.Index).ToList();
+        }
+
+        private string AggregateModifierLabels(List<EZModifier> mods)
+        {
+            var subLabel = "";
+
+            switch (mods.Count)
+            {
+                case 1:
+                    subLabel = mods.First().Labels[EZModifier.LabelSize.Large];
+
+                    break;
+                case 2:
+                    subLabel = mods.Select(m => m.Labels[EZModifier.LabelSize.Medium]).Aggregate((seed, inc) => $"{seed}+{inc}");
+
+                    break;
+                default:
+                    subLabel = mods.Select(m => m.Labels[EZModifier.LabelSize.Small]).Aggregate((seed, inc) => $"{seed}+{inc}");
+
+                    break;
+            }
+
+            return subLabel;
         }
     }
 }
