@@ -10,7 +10,6 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
     {
         private IWindowService _windowService;
         private ICommand _lostFocusCommand;
-        private ICommand _keyPressCommand;
         private string _windowTitle;
 
         public string WindowTitle
