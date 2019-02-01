@@ -8,7 +8,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 {
     public class DisplayLayoutViewModel : ViewModelBase
     {
-        private IWindowService _windowService;
+        private readonly IWindowService _windowService;
         private ICommand _lostFocusCommand;
         private string _windowTitle;
 
