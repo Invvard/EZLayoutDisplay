@@ -82,7 +82,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Model\Dictionary\LayoutTemplateDictionary.cs" />
     <Compile Include="Model\KeyTemplate.cs" />
     <Compile Include="Service\Design\ApplicationService.cs" />
     <Compile Include="Service\Design\KeyboardHookService.cs" />
