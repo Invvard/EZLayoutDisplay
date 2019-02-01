@@ -69,5 +69,15 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Properties {
                 return ((byte[])(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] layoutTemplate {
+            get {
+                object obj = ResourceManager.GetObject("layoutTemplate", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }
