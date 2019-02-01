@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using InvvardDev.EZLayoutDisplay.Desktop.Helper;
 using InvvardDev.EZLayoutDisplay.Desktop.Model;
 using InvvardDev.EZLayoutDisplay.Desktop.Model.Enum;
 using InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation;
