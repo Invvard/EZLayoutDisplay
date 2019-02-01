@@ -24,6 +24,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Design
             return new EZLayout();
         }
 
+        /// <inheritdoc />
         public ObservableCollection<KeyTemplate> GetLayoutTemplate()
         {
             var layoutTemplate = new ObservableCollection<KeyTemplate> {
