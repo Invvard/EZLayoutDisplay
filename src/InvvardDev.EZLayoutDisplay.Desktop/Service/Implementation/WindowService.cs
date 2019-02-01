@@ -26,6 +26,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
             }
 
             _windows[windowKey].Show();
+            _windows[windowKey].Activate();
         }
 
         public void CloseWindow<T>()

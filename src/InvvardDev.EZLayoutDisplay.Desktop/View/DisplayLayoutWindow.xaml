@@ -4,12 +4,21 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InvvardDev.EZLayoutDisplay.Desktop.View"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:command="http://www.galasoft.ch/mvvmlight"
         mc:Ignorable="d"
         Title="{Binding WindowTitle}" Height="450" Width="800"
-        WindowStartupLocation="CenterScreen"
-        ShowInTaskbar="False"
+        WindowStartupLocation="CenterScreen" Topmost="True"
+        ResizeMode="NoResize" WindowStyle="None"
         DataContext="{Binding DisplayLayout, Source={StaticResource Locator}}">
-    <Grid>
-        
-    </Grid>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Deactivated">
+            <command:EventToCommand Command="{Binding LostFocusCommand, Mode=OneWay}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Window.InputBindings>
+        <KeyBinding Key="Escape" Command="{Binding LostFocusCommand, Mode=OneWay}" />
+    </Window.InputBindings>
+
+    <Grid UseLayoutRounding="False" Focusable="True" />
 </Window>

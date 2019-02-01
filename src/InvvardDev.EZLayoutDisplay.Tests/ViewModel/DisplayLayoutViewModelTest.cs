@@ -1,4 +1,6 @@
-﻿using InvvardDev.EZLayoutDisplay.Desktop.ViewModel;
+﻿using InvvardDev.EZLayoutDisplay.Desktop.Service.Interface;
+using InvvardDev.EZLayoutDisplay.Desktop.ViewModel;
+using Moq;
 using Xunit;
 
 namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
@@ -9,9 +11,10 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
         public void DisplayLayoutViewModelConstructor()
         {
             //Arrange
+            var mockWindowService = new Mock<IWindowService>();
 
             //Act
-            var displayLayoutViewModel = new DisplayLayoutViewModel();
+            var displayLayoutViewModel = new DisplayLayoutViewModel(mockWindowService.Object);
 
             //Assert
             Assert.Equal("Ergodox Layout", displayLayoutViewModel.WindowTitle);
