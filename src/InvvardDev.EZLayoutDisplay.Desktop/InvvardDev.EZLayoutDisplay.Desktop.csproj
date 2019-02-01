@@ -174,7 +174,7 @@
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\keyDefinitions.json" />
-    <None Include="Properties\layoutTemplate.json" />
+    <None Include="Properties\layoutDefinition.json" />
     <None Include="Properties\Settings.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
