@@ -22,26 +22,22 @@
         <KeyBinding Key="Escape" Command="{Binding LostFocusCommand, Mode=OneWay}" />
     </Window.InputBindings>
 
-    <ItemsControl ItemsSource="{Binding RectItems}">
+    <ItemsControl ItemsSource="{Binding LayoutTemplate}">
         <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
                 <Canvas />
             </ItemsPanelTemplate>
         </ItemsControl.ItemsPanel>
-        <ItemsControl.ItemContainerStyle>
-            <Style TargetType="ContentPresenter">
-                <Setter Property="Canvas.Left" Value="{Binding X}" />
-                <Setter Property="Canvas.Top" Value="{Binding Y}" />
-            </Style>
-        </ItemsControl.ItemContainerStyle>
         <ItemsControl.ItemTemplate>
             <DataTemplate>
                 <Canvas>
-                    <Rectangle x:Name="KeyBase" Height="81" Width="54" HorizontalAlignment="Left" Canvas.Left="20"
-                               Canvas.Top="20"
-                               RenderTransformOrigin="0,0" StrokeThickness="0" Style="{DynamicResource KeyBase}" />
-                    <Rectangle x:Name="KeyTop" StrokeThickness="0" Canvas.Left="23" Canvas.Top="23" Width="48"
-                               Height="70"
+                    <Rectangle x:Name="KeyBase"
+                               Height="{Binding BaseKeyHeight}" Width="{Binding BaseKeyWidth}"
+                               Canvas.Left="{Binding BaseKeyX}" Canvas.Top="{Binding BaseKeyY}"
+                               RenderTransformOrigin="0,0" StrokeThickness="1" Style="{DynamicResource KeyBase}" />
+                    <Rectangle x:Name="KeyTop" StrokeThickness="0"
+                               Canvas.Left="{Binding TopKeyX}" Canvas.Top="{Binding TopKeyY}"
+                               Width="{Binding TopKeyWidth}" Height="{Binding TopKeyHeight}"
                                Style="{DynamicResource KeyTop}" />
                 </Canvas>
             </DataTemplate>
