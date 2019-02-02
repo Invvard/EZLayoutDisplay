@@ -1,4 +1,4 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using InvvardDev.EZLayoutDisplay.Desktop.Model;
 
@@ -23,7 +23,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Interface
         /// <summary>
         /// Gets the list of <see cref="KeyTemplate"/>.
         /// </summary>
-        /// <returns>An <see cref="ObservableCollection{KeyTemplate}"/></returns>
-        ObservableCollection<KeyTemplate> GetLayoutTemplate();
+        /// <returns>An <see cref="IEnumerable{KeyTemplate}"/></returns>
+        Task<IEnumerable<KeyTemplate>> GetLayoutTemplate();
     }
 }

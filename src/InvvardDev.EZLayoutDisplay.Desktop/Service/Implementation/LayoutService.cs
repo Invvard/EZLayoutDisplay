@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,7 +17,6 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
             "{{\"operationName\":\"getLayout\",\"variables\":{{\"hashId\":\"{0}\"}},\"query\":\"query getLayout($hashId: String!) {{\\n Layout(hashId: $hashId) {{\\n ...LayoutData\\n }}\\n}}\\n\\nfragment LayoutData on Layout {{\\n hashId\\n title\\n revisions {{\\n hashId\\n model\\n layers {{\\n hashId\\n keys\\n position\\n title\\n color\\n }}\\n}}\\n}}\\n\"}}";
 
         private const string GetLayoutRequestUri = "https://oryx.ergodox-ez.com/graphql";
-        private ObservableCollection<KeyTemplate> _layoutTemplate;
 
         #region ILayoutService implementation
 
@@ -52,29 +51,35 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
         }
 
         /// <inheritdoc />
-        public ObservableCollection<KeyTemplate> GetLayoutTemplate()
+        public async Task<IEnumerable<KeyTemplate>> GetLayoutTemplate()
         {
-            return _layoutTemplate ?? (_layoutTemplate = ReadLayoutDefinition());
+            IEnumerable<KeyTemplate> layoutTemplate = await ReadLayoutDefinition();
+
+            return layoutTemplate;
         }
 
         #endregion
 
         #region Private methods
-        
-        private ObservableCollection<KeyTemplate> ReadLayoutDefinition()
+
+        private async Task<IEnumerable<KeyTemplate>> ReadLayoutDefinition()
         {
             if (Resources.layoutDefinition.Length <= 0)
             {
                 // TODO : add logging
-                return new ObservableCollection<KeyTemplate>();
+                return new List<KeyTemplate>();
             }
 
-            var json = Encoding.Default.GetString(Resources.layoutDefinition);
+            var layoutTemplate = await Task.Run(() => {
+                                              var json = Encoding.Default.GetString(Resources.layoutDefinition);
 
-            var layoutDefinition = JsonConvert.DeserializeObject<ObservableCollection<KeyTemplate>>(json);
+                                              var layoutDefinition = JsonConvert.DeserializeObject<IEnumerable<KeyTemplate>>(json);
 
-            return layoutDefinition;
-        } 
+                                              return layoutDefinition;
+                                          });
+
+            return layoutTemplate;
+        }
 
         #endregion
     }
