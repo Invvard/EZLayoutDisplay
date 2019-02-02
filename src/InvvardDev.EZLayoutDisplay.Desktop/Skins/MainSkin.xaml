@@ -11,6 +11,7 @@
         <Setter Property="RadiusY" Value="5" />
         <Setter Property="Fill" Value="{StaticResource KeyBaseColorBrush}"/>
         <Setter Property="Stroke" Value="{StaticResource KeyBaseBorderColorBrush}" />
+        <Setter Property="StrokeThickness" Value="1"/>
     </Style>
     
     <Style TargetType="Rectangle" x:Key="KeyTop">
@@ -18,6 +19,7 @@
         <Setter Property="RadiusY" Value="3"></Setter>
         <Setter Property="Fill" Value="{StaticResource KeyTopColorBrush}"/>
         <Setter Property="Stroke" Value="{StaticResource KeyTopBorderColorBrush}" />
+        <Setter Property="StrokeThickness" Value="1"/>
     </Style>
 
 </ResourceDictionary>
