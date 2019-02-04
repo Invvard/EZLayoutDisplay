@@ -25,22 +25,11 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Design
         }
 
         /// <inheritdoc />
-        public Task<IEnumerable<KeyTemplate>> GetLayoutTemplate()
+        public async Task<IEnumerable<KeyTemplate>> GetLayoutTemplate()
         {
-            var layoutTemplate = new Task<IEnumerable<KeyTemplate>>(() => new List<KeyTemplate> {
-                                                                        new KeyTemplate(0, 0, 1.5, vOffset: 0.37),
-                                                                        new KeyTemplate(1.5, 0, vOffset: 0.37, isGlowing: true),
-                                                                        new KeyTemplate(2.5, 0, vOffset: 129, isGlowing: true),
-                                                                        new KeyTemplate(3.5, 0, isGlowing: true),
-                                                                        new KeyTemplate(0, 1, 1.5, vOffset: .37, isGlowing: true),
-                                                                        new KeyTemplate(1.5, 1, vOffset: .37, isGlowing: true),
-                                                                        new KeyTemplate(2.5, 1, vOffset: .129, isGlowing: true),
-                                                                        new KeyTemplate(3.5, 1, isGlowing: true),
-                                                                    });
+            var layoutTemplate = new Task<IEnumerable<KeyTemplate>>(() => new List<KeyTemplate>());
 
-
-
-            return layoutTemplate;
+            return await layoutTemplate;
         }
     }
 }
