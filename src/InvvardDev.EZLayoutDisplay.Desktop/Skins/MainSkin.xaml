@@ -6,20 +6,22 @@
     <SolidColorBrush x:Key="KeyTopColorBrush" Color="#fcfcfc"></SolidColorBrush>
     <SolidColorBrush x:Key="KeyTopBorderColorBrush" Color="#ffffff" Opacity="10"></SolidColorBrush>
     
-    <Style TargetType="Rectangle" x:Key="KeyBase">
+    <Style TargetType="Rectangle" x:Key="BaseKey">
+        <Setter Property="StrokeThickness" Value="1"/>
+    </Style>
+
+    <Style TargetType="Rectangle" BasedOn="{StaticResource BaseKey}" x:Key="KeyBase">
         <Setter Property="RadiusX" Value="5" />
         <Setter Property="RadiusY" Value="5" />
         <Setter Property="Fill" Value="{StaticResource KeyBaseColorBrush}"/>
         <Setter Property="Stroke" Value="{StaticResource KeyBaseBorderColorBrush}" />
-        <Setter Property="StrokeThickness" Value="1"/>
     </Style>
-    
-    <Style TargetType="Rectangle" x:Key="KeyTop">
+
+    <Style TargetType="Rectangle" BasedOn="{StaticResource BaseKey}" x:Key="KeyTop">
         <Setter Property="RadiusX" Value="3"></Setter>
         <Setter Property="RadiusY" Value="3"></Setter>
         <Setter Property="Fill" Value="{StaticResource KeyTopColorBrush}"/>
         <Setter Property="Stroke" Value="{StaticResource KeyTopBorderColorBrush}" />
-        <Setter Property="StrokeThickness" Value="1"/>
     </Style>
 
 </ResourceDictionary>
