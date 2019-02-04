@@ -6,7 +6,7 @@
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:command="http://www.galasoft.ch/mvvmlight"
     x:Class="InvvardDev.EZLayoutDisplay.Desktop.View.DisplayLayoutWindow"
-    mc:Ignorable="d" Height="450" Width="800"
+    mc:Ignorable="d" Height="423" Width="1075"
     WindowStartupLocation="CenterScreen" Topmost="True"
     ResizeMode="NoResize"
     Visibility="Visible" ShowInTaskbar="False" WindowStyle="None"
@@ -25,7 +25,7 @@
     <ItemsControl ItemsSource="{Binding LayoutTemplate}">
         <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
-                <Canvas />
+                <Canvas Margin="10" />
             </ItemsPanelTemplate>
         </ItemsControl.ItemsPanel>
         <ItemsControl.ItemTemplate>
