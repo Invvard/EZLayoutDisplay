@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using InvvardDev.EZLayoutDisplay.Desktop.Model;
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Interface
@@ -18,5 +19,11 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Interface
         /// <param name="ergodoxLayout">The <see cref="ErgodoxLayout"/> to be transformed.</param>
         /// <returns>The <see cref="EZLayout"/> transformed into.</returns>
         EZLayout PrepareEZLayout(ErgodoxLayout ergodoxLayout);
+
+        /// <summary>
+        /// Gets the list of <see cref="KeyTemplate"/>.
+        /// </summary>
+        /// <returns>An <see cref="IEnumerable{KeyTemplate}"/></returns>
+        Task<IEnumerable<KeyTemplate>> GetLayoutTemplate();
     }
 }
