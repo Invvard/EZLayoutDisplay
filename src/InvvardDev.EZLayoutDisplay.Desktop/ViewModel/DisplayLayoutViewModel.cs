@@ -73,13 +73,26 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
                                                                                                  new KeyTemplate(0, 1, 1.5, vOffset: .37, isGlowing: true),
                                                                                                  new KeyTemplate(1.5, 1, vOffset: .37, isGlowing: true),
                                                                                                  new KeyTemplate(2.5, 1, vOffset: .129, isGlowing: true),
-                                                                                                 new KeyTemplate(3.5, 1, isGlowing: true),
+
+                                                                                                 new KeyTemplate(2.5, 2, hOffset: .37, vOffset: .87, rotationAngle: 30),
+                                                                                                 new KeyTemplate(3.5, 2, hOffset: .24, vOffset: 1.37, rotationAngle: 30),
+                                                                                                 new KeyTemplate(3.5, 3, hOffset: -.26, vOffset: 1.24, rotationAngle: 30),
+                                                                                                 new KeyTemplate(1.5, 3, height: 2, vOffset: .24, rotationAngle: 30),
+                                                                                                 new KeyTemplate(2.5, 3, height: 2, hOffset: -.13, vOffset: .74, rotationAngle: 30),
+                                                                                                 new KeyTemplate(3.5, 4, hOffset: -.76, vOffset: 1.11, rotationAngle: 30),
+
+                                                                                                 new KeyTemplate(5, 2, hOffset: -.24, vOffset: 1.37, rotationAngle: -30, rotationOrigin:"1,0"),
+                                                                                                 new KeyTemplate(6, 2, hOffset: -.37, vOffset: .87, rotationAngle: -30, rotationOrigin:"1,0"),
+                                                                                                 new KeyTemplate(5, 3, hOffset: .26, vOffset: 1.24, rotationAngle: -30, rotationOrigin:"1,0"),
+                                                                                                 new KeyTemplate(5, 4, hOffset: .76, vOffset: 1.11, rotationAngle: -30, rotationOrigin:"1,0"),
+                                                                                                 new KeyTemplate(6, 3, height: 2, hOffset: .13, vOffset: .74, rotationAngle: -30, rotationOrigin:"1,0"),
+                                                                                                 new KeyTemplate(7, 3, height: 2, vOffset: .24, rotationAngle: -30, rotationOrigin:"1,0"),
                                                                                              });
             }
             else
             {
                 var definition = await _layoutService.GetLayoutTemplate();
-                LayoutTemplate = new ObservableCollection<KeyTemplate>(definition.ToList());
+                LayoutTemplate = new ObservableCollection<KeyTemplate>(definition);
             }
         }
 
