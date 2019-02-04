@@ -1,13 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reflection;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using InvvardDev.EZLayoutDisplay.Desktop.Model;
+using InvvardDev.EZLayoutDisplay.Desktop.Properties;
 using InvvardDev.EZLayoutDisplay.Desktop.Service.Interface;
 using InvvardDev.EZLayoutDisplay.Desktop.View;
+using Newtonsoft.Json;
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 {
@@ -65,29 +69,10 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         {
             if (IsInDesignModeStatic)
             {
-                LayoutTemplate = new ObservableCollection<KeyTemplate>(new List<KeyTemplate> {
-                                                                                                 new KeyTemplate(0, 0, 1.5, vOffset: 0.37),
-                                                                                                 new KeyTemplate(1.5, 0, vOffset: 0.37, isGlowing: true),
-                                                                                                 new KeyTemplate(2.5, 0, vOffset: 129, isGlowing: true),
-                                                                                                 new KeyTemplate(3.5, 0, isGlowing: true),
-                                                                                                 new KeyTemplate(0, 1, 1.5, vOffset: .37, isGlowing: true),
-                                                                                                 new KeyTemplate(1.5, 1, vOffset: .37, isGlowing: true),
-                                                                                                 new KeyTemplate(2.5, 1, vOffset: .129, isGlowing: true),
+                var json = Encoding.Default.GetString(Resources.layoutDefinition);
 
-                                                                                                 new KeyTemplate(2.5, 2, hOffset: .37, vOffset: .87, rotationAngle: 30),
-                                                                                                 new KeyTemplate(3.5, 2, hOffset: .24, vOffset: 1.37, rotationAngle: 30),
-                                                                                                 new KeyTemplate(3.5, 3, hOffset: -.26, vOffset: 1.24, rotationAngle: 30),
-                                                                                                 new KeyTemplate(1.5, 3, height: 2, vOffset: .24, rotationAngle: 30),
-                                                                                                 new KeyTemplate(2.5, 3, height: 2, hOffset: -.13, vOffset: .74, rotationAngle: 30),
-                                                                                                 new KeyTemplate(3.5, 4, hOffset: -.76, vOffset: 1.11, rotationAngle: 30),
-
-                                                                                                 new KeyTemplate(5, 2, hOffset: -.24, vOffset: 1.37, rotationAngle: -30, rotationOrigin:"1,0"),
-                                                                                                 new KeyTemplate(6, 2, hOffset: -.37, vOffset: .87, rotationAngle: -30, rotationOrigin:"1,0"),
-                                                                                                 new KeyTemplate(5, 3, hOffset: .26, vOffset: 1.24, rotationAngle: -30, rotationOrigin:"1,0"),
-                                                                                                 new KeyTemplate(5, 4, hOffset: .76, vOffset: 1.11, rotationAngle: -30, rotationOrigin:"1,0"),
-                                                                                                 new KeyTemplate(6, 3, height: 2, hOffset: .13, vOffset: .74, rotationAngle: -30, rotationOrigin:"1,0"),
-                                                                                                 new KeyTemplate(7, 3, height: 2, vOffset: .24, rotationAngle: -30, rotationOrigin:"1,0"),
-                                                                                             });
+                var layoutDefinition = JsonConvert.DeserializeObject<IEnumerable<KeyTemplate>>(json);
+                LayoutTemplate = new ObservableCollection<KeyTemplate>(layoutDefinition);
             }
             else
             {
