@@ -31,14 +31,26 @@
         <ItemsControl.ItemTemplate>
             <DataTemplate>
                 <Canvas>
-                    <Rectangle x:Name="KeyBase"
+                    <Rectangle x:Name="KeyBase" 
                                Height="{Binding BaseKeyHeight}" Width="{Binding BaseKeyWidth}"
                                Canvas.Left="{Binding BaseKeyX}" Canvas.Top="{Binding BaseKeyY}"
-                               RenderTransformOrigin="0,0" StrokeThickness="1" Style="{DynamicResource KeyBase}" />
-                    <Rectangle x:Name="KeyTop" StrokeThickness="0"
+                               RenderTransformOrigin="{Binding RotationOrigin}" Style="{DynamicResource KeyBase}">
+                        <Rectangle.RenderTransform>
+                            <TransformGroup>
+                                <RotateTransform Angle="{Binding RotationAngle}"/>
+                            </TransformGroup>
+                        </Rectangle.RenderTransform>
+                    </Rectangle>
+                    <Rectangle x:Name="KeyTop"
                                Canvas.Left="{Binding TopKeyX}" Canvas.Top="{Binding TopKeyY}"
                                Width="{Binding TopKeyWidth}" Height="{Binding TopKeyHeight}"
-                               Style="{DynamicResource KeyTop}" />
+                               RenderTransformOrigin="{Binding RotationOrigin}" Style="{DynamicResource KeyTop}">
+                        <Rectangle.RenderTransform>
+                            <TransformGroup>
+                                <RotateTransform Angle="{Binding RotationAngle}"/>
+                            </TransformGroup>
+                        </Rectangle.RenderTransform>
+                    </Rectangle>
                 </Canvas>
             </DataTemplate>
         </ItemsControl.ItemTemplate>
