@@ -107,7 +107,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private void SwitchLayer()
         {
             var keys = _ezLayout.EZLayers.First(l => l.Index == _currentLayerIndex).EZKeys;
-            CurrentLayerKeys = new ObservableCollection<EZKey>(keys);
+
+            for (int i = 0 ; i < LayoutTemplate.Count ; i++) { LayoutTemplate[i].EZKey = keys[i]; }
         }
 
         private void LostFocus()
