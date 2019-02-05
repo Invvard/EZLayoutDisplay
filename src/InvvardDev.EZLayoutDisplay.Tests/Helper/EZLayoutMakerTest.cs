@@ -188,8 +188,8 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
         }
 
         [ Theory ]
-        [ InlineData("TG", "\u2750 1", KeyCategory.Layer) ] // Should display "❐ TG 1"
-        [ InlineData("MO", "\u27F2 1", KeyCategory.Layer) ] // Should display "⟲ MO 1"
+        [ InlineData("TG", "❐ 1", KeyCategory.Layer) ]
+        [ InlineData("MO", "⟲ 1", KeyCategory.Layer) ]
         [ InlineData("OSL", "OSL 1", KeyCategory.Layer) ]
         [ InlineData("TO", "TO 1", KeyCategory.Layer) ]
         [ InlineData("TT", "TT 1", KeyCategory.Layer) ]
@@ -219,8 +219,8 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
         }
 
         [ Theory ]
-        [ InlineData("LT", "", "LT → 1", "", KeyCategory.LayerShortcuts) ]      // Should display "LT → 1"
-        [ InlineData("LT", "KC_0", "0", "LT → 1", KeyCategory.LayerShortcuts) ] // Should display "0LT → 1"
+        [ InlineData("LT", "", "LT → 1", "", KeyCategory.LayerShortcuts) ]
+        [ InlineData("LT", "KC_0", "0", "LT → 1", KeyCategory.LayerShortcuts) ]
         public void PrepareEZLayout_KeyCategoryLayerShortcut(string keyCode, string command, string expectedLabel, string expectedSubLabel, KeyCategory expectedCategory)
         {
             // Arrange
