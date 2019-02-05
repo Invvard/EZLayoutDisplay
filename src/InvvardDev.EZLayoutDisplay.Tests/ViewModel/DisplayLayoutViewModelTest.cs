@@ -17,6 +17,19 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             var mockWindowService = new Mock<IWindowService>();
             var mockLayoutService = new Mock<ILayoutService>();
             var mockSettingsService = new Mock<ISettingsService>();
+            mockSettingsService.SetupProperty(s => s.EZLayout,
+                                              new EZLayout {
+                                                               EZLayers = new List<EZLayer> {
+                                                                                                new EZLayer {
+                                                                                                                EZKeys = new List<EZKey> {
+                                                                                                                                             new EZKey {
+                                                                                                                                                           Label = "A",
+                                                                                                                                                           SubLabel = "a"
+                                                                                                                                                       }
+                                                                                                                                         }
+                                                                                                            }
+                                                                                            }
+                                                           });
 
             //Act
             var displayLayoutViewModel = new DisplayLayoutViewModel(mockWindowService.Object, mockLayoutService.Object, mockSettingsService.Object);
