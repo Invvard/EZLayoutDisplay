@@ -188,14 +188,14 @@
   { "code": "KC_F24", "label": "F24", "category": "fn" },
   {
     "code": "TG",
-    "label": "❐ TG {0}",
+    "label": "\u2750 {0}",
     "category": "layer",
     "description": "Toggle layer: Switch to a given layer. Tap this key again to return to the current layer.",
     "precedingKey": true
   },
   {
     "code": "MO",
-    "label": "⟲ MO {0}",
+    "label": "\u27F2 {0}",
     "category": "layer",
     "description": "Momentary layer toggle: Activates the selected layer, but only as long as you keep this key pressed.",
     "precedingKey": true
@@ -221,7 +221,7 @@
   },
   {
     "code": "LT",
-    "label": "LT → {0}",
+    "label": "LT \u2192 {0}",
     "category": "layerShortcuts",
     "description": "Momentary Layer Toggle: Switch to the selected layer when held, send the selected key when tapped",
     "command": "KC_NO",
