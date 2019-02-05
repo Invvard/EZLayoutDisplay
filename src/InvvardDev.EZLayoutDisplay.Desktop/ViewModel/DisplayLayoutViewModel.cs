@@ -97,18 +97,41 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             {
                 var definition = await _layoutService.GetLayoutTemplate();
                 LayoutTemplate = new ObservableCollection<KeyTemplate>(definition);
-
-                _ezLayout = _settingsService.EZLayout;
-
-                SwitchLayer();
             }
+
+            _ezLayout = _settingsService.EZLayout;
+
+            SwitchLayer();
         }
 
         private void SwitchLayer()
         {
-            var keys = _ezLayout.EZLayers.First(l => l.Index == _currentLayerIndex).EZKeys;
+            List<EZKey> keys;
 
-            for (int i = 0 ; i < LayoutTemplate.Count ; i++) { LayoutTemplate[i].EZKey = keys[i]; }
+            if (IsInDesignModeStatic)
+            {
+                keys = new List<EZKey>();
+
+                for (int i = 0 ; i < LayoutTemplate.Count ; i++)
+                {
+                    keys.Add(new EZKey {
+                                           Label = "A \u2192",
+                                           SubLabel = "Left Shift"
+                                       });
+                }
+            }
+            else
+            {
+                keys = _ezLayout?.EZLayers?.First(l => l.Index == _currentLayerIndex)?.EZKeys ?? new List<EZKey>(LayoutTemplate.Count);
+            }
+
+            if (keys.Count == LayoutTemplate.Count)
+            {
+                for (int i = 0 ; i < LayoutTemplate.Count ; i++)
+                {
+                    LayoutTemplate[i].EZKey = keys[i];
+                }
+            }
         }
 
         private void LostFocus()
