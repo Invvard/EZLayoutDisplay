@@ -6,7 +6,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
 {
     public class WindowService: IWindowService
     {
-        private Dictionary<string, Window> _windows;
+        private readonly Dictionary<string, Window> _windows;
 
         public WindowService()
         {
