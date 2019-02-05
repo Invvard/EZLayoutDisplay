@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
@@ -23,11 +24,15 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private ICommand _lostFocusCommand;
 
         private ObservableCollection<KeyTemplate> _layoutTemplate;
+        private ObservableCollection<EZKey> _currentLayerKeys;
+        private int _currentLayerIndex;
+        private EZLayout _ezLayout;
+
         private string _windowTitle;
 
         #endregion
 
-        #region MyRegion
+        #region Properties
 
         public string WindowTitle
         {
@@ -39,6 +44,12 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         {
             get => _layoutTemplate;
             set => Set(ref _layoutTemplate, value);
+        }
+
+        public ObservableCollection<EZKey> CurrentLayerKeys
+        {
+            get => _currentLayerKeys;
+            set => Set(ref _currentLayerKeys, value);
         }
 
         #endregion
@@ -64,8 +75,17 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             PopulateModel();
         }
 
+        #region Private methods
+
+        private void SetLabelUi()
+        {
+            WindowTitle = "Ergodox Layout";
+        }
+
         private async void PopulateModel()
         {
+            _currentLayerIndex = 0;
+
             if (IsInDesignModeStatic)
             {
                 var json = Encoding.Default.GetString(Resources.layoutDefinition);
@@ -77,14 +97,17 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             {
                 var definition = await _layoutService.GetLayoutTemplate();
                 LayoutTemplate = new ObservableCollection<KeyTemplate>(definition);
+
+                _ezLayout = _settingsService.EZLayout;
+
+                SwitchLayer();
             }
         }
 
-        #region Private methods
-
-        private void SetLabelUi()
+        private void SwitchLayer()
         {
-            WindowTitle = "Ergodox Layout";
+            var keys = _ezLayout.EZLayers.First(l => l.Index == _currentLayerIndex).EZKeys;
+            CurrentLayerKeys = new ObservableCollection<EZKey>(keys);
         }
 
         private void LostFocus()
