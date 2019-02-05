@@ -18,6 +18,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         private readonly IWindowService _windowService;
         private readonly ILayoutService _layoutService;
+        private readonly ISettingsService _settingsService;
 
         private ICommand _lostFocusCommand;
 
@@ -53,10 +54,11 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         #endregion
 
-        public DisplayLayoutViewModel(IWindowService windowService, ILayoutService layoutService)
+        public DisplayLayoutViewModel(IWindowService windowService, ILayoutService layoutService, ISettingsService settingsService)
         {
             _windowService = windowService;
             _layoutService = layoutService;
+            _settingsService = settingsService;
 
             SetLabelUi();
             PopulateModel();
