@@ -13,6 +13,11 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Interface
         /// Gets or sets the ErgodoxLayoutUrl setting.
         /// </summary>
         string ErgodoxLayoutUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the EZLayout setting.
+        /// </summary>
+        EZLayout EZLayout { get; set; }
         
         /// <summary>
         /// Saves all settings to file.
