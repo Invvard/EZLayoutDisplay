@@ -154,7 +154,6 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Service
             Assert.Equal(KeyCategory.Fn, layer1KeyResults[0].KeyCategory);
             Assert.Equal("Space", layer1KeyResults[1].Label);
             Assert.Equal("space", layer1KeyResults[1].GlyphName);
-            Assert.False(layer1KeyResults[1].IsLabelDisplayed);
             Assert.Equal(KeyCategory.Spacing, layer1KeyResults[1].KeyCategory);
         }
     }
