@@ -35,7 +35,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
         /// Gets the key secondary command.
         /// </summary>
         [JsonProperty("command")]
-        public KeyDefinition SecondaryCommand { get; private set; }
+        public string SecondaryCommand { get; private set; }
 
         /// <summary>
         /// Gets the key glyph name to display.
