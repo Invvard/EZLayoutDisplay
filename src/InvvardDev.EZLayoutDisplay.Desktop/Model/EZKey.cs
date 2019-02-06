@@ -35,14 +35,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
         public KeyCategory KeyCategory { get; set; }
 
         /// <summary>
-        /// Gets or sets the indicator wether the <see cref="SubLabel"/>
-        /// is above <see cref="Label"/>.
+        /// Gets or sets the type of display for this key.
         /// </summary>
-        public bool IsSubLabelAbove { get; set; }
-
-        /// <summary>
-        /// Gets the indicator if <see cref="Label"/> must be displayed.
-        /// </summary>
-        public bool IsLabelDisplayed => string.IsNullOrWhiteSpace(GlyphName);
+        public KeyDisplayType DisplayType { get; set; }
     }
 }
