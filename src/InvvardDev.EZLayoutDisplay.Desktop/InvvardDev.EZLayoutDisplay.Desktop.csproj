@@ -82,6 +82,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Helper\KeyContentTemplateSelector.cs" />
     <Compile Include="Model\Enum\KeyDisplayType.cs" />
     <Compile Include="Model\KeyTemplate.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -187,6 +188,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
