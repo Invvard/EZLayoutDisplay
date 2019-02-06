@@ -155,10 +155,10 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
         }
 
         [ Theory ]
-        [ InlineData("KC_LALT", "MOD_LSFT", "Option", "", false, KeyCategory.Modifier) ]
-        [ InlineData("OSM", "", "OSM", "", false, KeyCategory.Modifier) ]
-        [ InlineData("OSM", "MOD_LSFT", "OSM", "Shift", true, KeyCategory.Modifier) ]
-        public void PrepareEZLayout_KeyCategoryOSM(string keyCode, string command, string expectedLabel, string expectedSubLabel, bool expectedIsSubLabelAbove, KeyCategory expectedCategory)
+        [ InlineData("KC_LALT", "MOD_LSFT", "Option", "", KeyDisplayType.SimpleLabel, KeyCategory.Modifier) ]
+        [ InlineData("OSM", "", "OSM", "", KeyDisplayType.SimpleLabel, KeyCategory.Modifier) ]
+        [ InlineData("OSM", "MOD_LSFT", "OSM", "Shift", KeyDisplayType.LabelWithSubLabelOnTop, KeyCategory.Modifier) ]
+        public void PrepareEZLayout_KeyCategoryOSM(string keyCode, string command, string expectedLabel, string expectedSubLabel, KeyDisplayType expectedKeyDisplayType, KeyCategory expectedCategory)
         {
             // Arrange
             var ergodoxKey = new ErgodoxKey() {
@@ -183,7 +183,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
             var keyResult = ezLayoutResult.EZLayers.First().EZKeys.First();
             Assert.Equal(expectedLabel, keyResult.Label);
             Assert.Equal(expectedSubLabel, keyResult.SubLabel);
-            Assert.Equal(expectedIsSubLabelAbove, keyResult.IsSubLabelAbove);
+            Assert.Equal(expectedKeyDisplayType, keyResult.DisplayType);
             Assert.Equal(expectedCategory, keyResult.KeyCategory);
         }
 
@@ -249,16 +249,16 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
         }
 
         [ Theory ]
-        [ InlineData("KC_AUDIO_MUTE", "Mute", "volume-off", false, KeyCategory.Media) ]
-        [ InlineData("KC_MEDIA_EJECT", "Eject", null, true, KeyCategory.Media) ]
-        [ InlineData("KC_MS_UP", "Move up", "mouse-up", false, KeyCategory.Mouse) ]
-        [ InlineData("KC_MS_BTN4", "Button 4", null, true, KeyCategory.Mouse) ]
-        [ InlineData("KC_APPLICATION", "Application", "list-alt", false, KeyCategory.Nav) ]
-        [ InlineData("KC_PGDOWN", "PgDn", null, true, KeyCategory.Nav) ]
-        [ InlineData("KC_BSPACE", "Backspace", "backspace", false, KeyCategory.Spacing) ]
-        [ InlineData("KC_ESCAPE", "Esc", null, true, KeyCategory.Spacing) ]
-        [ InlineData("RGB_MOD", "Animate", "air", false, KeyCategory.Shine) ]
-        public void PrepareEZLayout_KeyCategoryWithGlyphs(string keyCode, string expectedLabel, string expectedGlyph, bool expectedIsDisplayedLabel, KeyCategory expectedCategory)
+        [ InlineData("KC_AUDIO_MUTE", "Mute", "volume-off", KeyDisplayType.Glyph, KeyCategory.Media) ]
+        [ InlineData("KC_MEDIA_EJECT", "Eject", null, KeyDisplayType.SimpleLabel, KeyCategory.Media) ]
+        [ InlineData("KC_MS_UP", "Move up", "mouse-up", KeyDisplayType.Glyph, KeyCategory.Mouse) ]
+        [ InlineData("KC_MS_BTN4", "Button 4", null, KeyDisplayType.SimpleLabel, KeyCategory.Mouse) ]
+        [ InlineData("KC_APPLICATION", "Application", "list-alt", KeyDisplayType.Glyph, KeyCategory.Nav) ]
+        [ InlineData("KC_PGDOWN", "PgDn", null, KeyDisplayType.SimpleLabel, KeyCategory.Nav) ]
+        [ InlineData("KC_BSPACE", "Backspace", "backspace", KeyDisplayType.Glyph, KeyCategory.Spacing) ]
+        [ InlineData("KC_ESCAPE", "Esc", null, KeyDisplayType.SimpleLabel, KeyCategory.Spacing) ]
+        [ InlineData("RGB_MOD", "Animate", "air", KeyDisplayType.Glyph, KeyCategory.Shine) ]
+        public void PrepareEZLayout_KeyCategoryWithGlyphs(string keyCode, string expectedLabel, string expectedGlyph, KeyDisplayType expectedDisplayType, KeyCategory expectedCategory)
         {
             // Arrange
             var ergodoxKey = new ErgodoxKey() {
@@ -280,7 +280,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
             var keyResult = ezLayoutResult.EZLayers.First().EZKeys.First();
             Assert.Equal(expectedLabel, keyResult.Label);
             Assert.Equal(expectedGlyph, keyResult.GlyphName);
-            Assert.Equal(expectedIsDisplayedLabel, keyResult.IsLabelDisplayed);
+            Assert.Equal(expectedDisplayType, keyResult.DisplayType);
             Assert.Equal(expectedCategory, keyResult.KeyCategory);
         }
 
@@ -343,42 +343,42 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
         }
 
         [ Theory ]
-        [ InlineData(false, false, false, false, false, false, false, false, "", false) ]
-        [ InlineData(true, false, false, false, false, false, false, false, "Alt", true) ]
-        [ InlineData(false, true, false, false, false, false, false, false, "Ctrl", true) ]
-        [ InlineData(false, false, true, false, false, false, false, false, "Shift", true) ]
-        [ InlineData(false, false, false, true, false, false, false, false, "Win", true) ]
-        [ InlineData(false, false, false, false, true, false, false, false, "Alt", true) ]
-        [ InlineData(false, false, false, false, false, true, false, false, "Ctrl", true) ]
-        [ InlineData(false, false, false, false, false, false, true, false, "Shift", true) ]
-        [ InlineData(false, false, false, false, false, false, false, true, "Win", true) ]
-        [ InlineData(true, true, false, false, false, false, false, false, "ALT+CTL", true) ]
-        [ InlineData(true, false, true, false, false, false, false, false, "ALT+SFT", true) ]
-        [ InlineData(true, false, false, true, false, false, false, false, "ALT+WIN", true) ]
-        [ InlineData(false, false, false, false, true, true, false, false, "ALT+CTL", true) ]
-        [ InlineData(false, false, false, false, true, false, true, false, "ALT+SFT", true) ]
-        [ InlineData(false, false, false, false, true, false, false, true, "ALT+WIN", true) ]
-        [ InlineData(false, true, false, false, true, false, false, false, "CTL+ALT", true) ]
-        [ InlineData(false, false, false, true, true, false, false, false, "WIN+ALT", true) ]
-        [ InlineData(false, true, false, true, true, false, false, false, "C+W+A", true) ]
-        [ InlineData(false, true, false, false, true, false, false, true, "C+A+W", true) ]
-        [ InlineData(false, true, true, false, false, false, false, true, "C+S+W", true) ]
-        [ InlineData(false, true, false, true, false, false, true, false, "C+W+S", true) ]
-        [ InlineData(false, true, true, true, false, false, false, false, "C+W+S", true) ]
-        [ InlineData(true, true, true, true, false, false, false, false, "A+C+W+S", true) ]
-        [ InlineData(false, false, false, false, true, true, true, true, "A+C+W+S", true) ]
-        [ InlineData(true, false, true, false, false, true, false, true, "A+S+C+W", true) ]
-        [ InlineData(false, true, false, true, true, false, true, false, "C+W+A+S", true) ]
-        public void PrepareEZLayout_ProcessModifiers(bool   leftAlt,
-                                                     bool   leftCtrl,
-                                                     bool   leftShift,
-                                                     bool   leftWin,
-                                                     bool   rightAlt,
-                                                     bool   rightCtrl,
-                                                     bool   rightShift,
-                                                     bool   rightWin,
-                                                     string expectedSubLabel,
-                                                     bool   expectedIsSubLabelAbove)
+        [ InlineData(false, false, false, false, false, false, false, false, "", KeyDisplayType.SimpleLabel) ]
+        [ InlineData(true, false, false, false, false, false, false, false, "Alt", KeyDisplayType.LabelWithSubLabelOnTop) ]
+        [ InlineData(false, true, false, false, false, false, false, false, "Ctrl", KeyDisplayType.LabelWithSubLabelOnTop) ]
+        [ InlineData(false, false, true, false, false, false, false, false, "Shift", KeyDisplayType.LabelWithSubLabelOnTop) ]
+        [ InlineData(false, false, false, true, false, false, false, false, "Win", KeyDisplayType.LabelWithSubLabelOnTop) ]
+        [ InlineData(false, false, false, false, true, false, false, false, "Alt", KeyDisplayType.LabelWithSubLabelOnTop) ]
+        [ InlineData(false, false, false, false, false, true, false, false, "Ctrl", KeyDisplayType.LabelWithSubLabelOnTop) ]
+        [ InlineData(false, false, false, false, false, false, true, false, "Shift", KeyDisplayType.LabelWithSubLabelOnTop) ]
+        [ InlineData(false, false, false, false, false, false, false, true, "Win", KeyDisplayType.LabelWithSubLabelOnTop) ]
+        [ InlineData(true, true, false, false, false, false, false, false, "ALT+CTL", KeyDisplayType.LabelWithSubLabelOnTop) ]
+        [ InlineData(true, false, true, false, false, false, false, false, "ALT+SFT", KeyDisplayType.LabelWithSubLabelOnTop) ]
+        [ InlineData(true, false, false, true, false, false, false, false, "ALT+WIN", KeyDisplayType.LabelWithSubLabelOnTop) ]
+        [ InlineData(false, false, false, false, true, true, false, false, "ALT+CTL", KeyDisplayType.LabelWithSubLabelOnTop) ]
+        [ InlineData(false, false, false, false, true, false, true, false, "ALT+SFT", KeyDisplayType.LabelWithSubLabelOnTop) ]
+        [ InlineData(false, false, false, false, true, false, false, true, "ALT+WIN", KeyDisplayType.LabelWithSubLabelOnTop) ]
+        [ InlineData(false, true, false, false, true, false, false, false, "CTL+ALT", KeyDisplayType.LabelWithSubLabelOnTop) ]
+        [ InlineData(false, false, false, true, true, false, false, false, "WIN+ALT", KeyDisplayType.LabelWithSubLabelOnTop) ]
+        [ InlineData(false, true, false, true, true, false, false, false, "C+W+A", KeyDisplayType.LabelWithSubLabelOnTop) ]
+        [ InlineData(false, true, false, false, true, false, false, true, "C+A+W", KeyDisplayType.LabelWithSubLabelOnTop) ]
+        [ InlineData(false, true, true, false, false, false, false, true, "C+S+W", KeyDisplayType.LabelWithSubLabelOnTop) ]
+        [ InlineData(false, true, false, true, false, false, true, false, "C+W+S", KeyDisplayType.LabelWithSubLabelOnTop) ]
+        [ InlineData(false, true, true, true, false, false, false, false, "C+W+S", KeyDisplayType.LabelWithSubLabelOnTop) ]
+        [ InlineData(true, true, true, true, false, false, false, false, "A+C+W+S", KeyDisplayType.LabelWithSubLabelOnTop) ]
+        [ InlineData(false, false, false, false, true, true, true, true, "A+C+W+S", KeyDisplayType.LabelWithSubLabelOnTop) ]
+        [ InlineData(true, false, true, false, false, true, false, true, "A+S+C+W", KeyDisplayType.LabelWithSubLabelOnTop) ]
+        [ InlineData(false, true, false, true, true, false, true, false, "C+W+A+S", KeyDisplayType.LabelWithSubLabelOnTop) ]
+        public void PrepareEZLayout_ProcessModifiers(bool           leftAlt,
+                                                     bool           leftCtrl,
+                                                     bool           leftShift,
+                                                     bool           leftWin,
+                                                     bool           rightAlt,
+                                                     bool           rightCtrl,
+                                                     bool           rightShift,
+                                                     bool           rightWin,
+                                                     string         expectedSubLabel,
+                                                     KeyDisplayType expectedDisplayType)
         {
             // Arrange
             var modifiers = new ErgodoxModifiers {
@@ -411,7 +411,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
             var keyResult = ezLayoutResult.EZLayers.First().EZKeys.First();
             Assert.Equal("A", keyResult.Label);
             Assert.Equal(expectedSubLabel, keyResult.SubLabel);
-            Assert.Equal(expectedIsSubLabelAbove, keyResult.IsSubLabelAbove);
+            Assert.Equal(expectedDisplayType, keyResult.DisplayType);
         }
     }
 }
