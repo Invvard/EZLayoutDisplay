@@ -17,11 +17,14 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
 
             DataTemplate template = SimpleLabelDataTemplate;
 
+            if (key == null) return template;
+
             switch (key.EZKey.DisplayType)
             {
                 case KeyDisplayType.None:
                 case KeyDisplayType.SimpleLabel:
                     template = SimpleLabelDataTemplate;
+
                     break;
                 case KeyDisplayType.LabelInternational:
 
@@ -34,6 +37,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
                     break;
                 case KeyDisplayType.Glyph:
                     template = GlyphDataTemplate;
+
                     break;
             }
 
