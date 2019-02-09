@@ -64,7 +64,6 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
              * KeyCategory.Fn
              * KeyCategory.Fw
              * KeyCategory.Lang
-             * KeyCategory.Modifier
              * KeyCategory.Numpad
              * KeyCategory.Other
              * KeyCategory.Punct
@@ -110,10 +109,10 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
                 case KeyCategory.Nav:
                 case KeyCategory.Spacing:
                 case KeyCategory.Shine:
-                    key.GlyphName = keyDefinition.GlyphName;
-                    key.DisplayType = string.IsNullOrWhiteSpace(key.GlyphName)
-                                          ? KeyDisplayType.SimpleLabel
-                                          : KeyDisplayType.Glyph;
+                    key.IsGlyph = keyDefinition.IsGlyph;
+                    key.DisplayType = key.IsGlyph
+                                          ? KeyDisplayType.SimpleGlyph
+                                          : KeyDisplayType.SimpleLabel;
 
                     break;
                 case KeyCategory.Shortcuts:
