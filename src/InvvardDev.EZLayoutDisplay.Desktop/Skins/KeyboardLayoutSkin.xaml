@@ -2,79 +2,89 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:helper="clr-namespace:InvvardDev.EZLayoutDisplay.Desktop.Helper">
 
-    <SolidColorBrush x:Key="KeyBaseColorBrush" Color="#f4f4f4"></SolidColorBrush>
-    <SolidColorBrush x:Key="KeyBaseBorderColorBrush" Color="#c7c7c7"></SolidColorBrush>
-    <SolidColorBrush x:Key="KeyTopColorBrush" Color="#fcfcfc"></SolidColorBrush>
-    <SolidColorBrush x:Key="KeyTopBorderColorBrush" Color="#ffffff" Opacity="10"></SolidColorBrush>
-    
+    <FontFamily x:Key="LatoFontFamily">/InvvardDev.EZLayoutDisplay.Desktop;component/Skins/Fonts/#Lato</FontFamily>
+    <FontFamily x:Key="OryxFontFamily">/InvvardDev.EZLayoutDisplay.Desktop;component/Skins/Fonts/#Oryx</FontFamily>
+
+    <SolidColorBrush x:Key="KeyBaseColorBrush" Color="#f4f4f4" />
+    <SolidColorBrush x:Key="KeyBaseBorderColorBrush" Color="#c7c7c7" />
+    <SolidColorBrush x:Key="KeyTopColorBrush" Color="#fcfcfc" />
+    <SolidColorBrush x:Key="KeyTopBorderColorBrush" Color="#ffffff" Opacity="10" />
+
     <Style TargetType="Rectangle" x:Key="BaseKey">
-        <Setter Property="StrokeThickness" Value="1"/>
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="RenderTransform">
+            <Setter.Value>
+                <TransformGroup>
+                    <RotateTransform Angle="{Binding RotationAngle}" />
+                </TransformGroup>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="RenderTransformOrigin" Value="{Binding RotationOrigin}" />
     </Style>
 
     <Style TargetType="Rectangle" BasedOn="{StaticResource BaseKey}" x:Key="KeyBase">
         <Setter Property="RadiusX" Value="5" />
         <Setter Property="RadiusY" Value="5" />
-        <Setter Property="Fill" Value="{StaticResource KeyBaseColorBrush}"/>
+        <Setter Property="Fill" Value="{StaticResource KeyBaseColorBrush}" />
         <Setter Property="Stroke" Value="{StaticResource KeyBaseBorderColorBrush}" />
     </Style>
 
     <Style TargetType="Rectangle" BasedOn="{StaticResource BaseKey}" x:Key="KeyTop">
-        <Setter Property="RadiusX" Value="3"></Setter>
-        <Setter Property="RadiusY" Value="3"></Setter>
-        <Setter Property="Fill" Value="{StaticResource KeyTopColorBrush}"/>
+        <Setter Property="RadiusX" Value="3" />
+        <Setter Property="RadiusY" Value="3" />
+        <Setter Property="Fill" Value="{StaticResource KeyTopColorBrush}" />
         <Setter Property="Stroke" Value="{StaticResource KeyTopBorderColorBrush}" />
     </Style>
 
     <DataTemplate x:Key="KeyBaseDataTemplate">
         <Canvas>
-            <Rectangle x:Name="KeyBaseRect"
+            <Rectangle x:Name="KeyBaseRect" Style="{DynamicResource KeyBase}"
                        Height="{Binding BaseKeyHeight}" Width="{Binding BaseKeyWidth}"
-                       Canvas.Left="{Binding BaseKeyX}" Canvas.Top="{Binding BaseKeyY}"
-                       RenderTransformOrigin="{Binding RotationOrigin}" Style="{DynamicResource KeyBase}">
-                <Rectangle.RenderTransform>
-                    <TransformGroup>
-                        <RotateTransform Angle="{Binding RotationAngle}" />
-                    </TransformGroup>
-                </Rectangle.RenderTransform>
-            </Rectangle>
-            <Rectangle x:Name="KeyTopRect"
+                       Canvas.Left="{Binding BaseKeyX}" Canvas.Top="{Binding BaseKeyY}" />
+            <Rectangle x:Name="KeyTopRect" Style="{DynamicResource KeyTop}"
                        Canvas.Left="{Binding TopKeyX}" Canvas.Top="{Binding TopKeyY}"
-                       Width="{Binding TopKeyWidth}" Height="{Binding TopKeyHeight}"
-                       RenderTransformOrigin="{Binding RotationOrigin}" Style="{DynamicResource KeyTop}">
-                <Rectangle.RenderTransform>
-                    <TransformGroup>
-                        <RotateTransform Angle="{Binding RotationAngle}" />
-                    </TransformGroup>
-                </Rectangle.RenderTransform>
-            </Rectangle></Canvas>
+                       Width="{Binding TopKeyWidth}" Height="{Binding TopKeyHeight}" />
+        </Canvas>
     </DataTemplate>
+
+    <Style TargetType="Label" x:Key="SimpleKeyBase">
+        <Setter Property="RenderTransformOrigin" Value="{Binding RotationOrigin}" />
+        <Setter Property="RenderTransform">
+            <Setter.Value>
+                <TransformGroup>
+                    <RotateTransform Angle="{Binding RotationAngle}" />
+                </TransformGroup>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Canvas.Left" Value="{Binding TopKeyX}" />
+        <Setter Property="Canvas.Top" Value="{Binding TopKeyY}" />
+        <Setter Property="Width" Value="{Binding TopKeyWidth}" />
+        <Setter Property="Height" Value="{Binding TopKeyHeight}" />
+        <Setter Property="FontFamily" Value="{StaticResource LatoFontFamily}" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="SimpleGlyphBase">
+        <Setter Property="FontFamily" Value="{StaticResource OryxFontFamily}" />
+    </Style>
 
     <DataTemplate x:Key="SimpleLabelDataTemplate">
         <Canvas>
             <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource KeyBaseDataTemplate}" />
-            <Label x:Name="KeyContent" Content="{Binding EZKey.Label}" HorizontalContentAlignment="Center"
-                           VerticalContentAlignment="Center"
-                           Canvas.Left="{Binding TopKeyX}" Canvas.Top="{Binding TopKeyY}"
-                           Width="{Binding TopKeyWidth}" Height="{Binding TopKeyHeight}"
-                           RenderTransformOrigin="{Binding RotationOrigin}">
-                <Label.RenderTransform>
-                    <TransformGroup>
-                        <RotateTransform Angle="{Binding RotationAngle}" />
-                    </TransformGroup>
-                </Label.RenderTransform>
-            </Label>
+            <Label Content="{Binding EZKey.Label}" Style="{StaticResource SimpleKeyBase}" />
         </Canvas>
     </DataTemplate>
 
-    <DataTemplate x:Key="GlyphDataTemplate">
+    <DataTemplate x:Key="SimpleGlyphDataTemplate">
         <Canvas>
             <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource KeyBaseDataTemplate}" />
-            <Image Source="Images/tray_base.ico" />
+            <Label Content="{Binding EZKey.Label}" Style="{StaticResource SimpleGlyphBase}" />
         </Canvas>
     </DataTemplate>
-    
+
     <helper:KeyContentTemplateSelector x:Key="KeyContentTemplateSelector"
                                        SimpleLabelDataTemplate="{StaticResource SimpleLabelDataTemplate}"
-                                       GlyphDataTemplate="{StaticResource GlyphDataTemplate}" />
+                                       SimpleGlyphDataTemplate="{StaticResource SimpleGlyphDataTemplate}" />
 
 </ResourceDictionary>
