@@ -123,7 +123,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
         [ InlineData("KC_F1", "F1", KeyCategory.Fn) ]
         [ InlineData("MAGIC_TOGGLE_NKRO", "NKRO", KeyCategory.Fw) ]
         [ InlineData("KC_LANG1", "LANG 1", KeyCategory.Lang) ]
-        [ InlineData("KC_LSHIFT", "Shift", KeyCategory.Modifier) ]
+        [ InlineData("KC_LSHIFT", "\u21e7", KeyCategory.Modifier) ]
         [ InlineData("KC_KP_0", "0", KeyCategory.Numpad) ]
         [ InlineData("KC_TRANSPARENT", "", KeyCategory.Other) ]
         [ InlineData("KC_PAUSE", "Pause", KeyCategory.Other) ]
@@ -155,9 +155,9 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
         }
 
         [ Theory ]
-        [ InlineData("KC_LALT", "MOD_LSFT", "Option", "", KeyDisplayType.SimpleLabel, KeyCategory.Modifier) ]
+        [ InlineData("KC_LALT", "MOD_LSFT", "Left Alt", "", KeyDisplayType.SimpleLabel, KeyCategory.Modifier) ]
         [ InlineData("OSM", "", "OSM", "", KeyDisplayType.SimpleLabel, KeyCategory.Modifier) ]
-        [ InlineData("OSM", "MOD_LSFT", "OSM", "Shift", KeyDisplayType.LabelWithSubLabelOnTop, KeyCategory.Modifier) ]
+        [ InlineData("OSM", "MOD_LSFT", "OSM", "\u21e7", KeyDisplayType.LabelWithSubLabelOnTop, KeyCategory.Modifier) ]
         public void PrepareEZLayout_KeyCategoryOSM(string keyCode, string command, string expectedLabel, string expectedSubLabel, KeyDisplayType expectedKeyDisplayType, KeyCategory expectedCategory)
         {
             // Arrange
@@ -249,16 +249,16 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
         }
 
         [ Theory ]
-        [ InlineData("KC_AUDIO_MUTE", "Mute", "volume-off", KeyDisplayType.Glyph, KeyCategory.Media) ]
-        [ InlineData("KC_MEDIA_EJECT", "Eject", null, KeyDisplayType.SimpleLabel, KeyCategory.Media) ]
-        [ InlineData("KC_MS_UP", "Move up", "mouse-up", KeyDisplayType.Glyph, KeyCategory.Mouse) ]
-        [ InlineData("KC_MS_BTN4", "Button 4", null, KeyDisplayType.SimpleLabel, KeyCategory.Mouse) ]
-        [ InlineData("KC_APPLICATION", "Application", "list-alt", KeyDisplayType.Glyph, KeyCategory.Nav) ]
-        [ InlineData("KC_PGDOWN", "PgDn", null, KeyDisplayType.SimpleLabel, KeyCategory.Nav) ]
-        [ InlineData("KC_BSPACE", "Backspace", "backspace", KeyDisplayType.Glyph, KeyCategory.Spacing) ]
-        [ InlineData("KC_ESCAPE", "Esc", null, KeyDisplayType.SimpleLabel, KeyCategory.Spacing) ]
-        [ InlineData("RGB_MOD", "Animate", "air", KeyDisplayType.Glyph, KeyCategory.Shine) ]
-        public void PrepareEZLayout_KeyCategoryWithGlyphs(string keyCode, string expectedLabel, string expectedGlyph, KeyDisplayType expectedDisplayType, KeyCategory expectedCategory)
+        [ InlineData("KC_AUDIO_MUTE", "\ue913", KeyDisplayType.SimpleGlyph, KeyCategory.Media) ]
+        [ InlineData("KC_MEDIA_EJECT", "\ue90c", KeyDisplayType.SimpleGlyph, KeyCategory.Media) ]
+        [ InlineData("KC_MS_UP", "\ue91c", KeyDisplayType.SimpleGlyph, KeyCategory.Mouse) ]
+        [ InlineData("KC_MS_BTN4", "Button 4", KeyDisplayType.SimpleLabel, KeyCategory.Mouse) ]
+        [ InlineData("KC_APPLICATION", "\ue90f", KeyDisplayType.SimpleGlyph, KeyCategory.Nav) ]
+        [ InlineData("KC_PGDOWN", "PgDn", KeyDisplayType.SimpleLabel, KeyCategory.Nav) ]
+        [ InlineData("KC_BSPACE", "\ue918", KeyDisplayType.SimpleGlyph, KeyCategory.Spacing) ]
+        [ InlineData("KC_ESCAPE", "Esc", KeyDisplayType.SimpleLabel, KeyCategory.Spacing) ]
+        [ InlineData("RGB_MOD", "\ue916", KeyDisplayType.SimpleGlyph, KeyCategory.Shine) ]
+        public void PrepareEZLayout_KeyCategoryWithGlyphs(string keyCode, string expectedLabel, KeyDisplayType expectedDisplayType, KeyCategory expectedCategory)
         {
             // Arrange
             var ergodoxKey = new ErgodoxKey() {
@@ -279,7 +279,6 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
             Assert.Single(ezLayoutResult.EZLayers.First().EZKeys);
             var keyResult = ezLayoutResult.EZLayers.First().EZKeys.First();
             Assert.Equal(expectedLabel, keyResult.Label);
-            Assert.Equal(expectedGlyph, keyResult.GlyphName);
             Assert.Equal(expectedDisplayType, keyResult.DisplayType);
             Assert.Equal(expectedCategory, keyResult.KeyCategory);
         }

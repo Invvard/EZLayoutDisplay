@@ -152,8 +152,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Service
             var layer1KeyResults = ezLayoutResult.EZLayers[1].EZKeys;
             Assert.Equal("F1", layer1KeyResults[0].Label);
             Assert.Equal(KeyCategory.Fn, layer1KeyResults[0].KeyCategory);
-            Assert.Equal("Space", layer1KeyResults[1].Label);
-            Assert.Equal("space", layer1KeyResults[1].GlyphName);
+            Assert.Equal("\u23b5", layer1KeyResults[1].Label);
             Assert.Equal(KeyCategory.Spacing, layer1KeyResults[1].KeyCategory);
         }
     }
