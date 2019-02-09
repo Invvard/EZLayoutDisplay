@@ -20,9 +20,9 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
         public string SubLabel { get; set; }
 
         /// <summary>
-        /// Gets or sets the Glyph name.
+        /// Gets or sets the indicator whether a label is a custom glyph.
         /// </summary>
-        public string GlyphName { get; set; }
+        public bool IsGlyph { get; set; }
 
         /// <summary>
         /// Gets or sets the key glowing color.

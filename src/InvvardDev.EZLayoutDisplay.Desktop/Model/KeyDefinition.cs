@@ -40,8 +40,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
         /// <summary>
         /// Gets the key glyph name to display.
         /// </summary>
-        [JsonProperty("glyph")]
-        public string GlyphName { get; private set; }
+        [JsonProperty("isglyph")]
+        public bool IsGlyph { get; private set; }
 
         /// <summary>
         /// Gets the key preceding key indicator (blocks the targeted layer).
