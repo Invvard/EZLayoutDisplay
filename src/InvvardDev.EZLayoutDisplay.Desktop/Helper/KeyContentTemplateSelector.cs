@@ -9,15 +9,13 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
     public class KeyContentTemplateSelector : DataTemplateSelector
     {
         public DataTemplate SimpleLabelDataTemplate { get; set; }
-        public DataTemplate GlyphDataTemplate { get; set; }
+        public DataTemplate SimpleGlyphDataTemplate { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
-            var key = item as KeyTemplate;
-
             DataTemplate template = SimpleLabelDataTemplate;
 
-            if (key == null) return template;
+            if (!(item is KeyTemplate key)) return template;
 
             switch (key.EZKey.DisplayType)
             {
@@ -35,10 +33,19 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
                 case KeyDisplayType.LabelWithSubLabelOnTop:
 
                     break;
-                case KeyDisplayType.Glyph:
-                    template = GlyphDataTemplate;
+                case KeyDisplayType.SimpleGlyph:
+                    template = SimpleGlyphDataTemplate;
 
                     break;
+                case KeyDisplayType.GlyphWithSubLabelUnder:
+
+                    break;
+                case KeyDisplayType.GlyphWithSubLabelOnTop:
+
+                    break;
+                default:
+
+                    throw new ArgumentOutOfRangeException();
             }
 
             return template;
