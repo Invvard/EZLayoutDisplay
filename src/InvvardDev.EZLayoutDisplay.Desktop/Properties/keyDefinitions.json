@@ -94,10 +94,11 @@
   },
   {
     "code": "SFT_T",
-    "label": "Left Shift",
+    "label": "\u21e7",
     "category": "dualFunction",
     "command": "KC_NO",
-    "description": "Tapping results in the keystroke specified in <\"command\"> - holding acts as Left Shift"
+    "description": "Tapping results in the keystroke specified in <\"command\"> - holding acts as Left Shift",
+    "isglyph": "true"
   },
   {
     "code": "ALT_T",
@@ -227,29 +228,44 @@
     "command": "KC_NO",
     "precedingKey": true
   },
-  { "code": "KC_AUDIO_MUTE", "label": "Mute", "category": "media", "glyph": "volume-off" },
-  { "code": "KC_AUDIO_VOL_UP", "label": "Volume up", "category": "media", "glyph": "volume-up" },
+  {
+    "code": "KC_AUDIO_MUTE",
+    "label": "\ue913",
+    "category": "media",
+    "description": "Volume off / Mute",
+    "isglyph": "true"
+  },
+  {
+    "code": "KC_AUDIO_VOL_UP",
+    "label": "\ue914",
+    "category": "media",
+    "description": "Volume up",
+    "isglyph": "true"
+  },
   {
     "code": "KC_AUDIO_VOL_DOWN",
-    "label": "Volume down",
+    "label": "\ue912",
     "category": "media",
-    "glyph": "volume-down"
+    "description": "Volume down",
+    "isglyph": "true"
   },
   {
     "code": "KC_MEDIA_NEXT_TRACK",
-    "label": "Next",
+    "label": "\ue908",
     "category": "media",
-    "glyph": "step-forward"
+    "description": "Next track",
+    "isglyph": "true"
   },
   {
     "code": "KC_MEDIA_PREV_TRACK",
-    "label": "Prev",
+    "label": "\ue90a",
     "category": "media",
-    "glyph": "step-backward"
+    "description": "Previous track",
+    "isglyph": "true"
   },
-  { "code": "KC_MEDIA_STOP", "label": "Stop", "category": "media", "glyph": "stop" },
-  { "code": "KC_MEDIA_PLAY_PAUSE", "label": "Play", "category": "media", "glyph": "play" },
-  { "code": "KC_MEDIA_EJECT", "label": "Eject", "category": "media" },
+  { "code": "KC_MEDIA_STOP", "label": "\ue919", "category": "media", "description": "Stop media","isglyph": "true" },
+  { "code": "KC_MEDIA_PLAY_PAUSE", "label": "\ue91a", "category": "media", "description": "Play/Pause media", "isglyph": "true" },
+  { "code": "KC_MEDIA_EJECT", "label": "\ue90c", "category": "media", "description": "Eject", "isglyph": "true" },
   { "code": "KC_MAIL", "label": "Mail", "category": "media" },
   { "code": "KC_CALCULATOR", "label": "Calc", "category": "media" },
   { "code": "KC_MY_COMPUTER", "label": "File manager", "category": "media" },
@@ -259,16 +275,16 @@
   { "code": "KC_WWW_FORWARD", "label": "WWW Fwd", "category": "media" },
   { "code": "KC_WWW_REFRESH", "label": "Refresh", "category": "media" },
   { "code": "KC_WWW_FAVORITES", "label": "Favorites", "category": "media" },
-  { "code": "KC_MEDIA_FAST_FORWARD", "label": "Fast forward", "category": "media" },
-  { "code": "KC_MEDIA_REWIND", "label": "Rewind", "category": "media" },
-  { "code": "KC_LSHIFT", "label": "Shift", "category": "modifier" },
-  { "code": "KC_RSHIFT", "label": "Shift", "category": "modifier" },
-  { "code": "KC_LCTRL", "label": "Ctrl", "category": "modifier" },
-  { "code": "KC_RCTRL", "label": "Ctrl", "category": "modifier" },
-  { "code": "KC_LALT", "label": "Option", "category": "modifier" },
-  { "code": "KC_RALT", "label": "Option", "category": "modifier" },
-  { "code": "KC_LGUI", "label": "Meta", "category": "modifier" },
-  { "code": "KC_RGUI", "label": "Meta", "category": "modifier" },
+  { "code": "KC_MEDIA_FAST_FORWARD", "label": "\ue906", "category": "media", "description": "Fast forward", "isglyph": "true" },
+  { "code": "KC_MEDIA_REWIND", "label": "\ue909", "category": "media", "description": "Rewind", "isglyph": "true" },
+  { "code": "KC_LSHIFT", "label": "\u21e7", "category": "modifier", "description": "Left shift", "isglyph": "true" },
+  { "code": "KC_RSHIFT", "label": "\u21e7", "category": "modifier", "description": "Right Shift", "isglyph": "true"},
+  { "code": "KC_LCTRL", "label": "Left Ctrl", "category": "modifier" },
+  { "code": "KC_RCTRL", "label": "Right Ctrl", "category": "modifier" },
+  { "code": "KC_LALT", "label": "Left Alt", "category": "modifier" },
+  { "code": "KC_RALT", "label": "AltGr", "category": "modifier" },
+  { "code": "KC_LGUI", "label": "\ue904", "category": "modifier", "description": "Left Cmd/Win", "isglyph": "true" },
+  { "code": "KC_RGUI", "label": "\ue904", "category": "modifier", "description": "Right Cmd/Win", "isglyph": "true" },
   {
     "code": "OSM",
     "label": "OSM",
@@ -276,23 +292,23 @@
     "description":
       "One-shot modifier: Turns a modifier on, but only for one keypress. Once you press a key in the modifier is then deactivated. You can keep the modifier active by holding the key down."
   },
-  { "code": "MOD_LSFT", "label": "Shift", "category": "modifier" },
-  { "code": "MOD_RSFT", "label": "Shift", "category": "modifier" },
+  { "code": "MOD_LSFT", "label": "\u21e7", "category": "modifier", "description": "Left Shift", "isglyph": "true" },
+  { "code": "MOD_RSFT", "label": "\u21e7", "category": "modifier", "description": "Right Shift", "isglyph": "true" },
   { "code": "MOD_LCTL", "label": "Ctrl", "category": "modifier" },
   { "code": "MOD_RCTL", "label": "Ctrl", "category": "modifier" },
-  { "code": "MOD_LALT", "label": "Option", "category": "modifier" },
-  { "code": "MOD_RALT", "label": "Option", "category": "modifier" },
-  { "code": "MOD_LGUI", "label": "Meta", "category": "modifier" },
-  { "code": "MOD_RGUI", "label": "Meta", "category": "modifier" },
+  { "code": "MOD_LALT", "label": "Alt", "category": "modifier" },
+  { "code": "MOD_RALT", "label": "Alt", "category": "modifier" },
+  { "code": "MOD_LGUI", "label": "\ue904", "category": "modifier", "description": "Left Win", "isglyph": "true"  },
+  { "code": "MOD_RGUI", "label": "\ue904", "category": "modifier", "description": "Right Win", "isglyph": "true" },
   { "code": "MOD_HYPR", "label": "Hyper", "category": "modifier" },
   { "code": "MOD_MEH", "label": "Meh", "category": "modifier" },
-  { "code": "KC_MS_UP", "label": "Move up", "category": "mouse", "glyph": "mouse-up" },
-  { "code": "KC_MS_DOWN", "label": "Move down", "category": "mouse", "glyph": "mouse-down" },
-  { "code": "KC_MS_LEFT", "label": "Move left", "category": "mouse", "glyph": "mouse-left" },
-  { "code": "KC_MS_RIGHT", "label": "Move right", "category": "mouse", "glyph": "mouse-right" },
-  { "code": "KC_MS_BTN1", "label": "Left click", "category": "mouse", "glyph": "left-click" },
-  { "code": "KC_MS_BTN2", "label": "Right click", "category": "mouse", "glyph": "right-click" },
-  { "code": "KC_MS_BTN3", "label": "Middle click", "category": "mouse", "glyph": "middle-click" },
+  { "code": "KC_MS_UP", "label": "\ue91c", "category": "mouse", "description": "Mouse up", "isglyph": "true" },
+  { "code": "KC_MS_DOWN", "label": "\ue91d", "category": "mouse", "description": "Mouse down", "isglyph": "true" },
+  { "code": "KC_MS_LEFT", "label": "\ue91e", "category": "mouse", "description": "Mouse left", "isglyph": "true" },
+  { "code": "KC_MS_RIGHT", "label": "\ue91f", "category": "mouse", "description": "Mouse right", "isglyph": "true" },
+  { "code": "KC_MS_BTN1", "label": "\ue920", "category": "mouse", "description": "Left click", "isglyph": "true" },
+  { "code": "KC_MS_BTN2", "label": "\ue922", "category": "mouse", "description": "Right click", "isglyph": "true" },
+  { "code": "KC_MS_BTN3", "label": "\ue921", "category": "mouse", "description": "Middle click", "isglyph": "true" },
   { "code": "KC_MS_BTN4", "label": "Button 4", "category": "mouse" },
   { "code": "KC_MS_BTN5", "label": "Button 5", "category": "mouse" },
   { "code": "KC_MS_WH_UP", "label": "Wheel Up", "category": "mouse" },
@@ -302,48 +318,27 @@
   { "code": "KC_MS_ACCEL0", "label": "Acceleration 0", "category": "mouse" },
   { "code": "KC_MS_ACCEL1", "label": "Acceleration 1", "category": "mouse" },
   { "code": "KC_MS_ACCEL2", "label": "Acceleration 2", "category": "mouse" },
-  { "code": "KC_BSPACE", "label": "Backspace", "category": "spacing", "glyph": "backspace" },
+  { "code": "KC_BSPACE", "label": "\ue918", "category": "spacing", "description": "backspace", "isglyph": "true" },
   { "code": "KC_TAB", "label": "Tab", "category": "spacing" },
-  { "code": "KC_ENTER", "label": "Enter", "category": "spacing", "glyph": "enter" },
-  {
-    "code": "LALT",
-    "label": "Alt",
-    "category": "shortcuts",
-    "command": "KC_NO",
-    "description": "Add a \"command\" and it becomes Alt+<\"command\">"
-  },
+  { "code": "KC_ENTER", "label": "\u23ce", "category": "spacing", "description": "Enter" },
+  { "code": "LALT", "label": "Alt", "category": "shortcuts", "command": "KC_NO", "description": "Add a \"command\" and it becomes Alt+<\"command\">" },
   { "code": "KC_ESCAPE", "label": "Esc", "category": "spacing" },
-  {
-    "code": "KC_SPACE",
-    "label": "Space",
-    "category": "spacing",
-    "glyph": "space",
-    "description": "Spacebar"
-  },
+  { "code": "KC_SPACE", "label": "\u23b5", "category": "spacing", "description": "Spacebar" },
+  
   { "code": "KC_PGUP", "label": "PgUp", "category": "nav" },
-  {
-    "code": "KC_APPLICATION",
-    "label": "Application",
-    "category": "nav",
-    "description": "Contextual menu",
-    "glyph": "list-alt"
-  },
+  { "code": "KC_APPLICATION", "label": "\ue90f", "category": "nav", "description": "Contextual menu", "isglyph": "true" },
   { "code": "KC_PGDOWN", "label": "PgDn", "category": "nav" },
   { "code": "KC_END", "label": "End", "category": "nav" },
   { "code": "KC_HOME", "label": "Home", "category": "nav" },
-  { "code": "KC_LEFT", "label": "Left arrow", "category": "nav", "glyph": "left-arrow" },
-  { "code": "KC_UP", "label": "Up arrow", "category": "nav", "glyph": "up-arrow" },
-  { "code": "KC_RIGHT", "label": "Right arrow", "category": "nav", "glyph": "right-arrow" },
-  { "code": "KC_DOWN", "label": "Down arrow", "category": "nav", "glyph": "down-arrow" },
-  {
-    "code": "KC_PSCREEN",
-    "label": "SysRq",
-    "category": "nav",
-    "description": "Also known as Print Screen. Alt+SysRq would give you the Linux Magic SysRq combo on one key."
-  },
+  { "code": "KC_LEFT", "label": "\u25c0", "category": "nav", "description": "Left arrow" },
+  { "code": "KC_UP", "label": "\u25b2", "category": "nav", "description": "Up arrow" },
+  { "code": "KC_RIGHT", "label": "\u25b6", "category": "nav", "description": "Right arrow" },
+  { "code": "KC_DOWN", "label": "\u25bc", "category": "nav", "description": "Down arrow" },
+  { "code": "KC_PSCREEN", "label": "SysRq", "category": "nav", "description": "Also known as Print Screen. Alt+SysRq would give you the Linux Magic SysRq combo on one key." },
   { "code": "KC_INSERT", "label": "Ins", "category": "nav" },
   { "code": "KC_DELETE", "label": "Del", "category": "nav" },
   { "code": "KC_SCROLLLOCK", "label": "Scroll lock", "category": "nav" },
+  
   { "code": "KC_KP_0", "label": "0", "category": "numpad" },
   { "code": "KC_KP_1", "label": "1", "category": "numpad" },
   { "code": "KC_KP_2", "label": "2", "category": "numpad" },
@@ -575,22 +570,13 @@
   { "code": "DE_TILD", "label": "German ~", "category": "nordic" },
   { "code": "DE_PIPE", "label": "German |", "category": "nordic" },
   { "code": "MAGIC_TOGGLE_NKRO", "label": "NKRO", "category": "fw", "description": "Toggle N-Key Rollover mode" },
-  { "code": "RGB_MOD", "label": "Animate", "category": "shine", "glyph": "air" },
-  {
-    "code": "RGB_SLD",
-    "label": "Stop animation",
-    "category": "shine",
-    "glyph": "pause-circle-o"
-  },
-  { "code": "RGB_VAI", "label": "Brightness +", "category": "shine", "glyph": "brightness-up" },
-  { "code": "RGB_VAD", "label": "Brightness -", "category": "shine", "glyph": "brightness-down" },
-  {
-    "code": "RGB_HUI",
-    "label": "Hue +",
-    "category": "shine",
-    "glyph": "hui"
-  },
-  { "code": "RGB_HUD", "label": "Hue -", "category": "shine", "glyph": "hud" },
-  { "code": "RGB_TOG", "label": "Toggle lighting", "category": "shine", "glyph": "toggle-on" },
-  { "code": "RGB", "label": "", "category": "shine", "glyph": "color-palette" }
+  
+  { "code": "RGB_MOD", "label": "\ue916", "category": "shine", "description": "Animate", "isglyph": "true" },
+  { "code": "RGB_SLD", "label": "\ue90e", "category": "shine", "description": "Pause animation", "isglyph": "true" },
+  { "code": "RGB_VAI", "label": "\ue911", "category": "shine", "description": "Brightness up", "isglyph": "true" },
+  { "code": "RGB_VAD", "label": "\ue910", "category": "shine", "description": "Brightness down", "isglyph": "true" },
+  { "code": "RGB_HUI", "label": "\ue923", "category": "shine", "description": "Hue +", "isglyph": "true" },
+  { "code": "RGB_HUD", "label": "\ue924", "category": "shine", "glyph": "hud", "isglyph": "true" },
+  { "code": "RGB_TOG", "label": "\ue90d", "category": "shine", "description": "Toggle lighting", "isglyph": "true" },
+  { "code": "RGB", "label": "\ue915", "category": "shine", "description": "Color palette", "isglyph": "true" }
 ]
