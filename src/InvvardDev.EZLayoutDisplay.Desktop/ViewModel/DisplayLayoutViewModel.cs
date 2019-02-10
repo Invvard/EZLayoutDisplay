@@ -115,8 +115,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
                 for (int i = 0 ; i < LayoutTemplate.Count ; i++)
                 {
                     keys.Add(new EZKey {
-                                           Label = "A \u2192",
-                                           SubLabel = "Left Shift"
+                                           Label = new KeyLabel("A \u2192"),
+                                           Modifier = new KeyLabel("Left Shift")
                                        });
                 }
             }
