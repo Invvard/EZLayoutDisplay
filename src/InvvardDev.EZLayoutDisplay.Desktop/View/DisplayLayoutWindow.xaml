@@ -22,48 +22,12 @@
         <KeyBinding Key="Escape" Command="{Binding LostFocusCommand, Mode=OneWay}" />
     </Window.InputBindings>
 
-    <ItemsControl ItemsSource="{Binding LayoutTemplate}">
+    <ItemsControl ItemsSource="{Binding LayoutTemplate}"
+                  ItemTemplateSelector="{StaticResource KeyContentTemplateSelector}">
         <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
                 <Canvas Margin="10" />
             </ItemsPanelTemplate>
         </ItemsControl.ItemsPanel>
-        <ItemsControl.ItemTemplate>
-            <DataTemplate>
-                <Canvas>
-                    <Rectangle x:Name="KeyBaseRect"
-                               Height="{Binding BaseKeyHeight}" Width="{Binding BaseKeyWidth}"
-                               Canvas.Left="{Binding BaseKeyX}" Canvas.Top="{Binding BaseKeyY}"
-                               RenderTransformOrigin="{Binding RotationOrigin}" Style="{DynamicResource KeyBase}">
-                        <Rectangle.RenderTransform>
-                            <TransformGroup>
-                                <RotateTransform Angle="{Binding RotationAngle}" />
-                            </TransformGroup>
-                        </Rectangle.RenderTransform>
-                    </Rectangle>
-                    <Rectangle x:Name="KeyTopRect"
-                               Canvas.Left="{Binding TopKeyX}" Canvas.Top="{Binding TopKeyY}"
-                               Width="{Binding TopKeyWidth}" Height="{Binding TopKeyHeight}"
-                               RenderTransformOrigin="{Binding RotationOrigin}" Style="{DynamicResource KeyTop}">
-                        <Rectangle.RenderTransform>
-                            <TransformGroup>
-                                <RotateTransform Angle="{Binding RotationAngle}" />
-                            </TransformGroup>
-                        </Rectangle.RenderTransform>
-                    </Rectangle>
-                    <Label x:Name="KeyContent" Content="{Binding EZKey.Label}" HorizontalContentAlignment="Center"
-                           VerticalContentAlignment="Center"
-                           Canvas.Left="{Binding TopKeyX}" Canvas.Top="{Binding TopKeyY}"
-                           Width="{Binding TopKeyWidth}" Height="{Binding TopKeyHeight}"
-                           RenderTransformOrigin="{Binding RotationOrigin}">
-                        <Label.RenderTransform>
-                            <TransformGroup>
-                                <RotateTransform Angle="{Binding RotationAngle}" />
-                            </TransformGroup>
-                        </Label.RenderTransform>
-                    </Label>
-                </Canvas>
-            </DataTemplate>
-        </ItemsControl.ItemTemplate>
     </ItemsControl>
 </Window>
