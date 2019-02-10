@@ -23,8 +23,8 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
                                                                                                 new EZLayer {
                                                                                                                 EZKeys = new List<EZKey> {
                                                                                                                                              new EZKey {
-                                                                                                                                                           Label = "A",
-                                                                                                                                                           SubLabel = "a"
+                                                                                                                                                           Label = new KeyLabel("A"),
+                                                                                                                                                           Modifier = new KeyLabel("a")
                                                                                                                                                        }
                                                                                                                                          }
                                                                                                             }
@@ -64,7 +64,10 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             //Arrange
             var layoutTemplate = new List<KeyTemplate>();
 
-            for (int i = 0 ; i < numberOfKey ; i++) { layoutTemplate.Add(new KeyTemplate(i, i, 54, 81)); }
+            for (int i = 0 ; i < numberOfKey ; i++)
+            {
+                layoutTemplate.Add(new KeyTemplate(i, i, 54, 81));
+            }
 
             var mockWindowService = new Mock<IWindowService>();
             var mockLayoutService = new Mock<ILayoutService>();

@@ -91,6 +91,30 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
             Assert.Equal(expectedColor, ezLayoutResult.EZLayers.First().Color);
         }
 
+        [ Fact ]
+        public void PrepareEZLayout_KeyCodeUnknown()
+        {
+            // Arrange
+            var ergodoxKey = new ErgodoxKey() {
+                                                  GlowColor = "",
+                                                  Code = "KC_UNKNOWN_ADSLKFJ"
+            };
+            ErgodoxLayout ergodoxLayout = InitializeDataTree();
+            ergodoxLayout.Revisions.First().Layers.First().Keys.Add(ergodoxKey);
+
+            EZLayout ezLayoutResult;
+
+            // Act
+            var ezLayoutMaker = new EZLayoutMaker();
+            ezLayoutResult = ezLayoutMaker.PrepareEZLayout(ergodoxLayout);
+
+            // Assert
+            Assert.Single(ezLayoutResult.EZLayers);
+            Assert.Single(ezLayoutResult.EZLayers.First().EZKeys);
+            Assert.Equal("", ezLayoutResult.EZLayers.First().EZKeys.First().Label.Content);
+            Assert.False(ezLayoutResult.EZLayers.First().EZKeys.First().Label.IsGlyph);
+        }
+
         [ Theory ]
         [ InlineData("KC_TRANSPARENT", "expectedColor") ]
         public void PrepareEZLayout_InitializeEZKey(string expectedKeyCode, string expectedColor)
@@ -129,7 +153,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
         [ InlineData("KC_SCOLON", ";", KeyCategory.Punct) ]
         [ InlineData("KC_AT", "@", KeyCategory.ShiftedPunct) ]
         [ InlineData("KC_SYSTEM_POWER", "Power", KeyCategory.System) ]
-        public void PrepareEZLayout_KeyCategoryWithDirectLabel(string keyCode, string expectedLabel, KeyCategory expectedCategory)
+        public void PrepareEZLayout_KeyCategoryWithSimpleLabel(string keyCode, string expectedLabel, KeyCategory expectedCategory)
         {
             // Arrange
             var ergodoxKey = new ErgodoxKey() {
@@ -149,15 +173,16 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
             Assert.Single(ezLayoutResult.EZLayers);
             Assert.Single(ezLayoutResult.EZLayers.First().EZKeys);
             var keyResult = ezLayoutResult.EZLayers.First().EZKeys.First();
-            Assert.Equal(expectedLabel, keyResult.Label);
+            Assert.Equal(expectedLabel, keyResult.Label.Content);
+            Assert.False(keyResult.Label.IsGlyph);
             Assert.Equal(expectedCategory, keyResult.KeyCategory);
         }
 
         [ Theory ]
         [ InlineData("KC_LALT", "MOD_LSFT", "Left Alt", "", KeyDisplayType.SimpleLabel, KeyCategory.Modifier) ]
         [ InlineData("OSM", "", "OSM", "", KeyDisplayType.SimpleLabel, KeyCategory.Modifier) ]
-        [ InlineData("OSM", "MOD_LSFT", "OSM", "\u21e7", KeyDisplayType.LabelWithSubLabelOnTop, KeyCategory.Modifier) ]
-        public void PrepareEZLayout_KeyCategoryOSM(string keyCode, string command, string expectedLabel, string expectedSubLabel, KeyDisplayType expectedKeyDisplayType, KeyCategory expectedCategory)
+        [ InlineData("OSM", "MOD_LSFT", "OSM", "\u21e7", KeyDisplayType.ModifierOnTop, KeyCategory.Modifier) ]
+        public void PrepareEZLayout_KeyCategoryOSM(string keyCode, string command, string expectedLabel, string expectedSubLabel, KeyDisplayType expectedDisplayType, KeyCategory expectedCategory)
         {
             // Arrange
             var ergodoxKey = new ErgodoxKey() {
@@ -180,9 +205,17 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
             Assert.Single(ezLayoutResult.EZLayers.First().EZKeys);
 
             var keyResult = ezLayoutResult.EZLayers.First().EZKeys.First();
-            Assert.Equal(expectedLabel, keyResult.Label);
-            Assert.Equal(expectedSubLabel, keyResult.SubLabel);
-            Assert.Equal(expectedKeyDisplayType, keyResult.DisplayType);
+            Assert.Equal(expectedLabel, keyResult.Label.Content);
+            if (expectedDisplayType == KeyDisplayType.SimpleLabel)
+            {
+                Assert.Null(keyResult.Modifier);
+            }
+            else
+            {
+                Assert.Equal(expectedSubLabel, keyResult.Modifier.Content);
+                Assert.False(keyResult.Modifier.IsGlyph);
+            }
+            Assert.Equal(expectedDisplayType, keyResult.DisplayType);
             Assert.Equal(expectedCategory, keyResult.KeyCategory);
         }
 
@@ -213,14 +246,14 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
             Assert.Single(ezLayoutResult.EZLayers);
             Assert.Single(ezLayoutResult.EZLayers.First().EZKeys);
             var keyResult = ezLayoutResult.EZLayers.First().EZKeys.First();
-            Assert.Equal(expectedLabel, keyResult.Label);
+            Assert.Equal(expectedLabel, keyResult.Label.Content);
             Assert.Equal(expectedCategory, keyResult.KeyCategory);
         }
 
         [ Theory ]
-        [ InlineData("LT", "", "LT → 1", "", KeyCategory.LayerShortcuts) ]
-        [ InlineData("LT", "KC_0", "0", "LT → 1", KeyCategory.LayerShortcuts) ]
-        public void PrepareEZLayout_KeyCategoryLayerShortcut(string keyCode, string command, string expectedLabel, string expectedSubLabel, KeyCategory expectedCategory)
+        [ InlineData("LT", "", "LT → 1", "", KeyDisplayType.SimpleLabel, KeyCategory.LayerShortcuts) ]
+        [ InlineData("LT", "KC_0", "0", "LT → 1", KeyDisplayType.ModifierUnder, KeyCategory.LayerShortcuts) ]
+        public void PrepareEZLayout_KeyCategoryLayerShortcut(string keyCode, string command, string expectedLabel, string expectedSubLabel, KeyDisplayType expectedDisplayType, KeyCategory expectedCategory)
         {
             // Arrange
             var ergodoxKey = new ErgodoxKey() {
@@ -242,22 +275,30 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
             Assert.Single(ezLayoutResult.EZLayers);
             Assert.Single(ezLayoutResult.EZLayers.First().EZKeys);
             var keyResult = ezLayoutResult.EZLayers.First().EZKeys.First();
-            Assert.Equal(expectedLabel, keyResult.Label);
-            Assert.Equal(expectedSubLabel, keyResult.SubLabel);
+            Assert.Equal(expectedLabel, keyResult.Label.Content);
+            if (expectedDisplayType == KeyDisplayType.SimpleLabel)
+            {
+                Assert.Null(keyResult.Modifier);
+            }
+            else
+            {
+                Assert.Equal(expectedSubLabel, keyResult.Modifier.Content);
+                Assert.False(keyResult.Modifier.IsGlyph);
+            }
             Assert.Equal(expectedCategory, keyResult.KeyCategory);
         }
 
         [ Theory ]
-        [ InlineData("KC_AUDIO_MUTE", "\ue913", KeyDisplayType.SimpleGlyph, KeyCategory.Media, true) ]
-        [ InlineData("KC_MEDIA_EJECT", "\ue90c", KeyDisplayType.SimpleGlyph, KeyCategory.Media, true) ]
-        [ InlineData("KC_MS_UP", "\ue91c", KeyDisplayType.SimpleGlyph, KeyCategory.Mouse, true) ]
+        [ InlineData("KC_AUDIO_MUTE", "\ue913", KeyDisplayType.SimpleLabel, KeyCategory.Media, true) ]
+        [ InlineData("KC_MEDIA_EJECT", "\ue90c", KeyDisplayType.SimpleLabel, KeyCategory.Media, true) ]
+        [ InlineData("KC_MS_UP", "\ue91c", KeyDisplayType.SimpleLabel, KeyCategory.Mouse, true) ]
         [ InlineData("KC_MS_BTN4", "Button 4", KeyDisplayType.SimpleLabel, KeyCategory.Mouse, false) ]
-        [ InlineData("KC_APPLICATION", "\ue90f", KeyDisplayType.SimpleGlyph, KeyCategory.Nav, true) ]
+        [ InlineData("KC_APPLICATION", "\ue90f", KeyDisplayType.SimpleLabel, KeyCategory.Nav, true) ]
         [ InlineData("KC_PGDOWN", "PgDn", KeyDisplayType.SimpleLabel, KeyCategory.Nav, false) ]
-        [ InlineData("KC_BSPACE", "\ue918", KeyDisplayType.SimpleGlyph, KeyCategory.Spacing, true) ]
+        [ InlineData("KC_BSPACE", "\ue918", KeyDisplayType.SimpleLabel, KeyCategory.Spacing, true) ]
         [ InlineData("KC_ESCAPE", "Esc", KeyDisplayType.SimpleLabel, KeyCategory.Spacing, false) ]
-        [ InlineData("RGB_MOD", "\ue916", KeyDisplayType.SimpleGlyph, KeyCategory.Shine, true) ]
-        public void PrepareEZLayout_KeyCategoryWithGlyphs(string keyCode, string expectedLabel, KeyDisplayType expectedDisplayType, KeyCategory expectedCategory, bool expectedIssGlyph)
+        [ InlineData("RGB_MOD", "\ue916", KeyDisplayType.SimpleLabel, KeyCategory.Shine, true) ]
+        public void PrepareEZLayout_KeyCategoryWithGlyphs(string keyCode, string expectedLabel, KeyDisplayType expectedDisplayType, KeyCategory expectedCategory, bool expectedIsGlyph)
         {
             // Arrange
             var ergodoxKey = new ErgodoxKey() {
@@ -277,16 +318,16 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
             Assert.Single(ezLayoutResult.EZLayers);
             Assert.Single(ezLayoutResult.EZLayers.First().EZKeys);
             var keyResult = ezLayoutResult.EZLayers.First().EZKeys.First();
-            Assert.Equal(expectedLabel, keyResult.Label);
+            Assert.Equal(expectedLabel, keyResult.Label.Content);
+            Assert.Equal(expectedIsGlyph, keyResult.Label.IsGlyph);
             Assert.Equal(expectedDisplayType, keyResult.DisplayType);
             Assert.Equal(expectedCategory, keyResult.KeyCategory);
-            Assert.Equal(expectedIssGlyph, keyResult.IsGlyph);
         }
 
         [ Theory ]
-        [ InlineData("ALL_T", "KC_6", "6", "Hyper", KeyCategory.DualFunction) ]
-        [ InlineData("ALL_T", "", "Hyper", "", KeyCategory.DualFunction) ]
-        public void PrepareEZLayout_KeyCategoryDualFunction(string keyCode, string command, string expectedLabel, string expectedSubLabel, KeyCategory expectedCategory)
+        [ InlineData("ALL_T", "KC_6", "6", "Hyper", KeyCategory.DualFunction, KeyDisplayType.ModifierUnder) ]
+        [ InlineData("ALL_T", "", "Hyper", "", KeyCategory.DualFunction, KeyDisplayType.SimpleLabel) ]
+        public void PrepareEZLayout_KeyCategoryDualFunction(string keyCode, string command, string expectedLabel, string expectedSubLabel, KeyCategory expectedCategory, KeyDisplayType expectedDisplayType)
         {
             // Arrange
             var ergodoxKey = new ErgodoxKey() {
@@ -307,15 +348,22 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
             Assert.Single(ezLayoutResult.EZLayers);
             Assert.Single(ezLayoutResult.EZLayers.First().EZKeys);
             var keyResult = ezLayoutResult.EZLayers.First().EZKeys.First();
-            Assert.Equal(expectedLabel, keyResult.Label);
-            Assert.Equal(expectedSubLabel, keyResult.SubLabel);
+            Assert.Equal(expectedLabel, keyResult.Label.Content);
+            if (expectedDisplayType == KeyDisplayType.SimpleLabel)
+            {
+                Assert.Null(keyResult.Modifier);
+            }
+            else
+            {
+                Assert.Equal(expectedSubLabel, keyResult.Modifier.Content);
+            }
             Assert.Equal(expectedCategory, keyResult.KeyCategory);
         }
 
         [ Theory ]
-        [ InlineData("LALT", "KC_3", "Alt + 3", "", KeyCategory.Shortcuts) ]
-        [ InlineData("LALT", "", "Alt", "", KeyCategory.Shortcuts) ]
-        public void PrepareEZLayout_KeyCategoryShortcuts(string keyCode, string command, string expectedLabel, string expectedSubLabel, KeyCategory expectedCategory)
+        [ InlineData("LALT", "KC_3", "Alt + 3", KeyCategory.Shortcuts) ]
+        [ InlineData("LALT", "", "Alt", KeyCategory.Shortcuts) ]
+        public void PrepareEZLayout_KeyCategoryShortcuts(string keyCode, string command, string expectedLabel, KeyCategory expectedCategory)
         {
             // Arrange
             var ergodoxKey = new ErgodoxKey() {
@@ -336,38 +384,38 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
             Assert.Single(ezLayoutResult.EZLayers);
             Assert.Single(ezLayoutResult.EZLayers.First().EZKeys);
             var keyResult = ezLayoutResult.EZLayers.First().EZKeys.First();
-            Assert.Equal(expectedLabel, keyResult.Label);
-            Assert.Equal(expectedSubLabel, keyResult.SubLabel);
+            Assert.Equal(expectedLabel, keyResult.Label.Content);
+            Assert.Null(keyResult.Modifier);
             Assert.Equal(expectedCategory, keyResult.KeyCategory);
         }
 
         [ Theory ]
         [ InlineData(false, false, false, false, false, false, false, false, "", KeyDisplayType.SimpleLabel) ]
-        [ InlineData(true, false, false, false, false, false, false, false, "Alt", KeyDisplayType.LabelWithSubLabelOnTop) ]
-        [ InlineData(false, true, false, false, false, false, false, false, "Ctrl", KeyDisplayType.LabelWithSubLabelOnTop) ]
-        [ InlineData(false, false, true, false, false, false, false, false, "Shift", KeyDisplayType.LabelWithSubLabelOnTop) ]
-        [ InlineData(false, false, false, true, false, false, false, false, "Win", KeyDisplayType.LabelWithSubLabelOnTop) ]
-        [ InlineData(false, false, false, false, true, false, false, false, "Alt", KeyDisplayType.LabelWithSubLabelOnTop) ]
-        [ InlineData(false, false, false, false, false, true, false, false, "Ctrl", KeyDisplayType.LabelWithSubLabelOnTop) ]
-        [ InlineData(false, false, false, false, false, false, true, false, "Shift", KeyDisplayType.LabelWithSubLabelOnTop) ]
-        [ InlineData(false, false, false, false, false, false, false, true, "Win", KeyDisplayType.LabelWithSubLabelOnTop) ]
-        [ InlineData(true, true, false, false, false, false, false, false, "ALT+CTL", KeyDisplayType.LabelWithSubLabelOnTop) ]
-        [ InlineData(true, false, true, false, false, false, false, false, "ALT+SFT", KeyDisplayType.LabelWithSubLabelOnTop) ]
-        [ InlineData(true, false, false, true, false, false, false, false, "ALT+WIN", KeyDisplayType.LabelWithSubLabelOnTop) ]
-        [ InlineData(false, false, false, false, true, true, false, false, "ALT+CTL", KeyDisplayType.LabelWithSubLabelOnTop) ]
-        [ InlineData(false, false, false, false, true, false, true, false, "ALT+SFT", KeyDisplayType.LabelWithSubLabelOnTop) ]
-        [ InlineData(false, false, false, false, true, false, false, true, "ALT+WIN", KeyDisplayType.LabelWithSubLabelOnTop) ]
-        [ InlineData(false, true, false, false, true, false, false, false, "CTL+ALT", KeyDisplayType.LabelWithSubLabelOnTop) ]
-        [ InlineData(false, false, false, true, true, false, false, false, "WIN+ALT", KeyDisplayType.LabelWithSubLabelOnTop) ]
-        [ InlineData(false, true, false, true, true, false, false, false, "C+W+A", KeyDisplayType.LabelWithSubLabelOnTop) ]
-        [ InlineData(false, true, false, false, true, false, false, true, "C+A+W", KeyDisplayType.LabelWithSubLabelOnTop) ]
-        [ InlineData(false, true, true, false, false, false, false, true, "C+S+W", KeyDisplayType.LabelWithSubLabelOnTop) ]
-        [ InlineData(false, true, false, true, false, false, true, false, "C+W+S", KeyDisplayType.LabelWithSubLabelOnTop) ]
-        [ InlineData(false, true, true, true, false, false, false, false, "C+W+S", KeyDisplayType.LabelWithSubLabelOnTop) ]
-        [ InlineData(true, true, true, true, false, false, false, false, "A+C+W+S", KeyDisplayType.LabelWithSubLabelOnTop) ]
-        [ InlineData(false, false, false, false, true, true, true, true, "A+C+W+S", KeyDisplayType.LabelWithSubLabelOnTop) ]
-        [ InlineData(true, false, true, false, false, true, false, true, "A+S+C+W", KeyDisplayType.LabelWithSubLabelOnTop) ]
-        [ InlineData(false, true, false, true, true, false, true, false, "C+W+A+S", KeyDisplayType.LabelWithSubLabelOnTop) ]
+        [ InlineData(true, false, false, false, false, false, false, false, "Alt", KeyDisplayType.ModifierOnTop) ]
+        [ InlineData(false, true, false, false, false, false, false, false, "Ctrl", KeyDisplayType.ModifierOnTop) ]
+        [ InlineData(false, false, true, false, false, false, false, false, "Shift", KeyDisplayType.ModifierOnTop) ]
+        [ InlineData(false, false, false, true, false, false, false, false, "Win", KeyDisplayType.ModifierOnTop) ]
+        [ InlineData(false, false, false, false, true, false, false, false, "Alt", KeyDisplayType.ModifierOnTop) ]
+        [ InlineData(false, false, false, false, false, true, false, false, "Ctrl", KeyDisplayType.ModifierOnTop) ]
+        [ InlineData(false, false, false, false, false, false, true, false, "Shift", KeyDisplayType.ModifierOnTop) ]
+        [ InlineData(false, false, false, false, false, false, false, true, "Win", KeyDisplayType.ModifierOnTop) ]
+        [ InlineData(true, true, false, false, false, false, false, false, "ALT+CTL", KeyDisplayType.ModifierOnTop) ]
+        [ InlineData(true, false, true, false, false, false, false, false, "ALT+SFT", KeyDisplayType.ModifierOnTop) ]
+        [ InlineData(true, false, false, true, false, false, false, false, "ALT+WIN", KeyDisplayType.ModifierOnTop) ]
+        [ InlineData(false, false, false, false, true, true, false, false, "ALT+CTL", KeyDisplayType.ModifierOnTop) ]
+        [ InlineData(false, false, false, false, true, false, true, false, "ALT+SFT", KeyDisplayType.ModifierOnTop) ]
+        [ InlineData(false, false, false, false, true, false, false, true, "ALT+WIN", KeyDisplayType.ModifierOnTop) ]
+        [ InlineData(false, true, false, false, true, false, false, false, "CTL+ALT", KeyDisplayType.ModifierOnTop) ]
+        [ InlineData(false, false, false, true, true, false, false, false, "WIN+ALT", KeyDisplayType.ModifierOnTop) ]
+        [ InlineData(false, true, false, true, true, false, false, false, "C+W+A", KeyDisplayType.ModifierOnTop) ]
+        [ InlineData(false, true, false, false, true, false, false, true, "C+A+W", KeyDisplayType.ModifierOnTop) ]
+        [ InlineData(false, true, true, false, false, false, false, true, "C+S+W", KeyDisplayType.ModifierOnTop) ]
+        [ InlineData(false, true, false, true, false, false, true, false, "C+W+S", KeyDisplayType.ModifierOnTop) ]
+        [ InlineData(false, true, true, true, false, false, false, false, "C+W+S", KeyDisplayType.ModifierOnTop) ]
+        [ InlineData(true, true, true, true, false, false, false, false, "A+C+W+S", KeyDisplayType.ModifierOnTop) ]
+        [ InlineData(false, false, false, false, true, true, true, true, "A+C+W+S", KeyDisplayType.ModifierOnTop) ]
+        [ InlineData(true, false, true, false, false, true, false, true, "A+S+C+W", KeyDisplayType.ModifierOnTop) ]
+        [ InlineData(false, true, false, true, true, false, true, false, "C+W+A+S", KeyDisplayType.ModifierOnTop) ]
         public void PrepareEZLayout_ProcessModifiers(bool           leftAlt,
                                                      bool           leftCtrl,
                                                      bool           leftShift,
@@ -408,8 +456,16 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
             Assert.Single(ezLayoutResult.EZLayers);
             Assert.Single(ezLayoutResult.EZLayers.First().EZKeys);
             var keyResult = ezLayoutResult.EZLayers.First().EZKeys.First();
-            Assert.Equal("A", keyResult.Label);
-            Assert.Equal(expectedSubLabel, keyResult.SubLabel);
+            Assert.Equal("A", keyResult.Label.Content);
+            if (expectedDisplayType == KeyDisplayType.SimpleLabel)
+            {
+                Assert.Null(keyResult.Modifier);
+            }
+            else
+            {
+                Assert.Equal(expectedSubLabel, keyResult.Modifier.Content);
+                Assert.False(keyResult.Modifier.IsGlyph);
+            }
             Assert.Equal(expectedDisplayType, keyResult.DisplayType);
         }
     }
