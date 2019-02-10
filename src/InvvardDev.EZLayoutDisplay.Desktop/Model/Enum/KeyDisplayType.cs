@@ -13,33 +13,13 @@
         SimpleLabel = 1,
 
         /// <summary>
-        /// Display a label with a sub label under.
+        /// Display a label with a modifier under.
         /// </summary>
-        LabelWithSubLabelUnder = 2,
+        ModifierUnder = 2,
 
         /// <summary>
-        /// Display a label with a sub label on top.
+        /// Display a label with a modifier on top.
         /// </summary>
-        LabelWithSubLabelOnTop = 3,
-
-        /// <summary>
-        /// Display a glyph and no label.
-        /// </summary>
-        SimpleGlyph = 4,
-
-        /// <summary>
-        /// Display a glyph with sub label under.
-        /// </summary>
-        GlyphWithSubLabelUnder = 5,
-
-        /// <summary>
-        /// Display a glyph with sub label on top.
-        /// </summary>
-        GlyphWithSubLabelOnTop = 6,
-
-        /// <summary>
-        /// Display a label with the international indicator at the top right.
-        /// </summary>
-        LabelInternational = 7,
+        ModifierOnTop = 3
     }
 }
