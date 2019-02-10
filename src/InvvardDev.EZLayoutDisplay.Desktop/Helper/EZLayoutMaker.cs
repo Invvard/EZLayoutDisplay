@@ -73,8 +73,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
              **/
             EZKey key = new EZKey {
                                       KeyCategory = keyDefinition.KeyCategory,
-                                      Label = keyDefinition.Label,
-                                      SubLabel = "",
+                                      Label = new KeyLabel(keyDefinition.Label, keyDefinition.IsGlyph),
                                       Color = ergodoxKey.GlowColor,
                                       DisplayType = KeyDisplayType.SimpleLabel
                                   };
@@ -89,9 +88,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
                 case KeyCategory.Layer:
                 case KeyCategory.LayerShortcuts:
 
-                    key.Label = string.Format(key.Label, ergodoxKey.Layer.ToString());
+                    key.Label.Content = string.Format(key.Label.Content, ergodoxKey.Layer.ToString());
                     AddCommandLabel(ergodoxKey, key);
-                    key.DisplayType = KeyDisplayType.SimpleLabel;
 
                     break;
                 case KeyCategory.Modifier:
@@ -99,8 +97,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
                     if (ergodoxKey.Code == "OSM" && !string.IsNullOrWhiteSpace(ergodoxKey.Command))
                     {
                         var commandDefinition = GetKeyDefinition(ergodoxKey.Command);
-                        key.SubLabel = commandDefinition.Label;
-                        key.DisplayType = KeyDisplayType.LabelWithSubLabelOnTop;
+                        key.Modifier = new KeyLabel(commandDefinition.Label);
+                        key.DisplayType = KeyDisplayType.ModifierOnTop;
                     }
 
                     break;
@@ -109,10 +107,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
                 case KeyCategory.Nav:
                 case KeyCategory.Spacing:
                 case KeyCategory.Shine:
-                    key.IsGlyph = keyDefinition.IsGlyph;
-                    key.DisplayType = key.IsGlyph
-                                          ? KeyDisplayType.SimpleGlyph
-                                          : KeyDisplayType.SimpleLabel;
+                    key.DisplayType = KeyDisplayType.SimpleLabel;
 
                     break;
                 case KeyCategory.Shortcuts:
@@ -120,8 +115,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
                     if (!string.IsNullOrWhiteSpace(ergodoxKey.Command))
                     {
                         var commandDefinition = GetKeyDefinition(ergodoxKey.Command);
-                        key.Label = $"{key.Label} + {commandDefinition.Label}";
-                        key.DisplayType = KeyDisplayType.SimpleLabel;
+                        key.Label.Content = $"{key.Label.Content} + {commandDefinition.Label}";
                     }
 
                     break;
@@ -140,7 +134,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
 
         private KeyDefinition GetKeyDefinition(string ergodoxKeyCode)
         {
-            var keyDefinition = _keyDefinitionDictionary.KeyDefinitions.First(k => k.KeyCode == ergodoxKeyCode);
+            var keyDefinition = _keyDefinitionDictionary.KeyDefinitions.FirstOrDefault(k => k.KeyCode == ergodoxKeyCode) ?? GetKeyDefinition("KC_NO");
 
             return keyDefinition;
         }
@@ -150,9 +144,9 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
             if (string.IsNullOrWhiteSpace(ergodoxKey.Command)) return;
 
             var commandDefinition = GetKeyDefinition(ergodoxKey.Command);
-            key.SubLabel = key.Label;
-            key.Label = commandDefinition.Label;
-            key.DisplayType = KeyDisplayType.LabelWithSubLabelUnder;
+            key.Modifier = key.Label;
+            key.Label = new KeyLabel(commandDefinition.Label, commandDefinition.IsGlyph);
+            key.DisplayType = KeyDisplayType.ModifierOnTop;
         }
 
         private void ProcessModifiers(ErgodoxKey ergodoxKey, EZKey key)
@@ -163,8 +157,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
 
             if (!mods.Any()) return;
 
-            key.SubLabel = AggregateModifierLabels(mods);
-            key.DisplayType = KeyDisplayType.LabelWithSubLabelOnTop;
+            key.Modifier = new KeyLabel(AggregateModifierLabels(mods));
+            key.DisplayType = KeyDisplayType.ModifierOnTop;
         }
 
         private List<EZModifier> GetModifiersApplied(ErgodoxModifiers ergodoxModifiers)
