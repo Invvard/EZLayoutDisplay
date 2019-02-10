@@ -92,8 +92,8 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
         }
 
         [ Theory ]
-        [ InlineData("KC_TRANSPARENT", "expectedColor", 0) ]
-        public void PrepareEZLayout_InitializeEZKey(string expectedKeyCode, string expectedColor, int expectedIndex)
+        [ InlineData("KC_TRANSPARENT", "expectedColor") ]
+        public void PrepareEZLayout_InitializeEZKey(string expectedKeyCode, string expectedColor)
         {
             // Arrange
             var ergodoxKey = new ErgodoxKey() {
@@ -113,7 +113,6 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
             Assert.Single(ezLayoutResult.EZLayers);
             Assert.Single(ezLayoutResult.EZLayers.First().EZKeys);
             Assert.Equal(expectedColor, ezLayoutResult.EZLayers.First().EZKeys.First().Color);
-            Assert.Equal(expectedIndex, ezLayoutResult.EZLayers.First().EZKeys.First().Position);
         }
 
         [ Theory ]
@@ -249,16 +248,16 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
         }
 
         [ Theory ]
-        [ InlineData("KC_AUDIO_MUTE", "\ue913", KeyDisplayType.SimpleGlyph, KeyCategory.Media) ]
-        [ InlineData("KC_MEDIA_EJECT", "\ue90c", KeyDisplayType.SimpleGlyph, KeyCategory.Media) ]
-        [ InlineData("KC_MS_UP", "\ue91c", KeyDisplayType.SimpleGlyph, KeyCategory.Mouse) ]
-        [ InlineData("KC_MS_BTN4", "Button 4", KeyDisplayType.SimpleLabel, KeyCategory.Mouse) ]
-        [ InlineData("KC_APPLICATION", "\ue90f", KeyDisplayType.SimpleGlyph, KeyCategory.Nav) ]
-        [ InlineData("KC_PGDOWN", "PgDn", KeyDisplayType.SimpleLabel, KeyCategory.Nav) ]
-        [ InlineData("KC_BSPACE", "\ue918", KeyDisplayType.SimpleGlyph, KeyCategory.Spacing) ]
-        [ InlineData("KC_ESCAPE", "Esc", KeyDisplayType.SimpleLabel, KeyCategory.Spacing) ]
-        [ InlineData("RGB_MOD", "\ue916", KeyDisplayType.SimpleGlyph, KeyCategory.Shine) ]
-        public void PrepareEZLayout_KeyCategoryWithGlyphs(string keyCode, string expectedLabel, KeyDisplayType expectedDisplayType, KeyCategory expectedCategory)
+        [ InlineData("KC_AUDIO_MUTE", "\ue913", KeyDisplayType.SimpleGlyph, KeyCategory.Media, true) ]
+        [ InlineData("KC_MEDIA_EJECT", "\ue90c", KeyDisplayType.SimpleGlyph, KeyCategory.Media, true) ]
+        [ InlineData("KC_MS_UP", "\ue91c", KeyDisplayType.SimpleGlyph, KeyCategory.Mouse, true) ]
+        [ InlineData("KC_MS_BTN4", "Button 4", KeyDisplayType.SimpleLabel, KeyCategory.Mouse, false) ]
+        [ InlineData("KC_APPLICATION", "\ue90f", KeyDisplayType.SimpleGlyph, KeyCategory.Nav, true) ]
+        [ InlineData("KC_PGDOWN", "PgDn", KeyDisplayType.SimpleLabel, KeyCategory.Nav, false) ]
+        [ InlineData("KC_BSPACE", "\ue918", KeyDisplayType.SimpleGlyph, KeyCategory.Spacing, true) ]
+        [ InlineData("KC_ESCAPE", "Esc", KeyDisplayType.SimpleLabel, KeyCategory.Spacing, false) ]
+        [ InlineData("RGB_MOD", "\ue916", KeyDisplayType.SimpleGlyph, KeyCategory.Shine, true) ]
+        public void PrepareEZLayout_KeyCategoryWithGlyphs(string keyCode, string expectedLabel, KeyDisplayType expectedDisplayType, KeyCategory expectedCategory, bool expectedIssGlyph)
         {
             // Arrange
             var ergodoxKey = new ErgodoxKey() {
@@ -281,6 +280,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
             Assert.Equal(expectedLabel, keyResult.Label);
             Assert.Equal(expectedDisplayType, keyResult.DisplayType);
             Assert.Equal(expectedCategory, keyResult.KeyCategory);
+            Assert.Equal(expectedIssGlyph, keyResult.IsGlyph);
         }
 
         [ Theory ]

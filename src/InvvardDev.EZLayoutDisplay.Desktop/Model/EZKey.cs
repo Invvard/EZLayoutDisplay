@@ -5,11 +5,6 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
     public class EZKey
     {
         /// <summary>
-        /// Gets or sets the key position on layout.
-        /// </summary>
-        public int Position { get; set; }
-
-        /// <summary>
         /// Gets or sets the key main label.
         /// </summary>
         public string Label { get; set; }
@@ -39,4 +34,6 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
         /// </summary>
         public KeyDisplayType DisplayType { get; set; }
     }
+
+
 }
