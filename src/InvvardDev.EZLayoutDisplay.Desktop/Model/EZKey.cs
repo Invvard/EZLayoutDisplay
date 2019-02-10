@@ -7,17 +7,12 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
         /// <summary>
         /// Gets or sets the key main label.
         /// </summary>
-        public string Label { get; set; }
+        public KeyLabel Label { get; set; }
 
         /// <summary>
         /// Gets or sets the key secondary label.
         /// </summary>
-        public string SubLabel { get; set; }
-
-        /// <summary>
-        /// Gets or sets the indicator whether a label is a custom glyph.
-        /// </summary>
-        public bool IsGlyph { get; set; }
+        public KeyLabel Modifier { get; set; }
 
         /// <summary>
         /// Gets or sets the key glowing color.
@@ -35,5 +30,16 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
         public KeyDisplayType DisplayType { get; set; }
     }
 
+    public class KeyLabel
+    {
+        public string Content { get; set; }
 
+        public bool IsGlyph { get; set; }
+
+        public KeyLabel(string content, bool isGlyph = false)
+        {
+            Content = content;
+            IsGlyph = isGlyph;
+        }
+    }
 }
