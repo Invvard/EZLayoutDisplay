@@ -24,27 +24,13 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
                     template = SimpleLabelDataTemplate;
 
                     break;
-                case KeyDisplayType.LabelInternational:
+                case KeyDisplayType.ModifierOnTop:
 
                     break;
-                case KeyDisplayType.LabelWithSubLabelUnder:
-
-                    break;
-                case KeyDisplayType.LabelWithSubLabelOnTop:
-
-                    break;
-                case KeyDisplayType.SimpleGlyph:
-                    template = SimpleGlyphDataTemplate;
-
-                    break;
-                case KeyDisplayType.GlyphWithSubLabelUnder:
-
-                    break;
-                case KeyDisplayType.GlyphWithSubLabelOnTop:
+                case KeyDisplayType.ModifierUnder:
 
                     break;
                 default:
-
                     throw new ArgumentOutOfRangeException();
             }
 
