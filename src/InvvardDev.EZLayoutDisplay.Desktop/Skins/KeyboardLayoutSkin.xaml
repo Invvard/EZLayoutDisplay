@@ -4,7 +4,7 @@
 
     <FontFamily x:Key="LatoFontFamily">/InvvardDev.EZLayoutDisplay.Desktop;component/Skins/Fonts/#Lato</FontFamily>
     <FontFamily x:Key="OryxFontFamily">/InvvardDev.EZLayoutDisplay.Desktop;component/Skins/Fonts/#Oryx</FontFamily>
-
+ 
     <SolidColorBrush x:Key="KeyBaseColorBrush" Color="#f4f4f4" />
     <SolidColorBrush x:Key="KeyBaseBorderColorBrush" Color="#c7c7c7" />
     <SolidColorBrush x:Key="KeyTopColorBrush" Color="#fcfcfc" />
@@ -62,29 +62,27 @@
         <Setter Property="Canvas.Top" Value="{Binding TopKeyY}" />
         <Setter Property="Width" Value="{Binding TopKeyWidth}" />
         <Setter Property="Height" Value="{Binding TopKeyHeight}" />
-        <Setter Property="FontFamily" Value="{StaticResource LatoFontFamily}" />
-    </Style>
-
-    <Style TargetType="Label" x:Key="SimpleGlyphBase">
-        <Setter Property="FontFamily" Value="{StaticResource OryxFontFamily}" />
+        <Setter Property="FontSize" Value="18" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding EZKey.Label.IsGlyph}" Value="true">
+                <Setter Property="FontFamily" Value="{StaticResource OryxFontFamily}" />
+                <Setter Property="FontSize" Value="20" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding EZKey.Label.IsGlyph}" Value="false">
+                <Setter Property="FontFamily" Value="{StaticResource LatoFontFamily}" />
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
 
     <DataTemplate x:Key="SimpleLabelDataTemplate">
         <Canvas>
             <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource KeyBaseDataTemplate}" />
-            <Label Content="{Binding EZKey.Label}" Style="{StaticResource SimpleKeyBase}" />
-        </Canvas>
-    </DataTemplate>
-
-    <DataTemplate x:Key="SimpleGlyphDataTemplate">
-        <Canvas>
-            <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource KeyBaseDataTemplate}" />
-            <Label Content="{Binding EZKey.Label}" Style="{StaticResource SimpleGlyphBase}" />
+            <Label Content="{Binding EZKey.Label.Content}" Style="{StaticResource SimpleKeyBase}" />
         </Canvas>
     </DataTemplate>
 
     <helper:KeyContentTemplateSelector x:Key="KeyContentTemplateSelector"
                                        SimpleLabelDataTemplate="{StaticResource SimpleLabelDataTemplate}"
-                                       SimpleGlyphDataTemplate="{StaticResource SimpleGlyphDataTemplate}" />
+                                       SimpleGlyphDataTemplate="{StaticResource SimpleLabelDataTemplate}" />
 
 </ResourceDictionary>
