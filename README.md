@@ -8,7 +8,11 @@ And there's no interaction whatsoever with your peripheral devices, even with th
 _EZ Layout Display_ is a Windows application for Ergodox EZ enthusiasts and new comers, that displays your configured layout right from your desktop.
 
 ## How it works
-By pressing **Hyper + Space**, you'll instantly see a window with your configured layout (work best if it matches your actual keyboard layout ;))
+By pressing **Hyper + Space**, you'll instantly see a window with your configured layout.
+
+You can browse the different layers by hitting the **Space** bar.
+
+It is designed to be a quick reminder of your layout so as soon as it lose the focus or if you hit the **Escape** key, the layout window will disappear.
 
 ## Installation
 You can get the installer in the release tab and install it on your Windows.
@@ -18,4 +22,6 @@ The default Ergodox Layout is configured but you can change it very easily : jus
 
 ## Roadmap 
 Right now, settings and customisation are a bit scarce but I've a lot of ToDos and ideas to implement.
-Of course, your input(s) (ideas, contributions, thanks or even a brand new Ergodox) are very much welcome !
+Of course, your inputs (ideas, contributions, thanks or even a brand new Ergodox) are very much welcome !
+
+Don't hesitate to reach out on Twitter [@Invvard](https://twitter.com/invvard).
