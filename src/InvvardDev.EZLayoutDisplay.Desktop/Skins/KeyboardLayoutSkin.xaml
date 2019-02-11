@@ -4,7 +4,7 @@
 
     <FontFamily x:Key="LatoFontFamily">/InvvardDev.EZLayoutDisplay.Desktop;component/Skins/Fonts/#Lato</FontFamily>
     <FontFamily x:Key="OryxFontFamily">/InvvardDev.EZLayoutDisplay.Desktop;component/Skins/Fonts/#Oryx</FontFamily>
- 
+
     <SolidColorBrush x:Key="KeyBaseColorBrush" Color="#f4f4f4" />
     <SolidColorBrush x:Key="KeyBaseBorderColorBrush" Color="#c7c7c7" />
     <SolidColorBrush x:Key="KeyTopColorBrush" Color="#fcfcfc" />
@@ -27,6 +27,10 @@
         <Setter Property="RadiusY" Value="5" />
         <Setter Property="Fill" Value="{StaticResource KeyBaseColorBrush}" />
         <Setter Property="Stroke" Value="{StaticResource KeyBaseBorderColorBrush}" />
+        <Setter Property="Canvas.Top" Value="{Binding BaseKeyY}" />
+        <Setter Property="Canvas.Left" Value="{Binding BaseKeyX}" />
+        <Setter Property="Height" Value="{Binding BaseKeyHeight}" />
+        <Setter Property="Width" Value="{Binding BaseKeyWidth}" />
     </Style>
 
     <Style TargetType="Rectangle" BasedOn="{StaticResource BaseKey}" x:Key="KeyTop">
@@ -34,20 +38,45 @@
         <Setter Property="RadiusY" Value="3" />
         <Setter Property="Fill" Value="{StaticResource KeyTopColorBrush}" />
         <Setter Property="Stroke" Value="{StaticResource KeyTopBorderColorBrush}" />
+        <Setter Property="Canvas.Top" Value="{Binding TopKeyY}" />
+        <Setter Property="Canvas.Left" Value="{Binding TopKeyX}" />
+        <Setter Property="Height" Value="{Binding TopKeyHeight}" />
+        <Setter Property="Width" Value="{Binding TopKeyWidth}" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="SimpleKeyBase">
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding EZKey.Label.IsGlyph}" Value="true">
+                <Setter Property="FontFamily" Value="{StaticResource OryxFontFamily}" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding EZKey.Label.IsGlyph}" Value="false">
+                <Setter Property="FontFamily" Value="{StaticResource LatoFontFamily}" />
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
 
     <DataTemplate x:Key="KeyBaseDataTemplate">
         <Canvas>
-            <Rectangle x:Name="KeyBaseRect" Style="{DynamicResource KeyBase}"
-                       Height="{Binding BaseKeyHeight}" Width="{Binding BaseKeyWidth}"
-                       Canvas.Left="{Binding BaseKeyX}" Canvas.Top="{Binding BaseKeyY}" />
-            <Rectangle x:Name="KeyTopRect" Style="{DynamicResource KeyTop}"
-                       Canvas.Left="{Binding TopKeyX}" Canvas.Top="{Binding TopKeyY}"
-                       Width="{Binding TopKeyWidth}" Height="{Binding TopKeyHeight}" />
+            <Rectangle x:Name="KeyBaseRect" Style="{DynamicResource KeyBase}" />
+            <Rectangle x:Name="KeyTopRect" Style="{DynamicResource KeyTop}" />
         </Canvas>
     </DataTemplate>
 
-    <Style TargetType="Label" x:Key="SimpleKeyBase">
+    <Style TargetType="Viewbox" x:Key="SimpleLabelViewBox">
+        <Setter Property="Width" Value="{Binding TopKeyWidth}" />
+        <Setter Property="Height" Value="24" />
+        <Setter Property="Stretch" Value="Uniform" />
+        <Setter Property="StretchDirection" Value="Both" />
+    </Style>
+
+    <Style TargetType="Grid" x:Key="ContentGridBase">
+        <Setter Property="Canvas.Top" Value="{Binding TopKeyY}" />
+        <Setter Property="Canvas.Left" Value="{Binding TopKeyX}" />
+        <Setter Property="Width" Value="{Binding TopKeyWidth}" />
+        <Setter Property="Height" Value="{Binding TopKeyHeight}" />
         <Setter Property="RenderTransformOrigin" Value="{Binding RotationOrigin}" />
         <Setter Property="RenderTransform">
             <Setter.Value>
@@ -56,28 +85,16 @@
                 </TransformGroup>
             </Setter.Value>
         </Setter>
-        <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="Canvas.Left" Value="{Binding TopKeyX}" />
-        <Setter Property="Canvas.Top" Value="{Binding TopKeyY}" />
-        <Setter Property="Width" Value="{Binding TopKeyWidth}" />
-        <Setter Property="Height" Value="{Binding TopKeyHeight}" />
-        <Setter Property="FontSize" Value="18" />
-        <Style.Triggers>
-            <DataTrigger Binding="{Binding EZKey.Label.IsGlyph}" Value="true">
-                <Setter Property="FontFamily" Value="{StaticResource OryxFontFamily}" />
-                <Setter Property="FontSize" Value="20" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding EZKey.Label.IsGlyph}" Value="false">
-                <Setter Property="FontFamily" Value="{StaticResource LatoFontFamily}" />
-            </DataTrigger>
-        </Style.Triggers>
     </Style>
 
     <DataTemplate x:Key="SimpleLabelDataTemplate">
         <Canvas>
             <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource KeyBaseDataTemplate}" />
-            <Label Content="{Binding EZKey.Label.Content}" Style="{StaticResource SimpleKeyBase}" />
+            <Grid Style="{StaticResource ContentGridBase}">
+                <Viewbox Style="{StaticResource SimpleLabelViewBox}" Grid.Column="0" Grid.Row="0">
+                    <Label Style="{StaticResource SimpleKeyBase}" Content="{Binding EZKey.Label.Content}" />
+                </Viewbox>
+            </Grid>
         </Canvas>
     </DataTemplate>
 
