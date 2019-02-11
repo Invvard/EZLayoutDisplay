@@ -9,7 +9,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
     public class KeyContentTemplateSelector : DataTemplateSelector
     {
         public DataTemplate SimpleLabelDataTemplate { get; set; }
-        public DataTemplate SimpleGlyphDataTemplate { get; set; }
+        public DataTemplate ModifierOnTopDataTemplate { get; set; }
+        public DataTemplate ModifierUnderDataTemplate { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
@@ -25,12 +26,15 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
 
                     break;
                 case KeyDisplayType.ModifierOnTop:
+                    template = ModifierOnTopDataTemplate;
 
                     break;
                 case KeyDisplayType.ModifierUnder:
+                    template = ModifierUnderDataTemplate;
 
                     break;
                 default:
+
                     throw new ArgumentOutOfRangeException();
             }
 
