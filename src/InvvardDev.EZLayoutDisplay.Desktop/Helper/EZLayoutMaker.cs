@@ -10,6 +10,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
     public class EZLayoutMaker
     {
         private const string NoCommand = "KC_NO";
+        private const string KeyCodeOSM = "OSM";
         private readonly KeyCategoryDictionary _keyCategoryDictionary;
         private readonly KeyDefinitionDictionary _keyDefinitionDictionary;
 
@@ -101,7 +102,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
                     break;
                 case KeyCategory.Modifier:
 
-                    if (ergodoxKey.Code == "OSM" && !IsCommandEmpty(ergodoxKey.Command))
+                    if (ergodoxKey.Code == KeyCodeOSM && !IsCommandEmpty(ergodoxKey.Command))
                     {
                         var commandDefinition = GetKeyDefinition(ergodoxKey.Command);
                         key.Modifier = new KeyLabel(commandDefinition.Label);
@@ -248,7 +249,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
 
         private bool IsCommandEmpty(string command)
         {
-            var isEmpty = string.IsNullOrWhiteSpace(command) || command == NoCommand;
+            var isEmpty = string.IsNullOrWhiteSpace(command) || command == NoCommand || command == KeyCodeOSM;
 
             return isEmpty;
         }
