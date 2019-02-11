@@ -6,6 +6,7 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using InvvardDev.EZLayoutDisplay.Desktop.Model;
+using InvvardDev.EZLayoutDisplay.Desktop.Model.Enum;
 using InvvardDev.EZLayoutDisplay.Desktop.Properties;
 using InvvardDev.EZLayoutDisplay.Desktop.Service.Interface;
 using InvvardDev.EZLayoutDisplay.Desktop.View;
@@ -113,7 +114,9 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
                 keys = new List<EZKey> {
                                            new EZKey {
                                                          Label = new KeyLabel("="),
-                                                         Modifier = new KeyLabel("Left Shift")
+                                                         Modifier = new KeyLabel("Left Shift"),
+                                                         DisplayType = KeyDisplayType.ModifierOnTop,
+                                                         KeyCategory = KeyCategory.DualFunction
                                                      }
                                        };
 
