@@ -11,11 +11,15 @@ _EZ Layout Display_ is a Windows application for Ergodox EZ enthusiasts and new 
 By pressing **Hyper + Space**, you'll instantly see a window with your configured layout (work best if it matches your actual keyboard layout ;))
 
 ## Installation
-You can get the installer in the release tab and install it on your Windows.
+You can find the archive with all the necessary files in the [release section](https://github.com/Invvard/EZLayoutDisplay/releases).
+
+Just unzip the archive to the desired location.
 
 When it's done, just start the app and you'll see an icon appear in the notification center.
-The default Ergodox Layout is configured but you can change it very easily : just copy-paste your Ergodox Configurator in the settings window and you'll be good to go.
+The default Ergodox Layout is configured but you can change it very easily : just copy-paste your Ergodox Configurator custom layout URL in the settings window and you'll be good to go.
 
 ## Roadmap 
 Right now, settings and customisation are a bit scarce but I've a lot of ToDos and ideas to implement.
-Of course, your input(s) (ideas, contributions, thanks or even a brand new Ergodox) are very much welcome !
+
+## Contributors
+Of course, your input(s) (ideas, contributions, thanks or even a brand new Ergodox) are most welcome !
