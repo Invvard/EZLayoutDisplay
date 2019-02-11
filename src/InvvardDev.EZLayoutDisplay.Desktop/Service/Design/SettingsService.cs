@@ -9,6 +9,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Design
     {
         public Hotkey HotkeyShowLayout { get; set; }
         public string ErgodoxLayoutUrl { get; set; }
+        public EZLayout EZLayout { get; set; }
 
         public SettingsService()
         {

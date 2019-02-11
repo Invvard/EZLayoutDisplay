@@ -1,0 +1,145 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:helper="clr-namespace:InvvardDev.EZLayoutDisplay.Desktop.Helper">
+
+    <FontFamily x:Key="LatoFontFamily">/InvvardDev.EZLayoutDisplay.Desktop;component/Skins/Fonts/#Lato</FontFamily>
+    <FontFamily x:Key="OryxFontFamily">/InvvardDev.EZLayoutDisplay.Desktop;component/Skins/Fonts/#Oryx</FontFamily>
+
+    <SolidColorBrush x:Key="KeyBaseColorBrush" Color="#f4f4f4" />
+    <SolidColorBrush x:Key="KeyBaseBorderColorBrush" Color="#c7c7c7" />
+    <SolidColorBrush x:Key="KeyTopColorBrush" Color="#fcfcfc" />
+    <SolidColorBrush x:Key="KeyTopBorderColorBrush" Color="#ffffff" Opacity="10" />
+
+    <Style TargetType="Rectangle" x:Key="BaseKey">
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="RenderTransform">
+            <Setter.Value>
+                <TransformGroup>
+                    <RotateTransform Angle="{Binding RotationAngle}" />
+                </TransformGroup>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="RenderTransformOrigin" Value="{Binding RotationOrigin}" />
+    </Style>
+
+    <Style TargetType="Rectangle" BasedOn="{StaticResource BaseKey}" x:Key="KeyBase">
+        <Setter Property="RadiusX" Value="5" />
+        <Setter Property="RadiusY" Value="5" />
+        <Setter Property="Fill" Value="{StaticResource KeyBaseColorBrush}" />
+        <Setter Property="Stroke" Value="{StaticResource KeyBaseBorderColorBrush}" />
+        <Setter Property="Canvas.Top" Value="{Binding BaseKeyY}" />
+        <Setter Property="Canvas.Left" Value="{Binding BaseKeyX}" />
+        <Setter Property="Height" Value="{Binding BaseKeyHeight}" />
+        <Setter Property="Width" Value="{Binding BaseKeyWidth}" />
+    </Style>
+
+    <Style TargetType="Rectangle" BasedOn="{StaticResource BaseKey}" x:Key="KeyTop">
+        <Setter Property="RadiusX" Value="3" />
+        <Setter Property="RadiusY" Value="3" />
+        <Setter Property="Fill" Value="{StaticResource KeyTopColorBrush}" />
+        <Setter Property="Stroke" Value="{StaticResource KeyTopBorderColorBrush}" />
+        <Setter Property="Canvas.Top" Value="{Binding TopKeyY}" />
+        <Setter Property="Canvas.Left" Value="{Binding TopKeyX}" />
+        <Setter Property="Height" Value="{Binding TopKeyHeight}" />
+        <Setter Property="Width" Value="{Binding TopKeyWidth}" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="LabelStyle">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding EZKey.Label.IsGlyph}" Value="true">
+                <Setter Property="FontFamily" Value="{StaticResource OryxFontFamily}" />
+                <Setter Property="FontSize" Value="18" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding EZKey.Label.IsGlyph}" Value="false">
+                <Setter Property="FontFamily" Value="{StaticResource LatoFontFamily}" />
+                <Setter Property="FontSize" Value="22" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <DataTemplate x:Key="KeyBaseDataTemplate">
+        <Canvas>
+            <Rectangle x:Name="KeyBaseRect" Style="{DynamicResource KeyBase}" />
+            <Rectangle x:Name="KeyTopRect" Style="{DynamicResource KeyTop}" />
+        </Canvas>
+    </DataTemplate>
+
+    <Style TargetType="Viewbox" x:Key="LabelViewBox">
+        <Setter Property="Height" Value="30" />
+        <Setter Property="Margin" Value="3 0" />
+        <Setter Property="Stretch" Value="Uniform" />
+        <Setter Property="StretchDirection" Value="Both" />
+    </Style>
+
+    <Style TargetType="Viewbox" x:Key="ModifierViewBox" BasedOn="{StaticResource LabelViewBox}">
+        <Setter Property="Height" Value="18" />
+    </Style>
+
+    <Style TargetType="Grid" x:Key="ContentGridBase">
+        <Setter Property="Canvas.Top" Value="{Binding TopKeyY}" />
+        <Setter Property="Canvas.Left" Value="{Binding TopKeyX}" />
+        <Setter Property="Width" Value="{Binding TopKeyWidth}" />
+        <Setter Property="Height" Value="{Binding TopKeyHeight}" />
+        <Setter Property="RenderTransformOrigin" Value="{Binding RotationOrigin}" />
+        <Setter Property="RenderTransform">
+            <Setter.Value>
+                <TransformGroup>
+                    <RotateTransform Angle="{Binding RotationAngle}" />
+                </TransformGroup>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <DataTemplate x:Key="SimpleLabelDataTemplate">
+        <Canvas>
+            <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource KeyBaseDataTemplate}" />
+            <Grid Style="{StaticResource ContentGridBase}">
+                <Viewbox Style="{StaticResource LabelViewBox}" Grid.Column="0" Grid.Row="0">
+                    <Label Style="{StaticResource LabelStyle}" Content="{Binding EZKey.Label.Content}" />
+                </Viewbox>
+            </Grid>
+        </Canvas>
+    </DataTemplate>
+
+    <DataTemplate x:Key="ModifierOnTopDataTemplate">
+        <Canvas>
+            <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource KeyBaseDataTemplate}" />
+            <Grid Style="{StaticResource ContentGridBase}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height=".6*"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Viewbox Style="{StaticResource ModifierViewBox}" VerticalAlignment="Bottom" Grid.Column="0" Grid.Row="0">
+                    <Label Style="{StaticResource LabelStyle}" Content="{Binding EZKey.Modifier.Content}" />
+                </Viewbox>
+                <Viewbox Style="{StaticResource LabelViewBox}" VerticalAlignment="Top" Grid.Column="0" Grid.Row="1">
+                    <Label Style="{StaticResource LabelStyle}" Content="{Binding EZKey.Label.Content}" />
+                </Viewbox>
+            </Grid>
+        </Canvas>
+    </DataTemplate>
+
+    <DataTemplate x:Key="ModifierUnderDataTemplate">
+        <Canvas>
+            <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource KeyBaseDataTemplate}" />
+            <Grid Style="{StaticResource ContentGridBase}">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height=".6*"/>
+                </Grid.RowDefinitions>
+                <Viewbox Style="{StaticResource LabelViewBox}" VerticalAlignment="Bottom" Grid.Column="0" Grid.Row="0">
+                    <Label Style="{StaticResource LabelStyle}" Content="{Binding EZKey.Label.Content}" />
+                </Viewbox>
+                <Viewbox Style="{StaticResource ModifierViewBox}" VerticalAlignment="Top" Grid.Column="0" Grid.Row="1">
+                    <Label Style="{StaticResource LabelStyle}" Content="{Binding EZKey.Modifier.Content}" />
+                </Viewbox>
+            </Grid>
+        </Canvas>
+    </DataTemplate>
+
+    <helper:KeyContentTemplateSelector x:Key="KeyContentTemplateSelector"
+                                       SimpleLabelDataTemplate="{StaticResource SimpleLabelDataTemplate}"
+                                       ModifierOnTopDataTemplate="{StaticResource ModifierOnTopDataTemplate}"
+                                       ModifierUnderDataTemplate="{StaticResource ModifierUnderDataTemplate}" />
+
+</ResourceDictionary>

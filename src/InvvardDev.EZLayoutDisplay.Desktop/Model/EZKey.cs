@@ -5,24 +5,14 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
     public class EZKey
     {
         /// <summary>
-        /// Gets or sets the key position on layout.
-        /// </summary>
-        public int Position { get; set; }
-
-        /// <summary>
         /// Gets or sets the key main label.
         /// </summary>
-        public string Label { get; set; }
+        public KeyLabel Label { get; set; }
 
         /// <summary>
         /// Gets or sets the key secondary label.
         /// </summary>
-        public string SubLabel { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Glyph name.
-        /// </summary>
-        public string GlyphName { get; set; }
+        public KeyLabel Modifier { get; set; }
 
         /// <summary>
         /// Gets or sets the key glowing color.
@@ -35,14 +25,21 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
         public KeyCategory KeyCategory { get; set; }
 
         /// <summary>
-        /// Gets or sets the indicator wether the <see cref="SubLabel"/>
-        /// is above <see cref="Label"/>.
+        /// Gets or sets the type of display for this key.
         /// </summary>
-        public bool IsSubLabelAbove { get; set; }
+        public KeyDisplayType DisplayType { get; set; }
+    }
 
-        /// <summary>
-        /// Gets the indicator if <see cref="Label"/> must be displayed.
-        /// </summary>
-        public bool IsLabelDisplayed => string.IsNullOrWhiteSpace(GlyphName);
+    public class KeyLabel
+    {
+        public string Content { get; set; }
+
+        public bool IsGlyph { get; set; }
+
+        public KeyLabel(string content, bool isGlyph = false)
+        {
+            Content = content;
+            IsGlyph = isGlyph;
+        }
     }
 }

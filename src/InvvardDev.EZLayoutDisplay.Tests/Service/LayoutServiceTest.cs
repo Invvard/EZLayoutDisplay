@@ -87,11 +87,11 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Service
             Assert.Equal(3, ezLayoutResult.EZLayers.First().EZKeys.Count);
 
             var keyResults = ezLayoutResult.EZLayers.First().EZKeys;
-            Assert.Equal("A", keyResults[0].Label);
+            Assert.Equal("A", keyResults[0].Label.Content);
             Assert.Equal(KeyCategory.Letters, keyResults[0].KeyCategory);
-            Assert.Equal("0", keyResults[1].Label);
+            Assert.Equal("0", keyResults[1].Label.Content);
             Assert.Equal(KeyCategory.Digit, keyResults[1].KeyCategory);
-            Assert.Equal("", keyResults[2].Label);
+            Assert.Equal("", keyResults[2].Label.Content);
             Assert.Equal(KeyCategory.Other, keyResults[2].KeyCategory);
         }
 
@@ -142,19 +142,17 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Service
             Assert.Equal(2, ezLayoutResult.EZLayers[1].EZKeys.Count);
 
             var layer0KeyResults = ezLayoutResult.EZLayers[0].EZKeys;
-            Assert.Equal("A", layer0KeyResults[0].Label);
+            Assert.Equal("A", layer0KeyResults[0].Label.Content);
             Assert.Equal(KeyCategory.Letters, layer0KeyResults[0].KeyCategory);
-            Assert.Equal("0", layer0KeyResults[1].Label);
+            Assert.Equal("0", layer0KeyResults[1].Label.Content);
             Assert.Equal(KeyCategory.Digit, layer0KeyResults[1].KeyCategory);
-            Assert.Equal("", layer0KeyResults[2].Label);
+            Assert.Equal("", layer0KeyResults[2].Label.Content);
             Assert.Equal(KeyCategory.Other, layer0KeyResults[2].KeyCategory);
 
             var layer1KeyResults = ezLayoutResult.EZLayers[1].EZKeys;
-            Assert.Equal("F1", layer1KeyResults[0].Label);
+            Assert.Equal("F1", layer1KeyResults[0].Label.Content);
             Assert.Equal(KeyCategory.Fn, layer1KeyResults[0].KeyCategory);
-            Assert.Equal("Space", layer1KeyResults[1].Label);
-            Assert.Equal("space", layer1KeyResults[1].GlyphName);
-            Assert.False(layer1KeyResults[1].IsLabelDisplayed);
+            Assert.Equal("\u23b5", layer1KeyResults[1].Label.Content);
             Assert.Equal(KeyCategory.Spacing, layer1KeyResults[1].KeyCategory);
         }
     }
