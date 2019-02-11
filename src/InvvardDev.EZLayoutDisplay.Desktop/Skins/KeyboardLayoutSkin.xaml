@@ -45,14 +45,14 @@
     </Style>
 
     <Style TargetType="Label" x:Key="LabelStyle">
-        <Setter Property="FontSize" Value="20" />
-        <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Style.Triggers>
             <DataTrigger Binding="{Binding EZKey.Label.IsGlyph}" Value="true">
                 <Setter Property="FontFamily" Value="{StaticResource OryxFontFamily}" />
+                <Setter Property="FontSize" Value="18" />
             </DataTrigger>
             <DataTrigger Binding="{Binding EZKey.Label.IsGlyph}" Value="false">
                 <Setter Property="FontFamily" Value="{StaticResource LatoFontFamily}" />
+                <Setter Property="FontSize" Value="22" />
             </DataTrigger>
         </Style.Triggers>
     </Style>
@@ -65,14 +65,14 @@
     </DataTemplate>
 
     <Style TargetType="Viewbox" x:Key="LabelViewBox">
-        <Setter Property="Width" Value="{Binding TopKeyWidth}" />
-        <Setter Property="Height" Value="24" />
+        <Setter Property="Height" Value="30" />
+        <Setter Property="Margin" Value="3 0" />
         <Setter Property="Stretch" Value="Uniform" />
         <Setter Property="StretchDirection" Value="Both" />
     </Style>
 
     <Style TargetType="Viewbox" x:Key="ModifierViewBox" BasedOn="{StaticResource LabelViewBox}">
-        <Setter Property="Height" Value="16" />
+        <Setter Property="Height" Value="18" />
     </Style>
 
     <Style TargetType="Grid" x:Key="ContentGridBase">
@@ -106,13 +106,13 @@
             <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource KeyBaseDataTemplate}" />
             <Grid Style="{StaticResource ContentGridBase}">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="0.6*"/>
+                    <RowDefinition Height=".6*"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <Viewbox Style="{StaticResource ModifierViewBox}" Grid.Column="0" Grid.Row="0">
+                <Viewbox Style="{StaticResource ModifierViewBox}" VerticalAlignment="Bottom" Grid.Column="0" Grid.Row="0">
                     <Label Style="{StaticResource LabelStyle}" Content="{Binding EZKey.Modifier.Content}" />
                 </Viewbox>
-                <Viewbox Style="{StaticResource LabelViewBox}" Grid.Column="0" Grid.Row="1">
+                <Viewbox Style="{StaticResource LabelViewBox}" VerticalAlignment="Top" Grid.Column="0" Grid.Row="1">
                     <Label Style="{StaticResource LabelStyle}" Content="{Binding EZKey.Label.Content}" />
                 </Viewbox>
             </Grid>
@@ -125,12 +125,12 @@
             <Grid Style="{StaticResource ContentGridBase}">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
-                    <RowDefinition Height="0.6*"/>
+                    <RowDefinition Height=".6*"/>
                 </Grid.RowDefinitions>
-                <Viewbox Style="{StaticResource LabelViewBox}" Grid.Column="0" Grid.Row="0">
+                <Viewbox Style="{StaticResource LabelViewBox}" VerticalAlignment="Bottom" Grid.Column="0" Grid.Row="0">
                     <Label Style="{StaticResource LabelStyle}" Content="{Binding EZKey.Label.Content}" />
                 </Viewbox>
-                <Viewbox Style="{StaticResource ModifierViewBox}" Grid.Column="0" Grid.Row="1">
+                <Viewbox Style="{StaticResource ModifierViewBox}" VerticalAlignment="Top" Grid.Column="0" Grid.Row="1">
                     <Label Style="{StaticResource LabelStyle}" Content="{Binding EZKey.Modifier.Content}" />
                 </Viewbox>
             </Grid>
