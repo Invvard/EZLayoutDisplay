@@ -5,5 +5,6 @@
     {
         public static string HotkeyShowLayout => "HotkeyShowLayout";
         public static string ErgodoxLayoutUrl => "ErgodoxLayoutUrl";
+        public static string EZLayout => "EZLayout";
     }
 }

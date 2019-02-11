@@ -34,14 +34,14 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
         /// <summary>
         /// Gets the key secondary command.
         /// </summary>
-        [JsonProperty("commad")]
-        public KeyDefinition SecondaryCommand { get; private set; }
+        [JsonProperty("command")]
+        public string SecondaryCommand { get; private set; }
 
         /// <summary>
         /// Gets the key glyph name to display.
         /// </summary>
-        [JsonProperty("glyph")]
-        public string GlyphName { get; private set; }
+        [JsonProperty("isglyph")]
+        public bool IsGlyph { get; private set; }
 
         /// <summary>
         /// Gets the key preceding key indicator (blocks the targeted layer).

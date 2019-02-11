@@ -16,7 +16,7 @@
             <viewModel:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
             <converter:KeyCodeToCharConverter x:Key="keyCodeConverter" />
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Skins/MainSkin.xaml" />
+                <ResourceDictionary Source="Skins/KeyboardLayoutSkin.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
 

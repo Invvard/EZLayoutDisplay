@@ -9,7 +9,7 @@
     mc:Ignorable="d" Height="423" Width="1075"
     WindowStartupLocation="CenterScreen" Topmost="True"
     ResizeMode="NoResize"
-    Visibility="Visible" ShowInTaskbar="False" WindowStyle="None"
+    Visibility="Visible" ShowInTaskbar="True" WindowStyle="None"
     Title="{Binding WindowTitle}"
     DataContext="{Binding DisplayLayout, Source={StaticResource Locator}}">
 
@@ -22,38 +22,12 @@
         <KeyBinding Key="Escape" Command="{Binding LostFocusCommand, Mode=OneWay}" />
     </Window.InputBindings>
 
-    <ItemsControl ItemsSource="{Binding LayoutTemplate}">
+    <ItemsControl ItemsSource="{Binding LayoutTemplate}"
+                  ItemTemplateSelector="{StaticResource KeyContentTemplateSelector}">
         <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
                 <Canvas Margin="10" />
             </ItemsPanelTemplate>
         </ItemsControl.ItemsPanel>
-        <ItemsControl.ItemTemplate>
-            <DataTemplate>
-                <Canvas>
-                    <Rectangle x:Name="KeyBase" 
-                               Height="{Binding BaseKeyHeight}" Width="{Binding BaseKeyWidth}"
-                               Canvas.Left="{Binding BaseKeyX}" Canvas.Top="{Binding BaseKeyY}"
-                               RenderTransformOrigin="{Binding RotationOrigin}" Style="{DynamicResource KeyBase}">
-                        <Rectangle.RenderTransform>
-                            <TransformGroup>
-                                <RotateTransform Angle="{Binding RotationAngle}"/>
-                            </TransformGroup>
-                        </Rectangle.RenderTransform>
-                    </Rectangle>
-                    <Rectangle x:Name="KeyTop"
-                               Canvas.Left="{Binding TopKeyX}" Canvas.Top="{Binding TopKeyY}"
-                               Width="{Binding TopKeyWidth}" Height="{Binding TopKeyHeight}"
-                               RenderTransformOrigin="{Binding RotationOrigin}" Style="{DynamicResource KeyTop}">
-                        <Rectangle.RenderTransform>
-                            <TransformGroup>
-                                <RotateTransform Angle="{Binding RotationAngle}"/>
-                            </TransformGroup>
-                        </Rectangle.RenderTransform>
-                    </Rectangle>
-                </Canvas>
-            </DataTemplate>
-        </ItemsControl.ItemTemplate>
     </ItemsControl>
-
 </Window>

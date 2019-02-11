@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 using InvvardDev.EZLayoutDisplay.Desktop.Model;
 using InvvardDev.EZLayoutDisplay.Desktop.Model.Enum;
 using InvvardDev.EZLayoutDisplay.Desktop.Properties;
@@ -46,18 +47,17 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
             get
             {
                 Hotkey hotkey;
+
                 try
                 {
-                    var setting = (string)_settings[SettingsName.HotkeyShowLayout];
+                    var setting = (string) _settings[SettingsName.HotkeyShowLayout];
 
                     hotkey = string.IsNullOrWhiteSpace(setting)
                                  ? _defaultHotkey
                                  : JsonConvert.DeserializeObject<Hotkey>(setting);
                 }
-                catch (System.Exception)
-                {
-                    hotkey = _defaultHotkey;
-                }
+                catch (Exception) { hotkey = _defaultHotkey; }
+
                 return hotkey;
             }
             set
@@ -72,6 +72,26 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
         {
             get => (string) _settings[SettingsName.ErgodoxLayoutUrl];
             set => _settings[SettingsName.ErgodoxLayoutUrl] = value;
+        }
+
+        /// <inheritdoc />
+        public EZLayout EZLayout
+        {
+            get
+            {
+                var setting = (string) _settings[SettingsName.EZLayout];
+                var ezLayout = string.IsNullOrWhiteSpace(setting)
+                                   ? new EZLayout()
+                                   : JsonConvert.DeserializeObject<EZLayout>(setting);
+
+                return ezLayout;
+            }
+
+            set
+            {
+                var setting = JsonConvert.SerializeObject(value);
+                _settings[SettingsName.EZLayout] = setting;
+            }
         }
 
         #endregion

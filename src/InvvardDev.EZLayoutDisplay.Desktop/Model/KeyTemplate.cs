@@ -78,6 +78,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
         public double TopKeyWidth => BaseKeyWidth - 6;
         public double TopKeyHeight => BaseKeyHeight - 11;
 
+        public EZKey EZKey { get; set; }
+
         public KeyTemplate()
         {
             

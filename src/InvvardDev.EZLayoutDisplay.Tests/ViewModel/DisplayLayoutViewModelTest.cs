@@ -16,9 +16,23 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             //Arrange
             var mockWindowService = new Mock<IWindowService>();
             var mockLayoutService = new Mock<ILayoutService>();
+            var mockSettingsService = new Mock<ISettingsService>();
+            mockSettingsService.SetupProperty(s => s.EZLayout,
+                                              new EZLayout {
+                                                               EZLayers = new List<EZLayer> {
+                                                                                                new EZLayer {
+                                                                                                                EZKeys = new List<EZKey> {
+                                                                                                                                             new EZKey {
+                                                                                                                                                           Label = new KeyLabel("A"),
+                                                                                                                                                           Modifier = new KeyLabel("a")
+                                                                                                                                                       }
+                                                                                                                                         }
+                                                                                                            }
+                                                                                            }
+                                                           });
 
             //Act
-            var displayLayoutViewModel = new DisplayLayoutViewModel(mockWindowService.Object, mockLayoutService.Object);
+            var displayLayoutViewModel = new DisplayLayoutViewModel(mockWindowService.Object, mockLayoutService.Object, mockSettingsService.Object);
 
             //Assert
             Assert.Equal("Ergodox Layout", displayLayoutViewModel.WindowTitle);
@@ -31,9 +45,10 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             var mockWindowService = new Mock<IWindowService>();
             mockWindowService.Setup(w => w.CloseWindow<DisplayLayoutWindow>()).Verifiable();
             var mockLayoutService = new Mock<ILayoutService>();
+            var mockSettingsService = new Mock<ISettingsService>();
 
             //Act
-            var displayLayoutViewModel = new DisplayLayoutViewModel(mockWindowService.Object, mockLayoutService.Object);
+            var displayLayoutViewModel = new DisplayLayoutViewModel(mockWindowService.Object, mockLayoutService.Object, mockSettingsService.Object);
             displayLayoutViewModel.LostFocusCommand.Execute(null);
 
             //Assert
@@ -49,14 +64,18 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             //Arrange
             var layoutTemplate = new List<KeyTemplate>();
 
-            for (int i = 0 ; i < numberOfKey ; i++) { layoutTemplate.Add(new KeyTemplate(i, i, 54, 81)); }
+            for (int i = 0 ; i < numberOfKey ; i++)
+            {
+                layoutTemplate.Add(new KeyTemplate(i, i, 54, 81));
+            }
 
             var mockWindowService = new Mock<IWindowService>();
             var mockLayoutService = new Mock<ILayoutService>();
             mockLayoutService.Setup(l => l.GetLayoutTemplate()).ReturnsAsync(layoutTemplate).Verifiable();
+            var mockSettingsService = new Mock<ISettingsService>();
 
             //Act
-            var displayLayoutViewModel = new DisplayLayoutViewModel(mockWindowService.Object, mockLayoutService.Object);
+            var displayLayoutViewModel = new DisplayLayoutViewModel(mockWindowService.Object, mockLayoutService.Object, mockSettingsService.Object);
 
             //Assert
             mockLayoutService.Verify(l => l.GetLayoutTemplate(), Times.Once);

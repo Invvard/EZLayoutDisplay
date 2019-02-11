@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
@@ -59,7 +60,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         /// </summary>
         public ICommand UpdateLayoutCommand =>
             _updateLayoutCommand
-            ?? (_updateLayoutCommand = new RelayCommand(UpdateLayout));
+            ?? (_updateLayoutCommand = new RelayCommand(async () => await UpdateLayout()));
 
         /// <summary>
         /// Closes the settings window.
@@ -186,8 +187,10 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         #region Private methods
 
-        private void SaveSettings()
+        private async void SaveSettings()
         {
+            await UpdateLayout();
+
             _settingsService.ErgodoxLayoutUrl = LayoutUrlContent;
             _settingsService.HotkeyShowLayout = HotkeyShowLayout;
 
@@ -226,7 +229,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             return isDirty;
         }
 
-        private async void UpdateLayout()
+        private async Task UpdateLayout()
         {
             var layoutHashId = ExtractLayoutHashId(LayoutUrlContent);
 
@@ -234,6 +237,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             {
                 var ergodoxLayout = await _layoutService.GetErgodoxLayout(layoutHashId);
                 var ezLayout = _layoutService.PrepareEZLayout(ergodoxLayout);
+                _settingsService.EZLayout = ezLayout;
             }
             catch (ArgumentNullException) { throw; }
             catch (ArgumentException aex) { _windowService.ShowWarning(aex.Message); }
