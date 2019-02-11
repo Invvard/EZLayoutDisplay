@@ -110,9 +110,14 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
             if (IsInDesignModeStatic)
             {
-                keys = new List<EZKey>();
+                keys = new List<EZKey> {
+                                           new EZKey {
+                                                         Label = new KeyLabel("="),
+                                                         Modifier = new KeyLabel("Left Shift")
+                                                     }
+                                       };
 
-                for (int i = 0 ; i < LayoutTemplate.Count ; i++)
+                for (int i = 0 ; i < LayoutTemplate.Count-1 ; i++)
                 {
                     keys.Add(new EZKey {
                                            Label = new KeyLabel("A \u2192"),
