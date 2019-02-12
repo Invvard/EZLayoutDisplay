@@ -5,8 +5,10 @@ using System.Text;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
+using GalaSoft.MvvmLight.Messaging;
 using InvvardDev.EZLayoutDisplay.Desktop.Model;
 using InvvardDev.EZLayoutDisplay.Desktop.Model.Enum;
+using InvvardDev.EZLayoutDisplay.Desktop.Model.Messenger;
 using InvvardDev.EZLayoutDisplay.Desktop.Properties;
 using InvvardDev.EZLayoutDisplay.Desktop.Service.Interface;
 using InvvardDev.EZLayoutDisplay.Desktop.View;
@@ -72,6 +74,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             _layoutService = layoutService;
             _settingsService = settingsService;
 
+            Messenger.Default.Register<UpdatedLayoutMessage>(this, ReloadLayout);
+
             SetLabelUi();
             PopulateModel();
         }
@@ -103,6 +107,11 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             _ezLayout = _settingsService.EZLayout;
 
             SwitchLayer();
+        }
+
+        private void ReloadLayout(UpdatedLayoutMessage obj)
+        {
+            PopulateModel();
         }
 
         private void SwitchLayer()
