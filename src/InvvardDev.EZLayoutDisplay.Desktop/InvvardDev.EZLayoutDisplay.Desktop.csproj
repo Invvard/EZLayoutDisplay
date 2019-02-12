@@ -100,6 +100,7 @@
     <Compile Include="Helper\KeyContentTemplateSelector.cs" />
     <Compile Include="Model\Enum\KeyDisplayType.cs" />
     <Compile Include="Model\KeyTemplate.cs" />
+    <Compile Include="Model\Messenger\UpdatedLayoutMessage.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
