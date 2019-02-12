@@ -4,7 +4,9 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
+using GalaSoft.MvvmLight.Messaging;
 using InvvardDev.EZLayoutDisplay.Desktop.Model;
+using InvvardDev.EZLayoutDisplay.Desktop.Model.Messenger;
 using InvvardDev.EZLayoutDisplay.Desktop.Service.Interface;
 using InvvardDev.EZLayoutDisplay.Desktop.View;
 
@@ -195,6 +197,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             _settingsService.HotkeyShowLayout = HotkeyShowLayout;
 
             _settingsService.Save();
+
+            Messenger.Default.Send(new UpdatedLayoutMessage());
 
             UpdateButtonCanExecute();
         }
