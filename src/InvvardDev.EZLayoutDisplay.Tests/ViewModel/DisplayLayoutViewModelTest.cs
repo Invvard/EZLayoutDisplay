@@ -81,5 +81,47 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             mockLayoutService.Verify(l => l.GetLayoutTemplate(), Times.Once);
             Assert.Equal(numberOfKey, displayLayoutViewModel.LayoutTemplate.Count);
         }
+
+        [ Theory ]
+        [ InlineData(1, 0, 0) ]
+        [ InlineData(1, 1, 0) ]
+        [ InlineData(2, 0, 0) ]
+        [ InlineData(2, 1, 1) ]
+        [ InlineData(2, 2, 0) ]
+        [ InlineData(3, 0, 0) ]
+        [ InlineData(3, 1, 1) ]
+        [ InlineData(3, 2, 2) ]
+        [ InlineData(3, 3, 0) ]
+        public void NextLayerCommand(int layerNumber, int nextLayerHit, int expectedCurrentLayerIndex)
+        {
+            //Arrange
+            var keyboardLayout = new EZLayout();
+
+            for (int i = 0 ; i < layerNumber ; i++)
+            {
+                keyboardLayout.EZLayers.Add(new EZLayer {
+                                                            Index = i,
+                                                            EZKeys = new List<EZKey> {
+                                                                                         new EZKey()
+                                                                                     }
+                                                        });
+            }
+
+            var mockLayoutService = new Mock<ILayoutService>();
+            var mockWindowService = new Mock<IWindowService>();
+            var mockSettingsService = new Mock<ISettingsService>();
+            mockSettingsService.Setup(s => s.EZLayout).Returns(keyboardLayout);
+
+            //Act
+            var displayLayoutViewModel = new DisplayLayoutViewModel(mockWindowService.Object, mockLayoutService.Object, mockSettingsService.Object);
+
+            for (int i = 0 ; i < nextLayerHit ; i++)
+            {
+                displayLayoutViewModel.NextLayerCommand.Execute(null);
+            }
+
+            //Assert
+            Assert.Equal(expectedCurrentLayerIndex, displayLayoutViewModel.CurrentLayerIndex);
+        }
     }
 }

@@ -25,9 +25,9 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private readonly ISettingsService _settingsService;
 
         private ICommand _lostFocusCommand;
+        private ICommand _nextLayerCommand;
 
         private ObservableCollection<KeyTemplate> _layoutTemplate;
-        private ObservableCollection<EZKey> _currentLayerKeys;
         private int _currentLayerIndex;
         private EZLayout _ezLayout;
 
@@ -37,22 +37,31 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         #region Properties
 
+        /// <summary>
+        /// Gets or sets the window title.
+        /// </summary>
         public string WindowTitle
         {
             get => _windowTitle;
             set => Set(ref _windowTitle, value);
         }
 
+        /// <summary>
+        /// Gets or sets the layout template.
+        /// </summary>
         public ObservableCollection<KeyTemplate> LayoutTemplate
         {
             get => _layoutTemplate;
             set => Set(ref _layoutTemplate, value);
         }
 
-        public ObservableCollection<EZKey> CurrentLayerKeys
+        /// <summary>
+        /// Gets or sets the current layer index.
+        /// </summary>
+        public int CurrentLayerIndex
         {
-            get => _currentLayerKeys;
-            set => Set(ref _currentLayerKeys, value);
+            get => _currentLayerIndex;
+            set => Set(ref _currentLayerIndex, value);
         }
 
         #endregion
@@ -66,6 +75,13 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             _lostFocusCommand
             ?? (_lostFocusCommand = new RelayCommand(LostFocus));
 
+        /// <summary>
+        /// Next layer command.
+        /// </summary>
+        public ICommand NextLayerCommand =>
+            _nextLayerCommand
+            ?? (_nextLayerCommand = new RelayCommand(NextLayer));
+
         #endregion
 
         public DisplayLayoutViewModel(IWindowService windowService, ILayoutService layoutService, ISettingsService settingsService)
@@ -74,10 +90,10 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             _layoutService = layoutService;
             _settingsService = settingsService;
 
-            Messenger.Default.Register<UpdatedLayoutMessage>(this, ReloadLayout);
+            Messenger.Default.Register<UpdatedLayoutMessage>(this, LoadLayout);
 
             SetLabelUi();
-            PopulateModel();
+            LoadLayout(null);
         }
 
         #region Private methods
@@ -89,7 +105,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         private async void PopulateModel()
         {
-            _currentLayerIndex = 0;
+            CurrentLayerIndex = 0;
 
             if (IsInDesignModeStatic)
             {
@@ -106,12 +122,10 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
             _ezLayout = _settingsService.EZLayout;
 
-            SwitchLayer();
-        }
-
-        private void ReloadLayout(UpdatedLayoutMessage obj)
-        {
-            PopulateModel();
+            if (IsInDesignModeStatic || _ezLayout?.EZLayers != null && _ezLayout.EZLayers.Any() && _ezLayout.EZLayers.SelectMany(l => l.EZKeys).Any())
+            {
+                SwitchLayer();
+            }
         }
 
         private void SwitchLayer()
@@ -129,7 +143,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
                                                      }
                                        };
 
-                for (int i = 0 ; i < LayoutTemplate.Count-1 ; i++)
+                for (int i = 0 ; i < LayoutTemplate.Count - 1 ; i++)
                 {
                     keys.Add(new EZKey {
                                            Label = new KeyLabel("A \u2192"),
@@ -139,7 +153,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             }
             else
             {
-                keys = _ezLayout?.EZLayers?.First(l => l.Index == _currentLayerIndex)?.EZKeys ?? new List<EZKey>(LayoutTemplate.Count);
+                keys = _ezLayout.EZLayers.First(l => l.Index == CurrentLayerIndex).EZKeys;
             }
 
             if (keys.Count == LayoutTemplate.Count)
@@ -151,9 +165,34 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             }
         }
 
+        private void LoadLayout(UpdatedLayoutMessage obj)
+        {
+            PopulateModel();
+        }
+
         private void LostFocus()
         {
             _windowService.CloseWindow<DisplayLayoutWindow>();
+        }
+
+        private void NextLayer()
+        {
+            var maxLayerIndex = _ezLayout.EZLayers.Count - 1;
+
+            switch (CurrentLayerIndex)
+            {
+                case var exp when maxLayerIndex == 0:
+                case var _ when CurrentLayerIndex >= maxLayerIndex:
+                    CurrentLayerIndex = 0;
+
+                    break;
+                case var exp when CurrentLayerIndex < maxLayerIndex:
+                    CurrentLayerIndex++;
+
+                    break;
+            }
+
+            SwitchLayer();
         }
 
         #endregion
