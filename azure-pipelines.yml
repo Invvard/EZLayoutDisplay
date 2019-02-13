@@ -31,3 +31,11 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+    testSelector: 'testAssemblies'
+    testAssemblyVer2: '**\*test*.dll!**\*TestAdapter.dll!**\obj\**'
+    testPlan:
+    testSuite:
+    testConfiguration:
+    searchFolder: '$(System.DefaultWorkingDirectory)' 
+    customBatchSizeValue:
+    customRunTimePerBatchValue:
