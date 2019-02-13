@@ -20,6 +20,7 @@
     </i:Interaction.Triggers>
     <Window.InputBindings>
         <KeyBinding Key="Escape" Command="{Binding LostFocusCommand, Mode=OneWay}" />
+        <KeyBinding Key="Space" Command="{Binding NextLayerCommand, Mode=OneWay}" />
     </Window.InputBindings>
 
     <ItemsControl ItemsSource="{Binding LayoutTemplate}"
