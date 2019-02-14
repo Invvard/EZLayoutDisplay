@@ -23,7 +23,7 @@
         <KeyBinding Key="Space" Command="{Binding NextLayerCommand, Mode=OneWay}" />
     </Window.InputBindings>
 
-    <ItemsControl ItemsSource="{Binding LayoutTemplate}"
+    <ItemsControl ItemsSource="{Binding CurrentLayoutTemplate}"
                   ItemTemplateSelector="{StaticResource KeyContentTemplateSelector}">
         <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
