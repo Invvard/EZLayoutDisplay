@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
@@ -27,7 +29,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private ICommand _lostFocusCommand;
         private ICommand _nextLayerCommand;
 
-        private ObservableCollection<KeyTemplate> _layoutTemplate;
+        private List<List<KeyTemplate>> _layoutTemplates;
+        private ObservableCollection<KeyTemplate> _currentLayoutTemplate;
         private int _currentLayerIndex;
         private EZLayout _ezLayout;
 
@@ -49,10 +52,10 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         /// <summary>
         /// Gets or sets the layout template.
         /// </summary>
-        public ObservableCollection<KeyTemplate> LayoutTemplate
+        public ObservableCollection<KeyTemplate> CurrentLayoutTemplate
         {
-            get => _layoutTemplate;
-            set => Set(ref _layoutTemplate, value);
+            get => _currentLayoutTemplate;
+            set => Set(ref _currentLayoutTemplate, value);
         }
 
         /// <summary>
@@ -90,10 +93,12 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             _layoutService = layoutService;
             _settingsService = settingsService;
 
-            Messenger.Default.Register<UpdatedLayoutMessage>(this, LoadLayout);
+            Messenger.Default.Register<UpdatedLayoutMessage>(this, LoadCompleteLayout);
+
+            CurrentLayoutTemplate = new ObservableCollection<KeyTemplate>();
 
             SetLabelUi();
-            LoadLayout(null);
+            LoadCompleteLayout();
         }
 
         #region Private methods
@@ -103,71 +108,98 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             WindowTitle = "Ergodox Layout";
         }
 
-        private async void PopulateModel()
+        private async void LoadCompleteLayout()
         {
             CurrentLayerIndex = 0;
-
+            
             if (IsInDesignModeStatic)
             {
-                var json = Encoding.Default.GetString(Resources.layoutDefinition);
-
-                var layoutDefinition = JsonConvert.DeserializeObject<IEnumerable<KeyTemplate>>(json);
-                LayoutTemplate = new ObservableCollection<KeyTemplate>(layoutDefinition);
-            }
-            else
-            {
-                var definition = await _layoutService.GetLayoutTemplate();
-                LayoutTemplate = new ObservableCollection<KeyTemplate>(definition);
+                LoadDesignTimeModel();
+                return;
             }
 
             _ezLayout = _settingsService.EZLayout;
 
-            if (IsInDesignModeStatic || _ezLayout?.EZLayers != null && _ezLayout.EZLayers.Any() && _ezLayout.EZLayers.SelectMany(l => l.EZKeys).Any())
+            var layoutDefinition = await LoadLayoutDefinition() as List<KeyTemplate>;
+            _layoutTemplates = new List<List<KeyTemplate>>();
+
+            if (IsInDesignModeStatic // in DesignMode, every thing is already set
+                || layoutDefinition == null
+                || _ezLayout?.EZLayers == null
+                || !_ezLayout.EZLayers.Any()
+                || !_ezLayout.EZLayers.SelectMany(l => l.EZKeys).Any())
             {
-                SwitchLayer();
+                return;
+            }
+
+            await PopulateLayoutTemplates();
+
+            SwitchLayer();
+        }
+
+        private void LoadDesignTimeModel()
+        {
+            var json = Encoding.Default.GetString(Resources.layoutDefinition);
+            var layoutDefinition = JsonConvert.DeserializeObject<IEnumerable<KeyTemplate>>(json) as List<KeyTemplate>;
+
+            Debug.Assert(layoutDefinition != null, nameof(layoutDefinition) + " != null");
+
+            // ReSharper disable once UseObjectOrCollectionInitializer
+            CurrentLayoutTemplate = new ObservableCollection<KeyTemplate>(layoutDefinition);
+            CurrentLayoutTemplate[0].EZKey = new EZKey
+            {
+                Label = new KeyLabel("="),
+                Modifier = new KeyLabel("Left Shift"),
+                DisplayType = KeyDisplayType.ModifierOnTop,
+                KeyCategory = KeyCategory.DualFunction
+            };
+
+            for (int i = 1; i < CurrentLayoutTemplate.Count; i++)
+            {
+                CurrentLayoutTemplate[i].EZKey = new EZKey
+                {
+                    Label = new KeyLabel("A \u2192"),
+                    Modifier = new KeyLabel("Left Shift")
+                };
+            }
+        }
+
+        private async Task<IEnumerable<KeyTemplate>> LoadLayoutDefinition()
+        {
+            var layoutDefinition = await _layoutService.GetLayoutTemplate();
+
+            return layoutDefinition;
+        }
+
+        private async Task PopulateLayoutTemplates()
+        {
+            foreach (var t in _ezLayout.EZLayers)
+            {
+                var layoutTemplate = await LoadLayoutDefinition() as List<KeyTemplate>;
+
+                if (layoutTemplate != null)
+                {
+                    for (int j = 0 ; j < layoutTemplate.Count ; j++)
+                    {
+                        layoutTemplate[j].EZKey = t.EZKeys[j];
+                    }
+                }
+
+                _layoutTemplates.Add(layoutTemplate);
             }
         }
 
         private void SwitchLayer()
         {
-            List<EZKey> keys;
-
-            if (IsInDesignModeStatic)
-            {
-                keys = new List<EZKey> {
-                                           new EZKey {
-                                                         Label = new KeyLabel("="),
-                                                         Modifier = new KeyLabel("Left Shift"),
-                                                         DisplayType = KeyDisplayType.ModifierOnTop,
-                                                         KeyCategory = KeyCategory.DualFunction
-                                                     }
-                                       };
-
-                for (int i = 0 ; i < LayoutTemplate.Count - 1 ; i++)
-                {
-                    keys.Add(new EZKey {
-                                           Label = new KeyLabel("A \u2192"),
-                                           Modifier = new KeyLabel("Left Shift")
-                                       });
-                }
-            }
-            else
-            {
-                keys = _ezLayout.EZLayers.First(l => l.Index == CurrentLayerIndex).EZKeys;
-            }
-
-            if (keys.Count == LayoutTemplate.Count)
-            {
-                for (int i = 0 ; i < LayoutTemplate.Count ; i++)
-                {
-                    LayoutTemplate[i].EZKey = keys[i];
-                }
-            }
+            CurrentLayoutTemplate.Clear();
+            CurrentLayoutTemplate = new ObservableCollection<KeyTemplate>(_layoutTemplates[CurrentLayerIndex]);
         }
 
-        private void LoadLayout(UpdatedLayoutMessage obj)
+        #region Delegates
+
+        private void LoadCompleteLayout(UpdatedLayoutMessage obj)
         {
-            PopulateModel();
+            LoadCompleteLayout();
         }
 
         private void LostFocus()
@@ -181,12 +213,12 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
             switch (CurrentLayerIndex)
             {
-                case var exp when maxLayerIndex == 0:
+                case var _ when maxLayerIndex == 0:
                 case var _ when CurrentLayerIndex >= maxLayerIndex:
                     CurrentLayerIndex = 0;
 
                     break;
-                case var exp when CurrentLayerIndex < maxLayerIndex:
+                case var _ when CurrentLayerIndex < maxLayerIndex:
                     CurrentLayerIndex++;
 
                     break;
@@ -194,6 +226,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
             SwitchLayer();
         }
+
+        #endregion
 
         #endregion
     }
