@@ -1,12 +1,10 @@
 ﻿using System.ComponentModel;
-using GalaSoft.MvvmLight;
 using Newtonsoft.Json;
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.Model
 {
-    public class KeyTemplate : ObservableObject
+    public class KeyTemplate
     {
-        private EZKey _ezKey;
         private const int KeyUnitSize = 54;
 
         /// <summary>
@@ -80,11 +78,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
         public double TopKeyWidth => BaseKeyWidth - 6;
         public double TopKeyHeight => BaseKeyHeight - 11;
 
-        public EZKey EZKey
-        {
-            get => _ezKey;
-            set => Set(ref _ezKey, value);
-        }
+        public EZKey EZKey { get; set; }
 
         public KeyTemplate()
         {
