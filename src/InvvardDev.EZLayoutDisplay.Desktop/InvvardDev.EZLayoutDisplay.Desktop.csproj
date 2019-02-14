@@ -97,7 +97,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Helper\Extensions.cs" />
     <Compile Include="Helper\KeyContentTemplateSelector.cs" />
     <Compile Include="Model\Enum\KeyDisplayType.cs" />
     <Compile Include="Model\KeyTemplate.cs" />
