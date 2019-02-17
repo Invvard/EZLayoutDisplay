@@ -123,7 +123,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             var layoutDefinition = await LoadLayoutDefinition() as List<KeyTemplate>;
             _layoutTemplates = new List<List<KeyTemplate>>();
 
-            if (IsInDesignModeStatic // in DesignMode, every thing is already set
+            if (IsInDesignModeStatic // in DesignMode, everything is already set
                 || layoutDefinition == null
                 || _ezLayout?.EZLayers == null
                 || !_ezLayout.EZLayers.Any()
