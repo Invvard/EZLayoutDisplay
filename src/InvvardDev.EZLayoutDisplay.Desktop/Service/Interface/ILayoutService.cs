@@ -21,7 +21,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Interface
         EZLayout PrepareEZLayout(ErgodoxLayout ergodoxLayout);
 
         /// <summary>
-        /// Gets the list of <see cref="KeyTemplate"/>.
+        /// Gets the list of <see cref="KeyTemplate"/> from the local repository.
         /// </summary>
         /// <returns>An <see cref="IEnumerable{KeyTemplate}"/></returns>
         Task<IEnumerable<KeyTemplate>> GetLayoutTemplate();
