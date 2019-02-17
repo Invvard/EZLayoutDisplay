@@ -83,7 +83,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         /// </summary>
         public ICommand NextLayerCommand =>
             _nextLayerCommand
-            ?? (_nextLayerCommand = new RelayCommand(NextLayer));
+            ?? (_nextLayerCommand = new RelayCommand(NextLayer, NextLayerCanExecute));
 
         #endregion
 
@@ -111,20 +111,19 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private async void LoadCompleteLayout()
         {
             CurrentLayerIndex = 0;
-            
+
             if (IsInDesignModeStatic)
             {
                 LoadDesignTimeModel();
+
                 return;
             }
 
             _ezLayout = _settingsService.EZLayout;
 
-            var layoutDefinition = await LoadLayoutDefinition() as List<KeyTemplate>;
             _layoutTemplates = new List<List<KeyTemplate>>();
 
             if (IsInDesignModeStatic // in DesignMode, everything is already set
-                || layoutDefinition == null
                 || _ezLayout?.EZLayers == null
                 || !_ezLayout.EZLayers.Any()
                 || !_ezLayout.EZLayers.SelectMany(l => l.EZKeys).Any())
@@ -146,21 +145,19 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
             // ReSharper disable once UseObjectOrCollectionInitializer
             CurrentLayoutTemplate = new ObservableCollection<KeyTemplate>(layoutDefinition);
-            CurrentLayoutTemplate[0].EZKey = new EZKey
-            {
-                Label = new KeyLabel("="),
-                Modifier = new KeyLabel("Left Shift"),
-                DisplayType = KeyDisplayType.ModifierOnTop,
-                KeyCategory = KeyCategory.DualFunction
-            };
+            CurrentLayoutTemplate[0].EZKey = new EZKey {
+                                                           Label = new KeyLabel("="),
+                                                           Modifier = new KeyLabel("Left Shift"),
+                                                           DisplayType = KeyDisplayType.ModifierOnTop,
+                                                           KeyCategory = KeyCategory.DualFunction
+                                                       };
 
-            for (int i = 1; i < CurrentLayoutTemplate.Count; i++)
+            for (int i = 1 ; i < CurrentLayoutTemplate.Count ; i++)
             {
-                CurrentLayoutTemplate[i].EZKey = new EZKey
-                {
-                    Label = new KeyLabel("A \u2192"),
-                    Modifier = new KeyLabel("Left Shift")
-                };
+                CurrentLayoutTemplate[i].EZKey = new EZKey {
+                                                               Label = new KeyLabel("A \u2192"),
+                                                               Modifier = new KeyLabel("Left Shift")
+                                                           };
             }
         }
 
@@ -175,14 +172,11 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         {
             foreach (var t in _ezLayout.EZLayers)
             {
-                var layoutTemplate = await LoadLayoutDefinition() as List<KeyTemplate>;
+                if (!(await LoadLayoutDefinition() is List<KeyTemplate> layoutTemplate)) break;
 
-                if (layoutTemplate != null)
+                for (int j = 0 ; j < layoutTemplate.Count ; j++)
                 {
-                    for (int j = 0 ; j < layoutTemplate.Count ; j++)
-                    {
-                        layoutTemplate[j].EZKey = t.EZKeys[j];
-                    }
+                    layoutTemplate[j].EZKey = t.EZKeys[j];
                 }
 
                 _layoutTemplates.Add(layoutTemplate);
@@ -191,8 +185,10 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         private void SwitchLayer()
         {
-            CurrentLayoutTemplate.Clear();
-            CurrentLayoutTemplate = new ObservableCollection<KeyTemplate>(_layoutTemplates[CurrentLayerIndex]);
+            if (_layoutTemplates.Any())
+            {
+                CurrentLayoutTemplate = new ObservableCollection<KeyTemplate>(_layoutTemplates[CurrentLayerIndex]);
+            }
         }
 
         #region Delegates
@@ -205,6 +201,13 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private void LostFocus()
         {
             _windowService.CloseWindow<DisplayLayoutWindow>();
+        }
+
+        private bool NextLayerCanExecute()
+        {
+            var canExecute = _layoutTemplates.Any();
+
+            return canExecute;
         }
 
         private void NextLayer()
