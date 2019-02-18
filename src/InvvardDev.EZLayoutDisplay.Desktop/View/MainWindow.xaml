@@ -10,7 +10,7 @@
         Width="100"
         Visibility="Hidden"
         ShowInTaskbar="False"
-        WindowStartupLocation="CenterScreen"
+        WindowStartupLocation="CenterScreen" Icon="{StaticResource WindowIcon}"
         DataContext="{Binding Main, Source={StaticResource Locator}}">
 
     <Window.Resources>
@@ -32,11 +32,13 @@
         </ResourceDictionary>
     </Window.Resources>
 
+    
+
     <Grid x:Name="LayoutRoot">
         <tb:TaskbarIcon 
             Visibility="Visible"
             ToolTipText="Double-click for window, right-click for menu"
-            IconSource="/Skins/Images/tray_base.ico"
+            IconSource="{StaticResource TrayIcon}"
             ContextMenu="{StaticResource SysTrayMenu}"
             MenuActivation="RightClick"
             LeftClickCommand="{Binding ShowLayoutCommand}"/>
