@@ -10,7 +10,7 @@
     WindowStartupLocation="CenterScreen" Topmost="True"
     ResizeMode="NoResize"
     Visibility="Visible" ShowInTaskbar="True" WindowStyle="None"
-    Title="{Binding WindowTitle}"
+    Title="{Binding WindowTitle}" Icon="{StaticResource WindowIcon}"
     DataContext="{Binding DisplayLayout, Source={StaticResource Locator}}">
 
     <i:Interaction.Triggers>
