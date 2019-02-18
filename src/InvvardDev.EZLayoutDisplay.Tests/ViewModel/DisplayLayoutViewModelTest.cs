@@ -73,7 +73,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
 
             var keyboardLayout = new EZLayout();
 
-            for (int i = 0 ; i < numberOfLayer; i++)
+            for (int i = 0 ; i < numberOfLayer ; i++)
             {
                 keyboardLayout.EZLayers.Add(new EZLayer {
                                                             Index = i,
@@ -103,20 +103,19 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             //Arrange
             var keyboardLayout = new EZLayout();
 
-            for (int i = 0; i < layerNumber; i++)
+            for (int i = 0 ; i < layerNumber ; i++)
             {
-                keyboardLayout.EZLayers.Add(new EZLayer
-                                            {
-                                                Index = i,
-                                                EZKeys = new List<EZKey> {
-                                                                             new EZKey()
-                                                                         }
-                                            });
+                keyboardLayout.EZLayers.Add(new EZLayer {
+                                                            Index = i,
+                                                            EZKeys = new List<EZKey> {
+                                                                                         new EZKey()
+                                                                                     }
+                                                        });
             }
 
             var layoutTemplate = new List<KeyTemplate>();
 
-            for (int i = 0; i < 1; i++)
+            for (int i = 0 ; i < 1 ; i++)
             {
                 layoutTemplate.Add(new KeyTemplate(i, i, 54, 81));
             }
@@ -129,23 +128,23 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
 
             //Act
             var displayLayoutViewModel = new DisplayLayoutViewModel(mockWindowService.Object, mockLayoutService.Object, mockSettingsService.Object);
-            
+
             //Assert
             Assert.Equal(expectedCanExecute, displayLayoutViewModel.NextLayerCommand.CanExecute(null));
         }
 
         [ Theory ]
-        [ InlineData(0, 0, 0, false) ]
-        [ InlineData(1, 0, 0, true) ]
-        [ InlineData(1, 1, 0, true) ]
-        [ InlineData(2, 0, 0, true) ]
-        [ InlineData(2, 1, 1, true) ]
-        [ InlineData(2, 2, 0, true) ]
-        [ InlineData(3, 0, 0, true) ]
-        [ InlineData(3, 1, 1, true) ]
-        [ InlineData(3, 2, 2, true) ]
-        [ InlineData(3, 3, 0, true) ]
-        public void NextLayerCommand_Execute(int layerNumber, int nextLayerHit, int expectedCurrentLayerIndex, bool expectedCanExecute)
+        [ InlineData(0, 0, 0) ]
+        [ InlineData(1, 0, 0) ]
+        [ InlineData(1, 1, 0) ]
+        [ InlineData(2, 0, 0) ]
+        [ InlineData(2, 1, 1) ]
+        [ InlineData(2, 2, 0) ]
+        [ InlineData(3, 0, 0) ]
+        [ InlineData(3, 1, 1) ]
+        [ InlineData(3, 2, 2) ]
+        [ InlineData(3, 3, 0) ]
+        public void NextLayerCommand_Execute(int layerNumber, int nextLayerHit, int expectedCurrentLayerIndex)
         {
             //Arrange
             var keyboardLayout = new EZLayout();
