@@ -105,7 +105,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         private void SetLabelUi()
         {
-            WindowTitle = "Ergodox Layout";
+            WindowTitle = "ErgoDox Layout";
         }
 
         private async void LoadCompleteLayout()
