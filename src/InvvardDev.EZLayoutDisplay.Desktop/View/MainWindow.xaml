@@ -15,14 +15,16 @@
 
     <Window.Resources>
         <ResourceDictionary>
-
+            <Style x:Key="MainMenuItem" TargetType="MenuItem">
+                <Setter Property="FontWeight" Value="Bold"/>
+            </Style>
             <!-- The taskbar context menu - the first row is a dummy to show off simple data binding -->
             <!--
                 The "shared" directive is needed if we reopen the sample window a few times - WPF will otherwise
                 reuse the same context menu (which is a resource) again (which will have its DataContext set to the old TaskbarIcon)
             -->
             <ContextMenu x:Shared="false" x:Key="SysTrayMenu">
-                <MenuItem Header="{Binding TrayMenuShowLayoutCommandLabel}" Command="{Binding ShowLayoutCommand}" InputGestureText="{Binding TrayMenuShowLayoutShortcutLabel}"/>
+                <MenuItem Style="{StaticResource MainMenuItem}" Header="{Binding TrayMenuShowLayoutCommandLabel}" Command="{Binding ShowLayoutCommand}" InputGestureText="{Binding TrayMenuShowLayoutShortcutLabel}"/>
                 <Separator />
                 <MenuItem Header="{Binding TrayMenuShowSettingsCommandLabel}" Command="{Binding ShowSettingsCommand}" />
                 <MenuItem Header="{Binding TrayMenuShowAboutCommandLabel}" Command="{Binding ShowAboutCommand}" />
