@@ -25,6 +25,7 @@
                 <MenuItem Header="{Binding TrayMenuShowLayoutCommandLabel}" Command="{Binding ShowLayoutCommand}"/>
                 <Separator />
                 <MenuItem Header="{Binding TrayMenuShowSettingsCommandLabel}" Command="{Binding ShowSettingsCommand}" />
+                <MenuItem Header="{Binding TrayMenuShowAboutCommandLabel}" Command="{Binding ShowAboutCommand}" />
                 <Separator />
                 <MenuItem Header="{Binding TrayMenuExitCommandLabel}" Command="{Binding ExitApplicationCommand}" />
             </ContextMenu>
