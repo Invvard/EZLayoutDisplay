@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InvvardDev.EZLayoutDisplay.Desktop.View"
         mc:Ignorable="d"
-        Title="AboutWindow" Height="450" Width="800"
+        Title="{Binding WindowTitle}" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen" Icon="{StaticResource WindowIcon}"
         DataContext="{Binding About, Source={StaticResource Locator}}">
     <Grid>
         
