@@ -25,6 +25,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private readonly IApplicationService _applicationService;
 
         private string _trayMenuShowLayoutCommandLabel;
+        private string _trayMenuShowLayoutShortcutLabel;
         private string _trayMenuShowSettingsCommandLabel;
         private string _trayMenuShowAboutCommandLabel;
         private string _trayMenuExitCommandLabel;
@@ -37,6 +38,12 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         {
             get => _trayMenuShowLayoutCommandLabel;
             set => Set(ref _trayMenuShowLayoutCommandLabel, value);
+        }
+
+        public string TrayMenuShowLayoutShortcutLabel
+        {
+            get => _trayMenuShowLayoutShortcutLabel;
+            set => Set(ref _trayMenuShowLayoutShortcutLabel, value);
         }
 
         public string TrayMenuShowSettingsCommandLabel
@@ -99,6 +106,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private void SetLabelUi()
         {
             TrayMenuShowLayoutCommandLabel = "Show Layout";
+            TrayMenuShowLayoutShortcutLabel = "Hyper+Space";
             TrayMenuShowSettingsCommandLabel = "Settings";
             TrayMenuShowAboutCommandLabel = "About";
             TrayMenuExitCommandLabel = "Exit";
