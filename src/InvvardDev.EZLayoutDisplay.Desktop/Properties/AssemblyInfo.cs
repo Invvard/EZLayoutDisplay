@@ -6,8 +6,8 @@ using System.Windows;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("EZLayoutDisplay")]
-[assembly: AssemblyDescription("Display your Ergodox layout right from your desktop")]
+[assembly: AssemblyTitle("EZ Layout Display")]
+[assembly: AssemblyDescription("Display your ErgoDox layout right from your desktop")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyProduct("InvvardDev.EZLayoutDisplay")]
 [assembly: AssemblyCompany("InvvardDev")]
