@@ -35,7 +35,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             var displayLayoutViewModel = new DisplayLayoutViewModel(mockWindowService.Object, mockLayoutService.Object, mockSettingsService.Object);
 
             //Assert
-            Assert.Equal("Ergodox Layout", displayLayoutViewModel.WindowTitle);
+            Assert.Equal("ErgoDox Layout", displayLayoutViewModel.WindowTitle);
         }
 
         [ Fact ]
