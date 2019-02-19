@@ -7,6 +7,12 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         #region Fields
 
         private string _windowTitle;
+        private string _appTitleLabel;
+        private string _appVersionLabel;
+        private string _createdTitleLabel;
+        private string _basedOnTitleLabel;
+        private string _projectWebsiteTitleLabel;
+        private string _contactTitleLabel;
 
         #endregion
 
@@ -19,6 +25,42 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         {
             get => _windowTitle;
             set => Set(ref _windowTitle, value);
+        }
+
+        public string AppTitleLabel
+        {
+            get => _appTitleLabel;
+            set => Set(ref _appTitleLabel, value);
+        }
+
+        public string AppVersionLabel
+        {
+            get => _appVersionLabel;
+            set => Set(ref _appVersionLabel, value);
+        }
+
+        public string CreatedTitleLabel
+        {
+            get => _createdTitleLabel;
+            set => Set(ref _createdTitleLabel, value);
+        }
+
+        public string BasedOnTitleLabel
+        {
+            get => _basedOnTitleLabel;
+            set => Set(ref _basedOnTitleLabel, value);
+        }
+
+        public string ProjectWebsiteTitleLabel
+        {
+            get => _projectWebsiteTitleLabel;
+            set => Set(ref _projectWebsiteTitleLabel, value);
+        }
+
+        public string ContactTitleLabel
+        {
+            get => _contactTitleLabel;
+            set => Set(ref _contactTitleLabel, value);
         }
 
         #endregion
