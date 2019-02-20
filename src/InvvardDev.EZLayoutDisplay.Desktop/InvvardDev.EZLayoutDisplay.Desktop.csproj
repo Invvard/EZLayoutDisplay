@@ -247,7 +247,7 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Skins\Images\github-logo.png" />
-    <Resource Include="Skins\Images\Twitter_Bird.svg.png" />
+    <Resource Include="Skins\Images\twitter-logo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
