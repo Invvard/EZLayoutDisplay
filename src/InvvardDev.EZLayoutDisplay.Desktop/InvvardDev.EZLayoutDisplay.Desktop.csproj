@@ -152,6 +152,7 @@
     <Compile Include="View\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Converter\BoolToVisibilityConverter.cs" />
     <Compile Include="View\Converter\KeyCodeToCharConverter.cs" />
     <Compile Include="View\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
@@ -248,6 +249,9 @@
   <ItemGroup>
     <Resource Include="Skins\Images\github-logo.png" />
     <Resource Include="Skins\Images\twitter-logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Skins\Images\warning-sign.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

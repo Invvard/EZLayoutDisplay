@@ -35,6 +35,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private EZLayout _ezLayout;
 
         private string _windowTitle;
+        private bool _noLayoutAvailable;
 
         #endregion
 
@@ -47,6 +48,15 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         {
             get => _windowTitle;
             set => Set(ref _windowTitle, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the no layout available indicator.
+        /// </summary>
+        public bool NoLayoutAvailable
+        {
+            get => _noLayoutAvailable;
+            set => Set(ref _noLayoutAvailable, value);
         }
 
         /// <summary>
@@ -123,11 +133,12 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
             _layoutTemplates = new List<List<KeyTemplate>>();
 
-            if (IsInDesignModeStatic // in DesignMode, everything is already set
-                || _ezLayout?.EZLayers == null
+            if (_ezLayout?.EZLayers == null
                 || !_ezLayout.EZLayers.Any()
                 || !_ezLayout.EZLayers.SelectMany(l => l.EZKeys).Any())
             {
+                NoLayoutMode();
+
                 return;
             }
 
@@ -138,6 +149,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         private void LoadDesignTimeModel()
         {
+            NoLayoutAvailable = true;
+
             var json = Encoding.Default.GetString(Resources.layoutDefinition);
             var layoutDefinition = JsonConvert.DeserializeObject<IEnumerable<KeyTemplate>>(json) as List<KeyTemplate>;
 
@@ -152,10 +165,16 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
                                                            KeyCategory = KeyCategory.DualFunction
                                                        };
 
-            for (int i = 1 ; i < CurrentLayoutTemplate.Count ; i++)
+            CurrentLayoutTemplate[1].EZKey = new EZKey {
+                                                           Label = new KeyLabel("LT \u2192 1"),
+                                                           DisplayType = KeyDisplayType.SimpleLabel,
+                                                           KeyCategory = KeyCategory.DualFunction
+                                                       };
+
+            for (int i = 2 ; i < CurrentLayoutTemplate.Count ; i++)
             {
                 CurrentLayoutTemplate[i].EZKey = new EZKey {
-                                                               Label = new KeyLabel("A \u2192"),
+                                                               Label = new KeyLabel("E"),
                                                                Modifier = new KeyLabel("Left Shift")
                                                            };
             }
@@ -189,6 +208,11 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             {
                 CurrentLayoutTemplate = new ObservableCollection<KeyTemplate>(_layoutTemplates[CurrentLayerIndex]);
             }
+        }
+
+        private void NoLayoutMode()
+        {
+            NoLayoutAvailable = true;
         }
 
         #region Delegates

@@ -7,9 +7,9 @@
     xmlns:command="http://www.galasoft.ch/mvvmlight"
     x:Class="InvvardDev.EZLayoutDisplay.Desktop.View.DisplayLayoutWindow"
     mc:Ignorable="d" Height="423" Width="1075"
-    WindowStartupLocation="CenterScreen" Topmost="True"
+    WindowStartupLocation="CenterScreen" Topmost="{Binding IsTopMost}"
     ResizeMode="NoResize" Visibility="Visible" ShowInTaskbar="True"
-    WindowStyle="None"  Background="{StaticResource WindowBackgroundBrush}"
+    WindowStyle="None" Background="{StaticResource WindowBackgroundBrush}"
     Title="{Binding WindowTitle}" Icon="{StaticResource WindowIcon}"
     DataContext="{Binding DisplayLayout, Source={StaticResource Locator}}">
 
@@ -23,12 +23,29 @@
         <KeyBinding Key="Space" Command="{Binding NextLayerCommand, Mode=OneWay}" />
     </Window.InputBindings>
 
-    <ItemsControl ItemsSource="{Binding CurrentLayoutTemplate}"
-                  ItemTemplateSelector="{StaticResource KeyContentTemplateSelector}">
-        <ItemsControl.ItemsPanel>
-            <ItemsPanelTemplate>
-                <Canvas Margin="10" />
-            </ItemsPanelTemplate>
-        </ItemsControl.ItemsPanel>
-    </ItemsControl>
+    <Grid>
+        <ItemsControl ItemsSource="{Binding CurrentLayoutTemplate}"
+                      ItemTemplateSelector="{StaticResource KeyContentTemplateSelector}"
+                      Visibility="{Binding NoLayoutAvailable, Converter={StaticResource BoolToVisibleConverter}}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas Margin="10" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+        <Grid Visibility="{Binding NoLayoutAvailable, Converter={StaticResource BoolToHiddenConverter}}" Width="350">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width=".25*"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Image Grid.Column="0" Source="../Skins/Images/warning-sign.png"/>
+            <TextBlock Grid.Column="2" TextWrapping="WrapWithOverflow" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Left">
+                <Run Text="No layout available yet !"/>
+                <LineBreak/>
+                <Run Text="Please, go to the settings and update the layout."/>
+            </TextBlock>
+        </Grid>
+    </Grid>
+
 </Window>

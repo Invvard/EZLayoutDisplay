@@ -3,10 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-			 xmlns:ignore="http://www.galasoft.ch/ignore"
-			 xmlns:viewModel="clr-namespace:InvvardDev.EZLayoutDisplay.Desktop.ViewModel"
-			 xmlns:converter="clr-namespace:InvvardDev.EZLayoutDisplay.Desktop.View.Converter"
-			 ShutdownMode="OnExplicitShutdown"
+             xmlns:ignore="http://www.galasoft.ch/ignore"
+             xmlns:viewModel="clr-namespace:InvvardDev.EZLayoutDisplay.Desktop.ViewModel"
+             xmlns:converter="clr-namespace:InvvardDev.EZLayoutDisplay.Desktop.View.Converter"
+             ShutdownMode="OnExplicitShutdown"
              StartupUri="View/MainWindow.xaml"
              mc:Ignorable="d ignore">
 
@@ -14,15 +14,22 @@
         <ResourceDictionary>
             <!--Global View Model Locator-->
             <viewModel:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
-            <converter:KeyCodeToCharConverter x:Key="KeyCodeConverter" />
+
             <BitmapImage x:Key="WindowIcon" UriSource="Skins/Images/tray_base.ico" />
             <BitmapImage x:Key="TrayIcon" UriSource="Skins/Images/tray_base.ico" />
-            <SolidColorBrush x:Key="WindowBackgroundBrush" Color="WhiteSmoke"/>
+
+            <SolidColorBrush x:Key="WindowBackgroundBrush" Color="WhiteSmoke" />
+
+            <converter:KeyCodeToCharConverter x:Key="KeyCodeConverter" />
+            <converter:BoolToVisibilityConverter x:Key="BoolToHiddenConverter"
+                                                 TrueValue="Visible" FalseValue="Hidden" />
+            <converter:BoolToVisibilityConverter x:Key="BoolToVisibleConverter"
+                                                 TrueValue="Hidden" FalseValue="Visible" />
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Skins/KeyboardLayoutSkin.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
 
     </Application.Resources>
-    
+
 </Application>
