@@ -137,11 +137,11 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
                 || !_ezLayout.EZLayers.Any()
                 || !_ezLayout.EZLayers.SelectMany(l => l.EZKeys).Any())
             {
-                NoLayoutMode();
-
+                NoLayoutAvailable = true;
                 return;
             }
 
+            NoLayoutAvailable = false;
             await PopulateLayoutTemplates();
 
             SwitchLayer();
@@ -210,10 +210,6 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             }
         }
 
-        private void NoLayoutMode()
-        {
-            NoLayoutAvailable = true;
-        }
 
         #region Delegates
 
