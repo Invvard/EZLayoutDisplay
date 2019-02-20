@@ -14,9 +14,10 @@
         <ResourceDictionary>
             <!--Global View Model Locator-->
             <viewModel:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
-            <converter:KeyCodeToCharConverter x:Key="keyCodeConverter" />
+            <converter:KeyCodeToCharConverter x:Key="KeyCodeConverter" />
             <BitmapImage x:Key="WindowIcon" UriSource="Skins/Images/tray_base.ico" />
             <BitmapImage x:Key="TrayIcon" UriSource="Skins/Images/tray_base.ico" />
+            <SolidColorBrush x:Key="WindowBackgroundBrush" Color="WhiteSmoke"/>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Skins/KeyboardLayoutSkin.xaml" />
             </ResourceDictionary.MergedDictionaries>
