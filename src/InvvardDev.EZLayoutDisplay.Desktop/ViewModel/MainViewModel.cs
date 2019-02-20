@@ -18,13 +18,16 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         private ICommand _showLayoutCommand;
         private ICommand _showSettingsCommand;
+        private ICommand _showAboutCommand;
         private ICommand _exitCommand;
 
         private readonly IWindowService _windowService;
         private readonly IApplicationService _applicationService;
 
         private string _trayMenuShowLayoutCommandLabel;
+        private string _trayMenuShowLayoutShortcutLabel;
         private string _trayMenuShowSettingsCommandLabel;
+        private string _trayMenuShowAboutCommandLabel;
         private string _trayMenuExitCommandLabel;
 
         #endregion
@@ -37,10 +40,22 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             set => Set(ref _trayMenuShowLayoutCommandLabel, value);
         }
 
+        public string TrayMenuShowLayoutShortcutLabel
+        {
+            get => _trayMenuShowLayoutShortcutLabel;
+            set => Set(ref _trayMenuShowLayoutShortcutLabel, value);
+        }
+
         public string TrayMenuShowSettingsCommandLabel
         {
             get => _trayMenuShowSettingsCommandLabel;
             set => Set(ref _trayMenuShowSettingsCommandLabel, value);
+        }
+
+        public string TrayMenuShowAboutCommandLabel
+        {
+            get => _trayMenuShowAboutCommandLabel;
+            set => Set(ref _trayMenuShowAboutCommandLabel, value);
         }
 
         public string TrayMenuExitCommandLabel
@@ -62,6 +77,11 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         /// Shows the Settings Window.
         /// </summary>
         public ICommand ShowSettingsCommand => _showSettingsCommand ?? (_showSettingsCommand = new RelayCommand(ShowSettingsWindow));
+
+        /// <summary>
+        /// Shows the About Window.
+        /// </summary>
+        public ICommand ShowAboutCommand => _showAboutCommand ?? (_showAboutCommand = new RelayCommand(ShowAboutWindow));
 
         /// <summary>
         /// Shuts down the application.
@@ -86,7 +106,9 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private void SetLabelUi()
         {
             TrayMenuShowLayoutCommandLabel = "Show Layout";
+            TrayMenuShowLayoutShortcutLabel = "Hyper+Space";
             TrayMenuShowSettingsCommandLabel = "Settings";
+            TrayMenuShowAboutCommandLabel = "About";
             TrayMenuExitCommandLabel = "Exit";
         }
 
@@ -102,6 +124,11 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private void ShowSettingsWindow()
         {
             _windowService.ShowWindow<SettingsWindow>();
+        }
+
+        private void ShowAboutWindow()
+        {
+            _windowService.ShowWindow<AboutWindow>();
         }
 
         private void ShutdownApplication()

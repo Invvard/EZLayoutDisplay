@@ -45,6 +45,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<DisplayLayoutViewModel>();
             SimpleIoc.Default.Register<SettingsViewModel>();
+            SimpleIoc.Default.Register<AboutViewModel>();
         }
 
         /// <summary>
@@ -58,6 +59,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         public DisplayLayoutViewModel DisplayLayout => ServiceLocator.Current.GetInstance<DisplayLayoutViewModel>();
 
         public SettingsViewModel Settings => ServiceLocator.Current.GetInstance<SettingsViewModel>();
+
+        public AboutViewModel About => ServiceLocator.Current.GetInstance<AboutViewModel>();
         
         /// <summary>
         /// Cleans up all the resources.
