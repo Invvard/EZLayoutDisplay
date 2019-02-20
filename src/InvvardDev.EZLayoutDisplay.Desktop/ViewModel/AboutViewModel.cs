@@ -1,6 +1,11 @@
-﻿using System.Linq;
+﻿using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
+using System.Windows.Input;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.CommandWpf;
+using InvvardDev.EZLayoutDisplay.Desktop.Service.Interface;
+using InvvardDev.EZLayoutDisplay.Desktop.View;
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 {
@@ -8,14 +13,29 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
     {
         #region Fields
 
+        private IWindowService _windowService;
+
         private string _windowTitle;
         private string _appTitleLabel;
         private string _appVersionLabel;
         private string _createdTitleLabel;
         private string _basedOnTitleLabel;
-        private string _projectWebsiteTitleLabel;
+        private string _projectHomeTitleLabel;
         private string _contactTitleLabel;
+        private string _creatorInfoLabel;
+        private string _basedOnInfoLabel;
+        private string _projectHomeInfoLabel;
+        private string _contactInfoLabel;
         private string _closeButtonLabel;
+
+        private readonly string _basedOnUrl;
+        private readonly string _projectHomeUrl;
+        private readonly string _contactUrl;
+
+        private ICommand _navigateBasedOnUrlCommand;
+        private ICommand _navigateProjectHomeUrlCommand;
+        private ICommand _navigateContactUrlCommand;
+        private ICommand _closeAboutCommand;
 
         #endregion
 
@@ -54,16 +74,40 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             set => Set(ref _basedOnTitleLabel, value);
         }
 
-        public string ProjectWebsiteTitleLabel
+        public string ProjectHomeTitleLabel
         {
-            get => _projectWebsiteTitleLabel;
-            set => Set(ref _projectWebsiteTitleLabel, value);
+            get => _projectHomeTitleLabel;
+            set => Set(ref _projectHomeTitleLabel, value);
         }
 
         public string ContactTitleLabel
         {
             get => _contactTitleLabel;
             set => Set(ref _contactTitleLabel, value);
+        }
+
+        public string CreatorInfoLabel
+        {
+            get => _creatorInfoLabel;
+            set => Set(ref _creatorInfoLabel, value);
+        }
+
+        public string BasedOnInfoLabel
+        {
+            get => _basedOnInfoLabel;
+            set => Set(ref _basedOnInfoLabel, value);
+        }
+
+        public string ProjectHomeInfoLabel
+        {
+            get => _projectHomeInfoLabel;
+            set => Set(ref _projectHomeInfoLabel, value);
+        }
+
+        public string ContactInfoLabel
+        {
+            get => _contactInfoLabel;
+            set => Set(ref _contactInfoLabel, value);
         }
 
         public string CloseButtonLabel
@@ -76,12 +120,51 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         #region Relay commands
 
+        /// <summary>
+        /// Navigate to based on URL command.
+        /// </summary>
+        public ICommand NavigateBasedOnUrlCommand =>
+            _navigateBasedOnUrlCommand
+            ?? (_navigateBasedOnUrlCommand = new RelayCommand(NavigateBasedOnUrl));
+
+        /// <summary>
+        /// Navigate to project home URL command.
+        /// </summary>
+        public ICommand NavigateProjectHomeUrlCommand =>
+            _navigateProjectHomeUrlCommand
+            ?? (_navigateProjectHomeUrlCommand = new RelayCommand(NavigateProjectHomeUrl));
+
+        /// <summary>
+        /// Navigate to contact URL command.
+        /// </summary>
+        public ICommand NavigateContactUrlCommand =>
+            _navigateContactUrlCommand
+            ?? (_navigateContactUrlCommand = new RelayCommand(NavigateContactUrl));
+
+        /// <summary>
+        /// Close about window command.
+        /// </summary>
+        public ICommand CloseAboutCommand =>
+            _closeAboutCommand
+            ?? (_closeAboutCommand = new RelayCommand(CloseAboutWindow));
+
+        private void CloseAboutWindow()
+        {
+            _windowService.CloseWindow<AboutWindow>();
+        }
+
         #endregion
 
         #region Constructor
 
-        public AboutViewModel()
+        public AboutViewModel(IWindowService windowService)
         {
+            _windowService = windowService;
+
+            _basedOnUrl = "https://configure.ergodox-ez.com/layouts/default/latest/0";
+            _projectHomeUrl = "https://github.com/Invvard/EZLayoutDisplay";
+            _contactUrl = "https://twitter.com/invvard";
+
             SetLabelUi();
         }
 
@@ -97,8 +180,12 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             AppVersionLabel = $"v.{Assembly.GetExecutingAssembly().GetName().Version}";
             CreatedTitleLabel = "Created by";
             BasedOnTitleLabel = "Based on";
-            ProjectWebsiteTitleLabel = "Project website";
+            ProjectHomeTitleLabel = "Project home";
             ContactTitleLabel = "Contact";
+            CreatorInfoLabel = "Pierre CAVAROC";
+            BasedOnInfoLabel = "ErgoDox EZ Configurator";
+            ProjectHomeInfoLabel = appTitle;
+            ContactInfoLabel = "@Invvard";
             CloseButtonLabel = "OK";
         }
 
@@ -114,6 +201,21 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             }
 
             return appTitle;
+        }
+
+        private void NavigateBasedOnUrl()
+        {
+            Process.Start(_basedOnUrl);
+        }
+
+        private void NavigateProjectHomeUrl()
+        {
+            Process.Start(_projectHomeUrl);
+        }
+
+        private void NavigateContactUrl()
+        {
+            Process.Start(_contactUrl);
         }
 
         #endregion
