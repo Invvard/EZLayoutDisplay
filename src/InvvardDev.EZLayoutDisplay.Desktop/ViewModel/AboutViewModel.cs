@@ -1,4 +1,6 @@
-﻿using GalaSoft.MvvmLight;
+﻿using System.Linq;
+using System.Reflection;
+using GalaSoft.MvvmLight;
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 {
@@ -13,6 +15,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private string _basedOnTitleLabel;
         private string _projectWebsiteTitleLabel;
         private string _contactTitleLabel;
+        private string _closeButtonLabel;
 
         #endregion
 
@@ -63,6 +66,12 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             set => Set(ref _contactTitleLabel, value);
         }
 
+        public string CloseButtonLabel
+        {
+            get => _closeButtonLabel;
+            set => Set(ref _closeButtonLabel, value);
+        }
+
         #endregion
 
         #region Relay commands
@@ -82,7 +91,29 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         private void SetLabelUi()
         {
-            WindowTitle = "About EZ Layout Display";
+            var appTitle = GetAppTitle();
+            WindowTitle = $"About {appTitle}";
+            AppTitleLabel = appTitle;
+            AppVersionLabel = $"v.{Assembly.GetExecutingAssembly().GetName().Version}";
+            CreatedTitleLabel = "Created by";
+            BasedOnTitleLabel = "Based on";
+            ProjectWebsiteTitleLabel = "Project website";
+            ContactTitleLabel = "Contact";
+            CloseButtonLabel = "OK";
+        }
+
+        private static string GetAppTitle()
+        {
+            var appTitle = "EZ Layout Display";
+
+            var customAttributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyTitleAttribute), false).FirstOrDefault();
+            
+            if (customAttributes is AssemblyTitleAttribute attribute)
+            {
+                appTitle = attribute.Title;
+            }
+
+            return appTitle;
         }
 
         #endregion
