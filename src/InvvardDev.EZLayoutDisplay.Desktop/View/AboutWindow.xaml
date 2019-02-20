@@ -6,10 +6,43 @@
         xmlns:local="clr-namespace:InvvardDev.EZLayoutDisplay.Desktop.View"
         mc:Ignorable="d"
         Title="{Binding WindowTitle}" Height="300" Width="500"
-        ResizeMode="NoResize"
+        ResizeMode="NoResize" Background="#FFF5F5F5"
         WindowStartupLocation="CenterScreen" Icon="{StaticResource WindowIcon}"
         DataContext="{Binding About, Source={StaticResource Locator}}">
-    <Grid>
-        
+
+    <Window.Resources>
+        <ResourceDictionary Source="../Skins/AboutSkin.xaml"/>
+    </Window.Resources>
+
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition Height="10"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="130"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Image Source="{StaticResource EzLogo}" Grid.RowSpan="8"/>
+        <StackPanel Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2">
+            <Label Content="{Binding AppTitleLabel}" Style="{StaticResource AppTitleStyle}"/>
+            <Label Content="{Binding AppVersionLabel}" Padding="5,0"/>
+        </StackPanel>
+        <Label Grid.Row="2" Grid.Column="1" Content="{Binding CreatedTitleLabel}" Style="{StaticResource TitleLabelStyle}" />
+        <Label Grid.Row="3" Grid.Column="1" Content="{Binding BasedOnTitleLabel}" Style="{StaticResource TitleLabelStyle}"/>
+        <Label Grid.Row="4" Grid.Column="1" Content="{Binding ProjectWebsiteTitleLabel}" Style="{StaticResource TitleLabelStyle}"/>
+        <Label Grid.Row="5" Grid.Column="1" Content="{Binding ContactTitleLabel}" Style="{StaticResource TitleLabelStyle}"/>
+        <Label Grid.Row="2" Grid.Column="2" Content="Label" Style="{StaticResource InfoLabelStyle}"/>
+        <Label Grid.Row="3" Grid.Column="2" Content="Label" Style="{StaticResource InfoLabelStyle}"/>
+        <Label Grid.Row="4" Grid.Column="2" Content="Label" Style="{StaticResource InfoLabelStyle}"/>
+        <Label Grid.Row="5" Grid.Column="2" Content="Label" Style="{StaticResource InfoLabelStyle}"/>
+        <Button Content="{Binding CloseButtonLabel}" Width="75" Grid.Row="7" Grid.Column="2" Margin="5" HorizontalAlignment="Right"/>
     </Grid>
 </Window>
