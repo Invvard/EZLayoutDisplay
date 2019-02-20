@@ -40,7 +40,7 @@
     <Grid x:Name="LayoutRoot">
         <tb:TaskbarIcon 
             Visibility="Visible"
-            ToolTipText="Double-click for window, right-click for menu"
+            ToolTipText="Left-click for window, right-click for menu"
             IconSource="{StaticResource TrayIcon}"
             ContextMenu="{StaticResource SysTrayMenu}"
             MenuActivation="RightClick"
