@@ -1,10 +1,10 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <BitmapImage x:Key="EzLogo" UriSource="Images/about-logo.png"/>
-    
-    <Style TargetType="Label"  x:Key="LabelBaseStyle">
-        <Setter Property="Foreground" Value="#FF4D3511"/>
+    <BitmapImage x:Key="EzLogo" UriSource="Images/about-logo.png" />
+
+    <Style TargetType="Label" x:Key="LabelBaseStyle">
+        <Setter Property="Foreground" Value="#FF4D3511" />
     </Style>
 
     <Style TargetType="Label" x:Key="AppTitleStyle" BasedOn="{StaticResource LabelBaseStyle}">
@@ -13,15 +13,37 @@
         <Setter Property="Padding" Value="5,5,5,2" />
     </Style>
 
-    <Style x:Key="TitleLabelStyle" TargetType="Label" BasedOn="{StaticResource LabelBaseStyle}" >
+    <Style x:Key="TitleLabelStyle" TargetType="Label" BasedOn="{StaticResource LabelBaseStyle}">
         <Setter Property="FontFamily" Value="Segoe UI" />
-        <Setter Property="FontSize" Value="14" />
-        <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="HorizontalContentAlignment" Value="Right"/>
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Right" />
     </Style>
 
-    <Style x:Key="InfoLabelStyle" TargetType="Label" BasedOn="{StaticResource TitleLabelStyle}" >
-        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+    <Style x:Key="InfoLabelStyle" TargetType="Label" BasedOn="{StaticResource TitleLabelStyle}">
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+    </Style>
+
+    <Style x:Key="LogoInfoStyle" TargetType="Image">
+        <Setter Property="Width" Value="20" />
+        <Setter Property="Margin" Value="5,0,0,0" />
+    </Style>
+
+    <Style TargetType="Button" x:Key="HyperlinkStyledButton">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <TextBlock Foreground="#FF0066CC"
+                               Text="{TemplateBinding Content}"
+                               TextDecorations="Underline"
+                               FontFamily="Segoe UI"
+                               FontSize="15"
+                               Cursor="Hand" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Margin" Value="5,0,0,0" />
     </Style>
 
 </ResourceDictionary>
