@@ -27,6 +27,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         private string _windowTitle;
         private string _applyCommandLabel;
+        private string _updateCommandLabel;
         private string _closeCommandLabel;
         private string _cancelCommandLabel;
         private string _layoutUrlLabel;
@@ -62,7 +63,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         /// </summary>
         public ICommand UpdateLayoutCommand =>
             _updateLayoutCommand
-            ?? (_updateLayoutCommand = new RelayCommand(async () => await UpdateLayout()));
+            ?? (_updateLayoutCommand = new RelayCommand(SaveSettings));
 
         /// <summary>
         /// Closes the settings window.
@@ -85,6 +86,12 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         {
             get => _applyCommandLabel;
             set => Set(ref _applyCommandLabel, value);
+        }
+
+        public string UpdateCommandLabel
+        {
+            get => _updateCommandLabel;
+            set => Set(ref _updateCommandLabel, value);
         }
 
         public string CloseCommandLabel
@@ -170,6 +177,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             WindowTitle = "Settings";
             LayoutUrlLabel = "Configurator URL to your layout :";
             ApplyCommandLabel = "Apply";
+            UpdateCommandLabel = "Update";
             CloseCommandLabel = "Close";
             CancelCommandLabel = "Cancel";
             HotkeyTitleLabel = "Hotkey to display layout";
