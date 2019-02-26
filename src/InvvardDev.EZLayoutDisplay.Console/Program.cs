@@ -10,6 +10,13 @@ namespace InvvardDev.EZLayoutDisplay.Console
     {
         static void Main(string[] args)
         {
+            InitializeProcess();
+        }
+
+        private static void InitializeProcess()
+        {
+            var process = new KeyDefinitionProcessor();
+            process.StartProcess();
         }
     }
 }
