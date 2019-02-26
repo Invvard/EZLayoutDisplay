@@ -5,7 +5,6 @@ namespace InvvardDev.EZLayoutDisplay.Console
     public class KeyDefinitionProcessor
     {
         private const string KeyDefinitionJsFilename = "keyDefinitions.js";
-        private const string KeyDefinitionUrl = "https://configure.ergodox-ez.com/static/js/config/keyDefinitions.js";
 
         public KeyDefinitionProcessor() { }
 
