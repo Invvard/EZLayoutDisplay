@@ -7,10 +7,10 @@
             InitializeProcess();
         }
 
-        private static async void InitializeProcess()
+        private static void InitializeProcess()
         {
             var process = new KeyDefinitionProcessor();
-            await process.StartProcess();
+            process.RunProcess();
         }
     }
 }

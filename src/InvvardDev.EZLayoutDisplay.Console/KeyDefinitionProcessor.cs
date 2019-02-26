@@ -1,6 +1,8 @@
 ﻿using System;
+using System.CodeDom;
 using System.Net;
 using System.Threading.Tasks;
+using Jint;
 
 namespace InvvardDev.EZLayoutDisplay.Console
 {
@@ -14,21 +16,30 @@ namespace InvvardDev.EZLayoutDisplay.Console
             _keyDefinitionUrl = new Uri($"https://configure.ergodox-ez.com/static/js/config/{KeyDefinitionFileName}");
         }
 
-        public async Task StartProcess()
+        public void RunProcess()
         {
-            await DownloadKeyDefinitionScript();
+            var keyDefinitionJs = DownloadKeyDefinitionScript();
+            ParseJs(keyDefinitionJs);
         }
 
-        private async Task<string> DownloadKeyDefinitionScript()
+        private string DownloadKeyDefinitionScript()
         {
             string keyDefinitionjs;
 
             using (var client = new WebClient())
             {
-                keyDefinitionjs = await client.DownloadStringTaskAsync(_keyDefinitionUrl);
+                keyDefinitionjs = client.DownloadString(_keyDefinitionUrl);
             }
 
             return keyDefinitionjs;
+        }
+
+        private void ParseJs(string keyDefinitionJs)
+        {
+            var engine = new Engine();
+            var keyCodes = engine.Execute(keyDefinitionJs).Execute("return keyCodes;");
+            System.Console.WriteLine($"Key codes {keyCodes}");
+            System.Console.ReadKey();
         }
     }
 }
