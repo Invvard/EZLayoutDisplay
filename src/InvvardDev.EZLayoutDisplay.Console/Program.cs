@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace InvvardDev.EZLayoutDisplay.Console
+﻿namespace InvvardDev.EZLayoutDisplay.Console
 {
     class Program
     {
@@ -13,10 +7,10 @@ namespace InvvardDev.EZLayoutDisplay.Console
             InitializeProcess();
         }
 
-        private static void InitializeProcess()
+        private static async void InitializeProcess()
         {
             var process = new KeyDefinitionProcessor();
-            process.StartProcess();
+            await process.StartProcess();
         }
     }
 }
