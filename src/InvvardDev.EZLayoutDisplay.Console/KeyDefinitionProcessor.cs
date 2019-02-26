@@ -1,45 +1,33 @@
-﻿using System;
-using System.CodeDom;
-using System.Net;
-using System.Threading.Tasks;
-using Jint;
+﻿using System.IO;
 
 namespace InvvardDev.EZLayoutDisplay.Console
 {
     public class KeyDefinitionProcessor
     {
-        private const string KeyDefinitionFileName = "keyDefinitions.js";
-        private readonly Uri _keyDefinitionUrl;
+        private const string KeyDefinitionJsFilename = "keyDefinitions.js";
+        private const string KeyDefinitionUrl = "https://configure.ergodox-ez.com/static/js/config/keyDefinitions.js";
 
-        public KeyDefinitionProcessor()
-        {
-            _keyDefinitionUrl = new Uri($"https://configure.ergodox-ez.com/static/js/config/{KeyDefinitionFileName}");
-        }
+        public KeyDefinitionProcessor() { }
 
         public void RunProcess()
         {
-            var keyDefinitionJs = DownloadKeyDefinitionScript();
-            ParseJs(keyDefinitionJs);
-        }
-
-        private string DownloadKeyDefinitionScript()
-        {
-            string keyDefinitionjs;
-
-            using (var client = new WebClient())
+            if (!CheckKeyDefinitionJsExists())
             {
-                keyDefinitionjs = client.DownloadString(_keyDefinitionUrl);
+                return;
             }
 
-            return keyDefinitionjs;
+            ParseJs();
         }
 
-        private void ParseJs(string keyDefinitionJs)
+        private bool CheckKeyDefinitionJsExists()
         {
-            var engine = new Engine();
-            var keyCodes = engine.Execute(keyDefinitionJs).Execute("return keyCodes;");
-            System.Console.WriteLine($"Key codes {keyCodes}");
-            System.Console.ReadKey();
+            var fileExist = File.Exists(KeyDefinitionJsFilename);
+
+            return fileExist;
+        }
+
+        private void ParseJs()
+        {
         }
     }
 }
