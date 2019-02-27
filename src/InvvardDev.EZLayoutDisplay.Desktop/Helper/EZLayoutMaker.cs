@@ -127,7 +127,9 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
                     }
 
                     break;
-                case KeyCategory.Nordic:
+                case KeyCategory.French:
+                case KeyCategory.German:
+                case KeyCategory.Spanish:
 
                     break;
                 default:
