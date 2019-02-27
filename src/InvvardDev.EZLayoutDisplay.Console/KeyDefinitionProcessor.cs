@@ -5,6 +5,7 @@ namespace InvvardDev.EZLayoutDisplay.Console
     public class KeyDefinitionProcessor
     {
         private const string KeyDefinitionJsFilename = "keyDefinitions.js";
+        private const string DictionariesPattern = "export const keyCategories = {(?<category>[\\S\\s]*)};[\\S\\s]*export const keyCodes = {(?<keyCodes>[\\S\\s]*)};";
 
         public KeyDefinitionProcessor() { }
 
