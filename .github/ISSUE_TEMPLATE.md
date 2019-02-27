@@ -12,5 +12,6 @@
 
 ## Specifications
 
-  - EZLayout Version:
-  - Operating System (incl. Version) : Windows xx
+  - EZLayout Version: 
+  - ErgoDox Layout Configurator URL: 
+  - Operating System (incl. Version): Windows xx
