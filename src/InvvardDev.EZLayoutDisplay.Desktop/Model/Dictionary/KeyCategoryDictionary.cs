@@ -18,7 +18,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Dictionary
         private void InitializeKeyCategoryDetails()
         {
             KeyCategoryDetails = new List<KeyCategoryDetail> {
-                                                                 new KeyCategoryDetail(KeyCategory.Autoshift, "Auto shift"),
+                                                                 new KeyCategoryDetail(KeyCategory.AutoShift, "Auto shift"),
                                                                  new KeyCategoryDetail(KeyCategory.Digit, "Digits"),
                                                                  new KeyCategoryDetail(KeyCategory.Letters, "Letters"),
                                                                  new KeyCategoryDetail(KeyCategory.DualFunction, "Dual-function keys"),
@@ -32,8 +32,10 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Dictionary
                                                                  new KeyCategoryDetail(KeyCategory.Momentary, "Momentary layer switch"),
                                                                  new KeyCategoryDetail(KeyCategory.Mouse, "Mouse control"),
                                                                  new KeyCategoryDetail(KeyCategory.Nav, "Navigational"),
-                                                                 new KeyCategoryDetail(KeyCategory.Nordic, "Nordic"),
-                                                                 new KeyCategoryDetail(KeyCategory.Numpad, "Numpad"),
+                                                                 new KeyCategoryDetail(KeyCategory.French, "French"),
+                                                                 new KeyCategoryDetail(KeyCategory.German, "German"),
+                                                                 new KeyCategoryDetail(KeyCategory.Spanish, "Spanish"),
+                                                                 new KeyCategoryDetail(KeyCategory.NumPad, "Num pad"),
                                                                  new KeyCategoryDetail(KeyCategory.Other, "Other"),
                                                                  new KeyCategoryDetail(KeyCategory.Punct, "Punctuation"),
                                                                  new KeyCategoryDetail(KeyCategory.ShiftedPunct, "Shifted punctuation"),
