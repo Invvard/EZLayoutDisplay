@@ -4,7 +4,7 @@ namespace InvvardDev.EZLayoutDisplay.Console
 {
     public class KeyDefinitionProcessor
     {
-        private const string KeyDefinitionJsFilename = "keyDefinitions.js";
+        private const string KeyDefinitionJsFilename = "keyDefinitions.json";
 
         public KeyDefinitionProcessor() { }
 
@@ -15,7 +15,7 @@ namespace InvvardDev.EZLayoutDisplay.Console
                 return;
             }
 
-            ParseJs();
+            ParseJson();
         }
 
         private bool CheckKeyDefinitionJsExists()
@@ -25,7 +25,7 @@ namespace InvvardDev.EZLayoutDisplay.Console
             return fileExist;
         }
 
-        private void ParseJs()
+        private void ParseJson()
         {
         }
     }
