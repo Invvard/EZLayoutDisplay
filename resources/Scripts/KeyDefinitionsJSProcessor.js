@@ -1,4 +1,5 @@
 // Run on https://playcode.io/
+// Public URL : https://259701.playcode.io/
 
 function flatKeys(definitionKeyNames, definitionFlats) {
   // Transforms the keyDefinitions object to a flat object with the keyCode along with label.
