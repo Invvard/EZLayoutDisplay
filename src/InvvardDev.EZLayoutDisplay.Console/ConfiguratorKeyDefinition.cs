@@ -6,8 +6,7 @@ namespace InvvardDev.EZLayoutDisplay.Console
     {
         public string KeyCode { get; set; }
         public string Label { get; set; }
-        public object MenuLabel { get; set; }
-        public string AltLabel { get; set; }
+        public string MenuLabel { get; set; }
         public string Glyph { get; set; }
         public string Category { get; set; }
         public string Description { get; set; }
