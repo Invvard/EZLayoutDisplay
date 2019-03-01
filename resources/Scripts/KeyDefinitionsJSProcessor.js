@@ -1,5 +1,49 @@
 // Run on https://playcode.io/
 
+function flatKeys(definitionKeyNames, definitionFlats) {
+  // Transforms the keyDefinitions object to a flat object with the keyCode along with label.
+  for (var i = 0; i < definitionKeyNames.length; i++) {
+    const keyName = definitionKeyNames[i];
+    let definitionFlat = {
+      KeyCode: keyName
+    }
+    
+    getChildProperties(definitions[keyName], definitionFlat);
+    
+    definitionFlats.push(definitionFlat);
+  }
+}
+
+function getChildProperties(currentDefinition, definitionFlat) {
+  const keyProperty = Object.keys(currentDefinition);
+  for (let j = 0; j < keyProperty.length; j++) {
+    const keyPropertyName = keyProperty[j];
+    if (keyPropertyName == "os") {
+      flatOs(currentDefinition[keyPropertyName], definitionFlat);
+    }
+    else {
+      definitionFlat[keyPropertyName]= currentDefinition[keyPropertyName];
+    }
+  }
+}
+
+function flatOs(osList, definitionFlat) {
+  const osKeys = Object.keys(osList);
+  for (var i = 0; i < osKeys.length; i++) {
+    if (osKeys[i] === 'osx' || osKeys[i] === 'linux') {
+      continue;
+    }
+    
+    const osPropertyKeys = Object.keys(osList[osKeys[i]]);
+    for (var j = 0; j < osPropertyKeys.length; j++) {
+      if (osPropertyKeys[j] === 'menuLabel') {
+        continue;
+      }
+      definitionFlat[osPropertyKeys[j]] = osList[osKeys[i]][osPropertyKeys[j]]
+    }
+  }
+}
+
 const dualFunctionLabel  = "";
 const forwardLayers   = "";
 const otherLayers   = "";
@@ -1205,20 +1249,6 @@ const definitions = {
 const definitionKeyNames = Object.keys(definitions);
 let definitionFlats = [];
 
-// Transforms the keyDefinitions object to a flat object with the keyCode along with label.
-for (var i = 0; i < definitionKeyNames.length; i++) {
-  const keyName = definitionKeyNames[i];
-  let definitionFlat = {
-    KeyCode: keyName
-  }
-  
-  const keyProperty = Object.keys(definitions[keyName]);
-  for (let j = 0; j < keyProperty.length; j++) {
-    const keyPropertyName = keyProperty[j];
-    definitionFlat[keyPropertyName]= definitions[keyName][keyPropertyName];
-  }
-  
-  definitionFlats.push(definitionFlat);
-}
+flatKeys(definitionKeyNames, definitionFlats);
 
 console.log(definitionFlats);
