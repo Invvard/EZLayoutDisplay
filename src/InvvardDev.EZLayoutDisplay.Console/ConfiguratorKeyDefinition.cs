@@ -1,6 +1,8 @@
-﻿namespace InvvardDev.EZLayoutDisplay.Console
+﻿using System.Collections.Generic;
+
+namespace InvvardDev.EZLayoutDisplay.Console
 {
-    public class KeyDefinition
+    public class ConfiguratorKeyDefinition
     {
         public string KeyCode { get; set; }
         public string Label { get; set; }
@@ -11,5 +13,6 @@
         public string AltLabel { get; set; }
         public bool? PrecedingKey { get; set; }
         public string Glyph { get; set; }
+        public List<OsDefinition> OsDefinitions { get; set; }
     }
 }
