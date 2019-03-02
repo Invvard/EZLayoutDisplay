@@ -140,14 +140,14 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
         }
 
         [ Theory ]
-        [ InlineData("KC_ASDN", "Autoshift timeout down", KeyCategory.Autoshift) ]
+        [ InlineData("KC_ASDN", "Autoshift timeout down", KeyCategory.AutoShift) ]
         [ InlineData("KC_0", "0", KeyCategory.Digit) ]
         [ InlineData("KC_A", "A", KeyCategory.Letters) ]
         [ InlineData("KC_F1", "F1", KeyCategory.Fn) ]
         [ InlineData("MAGIC_TOGGLE_NKRO", "NKRO", KeyCategory.Fw) ]
         [ InlineData("KC_LANG1", "LANG 1", KeyCategory.Lang) ]
         [ InlineData("KC_LSHIFT", "\u21e7", KeyCategory.Modifier) ]
-        [ InlineData("KC_KP_0", "0", KeyCategory.Numpad) ]
+        [ InlineData("KC_KP_0", "0", KeyCategory.NumPad) ]
         [ InlineData("KC_TRANSPARENT", "", KeyCategory.Other) ]
         [ InlineData("KC_PAUSE", "Pause", KeyCategory.Other) ]
         [ InlineData("KC_SCOLON", ";", KeyCategory.Punct) ]

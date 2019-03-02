@@ -1,5 +1,6 @@
 ﻿using InvvardDev.EZLayoutDisplay.Desktop.Model.Enum;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.Model
 {
@@ -11,43 +12,44 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
         /// Gets the key code.
         /// </summary>
         [JsonProperty("code")]
-        public string KeyCode { get; private set; }
+        public string KeyCode { get; set; }
 
         /// <summary>
         /// Gets the key label.
         /// </summary>
         [JsonProperty("label")]
-        public string Label { get; private set; }
+        public string Label { get; set; }
 
         /// <summary>
         /// Gets the key category.
         /// </summary>
         [JsonProperty("category")]
-        public KeyCategory KeyCategory { get; private set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public KeyCategory KeyCategory { get; set; }
 
         /// <summary>
         /// Gets the key description.
         /// </summary>
-        [JsonProperty("description")]
-        public string Description { get; private set; }
+        [JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)]
+        public string Description { get; set; }
 
         /// <summary>
         /// Gets the key secondary command.
         /// </summary>
-        [JsonProperty("command")]
-        public string SecondaryCommand { get; private set; }
+        [JsonProperty("command", NullValueHandling = NullValueHandling.Ignore)]
+        public string SecondaryCommand { get; set; }
 
         /// <summary>
         /// Gets the key glyph name to display.
         /// </summary>
-        [JsonProperty("isglyph")]
-        public bool IsGlyph { get; private set; }
+        [JsonProperty("isglyph", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public bool IsGlyph { get; set; }
 
         /// <summary>
         /// Gets the key preceding key indicator (blocks the targeted layer).
         /// </summary>
-        [JsonProperty("precedingKey")]
-        public bool PrecedingKey { get; private set; }
+        [JsonProperty("precedingKey", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public bool PrecedingKey { get; set; }
 
         #endregion
     }
