@@ -22,7 +22,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
         /// <summary>
         /// Gets or sets the key international hint.
         /// </summary>
-        public string  InternationalHint { get; set; }
+        public string InternationalHint { get; set; }
 
         /// <summary>
         /// Gets or sets the key category.
