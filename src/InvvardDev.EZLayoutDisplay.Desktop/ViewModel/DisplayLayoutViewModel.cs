@@ -176,7 +176,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
                 CurrentLayoutTemplate[i].EZKey = new EZKey {
                                                                Label = new KeyLabel("E"),
                                                                Modifier = new KeyLabel("Left Shift"),
-                                                               KeyCategory = KeyCategory.French
+                                                               KeyCategory = KeyCategory.French,
+                                                               InternationalHint = "fr"
                 };
             }
         }
