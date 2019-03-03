@@ -64,6 +64,12 @@
         </Canvas>
     </DataTemplate>
 
+    <Style TargetType="TextBlock" x:Key="InternationalHint">
+        <Setter Property="FontSize" Value="10" />
+        <Setter Property="HorizontalAlignment" Value="Right" />
+        <Setter Property="Margin" Value="0 -2 2 0" />
+    </Style>
+
     <Style TargetType="Viewbox" x:Key="LabelViewBox">
         <Setter Property="Height" Value="30" />
         <Setter Property="Margin" Value="3 0" />
@@ -94,6 +100,7 @@
         <Canvas>
             <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource KeyBaseDataTemplate}" />
             <Grid Style="{StaticResource ContentGridBase}">
+                <TextBlock Style="{StaticResource InternationalHint}" Text="{Binding EZKey.InternationalHint}" />
                 <Viewbox Style="{StaticResource LabelViewBox}" Grid.Column="0" Grid.Row="0">
                     <Label Style="{StaticResource LabelStyle}" Content="{Binding EZKey.Label.Content}" />
                 </Viewbox>
