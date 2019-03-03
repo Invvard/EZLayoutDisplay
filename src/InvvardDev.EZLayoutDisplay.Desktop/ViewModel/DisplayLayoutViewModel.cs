@@ -149,7 +149,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         private void LoadDesignTimeModel()
         {
-            NoLayoutAvailable = true;
+            NoLayoutAvailable = false;
 
             var json = Encoding.Default.GetString(Resources.layoutDefinition);
             var layoutDefinition = JsonConvert.DeserializeObject<IEnumerable<KeyTemplate>>(json) as List<KeyTemplate>;
@@ -175,8 +175,10 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             {
                 CurrentLayoutTemplate[i].EZKey = new EZKey {
                                                                Label = new KeyLabel("E"),
-                                                               Modifier = new KeyLabel("Left Shift")
-                                                           };
+                                                               Modifier = new KeyLabel("Left Shift"),
+                                                               KeyCategory = KeyCategory.French,
+                                                               InternationalHint = "fr"
+                };
             }
         }
 

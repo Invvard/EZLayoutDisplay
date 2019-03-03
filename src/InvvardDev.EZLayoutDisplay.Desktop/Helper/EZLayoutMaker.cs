@@ -128,11 +128,15 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
 
                     break;
                 case KeyCategory.French:
-                case KeyCategory.German:
-                case KeyCategory.Spanish:
+                    key.InternationalHint = "fr";
 
                     break;
-                default:
+                case KeyCategory.German:
+                    key.InternationalHint = "de";
+
+                    break;
+                case KeyCategory.Spanish:
+                    key.InternationalHint = "es";
 
                     break;
             }
