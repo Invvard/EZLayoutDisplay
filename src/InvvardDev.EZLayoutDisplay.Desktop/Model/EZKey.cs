@@ -20,6 +20,11 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
         public string Color { get; set; }
 
         /// <summary>
+        /// Gets or sets the key international hint.
+        /// </summary>
+        public string  InternationalHint { get; set; }
+
+        /// <summary>
         /// Gets or sets the key category.
         /// </summary>
         public KeyCategory KeyCategory { get; set; }
