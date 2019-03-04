@@ -88,6 +88,10 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
                     {
                         key.DisplayType = KeyDisplayType.ModifierUnder;
                     }
+                    else
+                    {
+                        key.KeyCategory = KeyCategory.Modifier;
+                    }
 
                     break;
                 case KeyCategory.Layer:
@@ -148,7 +152,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
 
         private KeyDefinition GetKeyDefinition(string ergodoxKeyCode)
         {
-            var keyDefinition = _keyDefinitionDictionary.KeyDefinitions.FirstOrDefault(k => k.KeyCode == ergodoxKeyCode) ?? GetKeyDefinition("KC_NO");
+            var keyDefinition = _keyDefinitionDictionary.KeyDefinitions.FirstOrDefault(k => k.KeyCode == ergodoxKeyCode) ?? GetKeyDefinition(NoCommand);
 
             return keyDefinition;
         }
