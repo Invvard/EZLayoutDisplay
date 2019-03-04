@@ -6,8 +6,8 @@
     <FontFamily x:Key="OryxFontFamily">/InvvardDev.EZLayoutDisplay.Desktop;component/Skins/Fonts/#Oryx</FontFamily>
 
     <SolidColorBrush x:Key="KeyBaseColorBrush" Color="#f4f4f4" />
-    <SolidColorBrush x:Key="KeyBaseBorderColorBrush" Color="#c7c7c7" />
     <SolidColorBrush x:Key="KeyTopColorBrush" Color="#fcfcfc" />
+    <SolidColorBrush x:Key="KeyBaseBorderColorBrush" Color="#c7c7c7" />
     <SolidColorBrush x:Key="KeyTopBorderColorBrush" Color="#ffffff" Opacity="10" />
 
     <Style TargetType="Rectangle" x:Key="BaseKey">
