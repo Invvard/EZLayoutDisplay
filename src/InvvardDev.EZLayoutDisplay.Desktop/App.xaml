@@ -20,31 +20,13 @@
 
             <SolidColorBrush x:Key="WindowBackgroundBrush" Color="WhiteSmoke" />
 
-            <SolidColorBrush x:Key="BaseDefaultBackgroundBrush" Color="#f4f4f4" />
-            <SolidColorBrush x:Key="BaseDualFunctionBackgroundBrush" Color="#d5e1f9" />
-            <SolidColorBrush x:Key="BaseModifierBackgroundBrush" Color="#e1f5d7" />
-            <SolidColorBrush x:Key="BaseShineBackgroundBrush" Color="#f1e5b6" />
-
-            <SolidColorBrush x:Key="TopDefaultBackgroundBrush" Color="#fcfcfc" />
-            <SolidColorBrush x:Key="TopDualFunctionBackgroundBrush" Color="#e1ebff" />
-            <SolidColorBrush x:Key="TopModifierBackgroundBrush" Color="#ebffe1" />
-            <SolidColorBrush x:Key="TopShineBackgroundBrush" Color="#fff1ba" />
-
             <converter:KeyCodeToCharConverter x:Key="KeyCodeConverter" />
+
             <converter:BoolToVisibilityConverter x:Key="BoolToHiddenConverter"
                                                  TrueValue="Visible" FalseValue="Hidden" />
             <converter:BoolToVisibilityConverter x:Key="BoolToVisibleConverter"
                                                  TrueValue="Hidden" FalseValue="Visible" />
-            <converter:KeyCategoryToBrushConverter x:Key="KeyCategoryToBaseBrushConverter"
-                                                   DefaultBackgroundBrush="{StaticResource BaseDefaultBackgroundBrush}"
-                                                   DualFunctionBackgroundBrush="{StaticResource BaseDualFunctionBackgroundBrush}"
-                                                   ModifierBackgroundBrush="{StaticResource BaseModifierBackgroundBrush}"
-                                                   ShineBackgroundBrush="{StaticResource BaseShineBackgroundBrush}"/>
-            <converter:KeyCategoryToBrushConverter x:Key="KeyCategoryToTopBrushConverter"
-                                                   DefaultBackgroundBrush="{StaticResource TopDefaultBackgroundBrush}"
-                                                   DualFunctionBackgroundBrush="{StaticResource TopDualFunctionBackgroundBrush}"
-                                                   ModifierBackgroundBrush="{StaticResource TopModifierBackgroundBrush}"
-                                                   ShineBackgroundBrush="{StaticResource TopShineBackgroundBrush}" />
+
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Skins/KeyboardLayoutSkin.xaml" />
             </ResourceDictionary.MergedDictionaries>
