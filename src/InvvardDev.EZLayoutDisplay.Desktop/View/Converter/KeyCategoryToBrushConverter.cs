@@ -7,6 +7,7 @@ using InvvardDev.EZLayoutDisplay.Desktop.Model.Enum;
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.View.Converter
 {
+    [ValueConversion(typeof(SolidColorBrush), typeof(KeyCategory))]
     public class KeyCategoryToBrushConverter : IValueConverter
     {
         public SolidColorBrush DefaultBackgroundBrush { get; set; }
@@ -49,7 +50,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.View.Converter
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            return null;
         }
     }
 }
