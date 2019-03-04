@@ -21,10 +21,12 @@
             <SolidColorBrush x:Key="WindowBackgroundBrush" Color="WhiteSmoke" />
 
             <converter:KeyCodeToCharConverter x:Key="KeyCodeConverter" />
+
             <converter:BoolToVisibilityConverter x:Key="BoolToHiddenConverter"
                                                  TrueValue="Visible" FalseValue="Hidden" />
             <converter:BoolToVisibilityConverter x:Key="BoolToVisibleConverter"
                                                  TrueValue="Hidden" FalseValue="Visible" />
+
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Skins/KeyboardLayoutSkin.xaml" />
             </ResourceDictionary.MergedDictionaries>
