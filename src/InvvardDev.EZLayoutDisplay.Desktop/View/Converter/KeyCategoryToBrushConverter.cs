@@ -30,7 +30,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.View.Converter
             SolidColorBrush brush;
             switch ((KeyCategory)value)
             {
-                case KeyCategory.Layer:
+                case KeyCategory.LayerShortcuts:
                 case KeyCategory.DualFunction:
                     brush = DualFunctionBackgroundBrush;
                     break;
