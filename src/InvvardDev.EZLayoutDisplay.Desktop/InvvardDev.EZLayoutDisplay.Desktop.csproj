@@ -103,7 +103,6 @@
     </ApplicationDefinition>
     <Compile Include="Helper\KeyContentTemplateSelector.cs" />
     <Compile Include="Model\Enum\KeyDisplayType.cs" />
-    <Compile Include="Model\Enum\KeyTemplateLevel.cs" />
     <Compile Include="Model\KeyTemplate.cs" />
     <Compile Include="Model\Messenger\UpdatedLayoutMessage.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
