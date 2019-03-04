@@ -153,6 +153,7 @@
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Converter\BoolToVisibilityConverter.cs" />
+    <Compile Include="View\Converter\KeyCategoryToBrushConverter.cs" />
     <Compile Include="View\Converter\KeyCodeToCharConverter.cs" />
     <Compile Include="View\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>

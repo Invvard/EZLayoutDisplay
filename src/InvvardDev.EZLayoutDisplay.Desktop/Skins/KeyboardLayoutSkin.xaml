@@ -1,14 +1,34 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:helper="clr-namespace:InvvardDev.EZLayoutDisplay.Desktop.Helper">
+                    xmlns:helper="clr-namespace:InvvardDev.EZLayoutDisplay.Desktop.Helper"
+                    xmlns:converter="clr-namespace:InvvardDev.EZLayoutDisplay.Desktop.View.Converter">
 
     <FontFamily x:Key="LatoFontFamily">/InvvardDev.EZLayoutDisplay.Desktop;component/Skins/Fonts/#Lato</FontFamily>
     <FontFamily x:Key="OryxFontFamily">/InvvardDev.EZLayoutDisplay.Desktop;component/Skins/Fonts/#Oryx</FontFamily>
 
-    <SolidColorBrush x:Key="KeyBaseColorBrush" Color="#f4f4f4" />
+    <SolidColorBrush x:Key="BaseDefaultBackgroundBrush" Color="#f4f4f4" />
+    <SolidColorBrush x:Key="BaseDualFunctionBackgroundBrush" Color="#d5e1f9" />
+    <SolidColorBrush x:Key="BaseModifierBackgroundBrush" Color="#e1f5d7" />
+    <SolidColorBrush x:Key="BaseShineBackgroundBrush" Color="#f1e5b6" />
+
+    <SolidColorBrush x:Key="TopDefaultBackgroundBrush" Color="#fcfcfc" />
+    <SolidColorBrush x:Key="TopDualFunctionBackgroundBrush" Color="#e1ebff" />
+    <SolidColorBrush x:Key="TopModifierBackgroundBrush" Color="#ebffe1" />
+    <SolidColorBrush x:Key="TopShineBackgroundBrush" Color="#fff1ba" />
+
+    <converter:KeyCategoryToBrushConverter x:Key="KeyCategoryToBaseBrushConverter"
+                                           DefaultBackgroundBrush="{StaticResource BaseDefaultBackgroundBrush}"
+                                           DualFunctionBackgroundBrush="{StaticResource BaseDualFunctionBackgroundBrush}"
+                                           ModifierBackgroundBrush="{StaticResource BaseModifierBackgroundBrush}"
+                                           ShineBackgroundBrush="{StaticResource BaseShineBackgroundBrush}"/>
+    <converter:KeyCategoryToBrushConverter x:Key="KeyCategoryToTopBrushConverter"
+                                           DefaultBackgroundBrush="{StaticResource TopDefaultBackgroundBrush}"
+                                           DualFunctionBackgroundBrush="{StaticResource TopDualFunctionBackgroundBrush}"
+                                           ModifierBackgroundBrush="{StaticResource TopModifierBackgroundBrush}"
+                                           ShineBackgroundBrush="{StaticResource TopShineBackgroundBrush}" />
+
     <SolidColorBrush x:Key="KeyBaseBorderColorBrush" Color="#c7c7c7" />
-    <SolidColorBrush x:Key="KeyTopColorBrush" Color="#fcfcfc" />
-    <SolidColorBrush x:Key="KeyTopBorderColorBrush" Color="#ffffff" Opacity="10" />
+    <SolidColorBrush x:Key="KeyTopBorderColorBrush" Color="#1affffff" />
 
     <Style TargetType="Rectangle" x:Key="BaseKey">
         <Setter Property="StrokeThickness" Value="1" />
@@ -25,7 +45,7 @@
     <Style TargetType="Rectangle" BasedOn="{StaticResource BaseKey}" x:Key="KeyBase">
         <Setter Property="RadiusX" Value="5" />
         <Setter Property="RadiusY" Value="5" />
-        <Setter Property="Fill" Value="{StaticResource KeyBaseColorBrush}" />
+        <Setter Property="Fill" Value="{Binding EZKey.KeyCategory, Converter={StaticResource KeyCategoryToBaseBrushConverter}}" />
         <Setter Property="Stroke" Value="{StaticResource KeyBaseBorderColorBrush}" />
         <Setter Property="Canvas.Top" Value="{Binding BaseKeyY}" />
         <Setter Property="Canvas.Left" Value="{Binding BaseKeyX}" />
@@ -36,7 +56,7 @@
     <Style TargetType="Rectangle" BasedOn="{StaticResource BaseKey}" x:Key="KeyTop">
         <Setter Property="RadiusX" Value="3" />
         <Setter Property="RadiusY" Value="3" />
-        <Setter Property="Fill" Value="{StaticResource KeyTopColorBrush}" />
+        <Setter Property="Fill" Value="{Binding EZKey.KeyCategory, Converter={StaticResource KeyCategoryToTopBrushConverter}}" />
         <Setter Property="Stroke" Value="{StaticResource KeyTopBorderColorBrush}" />
         <Setter Property="Canvas.Top" Value="{Binding TopKeyY}" />
         <Setter Property="Canvas.Left" Value="{Binding TopKeyX}" />
