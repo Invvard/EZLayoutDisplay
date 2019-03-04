@@ -103,6 +103,7 @@
     </ApplicationDefinition>
     <Compile Include="Helper\KeyContentTemplateSelector.cs" />
     <Compile Include="Model\Enum\KeyDisplayType.cs" />
+    <Compile Include="Model\Enum\KeyTemplateLevel.cs" />
     <Compile Include="Model\KeyTemplate.cs" />
     <Compile Include="Model\Messenger\UpdatedLayoutMessage.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -153,6 +154,7 @@
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Converter\BoolToVisibilityConverter.cs" />
+    <Compile Include="View\Converter\KeyCategoryToBrushConverter.cs" />
     <Compile Include="View\Converter\KeyCodeToCharConverter.cs" />
     <Compile Include="View\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
