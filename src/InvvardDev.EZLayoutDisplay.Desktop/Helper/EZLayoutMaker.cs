@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using InvvardDev.EZLayoutDisplay.Desktop.Model;
 using InvvardDev.EZLayoutDisplay.Desktop.Model.Dictionary;
@@ -10,13 +9,12 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
     public class EZLayoutMaker
     {
         private const string NoCommand = "KC_NO";
-        private const string KeyCodeOSM = "OSM";
-        private readonly KeyCategoryDictionary _keyCategoryDictionary;
+        private const string TransparentKey = "KC_TRANSPARENT";
+        private const string KeyCodeOsm = "OSM";
         private readonly KeyDefinitionDictionary _keyDefinitionDictionary;
 
         public EZLayoutMaker()
         {
-            _keyCategoryDictionary = new KeyCategoryDictionary();
             _keyDefinitionDictionary = new KeyDefinitionDictionary();
         }
 
@@ -106,7 +104,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
                     break;
                 case KeyCategory.Modifier:
 
-                    if (ergodoxKey.Code == KeyCodeOSM && !IsCommandEmpty(ergodoxKey.Command))
+                    if (ergodoxKey.Code == KeyCodeOsm && !IsCommandEmpty(ergodoxKey.Command))
                     {
                         var commandDefinition = GetKeyDefinition(ergodoxKey.Command);
                         key.Modifier = new KeyLabel(commandDefinition.Label);
@@ -152,7 +150,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
 
         private KeyDefinition GetKeyDefinition(string ergodoxKeyCode)
         {
-            var keyDefinition = _keyDefinitionDictionary.KeyDefinitions.FirstOrDefault(k => k.KeyCode == ergodoxKeyCode) ?? GetKeyDefinition(NoCommand);
+            var keyDefinition = _keyDefinitionDictionary.KeyDefinitions.FirstOrDefault(k => k.KeyCode == ergodoxKeyCode) ?? GetKeyDefinition(TransparentKey);
 
             return keyDefinition;
         }
@@ -259,7 +257,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
 
         private bool IsCommandEmpty(string command)
         {
-            var isEmpty = string.IsNullOrWhiteSpace(command) || command == NoCommand || command == KeyCodeOSM;
+            var isEmpty = string.IsNullOrWhiteSpace(command) || command == NoCommand || command == KeyCodeOsm;
 
             return isEmpty;
         }

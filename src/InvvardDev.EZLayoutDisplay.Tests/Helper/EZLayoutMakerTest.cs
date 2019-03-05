@@ -153,6 +153,9 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
         [ InlineData("KC_SCOLON", ";", KeyCategory.Punct) ]
         [ InlineData("KC_AT", "@", KeyCategory.ShiftedPunct) ]
         [ InlineData("KC_SYSTEM_POWER", "Power", KeyCategory.System) ]
+        [ InlineData("FR_AMP", "&", KeyCategory.French) ]
+        [ InlineData("NO_LESS", "<", KeyCategory.German) ]
+        [ InlineData("ES_PLUS", "+", KeyCategory.Spanish) ]
         public void PrepareEZLayout_KeyCategoryWithSimpleLabel(string keyCode, string expectedLabel, KeyCategory expectedCategory)
         {
             // Arrange
@@ -326,7 +329,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
 
         [ Theory ]
         [ InlineData("ALL_T", "KC_6", "6", "Hyper", KeyCategory.DualFunction, KeyDisplayType.ModifierUnder) ]
-        [ InlineData("ALL_T", "", "Hyper", "", KeyCategory.DualFunction, KeyDisplayType.SimpleLabel) ]
+        [ InlineData("ALL_T", "", "Hyper", "", KeyCategory.Modifier, KeyDisplayType.SimpleLabel) ]
         public void PrepareEZLayout_KeyCategoryDualFunction(string keyCode, string command, string expectedLabel, string expectedSubLabel, KeyCategory expectedCategory, KeyDisplayType expectedDisplayType)
         {
             // Arrange
