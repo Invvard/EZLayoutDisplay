@@ -15,7 +15,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Model
 
             // Assert
             Assert.NotEmpty(dictionary.KeyDefinitions);
-            Assert.Equal(330, dictionary.KeyDefinitions.Count);
+            Assert.Equal(427, dictionary.KeyDefinitions.Count);
         }
     }
 }
