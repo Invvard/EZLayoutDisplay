@@ -312,6 +312,160 @@ namespace InvvardDev.EZLayoutDisplay.Console
                     isGlyph = true;
 
                     break;
+                case "FR_SUP2":
+                    label = "\\u00B2";
+
+                    break;
+                case "DE_SQ2":
+                    label = "German \\u00B2";
+
+                    break;
+                case "FR_EACU":
+                    label = "\\u00E9";
+
+                    break;
+                case "FR_EGRV":
+                    label = "\\u00E8";
+
+                    break;
+                case "FR_CCED":
+                    label = "\\u00E7";
+
+                    break;
+                case "FR_AGRV":
+                    label = "\\u00E0";
+
+                    break;
+                case "FR_UGRV":
+                    label = "\\u00F9";
+
+                    break;
+                case "DE_SS":
+                    label = "German \\u00DF";
+
+                    break;
+                case "DE_AE":
+                    label = "German \\u00C6";
+
+                    break;
+                case "DE_UE":
+                    label = "German \\u00DC";
+
+                    break;
+                case "DE_OE":
+                    label = "German \\u00D6";
+
+                    break;
+                case "DE_CIRC":
+                    label = "German \\u005E";
+
+                    break;
+                case "NO_HALF":
+                case "ES_EURO":
+                    label = "\\u00BD";
+
+                    break;
+                case "NO_AM":
+                    label = "\\u00E5";
+
+                    break;
+                case "NO_AE":
+                    label = "\\u00F8";
+
+                    break;
+                case "NO_OSLH":
+                    label = "\\u00E6";
+
+                    break;
+                case "ES_OVRR":
+                    label = "\\u00BA";
+
+                    break;
+                case "ES_IEXL":
+                    label = "\\u00A1";
+
+                    break;
+                case "ES_NTIL":
+                    label = "\\u00F1";
+
+                    break;
+                case "ES_ASML":
+                    label = "\\u00AA";
+
+                    break;
+                case "FR_OVRR":
+                    label = "\\u00B0";
+
+                    break;
+                case "DE_RING":
+                    label = "German \\u00B0";
+
+                    break;
+                case "FR_UMLT":
+                    label = "\\u00A8";
+
+                    break;
+                case "FR_PND":
+                    label = "\\u00A3";
+
+                    break;
+                case "FR_MU":
+                    label = "\\u03BC";
+
+                    break;
+                case "FR_SECT":
+                    label = "\\u00A7";
+
+                    break;
+                case "DE_PARA":
+                    label = "German \\u00A7";
+
+                    break;
+                case "DE_EURO":
+                    label = "German \\u20AC";
+
+                    break;
+                case "FR_EURO":
+                case "NO_EURO":
+                    label = "\\u20AC";
+
+                    break;
+                case "FR_BULT":
+                    label = "\\u00A4";
+
+                    break;
+                case "DE_ACUT":
+                    label = "German \\u00B4";
+
+                    break;
+                case "ES_ACUT":
+                    label = "\\u00B4";
+
+                    break;
+                case "DE_SQ3":
+                    label = "German \\u00B3";
+
+                    break;
+                case "NO_LCBR":
+                    label = "\\u00B6";
+
+                    break;
+                case "NO_RCBR":
+                    label = "\\u2260";
+
+                    break;
+                case "ES_OVDT":
+                    label = "\\u00B7";
+
+                    break;
+                case "ES_IQUE":
+                    label = "\\u00BF";
+
+                    break;
+                case "ES_NOT":
+                    label = "\\u00AC";
+
+                    break;
             }
 
             return (label, isGlyph);
