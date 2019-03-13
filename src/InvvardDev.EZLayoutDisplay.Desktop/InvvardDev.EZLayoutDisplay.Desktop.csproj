@@ -214,6 +214,9 @@
     <None Include="packages.config" />
     <None Include="Properties\keyDefinitions.json" />
     <None Include="Properties\layoutDefinition.json" />
+    <None Include="Properties\NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
