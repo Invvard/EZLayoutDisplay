@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using InvvardDev.EZLayoutDisplay.Desktop.Model;
 using InvvardDev.EZLayoutDisplay.Desktop.Model.Enum;
 using Newtonsoft.Json;
@@ -16,7 +15,7 @@ namespace InvvardDev.EZLayoutDisplay.Console
 
         public KeyDefinitionProcessor() { }
 
-        public async void RunProcess()
+        public void RunProcess()
         {
             if (!CheckKeyDefinitionJsExists())
             {
