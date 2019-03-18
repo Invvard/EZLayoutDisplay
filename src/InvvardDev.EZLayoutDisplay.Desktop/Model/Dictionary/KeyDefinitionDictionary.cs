@@ -1,12 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using InvvardDev.EZLayoutDisplay.Desktop.Properties;
 using Newtonsoft.Json;
+using NLog;
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Dictionary
 {
     public class KeyDefinitionDictionary
     {
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
         public List<KeyDefinition> KeyDefinitions { get; private set; }
 
         public KeyDefinitionDictionary()
@@ -20,13 +24,21 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Dictionary
 
             if (Resources.keyDefinitions.Length <= 0)
             {
-                // TODO : add logging
+                _logger.Warn("KeyDefinitioins are missing from Resources");
                 return;
             }
 
-            var json = Encoding.Default.GetString(Resources.keyDefinitions);
+            try
+            {
+                var json = Encoding.Default.GetString(Resources.keyDefinitions);
+                var keyDefinitions = JsonConvert.DeserializeObject<List<KeyDefinition>>(json);
 
-            KeyDefinitions.AddRange(JsonConvert.DeserializeObject<List<KeyDefinition>>(json));
+                KeyDefinitions.AddRange(keyDefinitions);
+            }
+            catch (Exception ex)
+            {
+                _logger.Fatal(ex);
+            }
         }
     }
 }
