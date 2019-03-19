@@ -15,12 +15,15 @@ using InvvardDev.EZLayoutDisplay.Desktop.Properties;
 using InvvardDev.EZLayoutDisplay.Desktop.Service.Interface;
 using InvvardDev.EZLayoutDisplay.Desktop.View;
 using Newtonsoft.Json;
+using NLog;
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 {
     public class DisplayLayoutViewModel : ViewModelBase
     {
         #region Fields
+
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         private readonly IWindowService _windowService;
         private readonly ILayoutService _layoutService;
@@ -99,6 +102,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         public DisplayLayoutViewModel(IWindowService windowService, ILayoutService layoutService, ISettingsService settingsService)
         {
+            Logger.Trace("{0}", GetType());
+
             _windowService = windowService;
             _layoutService = layoutService;
             _settingsService = settingsService;
@@ -109,6 +114,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
             SetLabelUi();
             LoadCompleteLayout();
+
+            Logger.Trace("About Window created");
         }
 
         #region Private methods
