@@ -110,6 +110,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Helper\KeyContentTemplateSelector.cs" />
+    <Compile Include="Helper\LoggerConfguration.cs" />
     <Compile Include="Model\Enum\KeyDisplayType.cs" />
     <Compile Include="Model\KeyTemplate.cs" />
     <Compile Include="Model\Messenger\UpdatedLayoutMessage.cs" />
