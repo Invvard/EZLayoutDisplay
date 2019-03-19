@@ -100,7 +100,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         /// </summary>
         public MainViewModel(IWindowService windowService, IApplicationService applicationService)
         {
-            Logger.Trace("{0}", GetType());
+            Logger.Trace("Instanciate {0}", GetType());
 
             _windowService = windowService;
             _applicationService = applicationService;

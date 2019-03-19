@@ -102,7 +102,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         public DisplayLayoutViewModel(IWindowService windowService, ILayoutService layoutService, ISettingsService settingsService)
         {
-            Logger.Trace("{0}", GetType());
+            Logger.Trace("Instanciate {0}", GetType());
 
             _windowService = windowService;
             _layoutService = layoutService;
