@@ -8,6 +8,7 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
+using InvvardDev.EZLayoutDisplay.Desktop.Helper;
 using InvvardDev.EZLayoutDisplay.Desktop.Model;
 using InvvardDev.EZLayoutDisplay.Desktop.Model.Enum;
 using InvvardDev.EZLayoutDisplay.Desktop.Model.Messenger;
@@ -102,7 +103,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         public DisplayLayoutViewModel(IWindowService windowService, ILayoutService layoutService, ISettingsService settingsService)
         {
-            Logger.Trace("Instanciate {0}", GetType());
+            LoggerHelper.TraceMethod("Instanciate {0}");
 
             _windowService = windowService;
             _layoutService = layoutService;
@@ -114,8 +115,6 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
             SetLabelUi();
             LoadCompleteLayout();
-
-            Logger.Trace("About Window created");
         }
 
         #region Private methods
@@ -127,6 +126,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         private async void LoadCompleteLayout()
         {
+            LoggerHelper.TraceMethod();
             CurrentLayerIndex = 0;
 
             if (IsInDesignModeStatic)
@@ -213,6 +213,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         private void SwitchLayer()
         {
+            LoggerHelper.TraceMethod();
+            Logger.Info("Switch to Layer {0} on {1}", CurrentLayerIndex, _layoutTemplates.Count - 1);
             if (_layoutTemplates.Any())
             {
                 CurrentLayoutTemplate = new ObservableCollection<KeyTemplate>(_layoutTemplates[CurrentLayerIndex]);
@@ -224,11 +226,13 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         private void LoadCompleteLayout(UpdatedLayoutMessage obj)
         {
+            LoggerHelper.TraceMethod("Intercept {0} message");
             LoadCompleteLayout();
         }
 
         private void LostFocus()
         {
+            LoggerHelper.TraceMethod("Call {0} relay command");
             _windowService.CloseWindow<DisplayLayoutWindow>();
         }
 
@@ -241,6 +245,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         private void NextLayer()
         {
+            LoggerHelper.TraceMethod("Call {0} relay command");
             var maxLayerIndex = _ezLayout.EZLayers.Count - 1;
 
             switch (CurrentLayerIndex)
