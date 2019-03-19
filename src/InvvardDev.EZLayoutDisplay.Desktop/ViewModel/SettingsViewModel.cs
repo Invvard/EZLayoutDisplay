@@ -9,12 +9,15 @@ using InvvardDev.EZLayoutDisplay.Desktop.Model;
 using InvvardDev.EZLayoutDisplay.Desktop.Model.Messenger;
 using InvvardDev.EZLayoutDisplay.Desktop.Service.Interface;
 using InvvardDev.EZLayoutDisplay.Desktop.View;
+using NLog;
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 {
     public class SettingsViewModel : ViewModelBase
     {
         #region Fields
+
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         private readonly ISettingsService _settingsService;
         private readonly IWindowService _windowService;
@@ -163,6 +166,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         public SettingsViewModel(ISettingsService settingsService, IWindowService windowService, ILayoutService layoutService)
         {
+            Logger.Trace("Instanciate {0}", GetType());
+
             _settingsService = settingsService;
             _windowService = windowService;
             _layoutService = layoutService;
