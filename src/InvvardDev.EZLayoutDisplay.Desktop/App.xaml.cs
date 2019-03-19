@@ -46,8 +46,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop
                     case var val when val.StartsWith("-loglevel=", true, CultureInfo.InvariantCulture):
                         (string key, string value) = SplitArg(arg);
 
-                        LogLevel level = LoggerConfguration.GetLogLevel(value);
-                        LoggerConfguration.AdjustLogLevel(level);
+                        LogLevel level = LoggerHelper.GetLogLevel(value);
+                        LoggerHelper.AdjustLogLevel(level);
 
                         break;
                 }
