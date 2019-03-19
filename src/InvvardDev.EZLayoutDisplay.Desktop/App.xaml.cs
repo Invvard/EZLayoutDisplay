@@ -28,7 +28,11 @@ namespace InvvardDev.EZLayoutDisplay.Desktop
 
         protected void OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
-            Logger.Error(e.Exception, "Unhandled exception");
+            Logger.Error(e.Exception, "Unhandled exception", sender);
+            MessageBox.Show("Something went horribly wrong...\nBut I landed on my feet like a cat !\n\nCheck logs to get more details.",
+                            "Almost crashed...",
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Error);
 
             e.Handled = true;
         }
