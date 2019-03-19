@@ -197,6 +197,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         private static string GetAppTitle()
         {
+            Logger.Trace("Call {0} method", nameof(GetAppTitle));
+
             var appTitle = "EZ Layout Display";
 
             var customAttributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyTitleAttribute), false).FirstOrDefault();
@@ -211,16 +213,19 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         private void NavigateBasedOnUrl()
         {
+            Logger.Trace("Call {0} relay command", nameof(NavigateBasedOnUrl));
             Process.Start(_basedOnUrl);
         }
 
         private void NavigateProjectHomeUrl()
         {
+            Logger.Trace("Call {0} relay command", nameof(NavigateProjectHomeUrl));
             Process.Start(_projectHomeUrl);
         }
 
         private void NavigateContactUrl()
         {
+            Logger.Trace("Call {0} relay command", nameof(NavigateContactUrl));
             Process.Start(_contactUrl);
         }
 
