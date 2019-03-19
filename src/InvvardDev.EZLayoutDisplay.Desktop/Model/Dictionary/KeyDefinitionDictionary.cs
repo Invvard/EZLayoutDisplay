@@ -9,7 +9,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Dictionary
 {
     public class KeyDefinitionDictionary
     {
-        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         public List<KeyDefinition> KeyDefinitions { get; private set; }
 
@@ -20,24 +20,28 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Dictionary
 
         private void InitializeKeyDefinitions()
         {
+            Logger.Trace($"Call {nameof(InitializeKeyDefinitions)} method");
             KeyDefinitions = new List<KeyDefinition>();
 
             if (Resources.keyDefinitions.Length <= 0)
             {
-                _logger.Warn("KeyDefinitioins are missing from Resources");
+                Logger.Warn("KeyDefinitioins are missing from Resources");
                 return;
             }
 
             try
             {
                 var json = Encoding.Default.GetString(Resources.keyDefinitions);
+                Logger.Debug($"Resource content = {json}");
+
                 var keyDefinitions = JsonConvert.DeserializeObject<List<KeyDefinition>>(json);
+                Logger.Debug("Key definitions {@value1}", keyDefinitions);
 
                 KeyDefinitions.AddRange(keyDefinitions);
             }
             catch (Exception ex)
             {
-                _logger.Fatal(ex);
+                Logger.Error(ex);
             }
         }
     }
