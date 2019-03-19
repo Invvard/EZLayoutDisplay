@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Input;
@@ -6,6 +7,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using InvvardDev.EZLayoutDisplay.Desktop.Service.Interface;
 using InvvardDev.EZLayoutDisplay.Desktop.View;
+using NLog;
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 {
@@ -13,7 +15,9 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
     {
         #region Fields
 
-        private IWindowService _windowService;
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
+        private readonly IWindowService _windowService;
 
         private string _windowTitle;
         private string _appTitleLabel;
@@ -159,6 +163,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         public AboutViewModel(IWindowService windowService)
         {
+            Logger.Trace("Instanciate {0}", GetType());
+
             _windowService = windowService;
 
             _basedOnUrl = "https://configure.ergodox-ez.com/layouts/default/latest/0";
