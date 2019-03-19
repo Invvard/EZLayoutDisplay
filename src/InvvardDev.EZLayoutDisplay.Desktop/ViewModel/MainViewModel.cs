@@ -3,6 +3,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using InvvardDev.EZLayoutDisplay.Desktop.Service.Interface;
 using InvvardDev.EZLayoutDisplay.Desktop.View;
+using NLog;
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 {
@@ -15,6 +16,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
     public class MainViewModel : ViewModelBase
     {
         #region Fields
+
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         private ICommand _showLayoutCommand;
         private ICommand _showSettingsCommand;
@@ -97,6 +100,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         /// </summary>
         public MainViewModel(IWindowService windowService, IApplicationService applicationService)
         {
+            Logger.Trace("{0}", GetType());
+
             _windowService = windowService;
             _applicationService = applicationService;
 
