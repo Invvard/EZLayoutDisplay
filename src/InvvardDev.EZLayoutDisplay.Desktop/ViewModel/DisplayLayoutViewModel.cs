@@ -103,7 +103,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         public DisplayLayoutViewModel(IWindowService windowService, ILayoutService layoutService, ISettingsService settingsService)
         {
-            Logger.TraceMethod("Instanciate {0}");
+            Logger.TraceConstructor();
 
             _windowService = windowService;
             _layoutService = layoutService;
@@ -232,20 +232,13 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         private void LostFocus()
         {
-            Logger.TraceMethod("Call {0} relay command");
+            Logger.TraceRelayCommand();
             _windowService.CloseWindow<DisplayLayoutWindow>();
-        }
-
-        private bool NextLayerCanExecute()
-        {
-            var canExecute = _layoutTemplates.Any();
-
-            return canExecute;
         }
 
         private void NextLayer()
         {
-            Logger.TraceMethod("Call {0} relay command");
+            Logger.TraceRelayCommand();
             var maxLayerIndex = _ezLayout.EZLayers.Count - 1;
 
             switch (CurrentLayerIndex)
@@ -262,6 +255,13 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             }
 
             SwitchLayer();
+        }
+
+        private bool NextLayerCanExecute()
+        {
+            var canExecute = _layoutTemplates.Any();
+
+            return canExecute;
         }
 
         #endregion
