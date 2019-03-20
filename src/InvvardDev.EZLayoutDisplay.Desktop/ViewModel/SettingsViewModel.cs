@@ -254,8 +254,6 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         private bool IsDirty()
         {
-            Logger.TraceMethod();
-
             var isDirty = _settingsService.ErgodoxLayoutUrl != _layoutUrlContent;
 
             return isDirty;
@@ -267,18 +265,27 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
             var layoutHashId = ExtractLayoutHashId(LayoutUrlContent);
 
+            Logger.Debug("Layout Hash ID = {0}", layoutHashId);
+
             try
             {
                 var ergodoxLayout = await _layoutService.GetErgodoxLayout(layoutHashId);
+                Logger.Debug("ergodoxLayout = {@value0}", ergodoxLayout);
+
                 var ezLayout = _layoutService.PrepareEZLayout(ergodoxLayout);
+                Logger.Debug("ezLayout = {@value0}", ezLayout);
+
                 _settingsService.EZLayout = ezLayout;
             }
-            catch (ArgumentNullException)
+            catch (ArgumentNullException anex)
             {
+                Logger.Error(anex);
+
                 throw;
             }
             catch (ArgumentException aex)
             {
+                Logger.Error(aex);
                 _windowService.ShowWarning(aex.Message);
             }
         }
