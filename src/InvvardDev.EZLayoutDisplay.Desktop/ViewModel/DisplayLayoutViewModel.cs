@@ -137,6 +137,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             }
 
             _ezLayout = _settingsService.EZLayout;
+            Logger.Debug("EZLayout = {@value0}", _ezLayout);
 
             _layoutTemplates = new List<List<KeyTemplate>>();
 
@@ -144,7 +145,9 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
                 || !_ezLayout.EZLayers.Any()
                 || !_ezLayout.EZLayers.SelectMany(l => l.EZKeys).Any())
             {
+                Logger.Info("No layout available");
                 NoLayoutAvailable = true;
+
                 return;
             }
 
@@ -156,6 +159,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         private void LoadDesignTimeModel()
         {
+            Logger.TraceMethod();
+
             NoLayoutAvailable = false;
 
             var json = Encoding.Default.GetString(Resources.layoutDefinition);
@@ -185,19 +190,14 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
                                                                Modifier = new KeyLabel("Left Shift"),
                                                                KeyCategory = KeyCategory.French,
                                                                InternationalHint = "fr"
-                };
+                                                           };
             }
-        }
-
-        private async Task<IEnumerable<KeyTemplate>> LoadLayoutDefinition()
-        {
-            var layoutDefinition = await _layoutService.GetLayoutTemplate();
-
-            return layoutDefinition;
         }
 
         private async Task PopulateLayoutTemplates()
         {
+            Logger.TraceMethod();
+
             foreach (var t in _ezLayout.EZLayers)
             {
                 if (!(await LoadLayoutDefinition() is List<KeyTemplate> layoutTemplate)) break;
@@ -211,16 +211,24 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             }
         }
 
+        private async Task<IEnumerable<KeyTemplate>> LoadLayoutDefinition()
+        {
+            Logger.TraceMethod();
+            var layoutDefinition = await _layoutService.GetLayoutTemplate();
+
+            return layoutDefinition;
+        }
+
         private void SwitchLayer()
         {
             Logger.TraceMethod();
             Logger.Info("Switch to Layer {0} on {1}", CurrentLayerIndex, _layoutTemplates.Count - 1);
+
             if (_layoutTemplates.Any())
             {
                 CurrentLayoutTemplate = new ObservableCollection<KeyTemplate>(_layoutTemplates[CurrentLayerIndex]);
             }
         }
-
 
         #region Delegates
 
