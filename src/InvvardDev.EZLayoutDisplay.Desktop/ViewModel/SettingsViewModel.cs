@@ -5,6 +5,7 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
+using InvvardDev.EZLayoutDisplay.Desktop.Helper;
 using InvvardDev.EZLayoutDisplay.Desktop.Model;
 using InvvardDev.EZLayoutDisplay.Desktop.Model.Messenger;
 using InvvardDev.EZLayoutDisplay.Desktop.Service.Interface;
@@ -126,28 +127,31 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             get => _layoutUrlContent;
             set
             {
-                if (Set(ref _layoutUrlContent, value)) { UpdateButtonCanExecute(); }
+                if (Set(ref _layoutUrlContent, value))
+                {
+                    UpdateButtonCanExecute();
+                }
             }
         }
-        
+
         public string AltModifierLabel
         {
             get => _altModifierLabel;
             set => Set(ref _altModifierLabel, value);
         }
-        
+
         public string CtrlModifierLabel
         {
             get => _ctrlModifierLabel;
             set => Set(ref _ctrlModifierLabel, value);
         }
-        
+
         public string ShiftModifierLabel
         {
             get => _shiftModifierLabel;
             set => Set(ref _shiftModifierLabel, value);
         }
-        
+
         public string WindowsModifierLabel
         {
             get => _windowsModifierLabel;
@@ -166,7 +170,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         public SettingsViewModel(ISettingsService settingsService, IWindowService windowService, ILayoutService layoutService)
         {
-            Logger.Trace("Instanciate {0}", GetType());
+            Logger.TraceConstructor();
 
             _settingsService = settingsService;
             _windowService = windowService;
@@ -204,6 +208,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         private async void SaveSettings()
         {
+            Logger.TraceMethod();
+
             await UpdateLayout();
 
             _settingsService.ErgodoxLayoutUrl = LayoutUrlContent;
@@ -218,6 +224,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         private void CancelSettings()
         {
+            Logger.TraceRelayCommand();
+
             _settingsService.Cancel();
 
             LayoutUrlContent = _settingsService.ErgodoxLayoutUrl;
@@ -226,21 +234,28 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         private void CloseSettingsWindow()
         {
+            Logger.TraceRelayCommand();
+
             if (IsDirty())
             {
                 SaveSettings();
             }
+
             _windowService.CloseWindow<SettingsWindow>();
         }
 
         private void UpdateButtonCanExecute()
         {
-            ((RelayCommand)ApplySettingsCommand).RaiseCanExecuteChanged();
-            ((RelayCommand)CancelSettingsCommand).RaiseCanExecuteChanged();
+            Logger.TraceMethod();
+
+            ((RelayCommand) ApplySettingsCommand).RaiseCanExecuteChanged();
+            ((RelayCommand) CancelSettingsCommand).RaiseCanExecuteChanged();
         }
 
         private bool IsDirty()
         {
+            Logger.TraceMethod();
+
             var isDirty = _settingsService.ErgodoxLayoutUrl != _layoutUrlContent;
 
             return isDirty;
@@ -248,6 +263,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         private async Task UpdateLayout()
         {
+            Logger.TraceMethod();
+
             var layoutHashId = ExtractLayoutHashId(LayoutUrlContent);
 
             try
@@ -256,12 +273,20 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
                 var ezLayout = _layoutService.PrepareEZLayout(ergodoxLayout);
                 _settingsService.EZLayout = ezLayout;
             }
-            catch (ArgumentNullException) { throw; }
-            catch (ArgumentException aex) { _windowService.ShowWarning(aex.Message); }
+            catch (ArgumentNullException)
+            {
+                throw;
+            }
+            catch (ArgumentException aex)
+            {
+                _windowService.ShowWarning(aex.Message);
+            }
         }
 
         private string ExtractLayoutHashId(string layoutUrl)
         {
+            Logger.TraceMethod();
+
             var layoutHashIdGroupName = "layoutHashId";
             var pattern = $"https://configure.ergodox-ez.com/layouts/(?<{layoutHashIdGroupName}>default|[a-zA-Z0-9]{{4}})(?:/latest/[0-9])?";
             var layoutHashId = "default";
@@ -269,7 +294,10 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             var regex = new Regex(pattern);
             var match = regex.Match(layoutUrl);
 
-            if (match.Success) { layoutHashId = match.Groups[layoutHashIdGroupName].Value; }
+            if (match.Success)
+            {
+                layoutHashId = match.Groups[layoutHashIdGroupName].Value;
+            }
 
             return layoutHashId;
         }
