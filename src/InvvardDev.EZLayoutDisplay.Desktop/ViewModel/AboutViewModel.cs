@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
+using InvvardDev.EZLayoutDisplay.Desktop.Helper;
 using InvvardDev.EZLayoutDisplay.Desktop.Service.Interface;
 using InvvardDev.EZLayoutDisplay.Desktop.View;
 using NLog;
@@ -152,18 +153,13 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             _closeAboutCommand
             ?? (_closeAboutCommand = new RelayCommand(CloseAboutWindow));
 
-        private void CloseAboutWindow()
-        {
-            _windowService.CloseWindow<AboutWindow>();
-        }
-
         #endregion
 
         #region Constructor
 
         public AboutViewModel(IWindowService windowService)
         {
-            Logger.Trace("Instanciate {0}", GetType());
+            Logger.TraceConstructor();
 
             _windowService = windowService;
 
@@ -197,7 +193,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         private static string GetAppTitle()
         {
-            Logger.Trace("Call {0} method", nameof(GetAppTitle));
+            Logger.TraceMethod();
 
             var appTitle = "EZ Layout Display";
 
@@ -213,20 +209,26 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         private void NavigateBasedOnUrl()
         {
-            Logger.Trace("Call {0} relay command", nameof(NavigateBasedOnUrl));
+            Logger.TraceRelayCommand();
             Process.Start(_basedOnUrl);
         }
 
         private void NavigateProjectHomeUrl()
         {
-            Logger.Trace("Call {0} relay command", nameof(NavigateProjectHomeUrl));
+            Logger.TraceRelayCommand();
             Process.Start(_projectHomeUrl);
         }
 
         private void NavigateContactUrl()
         {
-            Logger.Trace("Call {0} relay command", nameof(NavigateContactUrl));
+            Logger.TraceRelayCommand();
             Process.Start(_contactUrl);
+        }
+
+        private void CloseAboutWindow()
+        {
+            Logger.TraceRelayCommand();
+            _windowService.CloseWindow<AboutWindow>();
         }
 
         #endregion
