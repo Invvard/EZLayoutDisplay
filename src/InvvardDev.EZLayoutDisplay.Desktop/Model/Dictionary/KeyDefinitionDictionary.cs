@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using InvvardDev.EZLayoutDisplay.Desktop.Helper;
 using InvvardDev.EZLayoutDisplay.Desktop.Properties;
 using Newtonsoft.Json;
 using NLog;
@@ -15,12 +16,13 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Dictionary
 
         public KeyDefinitionDictionary()
         {
+            Logger.TraceConstructor();
             InitializeKeyDefinitions();
         }
 
         private void InitializeKeyDefinitions()
         {
-            Logger.Trace($"Call {nameof(InitializeKeyDefinitions)} method");
+            Logger.TraceMethod();
             KeyDefinitions = new List<KeyDefinition>();
 
             if (Resources.keyDefinitions.Length <= 0)
