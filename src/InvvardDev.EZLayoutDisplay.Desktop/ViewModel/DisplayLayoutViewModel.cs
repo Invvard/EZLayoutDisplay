@@ -103,7 +103,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         public DisplayLayoutViewModel(IWindowService windowService, ILayoutService layoutService, ISettingsService settingsService)
         {
-            LoggerHelper.TraceMethod("Instanciate {0}");
+            Logger.TraceMethod("Instanciate {0}");
 
             _windowService = windowService;
             _layoutService = layoutService;
@@ -126,7 +126,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         private async void LoadCompleteLayout()
         {
-            LoggerHelper.TraceMethod();
+            Logger.TraceMethod();
             CurrentLayerIndex = 0;
 
             if (IsInDesignModeStatic)
@@ -213,7 +213,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         private void SwitchLayer()
         {
-            LoggerHelper.TraceMethod();
+            Logger.TraceMethod();
             Logger.Info("Switch to Layer {0} on {1}", CurrentLayerIndex, _layoutTemplates.Count - 1);
             if (_layoutTemplates.Any())
             {
@@ -226,13 +226,13 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         private void LoadCompleteLayout(UpdatedLayoutMessage obj)
         {
-            LoggerHelper.TraceMethod("Intercept {0} message");
+            Logger.TraceMethod("Intercept {0} message");
             LoadCompleteLayout();
         }
 
         private void LostFocus()
         {
-            LoggerHelper.TraceMethod("Call {0} relay command");
+            Logger.TraceMethod("Call {0} relay command");
             _windowService.CloseWindow<DisplayLayoutWindow>();
         }
 
@@ -245,7 +245,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         private void NextLayer()
         {
-            LoggerHelper.TraceMethod("Call {0} relay command");
+            Logger.TraceMethod("Call {0} relay command");
             var maxLayerIndex = _ezLayout.EZLayers.Count - 1;
 
             switch (CurrentLayerIndex)
