@@ -14,6 +14,15 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
             logger.Trace(message, memberName, sourceLineNumber);
         }
 
+        internal static void TraceConstructor(this Logger                 logger,
+                                              string                      message          = "Instanciate {0} (line {1})",
+                                              [ CallerMemberName ] string memberName       = "",
+                                              [ CallerFilePath ]   string sourceFilePath   = "",
+                                              [ CallerLineNumber ] int    sourceLineNumber = 0)
+        {
+            logger.Trace(message, memberName, sourceLineNumber);
+        }
+
         internal static LogLevel GetLogLevel(string value)
         {
             LogLevel level;
