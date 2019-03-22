@@ -3,11 +3,14 @@ using System.Linq;
 using InvvardDev.EZLayoutDisplay.Desktop.Model;
 using InvvardDev.EZLayoutDisplay.Desktop.Model.Dictionary;
 using InvvardDev.EZLayoutDisplay.Desktop.Model.Enum;
+using NLog;
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
 {
     public class EZLayoutMaker
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
         private const string NoCommand = "KC_NO";
         private const string TransparentKey = "KC_TRANSPARENT";
         private const string KeyCodeOsm = "OSM";
@@ -15,11 +18,15 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
 
         public EZLayoutMaker()
         {
+            Logger.TraceConstructor();
             _keyDefinitionDictionary = new KeyDefinitionDictionary();
         }
 
         public EZLayout PrepareEZLayout(ErgodoxLayout ergodoxLayout)
         {
+            Logger.TraceMethod();
+            Logger.DebugInputParam(nameof(ergodoxLayout), ergodoxLayout);
+
             var ezLayout = new EZLayout {
                                             HashId = ergodoxLayout.HashId,
                                             Name = ergodoxLayout.Title
@@ -31,29 +38,39 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
                 ezLayout.EZLayers.Add(ezLayer);
             }
 
+            Logger.DebugOutputParam(nameof(ezLayout), ezLayout);
+
             return ezLayout;
         }
 
         private EZLayer PrepareEZLayer(ErgodoxLayer ergodoxLayer)
         {
+            Logger.TraceMethod();
+            Logger.DebugInputParam(nameof(ergodoxLayer), ergodoxLayer);
+
             var layer = new EZLayer {
                                         Index = ergodoxLayer.Position,
                                         Name = ergodoxLayer.Title,
                                         Color = ergodoxLayer.Color
                                     };
 
-            for (var index = 0 ; index < ergodoxLayer.Keys.Count ; index++)
+            foreach (var ergodoxKey in ergodoxLayer.Keys)
             {
-                EZKey key = PrepareKeyLabels(ergodoxLayer.Keys[index], index);
+                EZKey key = PrepareKeyLabels(ergodoxKey);
 
                 layer.EZKeys.Add(key);
             }
 
+            Logger.DebugOutputParam(nameof(layer), layer);
+
             return layer;
         }
 
-        private EZKey PrepareKeyLabels(ErgodoxKey ergodoxKey, int keyIndex)
+        private EZKey PrepareKeyLabels(ErgodoxKey ergodoxKey)
         {
+            Logger.TraceMethod();
+            Logger.DebugInputParam(nameof(ergodoxKey), ergodoxKey);
+
             KeyDefinition keyDefinition = GetKeyDefinition(ergodoxKey.Code);
 
             /** Every category has a label, so no need to make a special case :
@@ -145,6 +162,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
 
             ProcessModifiers(ergodoxKey, key);
 
+            Logger.DebugOutputParam(nameof(key), key);
+
             return key;
         }
 
@@ -234,7 +253,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
 
         private string AggregateModifierLabels(List<EZModifier> mods)
         {
-            var subLabel = "";
+            string subLabel;
 
             switch (mods.Count)
             {
