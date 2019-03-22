@@ -305,6 +305,9 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             {
                 layoutHashId = match.Groups[layoutHashIdGroupName].Value;
             }
+            
+            Logger.Debug("Layout URL = {0}", layoutUrl);
+            Logger.Debug("Layout Hash ID = {0}", layoutHashId);
 
             return layoutHashId;
         }
