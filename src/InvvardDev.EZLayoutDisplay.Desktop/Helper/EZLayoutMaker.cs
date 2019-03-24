@@ -169,7 +169,13 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
 
         private KeyDefinition GetKeyDefinition(string ergodoxKeyCode)
         {
-            var keyDefinition = _keyDefinitionDictionary.KeyDefinitions.FirstOrDefault(k => k.KeyCode == ergodoxKeyCode) ?? GetKeyDefinition(TransparentKey);
+            var keyDefinition = _keyDefinitionDictionary.KeyDefinitions.FirstOrDefault(k => k.KeyCode == ergodoxKeyCode);
+
+            if (keyDefinition == null)
+            {
+                Logger.Warn("Key code '{0}' unknown", ergodoxKeyCode);
+                keyDefinition = GetKeyDefinition(TransparentKey);
+            }
 
             return keyDefinition;
         }
