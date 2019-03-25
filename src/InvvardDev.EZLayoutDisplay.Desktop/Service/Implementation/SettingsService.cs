@@ -5,6 +5,7 @@ using InvvardDev.EZLayoutDisplay.Desktop.Model.Enum;
 using InvvardDev.EZLayoutDisplay.Desktop.Properties;
 using InvvardDev.EZLayoutDisplay.Desktop.Service.Interface;
 using Newtonsoft.Json;
+using NLog;
 using ModifierKeys = NonInvasiveKeyboardHookLibrary.ModifierKeys;
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
@@ -19,6 +20,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
 
         #region Fields
 
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly Settings _settings;
 
         #endregion

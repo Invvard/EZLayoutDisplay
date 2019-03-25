@@ -8,11 +8,13 @@ using InvvardDev.EZLayoutDisplay.Desktop.Model;
 using InvvardDev.EZLayoutDisplay.Desktop.Properties;
 using InvvardDev.EZLayoutDisplay.Desktop.Service.Interface;
 using Newtonsoft.Json;
+using NLog;
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
 {
     public class LayoutService : ILayoutService
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly string GetLayoutBody =
             "{{\"operationName\":\"getLayout\",\"variables\":{{\"hashId\":\"{0}\"}},\"query\":\"query getLayout($hashId: String!) {{\\n Layout(hashId: $hashId) {{\\n ...LayoutData\\n }}\\n}}\\n\\nfragment LayoutData on Layout {{\\n hashId\\n title\\n revisions {{\\n hashId\\n model\\n layers {{\\n hashId\\n keys\\n position\\n title\\n color\\n }}\\n}}\\n}}\\n\"}}";
 
