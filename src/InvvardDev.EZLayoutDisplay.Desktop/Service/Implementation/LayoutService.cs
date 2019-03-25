@@ -25,19 +25,36 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
         /// <inheritdoc />
         public async Task<ErgodoxLayout> GetErgodoxLayout(string layoutHashId)
         {
-            if (string.IsNullOrWhiteSpace(layoutHashId)) { throw new ArgumentNullException(nameof(layoutHashId), "Layout hash ID was not found."); }
+            Logger.TraceMethod();
+            Logger.DebugInputParam(nameof(layoutHashId), layoutHashId);
+
+            if (string.IsNullOrWhiteSpace(layoutHashId))
+            {
+                Logger.Error("Layout {0} was not found", layoutHashId);
+                throw new ArgumentNullException(nameof(layoutHashId), $"Layout hash ID \"{layoutHashId}\" was not found.");
+            }
 
             DataRoot layout;
 
             using (HttpClient client = new HttpClient())
             {
                 var body = string.Format(GetLayoutBody, layoutHashId);
+                Logger.Debug("Request body : {@body}", body);
+
                 var response = await client.PostAsync(GetLayoutRequestUri, new StringContent(body, Encoding.UTF8, "application/json"));
+                Logger.Debug("Response : {@response}", response);
+
                 var result = await response.Content.ReadAsStringAsync();
+                Logger.Debug("Content result : {@result}", result);
 
                 layout = JsonConvert.DeserializeObject<DataRoot>(result);
+                Logger.Debug("Deserialized layout : {@layout}", layout);
 
-                if (layout?.LayoutRoot?.Layout == null) { throw new ArgumentException(layoutHashId, $"Hash ID \"{layoutHashId}\" does not exist"); }
+                if (layout?.LayoutRoot?.Layout == null)
+                {
+                    Logger.Error("Layout {0} does not exist", layoutHashId);
+                    throw new ArgumentException(layoutHashId, $"Hash ID \"{layoutHashId}\" does not exist");
+                }
             }
 
             return layout.LayoutRoot.Layout;
@@ -46,6 +63,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
         /// <inheritdoc />
         public EZLayout PrepareEZLayout(ErgodoxLayout ergodoxLayout)
         {
+            Logger.TraceMethod();
+
             var ezLayoutMaker = new EZLayoutMaker();
             EZLayout ezLayout = ezLayoutMaker.PrepareEZLayout(ergodoxLayout);
 
@@ -55,6 +74,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
         /// <inheritdoc />
         public async Task<IEnumerable<KeyTemplate>> GetLayoutTemplate()
         {
+            Logger.TraceMethod();
+
             IEnumerable<KeyTemplate> layoutTemplate = await ReadLayoutDefinition();
 
             return layoutTemplate;
@@ -66,9 +87,11 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
 
         private async Task<IEnumerable<KeyTemplate>> ReadLayoutDefinition()
         {
+            Logger.TraceMethod();
+
             if (Resources.layoutDefinition.Length <= 0)
             {
-                // TODO : add logging
+                Logger.Warn("Layout definition is empty");
                 return new List<KeyTemplate>();
             }
 
@@ -79,6 +102,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
 
                                               return layoutDefinition;
                                           });
+
+            Logger.DebugOutputParam(nameof(layoutTemplate), layoutTemplate);
 
             return layoutTemplate;
         }
