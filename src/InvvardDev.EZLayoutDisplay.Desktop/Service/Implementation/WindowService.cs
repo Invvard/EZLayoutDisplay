@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
 using InvvardDev.EZLayoutDisplay.Desktop.Service.Interface;
+using NLog;
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
 {
     public class WindowService: IWindowService
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly Dictionary<string, Window> _windows;
 
         public WindowService()
