@@ -1,8 +1,10 @@
 ﻿using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
+using InvvardDev.EZLayoutDisplay.Desktop.Helper;
 using InvvardDev.EZLayoutDisplay.Desktop.Service.Interface;
 using InvvardDev.EZLayoutDisplay.Desktop.View;
+using NLog;
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 {
@@ -15,6 +17,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
     public class MainViewModel : ViewModelBase
     {
         #region Fields
+
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         private ICommand _showLayoutCommand;
         private ICommand _showSettingsCommand;
@@ -97,6 +101,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         /// </summary>
         public MainViewModel(IWindowService windowService, IApplicationService applicationService)
         {
+            Logger.TraceConstructor();
+
             _windowService = windowService;
             _applicationService = applicationService;
 
@@ -118,31 +124,28 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         private void ShowLayoutWindow()
         {
+            Logger.TraceRelayCommand();
             _windowService.ShowWindow<DisplayLayoutWindow>();
         }
 
         private void ShowSettingsWindow()
         {
+            Logger.TraceRelayCommand();
             _windowService.ShowWindow<SettingsWindow>();
         }
 
         private void ShowAboutWindow()
         {
+            Logger.TraceRelayCommand();
             _windowService.ShowWindow<AboutWindow>();
         }
 
         private void ShutdownApplication()
         {
+            Logger.TraceRelayCommand();
             _applicationService.ShutdownApplication();
         }
 
         #endregion
-
-        ////public override void Cleanup()
-        ////{
-        ////    // Clean up if needed
-
-        ////    base.Cleanup();
-        ////}
     }
 }

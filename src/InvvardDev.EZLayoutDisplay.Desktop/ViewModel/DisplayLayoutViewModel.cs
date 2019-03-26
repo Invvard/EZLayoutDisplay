@@ -8,6 +8,7 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
+using InvvardDev.EZLayoutDisplay.Desktop.Helper;
 using InvvardDev.EZLayoutDisplay.Desktop.Model;
 using InvvardDev.EZLayoutDisplay.Desktop.Model.Enum;
 using InvvardDev.EZLayoutDisplay.Desktop.Model.Messenger;
@@ -15,12 +16,15 @@ using InvvardDev.EZLayoutDisplay.Desktop.Properties;
 using InvvardDev.EZLayoutDisplay.Desktop.Service.Interface;
 using InvvardDev.EZLayoutDisplay.Desktop.View;
 using Newtonsoft.Json;
+using NLog;
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 {
     public class DisplayLayoutViewModel : ViewModelBase
     {
         #region Fields
+
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         private readonly IWindowService _windowService;
         private readonly ILayoutService _layoutService;
@@ -99,6 +103,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         public DisplayLayoutViewModel(IWindowService windowService, ILayoutService layoutService, ISettingsService settingsService)
         {
+            Logger.TraceConstructor();
+
             _windowService = windowService;
             _layoutService = layoutService;
             _settingsService = settingsService;
@@ -120,6 +126,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         private async void LoadCompleteLayout()
         {
+            Logger.TraceMethod();
             CurrentLayerIndex = 0;
 
             if (IsInDesignModeStatic)
@@ -130,6 +137,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             }
 
             _ezLayout = _settingsService.EZLayout;
+            Logger.Debug("EZLayout = {@value0}", _ezLayout);
 
             _layoutTemplates = new List<List<KeyTemplate>>();
 
@@ -137,7 +145,9 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
                 || !_ezLayout.EZLayers.Any()
                 || !_ezLayout.EZLayers.SelectMany(l => l.EZKeys).Any())
             {
+                Logger.Info("No layout available");
                 NoLayoutAvailable = true;
+
                 return;
             }
 
@@ -149,6 +159,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         private void LoadDesignTimeModel()
         {
+            Logger.TraceMethod();
+
             NoLayoutAvailable = false;
 
             var json = Encoding.Default.GetString(Resources.layoutDefinition);
@@ -178,19 +190,14 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
                                                                Modifier = new KeyLabel("Left Shift"),
                                                                KeyCategory = KeyCategory.French,
                                                                InternationalHint = "fr"
-                };
+                                                           };
             }
-        }
-
-        private async Task<IEnumerable<KeyTemplate>> LoadLayoutDefinition()
-        {
-            var layoutDefinition = await _layoutService.GetLayoutTemplate();
-
-            return layoutDefinition;
         }
 
         private async Task PopulateLayoutTemplates()
         {
+            Logger.TraceMethod();
+
             foreach (var t in _ezLayout.EZLayers)
             {
                 if (!(await LoadLayoutDefinition() is List<KeyTemplate> layoutTemplate)) break;
@@ -204,36 +211,42 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             }
         }
 
+        private async Task<IEnumerable<KeyTemplate>> LoadLayoutDefinition()
+        {
+            Logger.TraceMethod();
+            var layoutDefinition = await _layoutService.GetLayoutTemplate();
+
+            return layoutDefinition;
+        }
+
         private void SwitchLayer()
         {
+            Logger.TraceMethod();
+            Logger.Info("Switch to Layer {0} on {1}", CurrentLayerIndex, _layoutTemplates.Count - 1);
+
             if (_layoutTemplates.Any())
             {
                 CurrentLayoutTemplate = new ObservableCollection<KeyTemplate>(_layoutTemplates[CurrentLayerIndex]);
             }
         }
 
-
         #region Delegates
 
         private void LoadCompleteLayout(UpdatedLayoutMessage obj)
         {
+            Logger.TraceMethod("Intercept {0} message");
             LoadCompleteLayout();
         }
 
         private void LostFocus()
         {
+            Logger.TraceRelayCommand();
             _windowService.CloseWindow<DisplayLayoutWindow>();
-        }
-
-        private bool NextLayerCanExecute()
-        {
-            var canExecute = _layoutTemplates.Any();
-
-            return canExecute;
         }
 
         private void NextLayer()
         {
+            Logger.TraceRelayCommand();
             var maxLayerIndex = _ezLayout.EZLayers.Count - 1;
 
             switch (CurrentLayerIndex)
@@ -250,6 +263,13 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             }
 
             SwitchLayer();
+        }
+
+        private bool NextLayerCanExecute()
+        {
+            var canExecute = _layoutTemplates.Any();
+
+            return canExecute;
         }
 
         #endregion

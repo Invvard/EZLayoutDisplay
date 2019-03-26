@@ -1,15 +1,19 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
+using InvvardDev.EZLayoutDisplay.Desktop.Helper;
 using InvvardDev.EZLayoutDisplay.Desktop.Service.Interface;
+using NLog;
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
 {
-    public class WindowService: IWindowService
+    public class WindowService : IWindowService
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly Dictionary<string, Window> _windows;
 
         public WindowService()
         {
+            Logger.TraceConstructor();
             _windows = new Dictionary<string, Window>();
         }
 
@@ -18,9 +22,17 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
         public void ShowWindow<T>()
             where T : Window, new()
         {
+            Logger.TraceMethod();
+            Logger.Info("Opening {windowType} window", typeof(T));
+
             var windowKey = typeof(T).ToString();
+
+            Logger.Debug("Windows opened list : {@windows}", _windows);
+
             if (!_windows.ContainsKey(windowKey))
             {
+                Logger.Debug("{windowType} window added", typeof(T));
+
                 _windows.Add(windowKey, new T());
                 _windows[windowKey].Closing += WindowService_Closing;
             }
@@ -31,17 +43,25 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
 
         public void CloseWindow<T>()
         {
+            Logger.TraceMethod();
+            Logger.Info("Closing {windowType} window", typeof(T));
+
             var windowKey = typeof(T).ToString();
 
             if (_windows.ContainsKey(windowKey))
             {
+                Logger.Debug("{windowType} window is going to be closed", typeof(T));
                 _windows[windowKey].Close();
             }
         }
 
         public bool ShowWarning(string warningMessage)
         {
+            Logger.TraceMethod();
+
             var result = MessageBox.Show(warningMessage, "Warning", MessageBoxButton.OK, MessageBoxImage.Warning) == MessageBoxResult.OK;
+
+            Logger.DebugOutputParam(nameof(result), result);
 
             return result;
         }
@@ -50,9 +70,18 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
 
         private void WindowService_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            var windowKey = sender.GetType().ToString();
+            Logger.TraceMethod();
 
-            if (_windows.ContainsKey(windowKey)) { _windows.Remove(windowKey); }
+            var windowKey = sender.GetType().ToString();
+            Logger.Debug("Window {window} is closing", windowKey);
+
+            if (_windows.ContainsKey(windowKey))
+            {
+                Logger.Debug("Finalizing {windowType} window close", windowKey);
+
+                _windows[windowKey].Closing -= WindowService_Closing;
+                _windows.Remove(windowKey);
+            }
         }
     }
 }

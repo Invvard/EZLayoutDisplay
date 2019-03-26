@@ -3,6 +3,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation;
 using InvvardDev.EZLayoutDisplay.Desktop.Service.Interface;
+using NLog;
 using ApplicationService = InvvardDev.EZLayoutDisplay.Desktop.Service.Design.ApplicationService;
 using KeyboardHookService = InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation.KeyboardHookService;
 using LayoutService = InvvardDev.EZLayoutDisplay.Desktop.Service.Design.LayoutService;
@@ -68,6 +69,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         public static void Cleanup()
         {
             SimpleIoc.Default.GetInstance<IKeyboardHookService>()?.Dispose();
+            LogManager.Shutdown();
         }
     }
 }

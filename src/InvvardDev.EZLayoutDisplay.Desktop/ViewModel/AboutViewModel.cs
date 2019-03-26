@@ -1,11 +1,14 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
+using InvvardDev.EZLayoutDisplay.Desktop.Helper;
 using InvvardDev.EZLayoutDisplay.Desktop.Service.Interface;
 using InvvardDev.EZLayoutDisplay.Desktop.View;
+using NLog;
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 {
@@ -13,7 +16,9 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
     {
         #region Fields
 
-        private IWindowService _windowService;
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
+        private readonly IWindowService _windowService;
 
         private string _windowTitle;
         private string _appTitleLabel;
@@ -148,17 +153,14 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             _closeAboutCommand
             ?? (_closeAboutCommand = new RelayCommand(CloseAboutWindow));
 
-        private void CloseAboutWindow()
-        {
-            _windowService.CloseWindow<AboutWindow>();
-        }
-
         #endregion
 
         #region Constructor
 
         public AboutViewModel(IWindowService windowService)
         {
+            Logger.TraceConstructor();
+
             _windowService = windowService;
 
             _basedOnUrl = "https://configure.ergodox-ez.com/layouts/default/latest/0";
@@ -191,6 +193,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         private static string GetAppTitle()
         {
+            Logger.TraceMethod();
+
             var appTitle = "EZ Layout Display";
 
             var customAttributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyTitleAttribute), false).FirstOrDefault();
@@ -205,17 +209,26 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         private void NavigateBasedOnUrl()
         {
+            Logger.TraceRelayCommand();
             Process.Start(_basedOnUrl);
         }
 
         private void NavigateProjectHomeUrl()
         {
+            Logger.TraceRelayCommand();
             Process.Start(_projectHomeUrl);
         }
 
         private void NavigateContactUrl()
         {
+            Logger.TraceRelayCommand();
             Process.Start(_contactUrl);
+        }
+
+        private void CloseAboutWindow()
+        {
+            Logger.TraceRelayCommand();
+            _windowService.CloseWindow<AboutWindow>();
         }
 
         #endregion

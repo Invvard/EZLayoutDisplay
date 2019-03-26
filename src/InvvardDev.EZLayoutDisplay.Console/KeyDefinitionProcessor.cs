@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using InvvardDev.EZLayoutDisplay.Desktop.Model;
 using InvvardDev.EZLayoutDisplay.Desktop.Model.Enum;
 using Newtonsoft.Json;
@@ -14,9 +13,7 @@ namespace InvvardDev.EZLayoutDisplay.Console
         private const string KeyDefinitionInputFilename = "keyDefinitions.json";
         private const string KeyDefinitionOutputFilename = "keyDefinitions.output.json";
 
-        public KeyDefinitionProcessor() { }
-
-        public async void RunProcess()
+        public void RunProcess()
         {
             if (!CheckKeyDefinitionJsExists())
             {
