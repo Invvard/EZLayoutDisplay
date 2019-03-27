@@ -68,12 +68,11 @@
         <Style.Triggers>
             <DataTrigger Binding="{Binding EZKey.Label.IsGlyph}" Value="true">
                 <Setter Property="FontFamily" Value="{StaticResource OryxFontFamily}" />
-                <Setter Property="Foreground" Value="#777" />
                 <Setter Property="FontSize" Value="18" />
+                <Setter Property="Foreground" Value="{Binding EZKey.Color}" />
             </DataTrigger>
             <DataTrigger Binding="{Binding EZKey.Label.IsGlyph}" Value="false">
                 <Setter Property="FontFamily" Value="{StaticResource LatoFontFamily}" />
-                <Setter Property="Foreground" Value="#777" />
                 <Setter Property="FontSize" Value="22" />
                 <Setter Property="FontWeight" Value="Bold" />
                 <Setter Property="Foreground" Value="{Binding EZKey.Color}" />
