@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
 using GalaSoft.MvvmLight.Threading;
@@ -13,6 +14,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop
     public partial class App
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private Mutex _mutex;
 
         public App()
         {
@@ -22,8 +24,16 @@ namespace InvvardDev.EZLayoutDisplay.Desktop
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            EnforceSingleInstance();
             ProcessArgs(e.Args);
             base.OnStartup(e);
+        }
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+            _mutex?.ReleaseMutex();
+
+            base.OnExit(e);
         }
 
         protected void OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
@@ -35,6 +45,18 @@ namespace InvvardDev.EZLayoutDisplay.Desktop
                             MessageBoxImage.Error);
 
             e.Handled = true;
+        }
+
+        private void EnforceSingleInstance()
+        {
+            _mutex = new Mutex(true, "{InvvardDev.EZLayoutDisplay.Desktop-7F8CC1C9-0D4B-4F75-828A-0F2F29925C06}", out var singleInstance);
+
+            if (singleInstance) return;
+
+            MessageBox.Show("EZ Layout Display is already running :)");
+            _mutex = null;
+
+            Current.Shutdown();
         }
 
         private void ProcessArgs(string[] args)
