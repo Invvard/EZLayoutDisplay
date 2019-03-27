@@ -11,6 +11,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable")]
     public partial class App
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
@@ -32,6 +33,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop
         protected override void OnExit(ExitEventArgs e)
         {
             _mutex?.ReleaseMutex();
+            _mutex = null;
 
             base.OnExit(e);
         }
@@ -54,7 +56,6 @@ namespace InvvardDev.EZLayoutDisplay.Desktop
             if (singleInstance) return;
 
             MessageBox.Show("EZ Layout Display is already running :)");
-            _mutex = null;
 
             Current.Shutdown();
         }
@@ -66,7 +67,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop
                 switch (arg)
                 {
                     case var val when val.StartsWith("-loglevel=", true, CultureInfo.InvariantCulture):
-                        (string key, string value) = SplitArg(arg);
+                        string value = SplitArg(arg);
 
                         LogLevel level = LoggerHelper.GetLogLevel(value);
                         LoggerHelper.AdjustLogLevel(level);
@@ -76,17 +77,16 @@ namespace InvvardDev.EZLayoutDisplay.Desktop
             }
         }
 
-        private (string, string) SplitArg(string arg)
+        private string SplitArg(string arg)
         {
-            var (key, value) = ("", "");
+            var value = "";
             var splitted = arg.Split('=');
 
-            if (splitted.Length <= 1) return (key, value);
+            if (splitted.Length <= 1) return value;
 
-            key = splitted[0];
             value = splitted[1];
 
-            return (key, value);
+            return value;
         }
     }
 }
