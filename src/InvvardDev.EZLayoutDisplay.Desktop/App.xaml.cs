@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
 using GalaSoft.MvvmLight.Threading;
@@ -10,9 +11,11 @@ namespace InvvardDev.EZLayoutDisplay.Desktop
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable")]
     public partial class App
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private Mutex _mutex;
 
         public App()
         {
@@ -22,8 +25,17 @@ namespace InvvardDev.EZLayoutDisplay.Desktop
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            EnforceSingleInstance();
             ProcessArgs(e.Args);
             base.OnStartup(e);
+        }
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+            _mutex?.ReleaseMutex();
+            _mutex = null;
+
+            base.OnExit(e);
         }
 
         protected void OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
@@ -37,6 +49,17 @@ namespace InvvardDev.EZLayoutDisplay.Desktop
             e.Handled = true;
         }
 
+        private void EnforceSingleInstance()
+        {
+            _mutex = new Mutex(true, "{InvvardDev.EZLayoutDisplay.Desktop-7F8CC1C9-0D4B-4F75-828A-0F2F29925C06}", out var singleInstance);
+
+            if (singleInstance) return;
+
+            MessageBox.Show("EZ Layout Display is already running :)");
+
+            Current.Shutdown();
+        }
+
         private void ProcessArgs(string[] args)
         {
             foreach (var arg in args)
@@ -44,7 +67,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop
                 switch (arg)
                 {
                     case var val when val.StartsWith("-loglevel=", true, CultureInfo.InvariantCulture):
-                        (string key, string value) = SplitArg(arg);
+                        string value = SplitArg(arg);
 
                         LogLevel level = LoggerHelper.GetLogLevel(value);
                         LoggerHelper.AdjustLogLevel(level);
@@ -54,17 +77,16 @@ namespace InvvardDev.EZLayoutDisplay.Desktop
             }
         }
 
-        private (string, string) SplitArg(string arg)
+        private string SplitArg(string arg)
         {
-            var (key, value) = ("", "");
+            var value = "";
             var splitted = arg.Split('=');
 
-            if (splitted.Length <= 1) return (key, value);
+            if (splitted.Length <= 1) return value;
 
-            key = splitted[0];
             value = splitted[1];
 
-            return (key, value);
+            return value;
         }
     }
 }
