@@ -51,7 +51,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
             var layer = new EZLayer {
                                         Index = ergodoxLayer.Position,
                                         Name = ergodoxLayer.Title,
-                                        Color = ergodoxLayer.Color
+                                        Color = GetColor(ergodoxLayer.Color)
                                     };
 
             foreach (var ergodoxKey in ergodoxLayer.Keys)
@@ -91,7 +91,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
             EZKey key = new EZKey {
                                       KeyCategory = keyDefinition.KeyCategory,
                                       Label = new KeyLabel(keyDefinition.Label, keyDefinition.IsGlyph),
-                                      Color = ergodoxKey.GlowColor,
+                                      Color = GetColor(ergodoxKey.GlowColor),
                                       DisplayType = KeyDisplayType.SimpleLabel
                                   };
 
@@ -165,6 +165,13 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
             Logger.DebugOutputParam(nameof(key), key);
 
             return key;
+        }
+
+        private static string GetColor(string keyColor)
+        {
+            var fontColor = string.IsNullOrWhiteSpace(keyColor) ? "#777777" : keyColor;
+
+            return fontColor;
         }
 
         private KeyDefinition GetKeyDefinition(string ergodoxKeyCode)
