@@ -169,7 +169,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
 
         private static string GetColor(string keyColor)
         {
-            var fontColor = string.IsNullOrWhiteSpace(keyColor) ? "#777777" : keyColor;
+            var fontColor = string.IsNullOrWhiteSpace(keyColor) ? "#777" : keyColor;
 
             return fontColor;
         }
