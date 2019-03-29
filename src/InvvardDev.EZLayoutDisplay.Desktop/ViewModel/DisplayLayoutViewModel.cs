@@ -40,6 +40,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         private string _windowTitle;
         private bool _noLayoutAvailable;
+        private string _currentLayerName;
 
         #endregion
 
@@ -52,6 +53,15 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         {
             get => _windowTitle;
             set => Set(ref _windowTitle, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the current layer name.
+        /// </summary>
+        public string CurrentLayerName
+        {
+            get => _currentLayerName;
+            set => Set(ref _currentLayerName, value);
         }
 
         /// <summary>
@@ -230,6 +240,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             if (_layoutTemplates.Any())
             {
                 CurrentLayoutTemplate = new ObservableCollection<KeyTemplate>(_layoutTemplates[CurrentLayerIndex]);
+
             }
         }
 
