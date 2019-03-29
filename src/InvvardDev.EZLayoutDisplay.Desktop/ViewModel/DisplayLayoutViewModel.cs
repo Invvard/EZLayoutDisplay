@@ -132,6 +132,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private void SetLabelUi()
         {
             WindowTitle = "ErgoDox Layout";
+            CurrentLayerName = "";
         }
 
         private async void LoadCompleteLayout()
@@ -172,6 +173,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             Logger.TraceMethod();
 
             NoLayoutAvailable = false;
+            CurrentLayerName = "Current Layer Name";
 
             var json = Encoding.Default.GetString(Resources.layoutDefinition);
             var layoutDefinition = JsonConvert.DeserializeObject<IEnumerable<KeyTemplate>>(json) as List<KeyTemplate>;
