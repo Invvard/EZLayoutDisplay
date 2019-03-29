@@ -33,6 +33,9 @@
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
+        <StackPanel HorizontalAlignment="Center" Height="100" VerticalAlignment="Top" Width="180" Margin="0,25,0,0">
+            <TextBlock Text="LabelLabelLabelLabel LabelLabelLabelLabel" Margin="5,5,5,0" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center" Width="170" VerticalAlignment="Center" TextWrapping="WrapWithOverflow"/>
+        </StackPanel>
         <Grid Visibility="{Binding NoLayoutAvailable, Converter={StaticResource BoolToHiddenConverter}}" Width="350">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width=".25*"/>
