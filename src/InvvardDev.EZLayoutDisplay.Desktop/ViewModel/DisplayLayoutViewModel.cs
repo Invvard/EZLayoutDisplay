@@ -174,14 +174,16 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
                                                            Label = new KeyLabel("="),
                                                            Modifier = new KeyLabel("Left Shift"),
                                                            DisplayType = KeyDisplayType.ModifierOnTop,
-                                                           KeyCategory = KeyCategory.DualFunction
+                                                           KeyCategory = KeyCategory.DualFunction,
+                                                           Color = "#111"
                                                        };
 
             CurrentLayoutTemplate[1].EZKey = new EZKey {
                                                            Label = new KeyLabel("LT \u2192 1"),
                                                            DisplayType = KeyDisplayType.SimpleLabel,
-                                                           KeyCategory = KeyCategory.DualFunction
-                                                       };
+                                                           KeyCategory = KeyCategory.DualFunction,
+                                                           Color = "#BBB"
+            };
 
             for (int i = 2 ; i < CurrentLayoutTemplate.Count ; i++)
             {
@@ -189,8 +191,9 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
                                                                Label = new KeyLabel("E"),
                                                                Modifier = new KeyLabel("Left Shift"),
                                                                KeyCategory = KeyCategory.French,
-                                                               InternationalHint = "fr"
-                                                           };
+                                                               InternationalHint = "fr",
+                                                               Color = "#777"
+                };
             }
         }
 
