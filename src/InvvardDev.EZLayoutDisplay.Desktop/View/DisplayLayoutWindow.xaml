@@ -34,7 +34,8 @@
             </ItemsControl.ItemsPanel>
         </ItemsControl>
         <StackPanel HorizontalAlignment="Center" Height="100" VerticalAlignment="Top" Width="180" Margin="0,25,0,0">
-            <TextBlock Text="{Binding CurrentLayerName}" TextAlignment="Center" Margin="5,5,5,0" FontWeight="Bold" FontSize="16" TextWrapping="WrapWithOverflow"/>
+            <TextBlock Text="{Binding CurrentLayerNameTitle}" Foreground="#BBB" TextAlignment="Center" Margin="5,5,5,0" FontWeight="Bold" FontSize="14" TextWrapping="WrapWithOverflow"/>
+            <TextBlock Text="{Binding CurrentLayerName}" Foreground="#555" TextAlignment="Center" Margin="5,5,5,0" FontWeight="Bold" FontSize="16" TextWrapping="WrapWithOverflow"/>
         </StackPanel>
         <Grid Visibility="{Binding NoLayoutAvailable, Converter={StaticResource BoolToHiddenConverter}}" Width="350">
             <Grid.ColumnDefinitions>
