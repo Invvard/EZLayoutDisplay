@@ -242,8 +242,13 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             if (_layoutTemplates.Any())
             {
                 CurrentLayoutTemplate = new ObservableCollection<KeyTemplate>(_layoutTemplates[CurrentLayerIndex]);
-
+                ChangeLayerName();
             }
+        }
+
+        private void ChangeLayerName()
+        {
+            CurrentLayerName = _ezLayout.EZLayers[CurrentLayerIndex].Name;
         }
 
         #region Delegates
