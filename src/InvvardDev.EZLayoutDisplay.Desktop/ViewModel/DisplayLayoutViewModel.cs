@@ -39,8 +39,9 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private EZLayout _ezLayout;
 
         private string _windowTitle;
-        private bool _noLayoutAvailable;
+        private string _currentLayerNameTitle;
         private string _currentLayerName;
+        private bool _noLayoutAvailable;
 
         #endregion
 
@@ -53,6 +54,15 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         {
             get => _windowTitle;
             set => Set(ref _windowTitle, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the current layer name title.
+        /// </summary>
+        public string CurrentLayerNameTitle
+        {
+            get => _currentLayerNameTitle;
+            set => Set(ref _currentLayerNameTitle, value);
         }
 
         /// <summary>
@@ -132,6 +142,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private void SetLabelUi()
         {
             WindowTitle = "ErgoDox Layout";
+            CurrentLayerNameTitle = "Current layer :";
             CurrentLayerName = "";
         }
 
