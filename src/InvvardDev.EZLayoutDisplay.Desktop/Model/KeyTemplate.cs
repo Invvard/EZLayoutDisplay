@@ -62,7 +62,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
         public string RotationOrigin { get; set; }
 
         /// <summary>
-        /// Gets or sets the key .
+        /// Gets or sets the key Glowing indicator.
         /// </summary>
         [JsonProperty("glow", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         [DefaultValue(false)]
