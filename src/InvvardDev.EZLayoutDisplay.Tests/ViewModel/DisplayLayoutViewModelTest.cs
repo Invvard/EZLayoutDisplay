@@ -36,6 +36,8 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
 
             //Assert
             Assert.Equal("ErgoDox Layout", displayLayoutViewModel.WindowTitle);
+            Assert.Equal("No layout available !", displayLayoutViewModel.NoLayoutWarningFirstLine);
+            Assert.Equal("Please, go to the settings and update the layout.", displayLayoutViewModel.NoLayoutWarningSecondLine);
             Assert.Equal("Current layer :", displayLayoutViewModel.CurrentLayerNameTitle);
             Assert.Equal("", displayLayoutViewModel.CurrentLayerName);
         }
@@ -58,10 +60,10 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
         }
 
         [ Theory ]
-        [ InlineData(0, 1) ]
-        [ InlineData(1, 2) ]
-        [ InlineData(76, 2) ]
-        public void LoadCompleteLayout(int numberOfKey, int numberOfLayer)
+        [ InlineData(0, 1, true) ]
+        [ InlineData(1, 2, false) ]
+        [ InlineData(76, 2, false) ]
+        public void LoadCompleteLayout(int numberOfKey, int numberOfLayer, bool noLayoutAvailable)
         {
             //Arrange
             var layoutTemplate = new List<KeyTemplate>();
@@ -93,6 +95,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             var displayLayoutViewModel = new DisplayLayoutViewModel(mockWindowService.Object, mockLayoutService.Object, mockSettingsService.Object);
 
             //Assert
+            Assert.Equal(noLayoutAvailable, displayLayoutViewModel.NoLayoutAvailable);
             mockLayoutService.Verify(l => l.GetLayoutTemplate(), Times.AtMost(numberOfLayer));
             Assert.Equal(numberOfKey, displayLayoutViewModel.CurrentLayoutTemplate.Count);
         }
@@ -184,6 +187,25 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
 
             //Assert
             Assert.Equal(expectedCurrentLayerIndex, displayLayoutViewModel.CurrentLayerIndex);
+        }
+
+        [ Fact ]
+        public void NoLayoutAvailable()
+        {
+            // Arrange
+            var mockLayoutService = new Mock<ILayoutService>();
+            var mockWindowService = new Mock<IWindowService>();
+            var mockSettingsService = new Mock<ISettingsService>();
+            mockSettingsService.SetupProperty(s => s.EZLayout,
+                                              new EZLayout {
+                                                               EZLayers = new List<EZLayer>()
+                                                           });
+
+            // Act
+            var displayLayoutViewModel = new DisplayLayoutViewModel(mockWindowService.Object, mockLayoutService.Object, mockSettingsService.Object);
+
+            // Assert
+            Assert.True(displayLayoutViewModel.NoLayoutAvailable);
         }
     }
 }
