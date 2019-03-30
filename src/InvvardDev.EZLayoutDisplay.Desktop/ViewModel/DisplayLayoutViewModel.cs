@@ -39,6 +39,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private EZLayout _ezLayout;
 
         private string _windowTitle;
+        private string _noLayoutWarningFirstLine;
+        private string _noLayoutWarningSecondLine;
         private string _currentLayerNameTitle;
         private string _currentLayerName;
         private bool _noLayoutAvailable;
@@ -53,7 +55,25 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         public string WindowTitle
         {
             get => _windowTitle;
-            set => Set(ref _windowTitle, value);
+            private set => Set(ref _windowTitle, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the no layout warning first line.
+        /// </summary>
+        public string NoLayoutWarningFirstLine
+        {
+            get => _noLayoutWarningFirstLine;
+            private set => Set(ref _noLayoutWarningFirstLine, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the no layout warning second line.
+        /// </summary>
+        public string NoLayoutWarningSecondLine
+        {
+            get => _noLayoutWarningSecondLine;
+            private set => Set(ref _noLayoutWarningSecondLine, value);
         }
 
         /// <summary>
@@ -142,6 +162,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private void SetLabelUi()
         {
             WindowTitle = "ErgoDox Layout";
+            NoLayoutWarningFirstLine = "No layout available !";
+            NoLayoutWarningSecondLine = "Please, go to the settings and update the layout.";
             CurrentLayerNameTitle = "Current layer :";
             CurrentLayerName = "";
         }
