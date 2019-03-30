@@ -17,14 +17,10 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             var mockWindowService = new Mock<IWindowService>();
             var mockLayoutService = new Mock<ILayoutService>();
             var mockSettingsService = new Mock<ISettingsService>();
-            var expectedLayerName = "Layer name";
-            var expectedLayerIndex = 0;
             mockSettingsService.SetupProperty(s => s.EZLayout,
                                               new EZLayout {
                                                                EZLayers = new List<EZLayer> {
                                                                                                 new EZLayer {
-                                                                                                                Name = expectedLayerName,
-                                                                                                                Index = expectedLayerIndex,
                                                                                                                 EZKeys = new List<EZKey> {
                                                                                                                                              new EZKey {
                                                                                                                                                            Label = new KeyLabel("A"),
