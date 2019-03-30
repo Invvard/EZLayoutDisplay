@@ -259,7 +259,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         private void ChangeLayerName()
         {
-            CurrentLayerName = _ezLayout.EZLayers[CurrentLayerIndex].Name;
+            CurrentLayerName = $"{_ezLayout.EZLayers[CurrentLayerIndex].Name} {_ezLayout.EZLayers[CurrentLayerIndex].Index}";
         }
 
         #region Delegates
