@@ -62,7 +62,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         public string CurrentLayerNameTitle
         {
             get => _currentLayerNameTitle;
-            set => Set(ref _currentLayerNameTitle, value);
+            private set => Set(ref _currentLayerNameTitle, value);
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         public string CurrentLayerName
         {
             get => _currentLayerName;
-            set => Set(ref _currentLayerName, value);
+            private set => Set(ref _currentLayerName, value);
         }
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         public bool NoLayoutAvailable
         {
             get => _noLayoutAvailable;
-            set => Set(ref _noLayoutAvailable, value);
+            private set => Set(ref _noLayoutAvailable, value);
         }
 
         /// <summary>
