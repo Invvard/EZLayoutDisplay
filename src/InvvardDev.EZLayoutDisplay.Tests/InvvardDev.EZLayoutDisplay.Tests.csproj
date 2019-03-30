@@ -85,6 +85,7 @@
     <Compile Include="Helper\EZLayoutMakerTest.cs" />
     <Compile Include="Model\KeyDefinitionDictionaryTest.cs" />
     <Compile Include="Service\LayoutServiceTest.cs" />
+    <Compile Include="ViewModel\AboutViewModelTest.cs" />
     <Compile Include="ViewModel\DisplayLayoutViewModelTest.cs" />
     <Compile Include="ViewModel\MainViewModelTest.cs" />
     <Compile Include="ViewModel\SettingsViewModelTest.cs" />
