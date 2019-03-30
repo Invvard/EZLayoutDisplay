@@ -13,6 +13,15 @@
     Title="{Binding WindowTitle}" Icon="{StaticResource WindowIcon}"
     DataContext="{Binding DisplayLayout, Source={StaticResource Locator}}">
 
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Skins/KeyboardLayoutSkin.xaml" />
+                <ResourceDictionary Source="../Skins/DisplayLayoutSkin.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Deactivated">
             <command:EventToCommand Command="{Binding LostFocusCommand, Mode=OneWay}" />
@@ -33,6 +42,11 @@
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
+        <StackPanel Style="{StaticResource SpLayerNameStyle}"
+                    Visibility="{Binding NoLayoutAvailable, Converter={StaticResource BoolToVisibleConverter}}">
+            <TextBlock Text="{Binding CurrentLayerNameTitle}" Style="{StaticResource TbLayerNameTitleStyle}" />
+            <TextBlock Text="{Binding CurrentLayerName}" Style="{StaticResource TbLayerNameStyle}" />
+        </StackPanel>
         <Grid Visibility="{Binding NoLayoutAvailable, Converter={StaticResource BoolToHiddenConverter}}" Width="350">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width=".25*"/>
