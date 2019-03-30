@@ -26,10 +26,6 @@
                                                  TrueValue="Visible" FalseValue="Hidden" />
             <converter:BoolToVisibilityConverter x:Key="BoolToVisibleConverter"
                                                  TrueValue="Hidden" FalseValue="Visible" />
-
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Skins/KeyboardLayoutSkin.xaml" />
-            </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
 
     </Application.Resources>
