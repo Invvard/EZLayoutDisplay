@@ -1,4 +1,5 @@
 ﻿using InvvardDev.EZLayoutDisplay.Desktop.Service.Interface;
+using InvvardDev.EZLayoutDisplay.Desktop.View;
 using InvvardDev.EZLayoutDisplay.Desktop.ViewModel;
 using Moq;
 using Xunit;
@@ -29,6 +30,21 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             Assert.Equal("EZ Layout Display", aboutViewModel.ProjectHomeInfoLabel);
             Assert.Equal("@Invvard", aboutViewModel.ContactInfoLabel);
             Assert.Equal("OK", aboutViewModel.CloseButtonLabel);
+        }
+
+        [ Fact ]
+        public void CloseAboutWindowExecute()
+        {
+            // Arrange
+            var mockWindowService = new Mock<IWindowService>();
+            mockWindowService.Setup(w => w.CloseWindow<AboutWindow>()).Verifiable();
+
+            // Act
+            var aboutViewModel = new AboutViewModel(mockWindowService.Object);
+            aboutViewModel.CloseAboutCommand.Execute(null);
+
+            // Assert
+            mockWindowService.Verify(w => w.CloseWindow<AboutWindow>(), Times.Once);
         }
     }
 }
