@@ -39,6 +39,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private EZLayout _ezLayout;
 
         private string _windowTitle;
+        private string _currentLayerNameTitle;
+        private string _currentLayerName;
         private bool _noLayoutAvailable;
 
         #endregion
@@ -52,6 +54,24 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         {
             get => _windowTitle;
             set => Set(ref _windowTitle, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the current layer name title.
+        /// </summary>
+        public string CurrentLayerNameTitle
+        {
+            get => _currentLayerNameTitle;
+            set => Set(ref _currentLayerNameTitle, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the current layer name.
+        /// </summary>
+        public string CurrentLayerName
+        {
+            get => _currentLayerName;
+            set => Set(ref _currentLayerName, value);
         }
 
         /// <summary>
@@ -122,6 +142,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private void SetLabelUi()
         {
             WindowTitle = "ErgoDox Layout";
+            CurrentLayerNameTitle = "Current layer :";
+            CurrentLayerName = "";
         }
 
         private async void LoadCompleteLayout()
@@ -162,6 +184,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             Logger.TraceMethod();
 
             NoLayoutAvailable = false;
+            CurrentLayerName = "Current Layer Name";
 
             var json = Encoding.Default.GetString(Resources.layoutDefinition);
             var layoutDefinition = JsonConvert.DeserializeObject<IEnumerable<KeyTemplate>>(json) as List<KeyTemplate>;
@@ -174,14 +197,16 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
                                                            Label = new KeyLabel("="),
                                                            Modifier = new KeyLabel("Left Shift"),
                                                            DisplayType = KeyDisplayType.ModifierOnTop,
-                                                           KeyCategory = KeyCategory.DualFunction
+                                                           KeyCategory = KeyCategory.DualFunction,
+                                                           Color = "#111"
                                                        };
 
             CurrentLayoutTemplate[1].EZKey = new EZKey {
                                                            Label = new KeyLabel("LT \u2192 1"),
                                                            DisplayType = KeyDisplayType.SimpleLabel,
-                                                           KeyCategory = KeyCategory.DualFunction
-                                                       };
+                                                           KeyCategory = KeyCategory.DualFunction,
+                                                           Color = "#BBB"
+            };
 
             for (int i = 2 ; i < CurrentLayoutTemplate.Count ; i++)
             {
@@ -189,8 +214,9 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
                                                                Label = new KeyLabel("E"),
                                                                Modifier = new KeyLabel("Left Shift"),
                                                                KeyCategory = KeyCategory.French,
-                                                               InternationalHint = "fr"
-                                                           };
+                                                               InternationalHint = "fr",
+                                                               Color = "#777"
+                };
             }
         }
 
@@ -227,7 +253,13 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             if (_layoutTemplates.Any())
             {
                 CurrentLayoutTemplate = new ObservableCollection<KeyTemplate>(_layoutTemplates[CurrentLayerIndex]);
+                ChangeLayerName();
             }
+        }
+
+        private void ChangeLayerName()
+        {
+            CurrentLayerName = _ezLayout.EZLayers[CurrentLayerIndex].Name;
         }
 
         #region Delegates
