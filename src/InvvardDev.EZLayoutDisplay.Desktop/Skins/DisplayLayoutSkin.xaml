@@ -1,5 +1,22 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:InvvardDev.EZLayoutDisplay.Desktop.Skins">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- TextAlignment="Center" Margin="5,5,5,0" FontWeight="Bold" Foreground="#BBB" FontSize="14" TextWrapping="WrapWithOverflow" -->
     
+    <Style TargetType="TextBlock" x:Key="TextblockLayerNameStyle">
+        <Setter Property="TextAlignment" Value="Center" />
+        <Setter Property="Margin" Value="5,5,5,0" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="TextWrapping" Value="WrapWithOverflow" />
+    </Style>
+
+    <Style TargetType="TextBlock" BasedOn="{StaticResource TextblockLayerNameStyle}" x:Key="TbLayerNameTitleStyle">
+        <Setter Property="Foreground" Value="#BBB" />
+        <Setter Property="FontSize" Value="14" />
+    </Style>
+
+    <Style TargetType="TextBlock" BasedOn="{StaticResource TextblockLayerNameStyle}" x:Key="TbLayerNameStyle">
+        <Setter Property="Foreground" Value="#555" />
+        <Setter Property="FontSize" Value="16" />
+    </Style>
+
 </ResourceDictionary>
