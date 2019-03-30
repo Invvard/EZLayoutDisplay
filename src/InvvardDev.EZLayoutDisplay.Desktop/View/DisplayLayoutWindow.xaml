@@ -42,7 +42,7 @@
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
-        <StackPanel HorizontalAlignment="Center" Height="100" VerticalAlignment="Top" Width="180" Margin="0,25,0,0"
+        <StackPanel Style="{StaticResource SpLayerNameStyle}"
                     Visibility="{Binding NoLayoutAvailable, Converter={StaticResource BoolToVisibleConverter}}">
             <TextBlock Text="{Binding CurrentLayerNameTitle}" Style="{StaticResource TbLayerNameTitleStyle}" />
             <TextBlock Text="{Binding CurrentLayerName}" Style="{StaticResource TbLayerNameStyle}" />
