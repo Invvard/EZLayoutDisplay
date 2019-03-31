@@ -122,6 +122,7 @@
     <Compile Include="Service\Design\ApplicationService.cs" />
     <Compile Include="Service\Design\KeyboardHookService.cs" />
     <Compile Include="Service\Design\LayoutService.cs" />
+    <Compile Include="Service\Design\ProcessService.cs" />
     <Compile Include="Service\Design\SettingsService.cs" />
     <Compile Include="Service\Design\WindowService.cs" />
     <Compile Include="Helper\EZLayoutMaker.cs" />
@@ -146,12 +147,14 @@
     <Compile Include="Service\Implementation\ApplicationService.cs" />
     <Compile Include="Service\Implementation\KeyboardHookService.cs" />
     <Compile Include="Service\Implementation\LayoutService.cs" />
+    <Compile Include="Service\Implementation\ProcessService.cs" />
     <Compile Include="Service\Implementation\SettingsService.cs" />
     <Compile Include="Service\Implementation\WindowService.cs" />
     <Compile Include="Service\Interface\IApplicationService.cs" />
     <Compile Include="Service\Interface\IKeyboardHookService.cs" />
     <Compile Include="Service\Interface\ILayoutService.cs" />
     <Compile Include="Service\Interface\ILoggingService.cs" />
+    <Compile Include="Service\Interface\IProcessService.cs" />
     <Compile Include="Service\Interface\ISettingsService.cs" />
     <Compile Include="Service\Interface\IWindowService.cs" />
     <Compile Include="ViewModel\AboutViewModel.cs" />
