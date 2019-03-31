@@ -42,11 +42,18 @@
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
+
         <StackPanel Style="{StaticResource SpLayerNameStyle}"
                     Visibility="{Binding NoLayoutAvailable, Converter={StaticResource BoolToVisibleConverter}}">
             <TextBlock Text="{Binding CurrentLayerNameTitle}" Style="{StaticResource TbLayerNameTitleStyle}" />
             <TextBlock Text="{Binding CurrentLayerName}" Style="{StaticResource TbLayerNameStyle}" />
         </StackPanel>
+
+        <StackPanel Style="{StaticResource SpControlHintStyle}"
+            Visibility="{Binding NoLayoutAvailable, Converter={StaticResource BoolToVisibleConverter}}">
+            <TextBlock Text="{Binding ControlHintLabel}" Style="{StaticResource TbControlHintStyle}" />
+        </StackPanel>
+
         <Grid Visibility="{Binding NoLayoutAvailable, Converter={StaticResource BoolToHiddenConverter}}" Width="350">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width=".25*"/>
