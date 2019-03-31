@@ -55,9 +55,9 @@
             </Grid.ColumnDefinitions>
             <Image Grid.Column="0" Source="../Skins/Images/warning-sign.png"/>
             <TextBlock Grid.Column="2" TextWrapping="WrapWithOverflow" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Left">
-                <Run Text="{Binding NoLayoutWarningFirstLine}"/>
+                <Run Text="{Binding NoLayoutWarningFirstLine, Mode=OneWay}"/>
                 <LineBreak/>
-                <Run Text="{Binding NoLayoutWarningSecondLine}"/>
+                <Run Text="{Binding NoLayoutWarningSecondLine, Mode=OneWay}"/>
             </TextBlock>
         </Grid>
     </Grid>
