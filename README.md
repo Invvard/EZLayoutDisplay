@@ -25,7 +25,7 @@ By pressing **Hyper + Space** (or one left click on the tray icon), you'll insta
 
 You can browse the different layers by hitting the **Space** bar.
 
-It is designed to be a quick reminder of your layout so as soon as it lose the focus or if you hit the **Escape** key, the layout window will disappear.
+It is designed to be a quick reminder of your layout, so as soon as it loses focus or if you hit the **Escape** key, the layout window will disappear.
 
 ## Roadmap 
 Right now, settings and customisation are a bit scarce but I've a lot of ToDos and ideas to implement.
