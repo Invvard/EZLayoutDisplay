@@ -4,11 +4,6 @@ using GalaSoft.MvvmLight.Ioc;
 using InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation;
 using InvvardDev.EZLayoutDisplay.Desktop.Service.Interface;
 using NLog;
-using ApplicationService = InvvardDev.EZLayoutDisplay.Desktop.Service.Design.ApplicationService;
-using KeyboardHookService = InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation.KeyboardHookService;
-using LayoutService = InvvardDev.EZLayoutDisplay.Desktop.Service.Design.LayoutService;
-using SettingsService = InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation.SettingsService;
-using WindowService = InvvardDev.EZLayoutDisplay.Desktop.Service.Design.WindowService;
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 {
@@ -27,20 +22,21 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
             if (ViewModelBase.IsInDesignModeStatic)
             {
-                SimpleIoc.Default.Register<IWindowService, WindowService>();
+                SimpleIoc.Default.Register<IWindowService, Service.Design.WindowService>();
                 SimpleIoc.Default.Register<IKeyboardHookService, Service.Design.KeyboardHookService>();
                 SimpleIoc.Default.Register<ISettingsService, Service.Design.SettingsService>();
-                SimpleIoc.Default.Register<IApplicationService, ApplicationService>();
-                SimpleIoc.Default.Register<ILayoutService, LayoutService>();
+                SimpleIoc.Default.Register<IApplicationService, Service.Design.ApplicationService>();
+                SimpleIoc.Default.Register<ILayoutService, Service.Design.LayoutService>();
+                SimpleIoc.Default.Register<IProcessService, Service.Design.ProcessService>();
             }
             else
             {
-                SimpleIoc.Default.Register<IWindowService, Service.Implementation.WindowService>();
+                SimpleIoc.Default.Register<IWindowService, WindowService>();
                 SimpleIoc.Default.Register<ISettingsService>(() => new SettingsService(Properties.Settings.Default));
                 SimpleIoc.Default.Register<IKeyboardHookService, KeyboardHookService>(true);
-                SimpleIoc.Default.Register<IApplicationService, Service.Implementation.ApplicationService>();
-                SimpleIoc.Default.Register<ILayoutService, Service.Implementation.LayoutService>();
-
+                SimpleIoc.Default.Register<IApplicationService, ApplicationService>();
+                SimpleIoc.Default.Register<ILayoutService, LayoutService>();
+                SimpleIoc.Default.Register<IProcessService, ProcessService>();
             }
 
             SimpleIoc.Default.Register<MainViewModel>();
