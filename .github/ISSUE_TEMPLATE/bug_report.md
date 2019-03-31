@@ -1,7 +1,7 @@
 ---
 name: Bug report
 about: Create a bug report to help us improve
-title: ''
+title: "[BUG] Short & concise bug description"
 labels: bug
 assignees: Invvard
 
