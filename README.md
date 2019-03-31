@@ -28,7 +28,7 @@ You can browse the different layers by hitting the **Space** bar.
 It is designed to be a quick reminder of your layout, so as soon as it loses focus or if you hit the **Escape** key, the layout window will disappear.
 
 ## Roadmap 
-Right now, settings and customisation are a bit scarce but I've a lot of ToDos and ideas to implement.
+Right now, settings and customisation are a bit scarce but I've a lot of [ToDos and ideas](https://github.com/Invvard/EZLayoutDisplay/projects/1) to implement.
 
 ## Contributors
 Of course, your inputs, ideas and contributions are very much welcome !
