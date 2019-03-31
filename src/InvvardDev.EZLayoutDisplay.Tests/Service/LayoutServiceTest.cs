@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -154,6 +155,18 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Service
             Assert.Equal(KeyCategory.Fn, layer1KeyResults[0].KeyCategory);
             Assert.Equal("\u23b5", layer1KeyResults[1].Label.Content);
             Assert.Equal(KeyCategory.Spacing, layer1KeyResults[1].KeyCategory);
+        }
+
+        [Fact]
+        public async Task GetErgodoxLayout_HashIdNull()
+        {
+            // Arrange
+            ILayoutService layoutService = new LayoutService();
+
+            // Act
+            await Assert.ThrowsAsync<ArgumentNullException>(() => layoutService.GetErgodoxLayout(""));
+
+            // Assert
         }
     }
 }

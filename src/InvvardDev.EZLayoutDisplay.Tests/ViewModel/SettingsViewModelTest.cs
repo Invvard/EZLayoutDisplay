@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using InvvardDev.EZLayoutDisplay.Desktop.Model;
 using InvvardDev.EZLayoutDisplay.Desktop.Service.Interface;
@@ -13,7 +12,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
     public class SettingsViewModelTest
     {
         [ Fact ]
-        public void SettingsViewModelConstructor()
+        public void SettingsViewModel_Constructor()
         {
             //Arrange
             var tbContentInitial = "This is a test";
@@ -37,6 +36,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             Assert.Equal("CTRL", settingsViewModel.CtrlModifierLabel);
             Assert.Equal("SHIFT", settingsViewModel.ShiftModifierLabel);
             Assert.Equal("Windows", settingsViewModel.WindowsModifierLabel);
+            Assert.Equal("Update", settingsViewModel.UpdateCommandLabel);
         }
 
         [ Theory ]
@@ -138,7 +138,10 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             //Act
             var settingsViewModel = new SettingsViewModel(settingsService.Object, windowService.Object, mockLayoutService.Object);
 
-            if (mustSave) { settingsViewModel.LayoutUrlContent = tbContentNewValue; }
+            if (mustSave)
+            {
+                settingsViewModel.LayoutUrlContent = tbContentNewValue;
+            }
 
             settingsViewModel.CloseSettingsCommand.Execute(null);
 
@@ -202,7 +205,26 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
 
             // Act
             var settingsViewModel = new SettingsViewModel(mockSettingsService.Object, mockWindowService.Object, mockLayoutService.Object);
+            settingsViewModel.UpdateLayoutCommand.Execute(null);
 
+            // Assert
+            mockLayoutService.Verify();
+            mockWindowService.Verify();
+        }
+
+        [ Fact ]
+        public void UpdateLayoutCommandExecute_ArgumentNullExceptionRaised()
+        {
+            // Arrange
+            var mockSettingsService = new Mock<ISettingsService>();
+            mockSettingsService.SetupProperty(s => s.ErgodoxLayoutUrl, "");
+            var mockWindowService = new Mock<IWindowService>();
+            mockWindowService.Setup(w => w.ShowWarning(It.IsAny<string>())).Verifiable();
+            var mockLayoutService = new Mock<ILayoutService>();
+            mockLayoutService.Setup(l => l.GetErgodoxLayout(It.IsAny<string>())).Throws<ArgumentNullException>();
+
+            // Act
+            var settingsViewModel = new SettingsViewModel(mockSettingsService.Object, mockWindowService.Object, mockLayoutService.Object);
             settingsViewModel.UpdateLayoutCommand.Execute(null);
 
             // Assert
