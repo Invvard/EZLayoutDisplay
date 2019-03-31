@@ -11,7 +11,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
     public class DisplayLayoutViewModelTest
     {
         [ Fact ]
-        public void DisplayLayoutViewModelConstructor()
+        public void DisplayLayoutViewModel_Constructor()
         {
             //Arrange
             var mockWindowService = new Mock<IWindowService>();
@@ -40,6 +40,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             Assert.Equal("Please, go to the settings and update the layout.", displayLayoutViewModel.NoLayoutWarningSecondLine);
             Assert.Equal("Current layer :", displayLayoutViewModel.CurrentLayerNameTitle);
             Assert.Equal("", displayLayoutViewModel.CurrentLayerName);
+            Assert.Equal("Press 'Space' to display next layer", displayLayoutViewModel.ControlHintLabel);
         }
 
         [ Fact ]
