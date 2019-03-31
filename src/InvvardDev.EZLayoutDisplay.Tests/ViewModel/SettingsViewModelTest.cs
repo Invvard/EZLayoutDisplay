@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using InvvardDev.EZLayoutDisplay.Desktop.Model;
 using InvvardDev.EZLayoutDisplay.Desktop.Service.Interface;
@@ -37,6 +36,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             Assert.Equal("CTRL", settingsViewModel.CtrlModifierLabel);
             Assert.Equal("SHIFT", settingsViewModel.ShiftModifierLabel);
             Assert.Equal("Windows", settingsViewModel.WindowsModifierLabel);
+            Assert.Equal("Update", settingsViewModel.UpdateCommandLabel);
         }
 
         [ Theory ]
