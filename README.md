@@ -31,6 +31,6 @@ It is designed to be a quick reminder of your layout so as soon as it lose the f
 Right now, settings and customisation are a bit scarce but I've a lot of ToDos and ideas to implement.
 
 ## Contributors
-Of course, your inputs (ideas, contributions, thanks or even a brand new ErgoDox :grin:) are very much welcome !
+Of course, your inputs, ideas and contributions are very much welcome !
 
 Don't hesitate to reach out on Twitter [@Invvard](https://twitter.com/invvard).
