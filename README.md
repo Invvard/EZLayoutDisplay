@@ -33,4 +33,4 @@ Right now, settings and customisation are a bit scarce but I've a lot of [ToDos 
 ## Contributors
 Of course, your inputs, ideas and contributions are very much welcome !
 
-Don't hesitate to reach out on Twitter [@Invvard](https://twitter.com/invvard).
+Don't hesitate to reach out either on the Reddit channel [r/EZLayoutDisplay/](https://www.reddit.com/r/EZLayoutDisplay/) or on Twitter [@Invvard](https://twitter.com/invvard).
