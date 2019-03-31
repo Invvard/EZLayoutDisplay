@@ -43,6 +43,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private string _noLayoutWarningSecondLine;
         private string _currentLayerNameTitle;
         private string _currentLayerName;
+        private string _controlHintLabel;
         private bool _noLayoutAvailable;
 
         #endregion
@@ -92,6 +93,15 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         {
             get => _currentLayerName;
             private set => Set(ref _currentLayerName, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the control hint label.
+        /// </summary>
+        public string ControlHintLabel
+        {
+            get => _controlHintLabel;
+            private set => Set(ref _controlHintLabel, value);
         }
 
         /// <summary>
@@ -166,6 +176,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             NoLayoutWarningSecondLine = "Please, go to the settings and update the layout.";
             CurrentLayerNameTitle = "Current layer :";
             CurrentLayerName = "";
+            ControlHintLabel = "Press 'Space' to display next layer";
         }
 
         private async void LoadCompleteLayout()
