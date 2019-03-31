@@ -280,8 +280,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             catch (ArgumentNullException anex)
             {
                 Logger.Error(anex);
-
-                throw;
+                _windowService.ShowWarning(anex.Message);
             }
             catch (ArgumentException aex)
             {

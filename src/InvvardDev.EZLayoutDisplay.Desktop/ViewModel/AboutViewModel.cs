@@ -1,6 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Linq;
 using System.Reflection;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
@@ -19,6 +17,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         private readonly IWindowService _windowService;
+        private readonly IProcessService _processService;
 
         private string _windowTitle;
         private string _appTitleLabel;
@@ -157,11 +156,12 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         #region Constructor
 
-        public AboutViewModel(IWindowService windowService)
+        public AboutViewModel(IWindowService windowService, IProcessService processService)
         {
             Logger.TraceConstructor();
 
             _windowService = windowService;
+            _processService = processService;
 
             _basedOnUrl = "https://configure.ergodox-ez.com/layouts/default/latest/0";
             _projectHomeUrl = "https://github.com/Invvard/EZLayoutDisplay";
@@ -210,19 +210,19 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private void NavigateBasedOnUrl()
         {
             Logger.TraceRelayCommand();
-            Process.Start(_basedOnUrl);
+            _processService.StartWebUrl(_basedOnUrl);
         }
 
         private void NavigateProjectHomeUrl()
         {
             Logger.TraceRelayCommand();
-            Process.Start(_projectHomeUrl);
+            _processService.StartWebUrl(_projectHomeUrl);
         }
 
         private void NavigateContactUrl()
         {
             Logger.TraceRelayCommand();
-            Process.Start(_contactUrl);
+            _processService.StartWebUrl(_contactUrl);
         }
 
         private void CloseAboutWindow()
