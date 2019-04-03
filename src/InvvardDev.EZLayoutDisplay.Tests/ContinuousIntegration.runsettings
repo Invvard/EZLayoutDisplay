@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <!-- Configurations for data collectors -->
+  <DataCollectionRunSettings>
+    <DataCollectors>
+      <DataCollector friendlyName="Code Coverage" uri="datacollector://Microsoft/CodeCoverage/2.0" assemblyQualifiedName="Microsoft.VisualStudio.Coverage.DynamicCoverageDataCollector, Microsoft.VisualStudio.TraceCollector, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+        <Configuration>
+          <CodeCoverage>
+            <ModulePaths>
+              <Exclude>
+                <ModulePath>.*galasoft.*</ModulePath>
+                <ModulePath>.*tests.*</ModulePath>
+                <ModulePath>.*moq.*</ModulePath>
+                <ModulePath>.*newtonsoft.*</ModulePath>
+              </Exclude>
+            </ModulePaths>
+
+            <Functions>
+              <Exclude>
+                <Function>.*\.Desktop\.App.*</Function>
+                <Function>.*\.Desktop\.Model.*</Function>
+                <Function>.*\.Desktop\.Properties.*</Function>
+                <Function>.*\.Desktop\.Service\.Design.*</Function>
+                <Function>.*\.Desktop\.Helper\.KeyContentTemplateSelector.*</Function>
+                <Function>.*\.Desktop\.Helper\.LoggerHelper.*</Function>
+                <Function>.*\.Desktop\.Service\.Implementation\.ApplicationService.*</Function>
+                <Function>.*\.Desktop\.Service\.Implementation\.KeyboardHookService.*</Function>
+                <Function>.*\.Desktop\.Service\.Implementation\.ProcessService.*</Function>
+                <Function>.*\.Desktop\.Service\.Implementation\.SettingsService.*</Function>
+                <Function>.*\.Desktop\.Service\.Implementation\.WindowService.*</Function>
+                <Function>.*\.Desktop\.Service\.Implementation\.LayoutService.*GetLayoutTemplate.*</Function>
+                <Function>.*\.Desktop\.Service\.Implementation\.LayoutService.*ReadLayoutDefinition.*</Function>
+                <Function>.*\.Desktop\.ViewModel\.DisplayLayoutViewModel\.LoadDesignTimeModel\(.*</Function>
+                <Function>.*\.Desktop\.ViewModel\.ViewModelLocator.*</Function>
+                <Function>.*\.Desktop\.View\..*</Function>
+              </Exclude>
+            </Functions>
+
+            <!-- We recommend you do not change the following values: -->
+            <UseVerifiableInstrumentation>True</UseVerifiableInstrumentation>
+            <AllowLowIntegrityProcesses>True</AllowLowIntegrityProcesses>
+            <CollectFromChildProcesses>True</CollectFromChildProcesses>
+            <CollectAspDotNet>False</CollectAspDotNet>
+
+          </CodeCoverage>
+        </Configuration>
+      </DataCollector>
+    </DataCollectors>
+  </DataCollectionRunSettings>
+
+</RunSettings>

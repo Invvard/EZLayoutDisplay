@@ -83,6 +83,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ContinuousIntegration.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>ContinuousIntegration.runsettings</DependentUpon>
+    </Compile>
     <Compile Include="Helper\EZLayoutMakerTest.cs" />
     <Compile Include="Model\KeyDefinitionDictionaryTest.cs" />
     <Compile Include="Service\LayoutServiceTest.cs" />
@@ -94,6 +99,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="ContinuousIntegration.runsettings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>ContinuousIntegration.Designer.cs</LastGenOutput>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
