@@ -1,5 +1,7 @@
 # EZ Layout Display
-[![Build Status](https://dev.azure.com/invvard/GitHub.InvvardDev.EZLayoutDisplay/_apis/build/status/EZLayoutDisplay%20Nightly?branchName=master)](https://dev.azure.com/invvard/GitHub.InvvardDev.EZLayoutDisplay/_build/latest?definitionId=14&branchName=master)
+[![Azure DevOps builds](https://img.shields.io/azure-devops/build/invvard/GitHub.InvvardDev.EZLayoutDisplay/14.svg)](https://dev.azure.com/invvard/GitHub.InvvardDev.EZLayoutDisplay/_build/latest?definitionId=14&branchName=master)
+
+![Coverage](https://img.shields.io/azure-devops/coverage/invvard/GitHub.InvvardDev.EZLayoutDisplay/14.svg?label=Coverage)]
 ## Presentation
 _EZ Layout Display_ is a Windows application for ErgoDox EZ enthusiasts and new comers, that displays your configured layout right from your desktop.
 
