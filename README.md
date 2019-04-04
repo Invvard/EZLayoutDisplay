@@ -1,7 +1,8 @@
 # EZ Layout Display
 [![Azure DevOps builds](https://img.shields.io/azure-devops/build/invvard/GitHub.InvvardDev.EZLayoutDisplay/14.svg?label=Build)](https://dev.azure.com/invvard/GitHub.InvvardDev.EZLayoutDisplay/_build/latest?definitionId=14&branchName=master) 
 ![Azure DevOps tests](https://img.shields.io/azure-devops/tests/invvard/GitHub.InvvardDev.EZLayoutDisplay/14.svg?label=Tests) 
-![Azure DevOps coverage](https://img.shields.io/azure-devops/coverage/invvard/GitHub.InvvardDev.EZLayoutDisplay/14.svg?label=Coverage) 
+![Azure DevOps coverage](https://img.shields.io/azure-devops/coverage/invvard/GitHub.InvvardDev.EZLayoutDisplay/14.svg?label=Coverage)
+![GitHub release](https://img.shields.io/github/release/invvard/ezlayoutdisplay.svg?label=Latest%20release)
 ![GitHub Releases](https://img.shields.io/github/downloads/invvard/ezlayoutdisplay/latest/total.svg?label=Latest%20downloads) 
 ![GitHub All Releases](https://img.shields.io/github/downloads/invvard/ezlayoutdisplay/total.svg?label=Total%20downloads)
 ## Presentation
