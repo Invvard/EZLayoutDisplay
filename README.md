@@ -1,9 +1,4 @@
 # EZ Layout Display
-
-### IT'S A BETA !
-I'm developing this app in my spare time and I've only tested it with my setup (Windows 10 Pro x64 + ErgoDox EZ Glow), so there will be bugs. Nothing catastrophic though : it's a .NET app so there's very little room to harm anything ;)
-And there's no interaction whatsoever with your peripheral devices, even with the ErgoDox.
-
 ## Presentation
 _EZ Layout Display_ is a Windows application for ErgoDox EZ enthusiasts and new comers, that displays your configured layout right from your desktop.
 
