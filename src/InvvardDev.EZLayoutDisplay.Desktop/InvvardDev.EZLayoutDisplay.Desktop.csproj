@@ -131,8 +131,6 @@
     <Compile Include="Model\EZKey.cs" />
     <Compile Include="Model\EZLayout.cs" />
     <Compile Include="Model\EZModifier.cs" />
-    <Compile Include="Model\KeyCategoryDetail.cs" />
-    <Compile Include="Model\Dictionary\KeyCategoryDictionary.cs" />
     <Compile Include="Model\Enum\KeyCategory.cs" />
     <Compile Include="Model\Dictionary\KeyDefinitionDictionary.cs" />
     <Compile Include="Model\Enum\SettingsName.cs" />
