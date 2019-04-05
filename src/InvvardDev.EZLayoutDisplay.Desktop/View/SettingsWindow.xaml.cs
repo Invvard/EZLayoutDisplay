@@ -1,6 +1,4 @@
-﻿using System.Windows;
-
-namespace InvvardDev.EZLayoutDisplay.Desktop.View
+﻿namespace InvvardDev.EZLayoutDisplay.Desktop.View
 {
     /// <summary>
     /// Interaction logic for SettingsWindow.xaml

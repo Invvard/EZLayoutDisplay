@@ -10,11 +10,12 @@ using NonInvasiveKeyboardHookLibrary;
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
 {
+    // ReSharper disable once ClassNeverInstantiated.Global
     public class KeyboardHookService : IKeyboardHookService
     {
         #region Fields
 
-        private bool disposed;
+        private bool _disposed;
         private static KeyboardHookManager _hook;
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
@@ -25,7 +26,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
 
         #region Properties
 
-        public static KeyboardHookManager Hook => _hook ?? (_hook = new KeyboardHookManager());
+        private static KeyboardHookManager Hook => _hook ?? (_hook = new KeyboardHookManager());
 
         #endregion
 
@@ -130,7 +131,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
 
         protected virtual void Dispose(bool disposing)
         {
-            if (disposed)
+            if (_disposed)
                 return;
 
             if (disposing)
@@ -139,7 +140,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
                 Hook.Stop();
             }
 
-            disposed = true;
+            _disposed = true;
         } 
 
         #endregion

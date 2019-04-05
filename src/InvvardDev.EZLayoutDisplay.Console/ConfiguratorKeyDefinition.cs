@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace InvvardDev.EZLayoutDisplay.Console
+﻿namespace InvvardDev.EZLayoutDisplay.Console
 {
     public class ConfiguratorKeyDefinition
     {

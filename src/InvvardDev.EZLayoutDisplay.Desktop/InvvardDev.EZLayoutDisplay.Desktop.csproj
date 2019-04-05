@@ -93,10 +93,8 @@
       <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
@@ -131,8 +129,6 @@
     <Compile Include="Model\EZKey.cs" />
     <Compile Include="Model\EZLayout.cs" />
     <Compile Include="Model\EZModifier.cs" />
-    <Compile Include="Model\KeyCategoryDetail.cs" />
-    <Compile Include="Model\Dictionary\KeyCategoryDictionary.cs" />
     <Compile Include="Model\Enum\KeyCategory.cs" />
     <Compile Include="Model\Dictionary\KeyDefinitionDictionary.cs" />
     <Compile Include="Model\Enum\SettingsName.cs" />
@@ -153,7 +149,6 @@
     <Compile Include="Service\Interface\IApplicationService.cs" />
     <Compile Include="Service\Interface\IKeyboardHookService.cs" />
     <Compile Include="Service\Interface\ILayoutService.cs" />
-    <Compile Include="Service\Interface\ILoggingService.cs" />
     <Compile Include="Service\Interface\IProcessService.cs" />
     <Compile Include="Service\Interface\ISettingsService.cs" />
     <Compile Include="Service\Interface\IWindowService.cs" />
