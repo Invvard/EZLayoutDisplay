@@ -42,7 +42,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop
             base.OnExit(e);
         }
 
-        protected void OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        private void OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
             Logger.Error(e.Exception, "Unhandled exception", sender);
             MessageBox.Show("Something went horribly wrong...\nBut I landed on my feet like a cat !\n\nCheck logs to get more details.",
