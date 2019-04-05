@@ -128,7 +128,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         public int CurrentLayerIndex
         {
             get => _currentLayerIndex;
-            set => Set(ref _currentLayerIndex, value);
+            private set => Set(ref _currentLayerIndex, value);
         }
 
         #endregion

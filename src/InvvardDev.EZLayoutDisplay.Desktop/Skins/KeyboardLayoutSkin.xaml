@@ -119,6 +119,7 @@
         </Setter>
     </Style>
 
+    <!-- ReSharper disable Xaml.BindingWithContextNotResolved -->
     <DataTemplate x:Key="SimpleLabelDataTemplate">
         <Canvas>
             <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource KeyBaseDataTemplate}" />
@@ -166,6 +167,7 @@
             </Grid>
         </Canvas>
     </DataTemplate>
+    <!-- ReSharper restore Xaml.BindingWithContextNotResolved -->
 
     <helper:KeyContentTemplateSelector x:Key="KeyContentTemplateSelector"
                                        SimpleLabelDataTemplate="{StaticResource SimpleLabelDataTemplate}"

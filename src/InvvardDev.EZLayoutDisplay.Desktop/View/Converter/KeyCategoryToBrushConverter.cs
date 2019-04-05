@@ -10,10 +10,10 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.View.Converter
     [ValueConversion(typeof(SolidColorBrush), typeof(KeyCategory))]
     public class KeyCategoryToBrushConverter : IValueConverter
     {
-        public SolidColorBrush DefaultBackgroundBrush { get; set; }
-        public SolidColorBrush DualFunctionBackgroundBrush { get; set; }
-        public SolidColorBrush ModifierBackgroundBrush { get; set; }
-        public SolidColorBrush ShineBackgroundBrush { get; set; }
+        public SolidColorBrush DefaultBackgroundBrush { private get; set; }
+        public SolidColorBrush DualFunctionBackgroundBrush { private get; set; }
+        public SolidColorBrush ModifierBackgroundBrush { private get; set; }
+        public SolidColorBrush ShineBackgroundBrush { private get; set; }
 
         public KeyCategoryToBrushConverter()
         {
