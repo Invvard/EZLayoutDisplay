@@ -39,7 +39,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
     {
         public string Content { get; set; }
 
-        public bool IsGlyph { get; set; }
+        public bool IsGlyph { get; }
 
         public KeyLabel(string content, bool isGlyph = false)
         {

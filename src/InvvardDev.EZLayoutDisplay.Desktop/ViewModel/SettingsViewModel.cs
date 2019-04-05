@@ -119,7 +119,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         public string HotkeyTitleLabel
         {
             get => _hotkeyTitleLabel;
-            set => Set(ref _hotkeyTitleLabel, value);
+            private set => Set(ref _hotkeyTitleLabel, value);
         }
 
         public string LayoutUrlContent
@@ -137,28 +137,28 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         public string AltModifierLabel
         {
             get => _altModifierLabel;
-            set => Set(ref _altModifierLabel, value);
+            private set => Set(ref _altModifierLabel, value);
         }
 
         public string CtrlModifierLabel
         {
             get => _ctrlModifierLabel;
-            set => Set(ref _ctrlModifierLabel, value);
+            private set => Set(ref _ctrlModifierLabel, value);
         }
 
         public string ShiftModifierLabel
         {
             get => _shiftModifierLabel;
-            set => Set(ref _shiftModifierLabel, value);
+            private set => Set(ref _shiftModifierLabel, value);
         }
 
         public string WindowsModifierLabel
         {
             get => _windowsModifierLabel;
-            set => Set(ref _windowsModifierLabel, value);
+            private set => Set(ref _windowsModifierLabel, value);
         }
 
-        public Hotkey HotkeyShowLayout
+        private Hotkey HotkeyShowLayout
         {
             get => _hotkeyDisplayLayout;
             set => Set(ref _hotkeyDisplayLayout, value);

@@ -8,8 +8,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.View.Converter
     [ ValueConversion(typeof(bool), typeof(Visibility)) ]
     public sealed class BoolToVisibilityConverter : IValueConverter
     {
-        public Visibility TrueValue { get; set; }
-        public Visibility FalseValue { get; set; }
+        public Visibility TrueValue { private get; set; }
+        public Visibility FalseValue { private get; set; }
 
         public BoolToVisibilityConverter()
         {
