@@ -151,7 +151,6 @@
     <Compile Include="Service\Interface\IApplicationService.cs" />
     <Compile Include="Service\Interface\IKeyboardHookService.cs" />
     <Compile Include="Service\Interface\ILayoutService.cs" />
-    <Compile Include="Service\Interface\ILoggingService.cs" />
     <Compile Include="Service\Interface\IProcessService.cs" />
     <Compile Include="Service\Interface\ISettingsService.cs" />
     <Compile Include="Service\Interface\IWindowService.cs" />
