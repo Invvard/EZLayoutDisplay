@@ -31,7 +31,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
             if (string.IsNullOrWhiteSpace(layoutHashId))
             {
                 Logger.Error("Layout {0} was not found", layoutHashId);
-                throw new ArgumentNullException(nameof(layoutHashId), $"Layout hash ID \"{layoutHashId}\" was not found.");
+                // ReSharper disable once LocalizableElement
+                throw new ArgumentNullException(nameof(layoutHashId), $"Layout hash ID '{layoutHashId}' was not found.");
             }
 
             DataRoot layout;
