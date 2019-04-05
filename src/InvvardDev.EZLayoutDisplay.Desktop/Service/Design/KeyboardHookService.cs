@@ -16,6 +16,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Design
             Dispose(true);
         }
 
+        // ReSharper disable once UnusedParameter.Global : DesignTime service implementation
         protected virtual void Dispose(bool disposing)
         {
             Debug.WriteLine("Disposing the Design.KeyboardHookService");
