@@ -8,9 +8,9 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
 {
     public class KeyContentTemplateSelector : DataTemplateSelector
     {
-        public DataTemplate SimpleLabelDataTemplate { get; set; }
-        public DataTemplate ModifierOnTopDataTemplate { get; set; }
-        public DataTemplate ModifierUnderDataTemplate { get; set; }
+        public DataTemplate SimpleLabelDataTemplate { private get; set; }
+        public DataTemplate ModifierOnTopDataTemplate { private get; set; }
+        public DataTemplate ModifierUnderDataTemplate { private get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {

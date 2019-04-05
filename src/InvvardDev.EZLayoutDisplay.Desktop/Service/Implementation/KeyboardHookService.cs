@@ -10,6 +10,7 @@ using NonInvasiveKeyboardHookLibrary;
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
 {
+    // ReSharper disable once ClassNeverInstantiated.Global
     public class KeyboardHookService : IKeyboardHookService
     {
         #region Fields
@@ -25,7 +26,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
 
         #region Properties
 
-        public static KeyboardHookManager Hook => _hook ?? (_hook = new KeyboardHookManager());
+        private static KeyboardHookManager Hook => _hook ?? (_hook = new KeyboardHookManager());
 
         #endregion
 
