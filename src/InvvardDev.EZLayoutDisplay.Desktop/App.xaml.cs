@@ -16,6 +16,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private Mutex _mutex;
+        private bool _mutexOwned;
 
         public App()
         {
@@ -32,7 +33,10 @@ namespace InvvardDev.EZLayoutDisplay.Desktop
 
         protected override void OnExit(ExitEventArgs e)
         {
-            _mutex?.ReleaseMutex();
+            if (_mutexOwned)
+            {
+                _mutex?.ReleaseMutex();
+            }
             _mutex = null;
 
             base.OnExit(e);
@@ -51,9 +55,9 @@ namespace InvvardDev.EZLayoutDisplay.Desktop
 
         private void EnforceSingleInstance()
         {
-            _mutex = new Mutex(true, "{InvvardDev.EZLayoutDisplay.Desktop-7F8CC1C9-0D4B-4F75-828A-0F2F29925C06}", out var singleInstance);
+            _mutex = new Mutex(true, "{InvvardDev.EZLayoutDisplay.Desktop-7F8CC1C9-0D4B-4F75-828A-0F2F29925C06}", out _mutexOwned);
 
-            if (singleInstance) return;
+            if (_mutexOwned) return;
 
             MessageBox.Show("EZ Layout Display is already running :)");
 
