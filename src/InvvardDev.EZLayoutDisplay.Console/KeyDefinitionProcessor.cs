@@ -314,7 +314,7 @@ namespace InvvardDev.EZLayoutDisplay.Console
 
                     break;
                 case "DE_SQ2":
-                    label = "German \\u00B2";
+                    label = "\\u00B2";
 
                     break;
                 case "FR_EACU":
@@ -338,23 +338,23 @@ namespace InvvardDev.EZLayoutDisplay.Console
 
                     break;
                 case "DE_SS":
-                    label = "German \\u00DF";
+                    label = "\\u00DF";
 
                     break;
                 case "DE_AE":
-                    label = "German \\u00C6";
+                    label = "\\u00C6";
 
                     break;
                 case "DE_UE":
-                    label = "German \\u00DC";
+                    label = "\\u00DC";
 
                     break;
                 case "DE_OE":
-                    label = "German \\u00D6";
+                    label = "\\u00D6";
 
                     break;
                 case "DE_CIRC":
-                    label = "German \\u005E";
+                    label = "\\u005E";
 
                     break;
                 case "NO_HALF":
@@ -395,7 +395,7 @@ namespace InvvardDev.EZLayoutDisplay.Console
 
                     break;
                 case "DE_RING":
-                    label = "German \\u00B0";
+                    label = "\\u00B0";
 
                     break;
                 case "FR_UMLT":
@@ -415,11 +415,11 @@ namespace InvvardDev.EZLayoutDisplay.Console
 
                     break;
                 case "DE_PARA":
-                    label = "German \\u00A7";
+                    label = "\\u00A7";
 
                     break;
                 case "DE_EURO":
-                    label = "German \\u20AC";
+                    label = "\\u20AC";
 
                     break;
                 case "FR_EURO":
@@ -432,7 +432,7 @@ namespace InvvardDev.EZLayoutDisplay.Console
 
                     break;
                 case "DE_ACUT":
-                    label = "German \\u00B4";
+                    label = "\\u00B4";
 
                     break;
                 case "ES_ACUT":
@@ -440,7 +440,7 @@ namespace InvvardDev.EZLayoutDisplay.Console
 
                     break;
                 case "DE_SQ3":
-                    label = "German \\u00B3";
+                    label = "\\u00B3";
 
                     break;
                 case "NO_LCBR":
