@@ -342,7 +342,7 @@ namespace InvvardDev.EZLayoutDisplay.Console
 
                     break;
                 case "DE_AE":
-                    label = "\\u00C6";
+                    label = "\\u00C4";
 
                     break;
                 case "DE_UE":
@@ -354,7 +354,7 @@ namespace InvvardDev.EZLayoutDisplay.Console
 
                     break;
                 case "DE_CIRC":
-                    label = "\\u005E";
+                    label = "\\u005E\\u00B0";
 
                     break;
                 case "NO_HALF":
@@ -432,7 +432,7 @@ namespace InvvardDev.EZLayoutDisplay.Console
 
                     break;
                 case "DE_ACUT":
-                    label = "\\u00B4";
+                    label = "\\u00B4\\u0060";
 
                     break;
                 case "ES_ACUT":
