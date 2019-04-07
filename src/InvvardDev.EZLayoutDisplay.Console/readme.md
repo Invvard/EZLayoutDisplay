@@ -1,4 +1,4 @@
-# How-to
+# How-to update key definitions
 ## Javascript definition to JSON
 - Open a tab in your prefered browser and go to https://playcode.io/259701?tabs=console&script.js&output
   (or open [KeyDefinitionsJSProcessor.js](https://github.com/Invvard/EZLayoutDisplay/blob/master/resources/Scripts/KeyDefinitionsJSProcessor.js) in an environment where you can run it),
