@@ -154,7 +154,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
         [ InlineData("KC_AT", "@", KeyCategory.ShiftedPunct) ]
         [ InlineData("KC_SYSTEM_POWER", "Power", KeyCategory.System) ]
         [ InlineData("FR_AMP", "&", KeyCategory.French) ]
-        [ InlineData("NO_LESS", "<", KeyCategory.German) ]
+        [ InlineData("NO_LESS", "<", KeyCategory.Nordic) ]
         [ InlineData("ES_PLUS", "+", KeyCategory.Spanish) ]
         public void PrepareEZLayout_KeyCategoryWithSimpleLabel(string keyCode, string expectedLabel, KeyCategory expectedCategory)
         {
