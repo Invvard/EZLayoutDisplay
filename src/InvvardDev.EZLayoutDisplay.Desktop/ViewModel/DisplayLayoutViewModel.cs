@@ -46,7 +46,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private EZLayout _ezLayout;
 
         private int _windowHeight;
-        private ResizeMode _windowResizeMode;
+        private WindowStyle _windowStyle;
 
         private string _windowTitle;
         private string _noLayoutWarningFirstLine;
@@ -151,12 +151,12 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         }
 
         /// <summary>
-        /// Gets or sets the window's resize mode.
+        /// Gets or sets the window' style.
         /// </summary>
-        public ResizeMode WindowResizeMode
+        public WindowStyle WindowStyle
         {
-            get => _windowResizeMode;
-            private set => Set(ref _windowResizeMode, value);
+            get => _windowStyle;
+            private set => Set(ref _windowStyle, value);
         }
 
         #endregion
@@ -210,7 +210,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         private void SetWindowParameters()
         {
-            WindowResizeMode = ResizeMode.NoResize;
+            WindowStyle = WindowStyle.None;
             WindowHeight = NonResizableWindowHeight;
         }
 

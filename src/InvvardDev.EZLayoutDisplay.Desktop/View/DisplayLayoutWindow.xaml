@@ -8,7 +8,7 @@
     x:Class="InvvardDev.EZLayoutDisplay.Desktop.View.DisplayLayoutWindow"
     mc:Ignorable="d" Height="{Binding WindowHeight}" Width="1075"
     WindowStartupLocation="CenterScreen"
-    ResizeMode="{Binding WindowResizeMode}" Visibility="Visible" ShowInTaskbar="True"
+    ResizeMode="NoResize" Visibility="Visible" ShowInTaskbar="True"
     WindowStyle="None" Background="{StaticResource WindowBackgroundBrush}"
     Title="{Binding WindowTitle}" Icon="{StaticResource WindowIcon}"
     DataContext="{Binding DisplayLayout, Source={StaticResource Locator}}">
