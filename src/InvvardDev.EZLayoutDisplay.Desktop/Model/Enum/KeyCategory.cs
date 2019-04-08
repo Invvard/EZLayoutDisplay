@@ -19,6 +19,7 @@
         French,
         German,
         Spanish,
+        Nordic,
         NumPad,
         Other,
         Punct,

@@ -158,6 +158,10 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
                     key.InternationalHint = "es";
 
                     break;
+                case KeyCategory.Nordic:
+                    key.InternationalHint = "no";
+
+                    break;
             }
 
             ProcessModifiers(ergodoxKey, key);
