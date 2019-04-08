@@ -6,7 +6,7 @@
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:command="http://www.galasoft.ch/mvvmlight"
     x:Class="InvvardDev.EZLayoutDisplay.Desktop.View.DisplayLayoutWindow"
-    mc:Ignorable="d" Height="423" Width="1075"
+    mc:Ignorable="d" Height="{Binding WindowHeight}" Width="1075"
     WindowStartupLocation="CenterScreen"
     ResizeMode="NoResize" Visibility="Visible" ShowInTaskbar="True"
     WindowStyle="None" Background="{StaticResource WindowBackgroundBrush}"
