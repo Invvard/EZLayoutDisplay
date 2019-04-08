@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
@@ -22,6 +23,12 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 {
     public class DisplayLayoutViewModel : ViewModelBase
     {
+        #region Constants
+
+        private const int NonResizableWindowHeight = 423;
+        private const int ResizableWindowHeight = 423;
+
+        #endregion
         #region Fields
 
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
@@ -37,6 +44,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private ObservableCollection<KeyTemplate> _currentLayoutTemplate;
         private int _currentLayerIndex;
         private EZLayout _ezLayout;
+
+        private int _windowHeight;
 
         private string _windowTitle;
         private string _noLayoutWarningFirstLine;
@@ -131,6 +140,15 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             private set => Set(ref _currentLayerIndex, value);
         }
 
+        /// <summary>
+        /// Gets or sets the window's height.
+        /// </summary>
+        public int WindowHeight
+        {
+            get => _windowHeight;
+            private set => Set(ref _windowHeight, value);
+        }
+
         #endregion
 
         #region Relay commands
@@ -164,6 +182,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             CurrentLayoutTemplate = new ObservableCollection<KeyTemplate>();
 
             SetLabelUi();
+            SetWindowParameters();
             LoadCompleteLayout();
         }
 
@@ -177,6 +196,11 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             CurrentLayerNameTitle = "Current layer :";
             CurrentLayerName = "";
             ControlHintLabel = "Press 'Space' to display next layer";
+        }
+
+        private void SetWindowParameters()
+        {
+            WindowHeight = NonResizableWindowHeight;
         }
 
         private async void LoadCompleteLayout()
