@@ -51,7 +51,7 @@
 
         <StackPanel Style="{StaticResource SpControlHintStyle}"
             Visibility="{Binding NoLayoutAvailable, Converter={StaticResource BoolToVisibleConverter}}">
-            <ToggleButton Height="32" Margin="0 0 0 5" Content="Pin window" Style="{StaticResource ToggleButtonPinWindowStyle}"/>
+            <ToggleButton Content="Pin window" Style="{StaticResource ToggleButtonPinWindowStyle}"/>
             <TextBlock Text="{Binding ControlHintLabel}" Style="{StaticResource TbControlHintStyle}" />
         </StackPanel>
 
