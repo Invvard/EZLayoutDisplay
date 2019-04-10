@@ -37,7 +37,7 @@
             <SolidColorBrush x:Key="Button.Disabled.Background" Color="#FFF4F4F4"/>
             <SolidColorBrush x:Key="Button.Disabled.Border" Color="#FFADB2B5"/>
             <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383"/>
-            <Style x:Key="ToggleButtonStyle1" TargetType="{x:Type ToggleButton}">
+            <Style x:Key="ToggleButtonPinWindowStyle" TargetType="{x:Type ToggleButton}">
                 <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
                 <Setter Property="Background" Value="{StaticResource Button.Static.Background}"/>
                 <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border}"/>
@@ -59,10 +59,6 @@
                                 <Trigger Property="Button.IsDefaulted" Value="true">
                                     <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
                                     <Setter Property="Source" TargetName="toggleIcon" Value="/InvvardDev.EZLayoutDisplay.Desktop;component/Skins/Images/pin.png"/>
-                                </Trigger>
-                                <Trigger Property="IsPressed" Value="true">
-                                    <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Pressed.Background}"/>
-                                    <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Pressed.Border}"/>
                                 </Trigger>
                                 <Trigger Property="IsChecked" Value="False">
                                     <Setter Property="Source" TargetName="toggleIcon" Value="/InvvardDev.EZLayoutDisplay.Desktop;component/Skins/Images/pin.png"/>
@@ -119,7 +115,7 @@
 
         <StackPanel Style="{StaticResource SpControlHintStyle}"
             Visibility="{Binding NoLayoutAvailable, Converter={StaticResource BoolToVisibleConverter}}">
-            <ToggleButton Height="32" VerticalContentAlignment="Center" Content="Pin window" Style="{DynamicResource ToggleButtonStyle1}"/>
+            <ToggleButton Height="32" Content="Pin window" Style="{DynamicResource ToggleButtonPinWindowStyle}"/>
             <TextBlock Text="{Binding ControlHintLabel}" Style="{StaticResource TbControlHintStyle}" />
         </StackPanel>
 
