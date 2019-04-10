@@ -26,7 +26,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         #region Constants
 
         private const int NonResizableWindowHeight = 423;
-        private const int ResizableWindowHeight = 423;
+        private const int ResizableWindowHeight = 453;
 
         #endregion
         #region Fields
