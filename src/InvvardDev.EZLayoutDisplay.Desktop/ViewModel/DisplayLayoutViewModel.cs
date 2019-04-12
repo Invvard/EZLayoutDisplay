@@ -29,6 +29,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private const int ResizableWindowHeight = 453;
 
         #endregion
+
         #region Fields
 
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
@@ -39,6 +40,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         private ICommand _lostFocusCommand;
         private ICommand _nextLayerCommand;
+        private ICommand _togglePinWindowCommand;
 
         private List<List<KeyTemplate>> _layoutTemplates;
         private ObservableCollection<KeyTemplate> _currentLayoutTemplate;
@@ -176,6 +178,13 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         public ICommand NextLayerCommand =>
             _nextLayerCommand
             ?? (_nextLayerCommand = new RelayCommand(NextLayer, NextLayerCanExecute));
+
+        /// <summary>
+        /// Next layer command.
+        /// </summary>
+        public ICommand TogglePinWindowCommand =>
+            _togglePinWindowCommand
+            ?? (_togglePinWindowCommand = new RelayCommand(TogglePinWindow));
 
         #endregion
 
@@ -370,6 +379,11 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             var canExecute = _layoutTemplates.Any();
 
             return canExecute;
+        }
+
+        private void TogglePinWindow()
+        {
+            
         }
 
         #endregion
