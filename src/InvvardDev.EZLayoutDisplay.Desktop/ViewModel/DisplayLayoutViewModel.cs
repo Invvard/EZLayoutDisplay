@@ -49,6 +49,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         private int _windowHeight;
         private WindowStyle _windowStyle;
+        private bool _isWindowPinned;
 
         private string _windowTitle;
         private string _noLayoutWarningFirstLine;
@@ -161,6 +162,15 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             private set => Set(ref _windowStyle, value);
         }
 
+        /// <summary>
+        /// Gets or sets the pinned status.
+        /// </summary>
+        public bool IsWindowPinned
+        {
+            get => _isWindowPinned;
+            private set => Set(ref _isWindowPinned, value);
+        }
+
         #endregion
 
         #region Relay commands
@@ -221,6 +231,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         {
             WindowStyle = WindowStyle.None;
             WindowHeight = NonResizableWindowHeight;
+            IsWindowPinned = false;
         }
 
         private async void LoadCompleteLayout()
@@ -383,7 +394,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         private void TogglePinWindow()
         {
-            
+            IsWindowPinned = !IsWindowPinned;
         }
 
         #endregion
