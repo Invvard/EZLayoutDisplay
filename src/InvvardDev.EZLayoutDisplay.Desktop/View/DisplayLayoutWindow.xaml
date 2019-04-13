@@ -4,10 +4,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-    xmlns:command="http://www.galasoft.ch/mvvmlight"
+    xmlns:command="http://www.galasoft.ch/mvvmlight" mc:Ignorable="d"
     x:Class="InvvardDev.EZLayoutDisplay.Desktop.View.DisplayLayoutWindow"
     DataContext="{Binding DisplayLayout, Source={StaticResource Locator}}"
-    mc:Ignorable="d" Height="{Binding WindowHeight}" Width="1075"
+    Height="Auto" Width="Auto" SizeToContent="WidthAndHeight"
     WindowStartupLocation="CenterScreen"
     ResizeMode="NoResize" Visibility="Visible" ShowInTaskbar="True"
     WindowStyle="{Binding WindowStyle}" Background="{StaticResource WindowBackgroundBrush}"
@@ -32,7 +32,7 @@
         <KeyBinding Key="Space" Command="{Binding NextLayerCommand, Mode=OneWay}" />
     </Window.InputBindings>
 
-    <Grid>
+    <Grid Width="1075" Height="{Binding WindowHeight}">
         <ItemsControl ItemsSource="{Binding CurrentLayoutTemplate}"
                       ItemTemplateSelector="{StaticResource KeyContentTemplateSelector}"
                       Visibility="{Binding NoLayoutAvailable, Converter={StaticResource BoolToVisibleConverter}}">
@@ -51,7 +51,7 @@
 
         <StackPanel Style="{StaticResource SpControlHintStyle}"
             Visibility="{Binding NoLayoutAvailable, Converter={StaticResource BoolToVisibleConverter}}">
-            <ToggleButton Content="Pin window" IsChecked="{Binding IsWindowPinned}" Style="{StaticResource ToggleButtonPinWindowStyle}" Command="{Binding TogglePinWindowCommand}" />
+            <ToggleButton Content="Pin window" IsChecked="{Binding IsWindowPinned, Mode=OneWay}" Style="{StaticResource ToggleButtonPinWindowStyle}" Command="{Binding TogglePinWindowCommand}" />
             <TextBlock Text="{Binding ControlHintLabel}" Style="{StaticResource TbControlHintStyle}" />
         </StackPanel>
 
