@@ -47,7 +47,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private string _noLayoutWarningSecondLine;
         private string _currentLayerNameTitle;
         private string _currentLayerName;
-        private string _controlHintLabel;
+        private string _controlHintSpaceLabel;
+        private string _controlHintEscapeLabel;
         private bool _noLayoutAvailable;
 
         #endregion
@@ -100,12 +101,21 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         }
 
         /// <summary>
-        /// Gets or sets the control hint label.
+        /// Gets or sets the control hint label for the Space bar.
         /// </summary>
-        public string ControlHintLabel
+        public string ControlHintSpaceLabel
         {
-            get => _controlHintLabel;
-            private set => Set(ref _controlHintLabel, value);
+            get => _controlHintSpaceLabel;
+            private set => Set(ref _controlHintSpaceLabel, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the control hint label for the Space bar.
+        /// </summary>
+        public string ControlHintEscapeLabel
+        {
+            get => _controlHintEscapeLabel;
+            private set => Set(ref _controlHintEscapeLabel, value);
         }
 
         /// <summary>
@@ -204,7 +214,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             NoLayoutWarningSecondLine = "Please, go to the settings and update the layout.";
             CurrentLayerNameTitle = "Current layer :";
             CurrentLayerName = "";
-            ControlHintLabel = "Press 'Space' to display next layer";
+            ControlHintSpaceLabel = "Press 'Space' to display next layer";
+            ControlHintEscapeLabel = "Press 'Escape' to hide window";
         }
 
         private void SetWindowParameters()

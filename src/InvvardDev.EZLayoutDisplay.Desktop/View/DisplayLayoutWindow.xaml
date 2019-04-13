@@ -53,7 +53,8 @@
             Visibility="{Binding NoLayoutAvailable, Converter={StaticResource BoolToVisibleConverter}}">
             <ToggleButton x:Name="ToggleWindowPin" Content="_Pin window" Command="{Binding TogglePinWindowCommand}"
                           Focusable="False" IsChecked="{Binding IsWindowPinned}" Style="{StaticResource ToggleButtonPinWindowStyle}" />
-            <TextBlock Text="{Binding ControlHintLabel}" Style="{StaticResource TbControlHintStyle}" />
+            <TextBlock Text="{Binding ControlHintEscapeLabel}" Style="{StaticResource TbControlHintStyle}" />
+            <TextBlock Text="{Binding ControlHintSpaceLabel}" Style="{StaticResource TbControlHintStyle}" /> 
         </StackPanel>
 
         <Grid Visibility="{Binding NoLayoutAvailable, Converter={StaticResource BoolToHiddenConverter}}" Width="350">
