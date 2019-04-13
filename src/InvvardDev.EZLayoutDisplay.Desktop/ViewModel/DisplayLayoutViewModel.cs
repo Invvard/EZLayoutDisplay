@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
@@ -23,13 +22,6 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 {
     public class DisplayLayoutViewModel : ViewModelBase
     {
-        #region Constants
-
-        private const int NonResizableWindowHeight = 423;
-        private const int ResizableWindowHeight = 423;
-
-        #endregion
-
         #region Fields
 
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
@@ -47,8 +39,6 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private int _currentLayerIndex;
         private EZLayout _ezLayout;
 
-        private int _windowHeight;
-        private WindowStyle _windowStyle;
         private bool _isWindowPinned;
 
         private string _windowTitle;
@@ -145,34 +135,12 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         }
 
         /// <summary>
-        /// Gets or sets the window's height.
-        /// </summary>
-        public int WindowHeight
-        {
-            get => _windowHeight;
-            private set
-            {
-                _windowHeight = value;
-                RaisePropertyChanged(() => WindowHeight);
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the window' style.
-        /// </summary>
-        public WindowStyle WindowStyle
-        {
-            get => _windowStyle;
-            private set => Set(ref _windowStyle, value);
-        }
-
-        /// <summary>
         /// Gets or sets the pinned status.
         /// </summary>
         public bool IsWindowPinned
         {
             get => _isWindowPinned;
-            private set => Set(ref _isWindowPinned, value);
+            set => Set(ref _isWindowPinned, value);
         }
 
         #endregion
@@ -184,7 +152,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         /// </summary>
         public ICommand LostFocusCommand =>
             _lostFocusCommand
-            ?? (_lostFocusCommand = new RelayCommand(LostFocus));
+            ?? (_lostFocusCommand = new RelayCommand(LostFocus, LostFocusCanExecute));
 
         /// <summary>
         /// Next layer command.
@@ -234,7 +202,6 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private void SetWindowParameters()
         {
             IsWindowPinned = false;
-            ConfigureWindow(NonResizableWindowHeight);
         }
 
         private async void LoadCompleteLayout()
@@ -353,11 +320,6 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             CurrentLayerName = $"{_ezLayout.EZLayers[CurrentLayerIndex].Name} {_ezLayout.EZLayers[CurrentLayerIndex].Index}";
         }
 
-        private void ConfigureWindow(int windowHeight)
-        {
-            WindowHeight = windowHeight;
-        }
-
         #region Delegates
 
         private void LoadCompleteLayout(UpdatedLayoutMessage obj)
@@ -400,18 +362,16 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             return canExecute;
         }
 
+        private bool LostFocusCanExecute()
+        {
+            var canExecute = !IsWindowPinned;
+
+            return canExecute;
+        }
+
         private void TogglePinWindow()
         {
-            IsWindowPinned = !IsWindowPinned;
-
-            if (IsWindowPinned)
-            {
-                ConfigureWindow(ResizableWindowHeight);
-            }
-            else
-            {
-                ConfigureWindow(ResizableWindowHeight);
-            }
+            
         }
 
         #endregion
