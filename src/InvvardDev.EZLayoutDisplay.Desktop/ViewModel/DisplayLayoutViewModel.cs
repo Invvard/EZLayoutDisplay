@@ -33,7 +33,6 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private ICommand _lostFocusCommand;
         private ICommand _hideWindowCommand;
         private ICommand _nextLayerCommand;
-        private ICommand _togglePinWindowCommand;
 
         private List<List<KeyTemplate>> _layoutTemplates;
         private ObservableCollection<KeyTemplate> _currentLayoutTemplate;
@@ -49,6 +48,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private string _currentLayerName;
         private string _controlHintSpaceLabel;
         private string _controlHintEscapeLabel;
+        private string _toggleBtnPinWindowContent;
+        private string _toggleBtnPinWindowTooltip;
         private bool _noLayoutAvailable;
 
         #endregion
@@ -119,6 +120,24 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         }
 
         /// <summary>
+        /// Gets or sets the Pin window toggle button label.
+        /// </summary>
+        public string ToggleBtnPinWindowContent
+        {
+            get => _toggleBtnPinWindowContent;
+            private set => Set(ref _toggleBtnPinWindowContent, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the Pin window toggle button label.
+        /// </summary>
+        public string ToggleBtnPinWindowTooltip
+        {
+            get => _toggleBtnPinWindowTooltip;
+            private set => Set(ref _toggleBtnPinWindowTooltip, value);
+        }
+
+        /// <summary>
         /// Gets or sets the no layout available indicator.
         /// </summary>
         public bool NoLayoutAvailable
@@ -179,13 +198,6 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             _nextLayerCommand
             ?? (_nextLayerCommand = new RelayCommand(NextLayer, NextLayerCanExecute));
 
-        /// <summary>
-        /// Next layer command.
-        /// </summary>
-        public ICommand TogglePinWindowCommand =>
-            _togglePinWindowCommand
-            ?? (_togglePinWindowCommand = new RelayCommand(TogglePinWindow));
-
         #endregion
 
         public DisplayLayoutViewModel(IWindowService windowService, ILayoutService layoutService, ISettingsService settingsService)
@@ -216,6 +228,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             CurrentLayerName = "";
             ControlHintSpaceLabel = "Press 'Space' to display next layer";
             ControlHintEscapeLabel = "Press 'Escape' to hide window";
+            ToggleBtnPinWindowContent = "_Pin window";
+            ToggleBtnPinWindowTooltip = "Press 'P' to toggle";
         }
 
         private void SetWindowParameters()
@@ -386,11 +400,6 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             var canExecute = !IsWindowPinned;
 
             return canExecute;
-        }
-
-        private void TogglePinWindow()
-        {
-            
         }
 
         #endregion
