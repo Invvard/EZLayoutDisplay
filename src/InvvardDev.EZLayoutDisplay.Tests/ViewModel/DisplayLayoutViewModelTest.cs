@@ -18,18 +18,10 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             var mockLayoutService = new Mock<ILayoutService>();
             var mockSettingsService = new Mock<ISettingsService>();
             mockSettingsService.SetupProperty(s => s.EZLayout,
-                                              new EZLayout {
-                                                               EZLayers = new List<EZLayer> {
-                                                                                                new EZLayer {
-                                                                                                                EZKeys = new List<EZKey> {
-                                                                                                                                             new EZKey {
-                                                                                                                                                           Label = new KeyLabel("A"),
-                                                                                                                                                           Modifier = new KeyLabel("a")
-                                                                                                                                                       }
-                                                                                                                                         }
-                                                                                                            }
-                                                                                            }
-                                                           });
+                                              new EZLayout
+                                              {
+                                                  EZLayers = new List<EZLayer> { new EZLayer { EZKeys = new List<EZKey> { new EZKey { Label = new KeyLabel("A"), Modifier = new KeyLabel("a") } } } }
+                                              });
 
             //Act
             var displayLayoutViewModel = new DisplayLayoutViewModel(mockWindowService.Object, mockLayoutService.Object, mockSettingsService.Object);
@@ -40,11 +32,14 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             Assert.Equal("Please, go to the settings and update the layout.", displayLayoutViewModel.NoLayoutWarningSecondLine);
             Assert.Equal("Current layer :", displayLayoutViewModel.CurrentLayerNameTitle);
             Assert.Equal("", displayLayoutViewModel.CurrentLayerName);
-            Assert.Equal("Press 'Space' to display next layer", displayLayoutViewModel.ControlHintLabel);
+            Assert.Equal("Press 'Space' to display next layer", displayLayoutViewModel.ControlHintSpaceLabel);
+            Assert.Equal("Press 'Escape' to hide window", displayLayoutViewModel.ControlHintEscapeLabel);
+            Assert.Equal("_Pin window", displayLayoutViewModel.ToggleBtnPinWindowContent);
+            Assert.Equal("Press 'P' to toggle", displayLayoutViewModel.ToggleBtnPinWindowTooltip);
         }
 
         [ Fact ]
-        public void LostFocusCommandExecute()
+        public void LostFocusCommand_Execute()
         {
             //Arrange
             var mockWindowService = new Mock<IWindowService>();
@@ -61,6 +56,50 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
         }
 
         [ Theory ]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void LostFocusCommand_CanExecute(bool isPinned)
+        {
+            //Arrange
+            var mockWindowService = new Mock<IWindowService>();
+            mockWindowService.Setup(w => w.CloseWindow<DisplayLayoutWindow>()).Verifiable();
+            var mockLayoutService = new Mock<ILayoutService>();
+            var mockSettingsService = new Mock<ISettingsService>();
+
+            //Act
+            var displayLayoutViewModel = new DisplayLayoutViewModel(mockWindowService.Object, mockLayoutService.Object, mockSettingsService.Object);
+            displayLayoutViewModel.IsWindowPinned = isPinned;
+            displayLayoutViewModel.LostFocusCommand.Execute(null);
+
+            //Assert
+            if (isPinned)
+            {
+                mockWindowService.Verify(w => w.CloseWindow<DisplayLayoutWindow>(), Times.Never);
+            }
+            else
+            {
+                mockWindowService.Verify(w => w.CloseWindow<DisplayLayoutWindow>(), Times.Once);
+            }
+        }
+
+        [Fact]
+        public void HideWindowCommand_Execute()
+        {
+            //Arrange
+            var mockLayoutService = new Mock<ILayoutService>();
+            var mockWindowService = new Mock<IWindowService>();
+            mockWindowService.Setup(w => w.CloseWindow<DisplayLayoutWindow>()).Verifiable();
+            var mockSettingsService = new Mock<ISettingsService>();
+
+            //Act
+            var displayLayoutViewModel = new DisplayLayoutViewModel(mockWindowService.Object, mockLayoutService.Object, mockSettingsService.Object);
+            displayLayoutViewModel.HideWindowCommand.Execute(null);
+
+            //Assert
+            mockWindowService.Verify(w => w.CloseWindow<DisplayLayoutWindow>(), Times.Once);
+        }
+
+        [Theory ]
         [ InlineData(0, 1, true) ]
         [ InlineData(1, 2, false) ]
         [ InlineData(76, 2, false) ]
@@ -80,10 +119,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
 
             for (int i = 0 ; i < numberOfLayer ; i++)
             {
-                keyboardLayout.EZLayers.Add(new EZLayer {
-                                                            Index = i,
-                                                            EZKeys = new List<EZKey>(ezKeys)
-                                                        });
+                keyboardLayout.EZLayers.Add(new EZLayer { Index = i, EZKeys = new List<EZKey>(ezKeys) });
             }
 
             var mockWindowService = new Mock<IWindowService>();
@@ -111,12 +147,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
 
             for (int i = 0 ; i < layerNumber ; i++)
             {
-                keyboardLayout.EZLayers.Add(new EZLayer {
-                                                            Index = i,
-                                                            EZKeys = new List<EZKey> {
-                                                                                         new EZKey()
-                                                                                     }
-                                                        });
+                keyboardLayout.EZLayers.Add(new EZLayer { Index = i, EZKeys = new List<EZKey> { new EZKey() } });
             }
 
             var layoutTemplate = new List<KeyTemplate>();
@@ -157,12 +188,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
 
             for (int i = 0 ; i < layerNumber ; i++)
             {
-                keyboardLayout.EZLayers.Add(new EZLayer {
-                                                            Index = i,
-                                                            EZKeys = new List<EZKey> {
-                                                                                         new EZKey()
-                                                                                     }
-                                                        });
+                keyboardLayout.EZLayers.Add(new EZLayer { Index = i, EZKeys = new List<EZKey> { new EZKey() } });
             }
 
             var layoutTemplate = new List<KeyTemplate>();
@@ -198,9 +224,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             var mockWindowService = new Mock<IWindowService>();
             var mockSettingsService = new Mock<ISettingsService>();
             mockSettingsService.SetupProperty(s => s.EZLayout,
-                                              new EZLayout {
-                                                               EZLayers = new List<EZLayer>()
-                                                           });
+                                              new EZLayout { EZLayers = new List<EZLayer>() });
 
             // Act
             var displayLayoutViewModel = new DisplayLayoutViewModel(mockWindowService.Object, mockLayoutService.Object, mockSettingsService.Object);

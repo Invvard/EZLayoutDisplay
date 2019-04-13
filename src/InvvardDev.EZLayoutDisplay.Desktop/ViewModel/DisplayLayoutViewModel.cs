@@ -31,6 +31,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private readonly ISettingsService _settingsService;
 
         private ICommand _lostFocusCommand;
+        private ICommand _hideWindowCommand;
         private ICommand _nextLayerCommand;
 
         private List<List<KeyTemplate>> _layoutTemplates;
@@ -38,12 +39,17 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private int _currentLayerIndex;
         private EZLayout _ezLayout;
 
+        private bool _isWindowPinned;
+
         private string _windowTitle;
         private string _noLayoutWarningFirstLine;
         private string _noLayoutWarningSecondLine;
         private string _currentLayerNameTitle;
         private string _currentLayerName;
-        private string _controlHintLabel;
+        private string _controlHintSpaceLabel;
+        private string _controlHintEscapeLabel;
+        private string _toggleBtnPinWindowContent;
+        private string _toggleBtnPinWindowTooltip;
         private bool _noLayoutAvailable;
 
         #endregion
@@ -96,12 +102,39 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         }
 
         /// <summary>
-        /// Gets or sets the control hint label.
+        /// Gets or sets the control hint label for the Space bar.
         /// </summary>
-        public string ControlHintLabel
+        public string ControlHintSpaceLabel
         {
-            get => _controlHintLabel;
-            private set => Set(ref _controlHintLabel, value);
+            get => _controlHintSpaceLabel;
+            private set => Set(ref _controlHintSpaceLabel, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the control hint label for the Space bar.
+        /// </summary>
+        public string ControlHintEscapeLabel
+        {
+            get => _controlHintEscapeLabel;
+            private set => Set(ref _controlHintEscapeLabel, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the Pin window toggle button label.
+        /// </summary>
+        public string ToggleBtnPinWindowContent
+        {
+            get => _toggleBtnPinWindowContent;
+            private set => Set(ref _toggleBtnPinWindowContent, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the Pin window toggle button label.
+        /// </summary>
+        public string ToggleBtnPinWindowTooltip
+        {
+            get => _toggleBtnPinWindowTooltip;
+            private set => Set(ref _toggleBtnPinWindowTooltip, value);
         }
 
         /// <summary>
@@ -131,6 +164,15 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             private set => Set(ref _currentLayerIndex, value);
         }
 
+        /// <summary>
+        /// Gets or sets the pinned status.
+        /// </summary>
+        public bool IsWindowPinned
+        {
+            get => _isWindowPinned;
+            set => Set(ref _isWindowPinned, value);
+        }
+
         #endregion
 
         #region Relay commands
@@ -140,7 +182,14 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         /// </summary>
         public ICommand LostFocusCommand =>
             _lostFocusCommand
-            ?? (_lostFocusCommand = new RelayCommand(LostFocus));
+            ?? (_lostFocusCommand = new RelayCommand(LostFocus, LostFocusCanExecute));
+
+        /// <summary>
+        /// Hide window command.
+        /// </summary>
+        public ICommand HideWindowCommand =>
+            _hideWindowCommand
+            ?? (_hideWindowCommand = new RelayCommand(LostFocus));
 
         /// <summary>
         /// Next layer command.
@@ -164,6 +213,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             CurrentLayoutTemplate = new ObservableCollection<KeyTemplate>();
 
             SetLabelUi();
+            SetWindowParameters();
             LoadCompleteLayout();
         }
 
@@ -176,7 +226,15 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             NoLayoutWarningSecondLine = "Please, go to the settings and update the layout.";
             CurrentLayerNameTitle = "Current layer :";
             CurrentLayerName = "";
-            ControlHintLabel = "Press 'Space' to display next layer";
+            ControlHintSpaceLabel = "Press 'Space' to display next layer";
+            ControlHintEscapeLabel = "Press 'Escape' to hide window";
+            ToggleBtnPinWindowContent = "_Pin window";
+            ToggleBtnPinWindowTooltip = "Press 'P' to toggle";
+        }
+
+        private void SetWindowParameters()
+        {
+            IsWindowPinned = false;
         }
 
         private async void LoadCompleteLayout()
@@ -239,7 +297,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
                                                            DisplayType = KeyDisplayType.SimpleLabel,
                                                            KeyCategory = KeyCategory.DualFunction,
                                                            Color = "#BBB"
-            };
+                                                       };
 
             for (int i = 2 ; i < CurrentLayoutTemplate.Count ; i++)
             {
@@ -249,7 +307,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
                                                                KeyCategory = KeyCategory.French,
                                                                InternationalHint = "fr",
                                                                Color = "#777"
-                };
+                                                           };
             }
         }
 
@@ -333,6 +391,13 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private bool NextLayerCanExecute()
         {
             var canExecute = _layoutTemplates.Any();
+
+            return canExecute;
+        }
+
+        private bool LostFocusCanExecute()
+        {
+            var canExecute = !IsWindowPinned;
 
             return canExecute;
         }
