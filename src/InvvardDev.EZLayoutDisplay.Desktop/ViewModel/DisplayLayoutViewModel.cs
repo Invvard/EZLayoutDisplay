@@ -26,7 +26,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         #region Constants
 
         private const int NonResizableWindowHeight = 423;
-        private const int ResizableWindowHeight = 453;
+        private const int ResizableWindowHeight = 424;
 
         #endregion
 
@@ -150,7 +150,11 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         public int WindowHeight
         {
             get => _windowHeight;
-            private set => Set(ref _windowHeight, value);
+            private set
+            {
+                _windowHeight = value;
+                RaisePropertyChanged(() => WindowHeight);
+            }
         }
 
         /// <summary>
@@ -229,9 +233,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         private void SetWindowParameters()
         {
-            WindowStyle = WindowStyle.None;
-            WindowHeight = NonResizableWindowHeight;
             IsWindowPinned = false;
+            ConfigureWindow(NonResizableWindowHeight);
         }
 
         private async void LoadCompleteLayout()
@@ -294,7 +297,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
                                                            DisplayType = KeyDisplayType.SimpleLabel,
                                                            KeyCategory = KeyCategory.DualFunction,
                                                            Color = "#BBB"
-            };
+                                                       };
 
             for (int i = 2 ; i < CurrentLayoutTemplate.Count ; i++)
             {
@@ -304,7 +307,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
                                                                KeyCategory = KeyCategory.French,
                                                                InternationalHint = "fr",
                                                                Color = "#777"
-                };
+                                                           };
             }
         }
 
@@ -348,6 +351,11 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private void ChangeLayerName()
         {
             CurrentLayerName = $"{_ezLayout.EZLayers[CurrentLayerIndex].Name} {_ezLayout.EZLayers[CurrentLayerIndex].Index}";
+        }
+
+        private void ConfigureWindow(int windowHeight)
+        {
+            WindowHeight = windowHeight;
         }
 
         #region Delegates
@@ -395,6 +403,15 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private void TogglePinWindow()
         {
             IsWindowPinned = !IsWindowPinned;
+
+            if (IsWindowPinned)
+            {
+                ConfigureWindow(ResizableWindowHeight);
+            }
+            else
+            {
+                ConfigureWindow(ResizableWindowHeight);
+            }
         }
 
         #endregion
