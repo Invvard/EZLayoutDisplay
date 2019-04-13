@@ -10,7 +10,7 @@
     Height="Auto" Width="Auto" SizeToContent="WidthAndHeight"
     WindowStartupLocation="CenterScreen"
     ResizeMode="NoResize" Visibility="Visible" ShowInTaskbar="True"
-    WindowStyle="{Binding WindowStyle}" Background="{StaticResource WindowBackgroundBrush}"
+    WindowStyle="SingleBorderWindow" Background="{StaticResource WindowBackgroundBrush}"
     Title="{Binding WindowTitle}" Icon="{StaticResource WindowIcon}">
 
     <Window.Resources>
