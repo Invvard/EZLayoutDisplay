@@ -51,7 +51,7 @@
 
         <StackPanel Style="{StaticResource SpControlHintStyle}"
             Visibility="{Binding NoLayoutAvailable, Converter={StaticResource BoolToVisibleConverter}}">
-            <ToggleButton x:Name="ToggleWindowPin" Content="Pin window" IsChecked="{Binding IsWindowPinned, Mode=OneWay}" Style="{StaticResource ToggleButtonPinWindowStyle}" Command="{Binding TogglePinWindowCommand}" />
+            <ToggleButton x:Name="ToggleWindowPin" Content="Pin window" IsChecked="{Binding IsWindowPinned}" Style="{StaticResource ToggleButtonPinWindowStyle}" Command="{Binding TogglePinWindowCommand}" />
             <TextBlock Text="{Binding ControlHintLabel}" Style="{StaticResource TbControlHintStyle}" />
         </StackPanel>
 
