@@ -32,7 +32,10 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             Assert.Equal("Please, go to the settings and update the layout.", displayLayoutViewModel.NoLayoutWarningSecondLine);
             Assert.Equal("Current layer :", displayLayoutViewModel.CurrentLayerNameTitle);
             Assert.Equal("", displayLayoutViewModel.CurrentLayerName);
-            Assert.Equal("Press 'Space' to display next layer", displayLayoutViewModel.ControlHintLabel);
+            Assert.Equal("Press 'Space' to display next layer", displayLayoutViewModel.ControlHintSpaceLabel);
+            Assert.Equal("Press 'Escape' to hide window", displayLayoutViewModel.ControlHintEscapeLabel);
+            Assert.Equal("_Pin window", displayLayoutViewModel.ToggleBtnPinWindowContent);
+            Assert.Equal("Press 'P' to toggle", displayLayoutViewModel.ToggleBtnPinWindowTooltip);
         }
 
         [ Fact ]
@@ -167,28 +170,6 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
 
             //Assert
             Assert.Equal(expectedCurrentLayerIndex, displayLayoutViewModel.CurrentLayerIndex);
-        }
-
-        [ Theory ]
-        [ InlineData(1, true) ]
-        [ InlineData(2, false) ]
-        public void TogglePinWindow_Execute(int executeNumber, bool expectedPinnedStatus)
-        {
-            //Arrange
-            var mockLayoutService = new Mock<ILayoutService>();
-            var mockWindowService = new Mock<IWindowService>();
-            var mockSettingsService = new Mock<ISettingsService>();
-
-            //Act
-            var displayLayoutViewModel = new DisplayLayoutViewModel(mockWindowService.Object, mockLayoutService.Object, mockSettingsService.Object);
-
-            for (int i = 0 ; i < executeNumber ; i++)
-            {
-                displayLayoutViewModel.TogglePinWindowCommand.Execute(null);
-            }
-
-            //Assert
-            Assert.Equal(expectedPinnedStatus, displayLayoutViewModel.IsWindowPinned);
         }
 
         [ Fact ]
