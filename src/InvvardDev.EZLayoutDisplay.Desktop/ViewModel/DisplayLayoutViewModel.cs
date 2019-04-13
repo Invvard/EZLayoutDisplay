@@ -31,6 +31,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private readonly ISettingsService _settingsService;
 
         private ICommand _lostFocusCommand;
+        private ICommand _hideWindowCommand;
         private ICommand _nextLayerCommand;
         private ICommand _togglePinWindowCommand;
 
@@ -153,6 +154,13 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         public ICommand LostFocusCommand =>
             _lostFocusCommand
             ?? (_lostFocusCommand = new RelayCommand(LostFocus, LostFocusCanExecute));
+
+        /// <summary>
+        /// Hide window command.
+        /// </summary>
+        public ICommand HideWindowCommand =>
+            _hideWindowCommand
+            ?? (_hideWindowCommand = new RelayCommand(LostFocus));
 
         /// <summary>
         /// Next layer command.
