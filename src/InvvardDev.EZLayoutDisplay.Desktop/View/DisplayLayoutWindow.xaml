@@ -4,14 +4,14 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-    xmlns:command="http://www.galasoft.ch/mvvmlight"
+    xmlns:command="http://www.galasoft.ch/mvvmlight" mc:Ignorable="d"
     x:Class="InvvardDev.EZLayoutDisplay.Desktop.View.DisplayLayoutWindow"
-    mc:Ignorable="d" Height="423" Width="1075"
-    WindowStartupLocation="CenterScreen"
+    DataContext="{Binding DisplayLayout, Source={StaticResource Locator}}"
+    Height="Auto" Width="Auto" SizeToContent="WidthAndHeight"
+    WindowStartupLocation="CenterScreen" Topmost="{Binding ElementName=ToggleWindowPin, Path=IsChecked}"
     ResizeMode="NoResize" Visibility="Visible" ShowInTaskbar="True"
-    WindowStyle="None" Background="{StaticResource WindowBackgroundBrush}"
-    Title="{Binding WindowTitle}" Icon="{StaticResource WindowIcon}"
-    DataContext="{Binding DisplayLayout, Source={StaticResource Locator}}">
+    WindowStyle="SingleBorderWindow" Background="{StaticResource WindowBackgroundBrush}"
+    Title="{Binding WindowTitle}" Icon="{StaticResource WindowIcon}">
 
     <Window.Resources>
         <ResourceDictionary>
@@ -28,12 +28,12 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <Window.InputBindings>
-        <KeyBinding Key="Escape" Command="{Binding LostFocusCommand, Mode=OneWay}" />
+        <KeyBinding Key="Escape" Command="{Binding HideWindowCommand, Mode=OneWay}" />
         <KeyBinding Key="Space" Command="{Binding NextLayerCommand, Mode=OneWay}" />
     </Window.InputBindings>
 
-    <Grid>
-        <ItemsControl ItemsSource="{Binding CurrentLayoutTemplate}"
+    <Grid Width="1075" Height="423">
+        <ItemsControl ItemsSource="{Binding CurrentLayoutTemplate}" Focusable="False"
                       ItemTemplateSelector="{StaticResource KeyContentTemplateSelector}"
                       Visibility="{Binding NoLayoutAvailable, Converter={StaticResource BoolToVisibleConverter}}">
             <ItemsControl.ItemsPanel>
@@ -51,7 +51,10 @@
 
         <StackPanel Style="{StaticResource SpControlHintStyle}"
             Visibility="{Binding NoLayoutAvailable, Converter={StaticResource BoolToVisibleConverter}}">
-            <TextBlock Text="{Binding ControlHintLabel}" Style="{StaticResource TbControlHintStyle}" />
+            <ToggleButton x:Name="ToggleWindowPin" Content="{Binding ToggleBtnPinWindowContent}" ToolTip="{Binding ToggleBtnPinWindowTooltip}"
+                          IsChecked="{Binding IsWindowPinned}" Focusable="False" Style="{StaticResource ToggleButtonPinWindowStyle}" />
+            <TextBlock Text="{Binding ControlHintEscapeLabel}" Style="{StaticResource TbControlHintStyle}" />
+            <TextBlock Text="{Binding ControlHintSpaceLabel}" Style="{StaticResource TbControlHintStyle}" /> 
         </StackPanel>
 
         <Grid Visibility="{Binding NoLayoutAvailable, Converter={StaticResource BoolToHiddenConverter}}" Width="350">
