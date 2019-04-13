@@ -8,7 +8,7 @@
     x:Class="InvvardDev.EZLayoutDisplay.Desktop.View.DisplayLayoutWindow"
     DataContext="{Binding DisplayLayout, Source={StaticResource Locator}}"
     Height="Auto" Width="Auto" SizeToContent="WidthAndHeight"
-    WindowStartupLocation="CenterScreen"
+    WindowStartupLocation="CenterScreen" Topmost="{Binding ElementName=ToggleWindowPin, Path=IsChecked}"
     ResizeMode="NoResize" Visibility="Visible" ShowInTaskbar="True"
     WindowStyle="SingleBorderWindow" Background="{StaticResource WindowBackgroundBrush}"
     Title="{Binding WindowTitle}" Icon="{StaticResource WindowIcon}">
@@ -32,7 +32,7 @@
         <KeyBinding Key="Space" Command="{Binding NextLayerCommand, Mode=OneWay}" />
     </Window.InputBindings>
 
-    <Grid Width="1075" Height="{Binding WindowHeight}">
+    <Grid Width="1075" Height="423">
         <ItemsControl ItemsSource="{Binding CurrentLayoutTemplate}"
                       ItemTemplateSelector="{StaticResource KeyContentTemplateSelector}"
                       Visibility="{Binding NoLayoutAvailable, Converter={StaticResource BoolToVisibleConverter}}">
@@ -51,7 +51,7 @@
 
         <StackPanel Style="{StaticResource SpControlHintStyle}"
             Visibility="{Binding NoLayoutAvailable, Converter={StaticResource BoolToVisibleConverter}}">
-            <ToggleButton Content="Pin window" IsChecked="{Binding IsWindowPinned, Mode=OneWay}" Style="{StaticResource ToggleButtonPinWindowStyle}" Command="{Binding TogglePinWindowCommand}" />
+            <ToggleButton x:Name="ToggleWindowPin" Content="Pin window" IsChecked="{Binding IsWindowPinned, Mode=OneWay}" Style="{StaticResource ToggleButtonPinWindowStyle}" Command="{Binding TogglePinWindowCommand}" />
             <TextBlock Text="{Binding ControlHintLabel}" Style="{StaticResource TbControlHintStyle}" />
         </StackPanel>
 
