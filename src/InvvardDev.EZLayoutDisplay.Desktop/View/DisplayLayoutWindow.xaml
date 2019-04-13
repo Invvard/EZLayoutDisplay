@@ -33,7 +33,7 @@
     </Window.InputBindings>
 
     <Grid Width="1075" Height="423">
-        <ItemsControl ItemsSource="{Binding CurrentLayoutTemplate}"
+        <ItemsControl ItemsSource="{Binding CurrentLayoutTemplate}" Focusable="False"
                       ItemTemplateSelector="{StaticResource KeyContentTemplateSelector}"
                       Visibility="{Binding NoLayoutAvailable, Converter={StaticResource BoolToVisibleConverter}}">
             <ItemsControl.ItemsPanel>
@@ -51,7 +51,7 @@
 
         <StackPanel Style="{StaticResource SpControlHintStyle}"
             Visibility="{Binding NoLayoutAvailable, Converter={StaticResource BoolToVisibleConverter}}">
-            <ToggleButton x:Name="ToggleWindowPin" Content="Pin window" IsChecked="{Binding IsWindowPinned}" Style="{StaticResource ToggleButtonPinWindowStyle}" Command="{Binding TogglePinWindowCommand}" />
+            <ToggleButton Focusable="False" x:Name="ToggleWindowPin" Content="Pin window" IsChecked="{Binding IsWindowPinned}" Style="{StaticResource ToggleButtonPinWindowStyle}" Command="{Binding TogglePinWindowCommand}" />
             <TextBlock Text="{Binding ControlHintLabel}" Style="{StaticResource TbControlHintStyle}" />
         </StackPanel>
 
