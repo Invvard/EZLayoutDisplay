@@ -21,7 +21,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             // Assert
             Assert.Equal("About EZ Layout Display", aboutViewModel.WindowTitle);
             Assert.Equal("EZ Layout Display", aboutViewModel.AppTitleLabel);
-            Assert.Equal("v.1.0.0.0", aboutViewModel.AppVersionLabel);
+            Assert.Equal("v.1.0.1.0", aboutViewModel.AppVersionLabel);
             Assert.Equal("Created by", aboutViewModel.CreatedTitleLabel);
             Assert.Equal("Based on", aboutViewModel.BasedOnTitleLabel);
             Assert.Equal("Project home", aboutViewModel.ProjectHomeTitleLabel);
