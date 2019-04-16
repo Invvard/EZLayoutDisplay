@@ -173,6 +173,9 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
         [ InlineData("https://configure.ergodox-ez.com/layouts/r2d2/lat/9", "r2d2") ]
         [ InlineData("https://configure.ergodox-ez.com/layouts/def/latest/0", "default") ]
         [ InlineData("https://configure.ergodox-ez.com/layouts/_t3s/latest/0", "default") ]
+        [ InlineData("https://configure.ergodox-ez.com/layouts/t3s/latest/0", "default") ]
+        [ InlineData("https://configure.ergodox-ez.com/layouts/adbcd/latest/0", "adbcd") ]
+        [ InlineData("https://configure.ergodox-ez.com/layouts/asdfasdfasdfasdfgfasdffgasf/latest/0", "asdfasdfasdfasdfgfasdffgasf") ]
         public void UpdateLayoutCommand_Execute(string layoutUrl, string expectedHashId)
         {
             //Arrange
