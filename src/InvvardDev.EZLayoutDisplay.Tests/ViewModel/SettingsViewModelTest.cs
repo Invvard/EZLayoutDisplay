@@ -165,17 +165,18 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
         }
 
         [ Theory ]
-        [ InlineData("https://configure.ergodox-ez.com/layouts/abcd/latest/0", "abcd") ]
-        [ InlineData("https://configure.ergodox-ez.com/layouts/1234/latest/0", "1234") ]
-        [ InlineData("https://configure.ergodox-ez.com/layouts/a2Vt/latest/0", "a2Vt") ]
-        [ InlineData("https://configure.ergodox-ez.com/layouts/default/latest/0", "default") ]
-        [ InlineData("https://configure.ergodox-ez.com/layouts/j3o4", "j3o4") ]
-        [ InlineData("https://configure.ergodox-ez.com/layouts/r2d2/lat/9", "r2d2") ]
-        [ InlineData("https://configure.ergodox-ez.com/layouts/def/latest/0", "default") ]
-        [ InlineData("https://configure.ergodox-ez.com/layouts/_t3s/latest/0", "default") ]
-        [ InlineData("https://configure.ergodox-ez.com/layouts/t3s/latest/0", "default") ]
-        [ InlineData("https://configure.ergodox-ez.com/layouts/adbcd/latest/0", "adbcd") ]
-        [ InlineData("https://configure.ergodox-ez.com/layouts/asdfasdfasdfasdfgfasdffgasf/latest/0", "asdfasdfasdfasdfgfasdffgasf") ]
+        [ InlineData("https://configure.ergodox-ez.com/layouts/abcd/latest/0", "default") ]
+        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/abcd/latest/0", "abcd") ]
+        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/1234/latest/0", "1234") ]
+        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/a2Vt/latest/0", "a2Vt") ]
+        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/default/latest/0", "default") ]
+        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/j3o4", "j3o4") ]
+        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/r2d2/lat/9", "r2d2") ]
+        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/def/latest/0", "default") ]
+        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/_t3s/latest/0", "default") ]
+        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/t3s/latest/0", "default") ]
+        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/adbcd/latest/0", "adbcd") ]
+        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/asdfasdfasdfasdfgfasdffgasf/latest/0", "asdfasdfasdfasdfgfasdffgasf") ]
         public void UpdateLayoutCommand_Execute(string layoutUrl, string expectedHashId)
         {
             //Arrange
