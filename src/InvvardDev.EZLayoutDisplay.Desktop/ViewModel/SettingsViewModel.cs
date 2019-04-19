@@ -294,7 +294,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             Logger.TraceMethod();
 
             var layoutHashIdGroupName = "layoutHashId";
-            var pattern = $"https://configure.ergodox-ez.com/layouts/(?<{layoutHashIdGroupName}>default|[a-zA-Z0-9]{{4,}})(?:/latest/[0-9])?";
+            var pattern = $"https://configure.ergodox-ez.com/ergodox-ez/layouts/(?<{layoutHashIdGroupName}>default|[a-zA-Z0-9]{{4,}})(?:/latest/[0-9])?";
             var layoutHashId = "default";
 
             var regex = new Regex(pattern);
