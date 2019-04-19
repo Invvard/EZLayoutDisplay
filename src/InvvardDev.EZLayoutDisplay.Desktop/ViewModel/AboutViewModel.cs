@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
@@ -177,9 +178,10 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private void SetLabelUi()
         {
             var appTitle = GetAppTitle();
+            var appVersion = GetAppVersion();
             WindowTitle = $"About {appTitle}";
             AppTitleLabel = appTitle;
-            AppVersionLabel = $"v.{Assembly.GetExecutingAssembly().GetName().Version}";
+            AppVersionLabel = $"v.{appVersion}";
             CreatedTitleLabel = "Created by";
             BasedOnTitleLabel = "Based on";
             ProjectHomeTitleLabel = "Project home";
@@ -189,6 +191,14 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             ProjectHomeInfoLabel = appTitle;
             ContactInfoLabel = "@Invvard";
             CloseButtonLabel = "OK";
+        }
+
+        private string GetAppVersion()
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            string version = FileVersionInfo.GetVersionInfo(assembly.Location).FileVersion;
+
+            return version;
         }
 
         private static string GetAppTitle()
