@@ -154,6 +154,10 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
                     key.InternationalHint = "de";
 
                     break;
+                case KeyCategory.Hungarian:
+                    key.InternationalHint = "hu";
+
+                    break;
                 case KeyCategory.Spanish:
                     key.InternationalHint = "es";
 
