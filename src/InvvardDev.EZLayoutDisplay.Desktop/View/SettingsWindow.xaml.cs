@@ -1,4 +1,6 @@
-﻿namespace InvvardDev.EZLayoutDisplay.Desktop.View
+﻿using System.Windows;
+
+namespace InvvardDev.EZLayoutDisplay.Desktop.View
 {
     /// <summary>
     /// Interaction logic for SettingsWindow.xaml
@@ -8,6 +10,11 @@
         public SettingsWindow()
         {
             InitializeComponent();
+
+#if DEBUG
+            btnUpdate.IsEnabled = true;
+            btnUpdate.Visibility = Visibility.Visible;
+#endif
         }
     }
 }
