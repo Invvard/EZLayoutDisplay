@@ -463,6 +463,74 @@ namespace InvvardDev.EZLayoutDisplay.Console
                     label = "\\u00AC";
 
                     break;
+                case "HU_UE":
+                    label = "\\u00FC";
+
+                    break;
+                case "HU_OO":
+                    label = "\\u00F3";
+
+                    break;
+                case "HU_OE":
+                    label = "\\u00F6";
+
+                    break;
+                case "HU_OEE":
+                    label = "\\u0151";
+
+                    break;
+                case "HU_UU":
+                    label = "\\u00FA";
+
+                    break;
+                case "HU_EE":
+                    label = "\\u00E9";
+
+                    break;
+                case "HU_BRV":
+                    label = "\\u02D8";
+
+                    break;
+                case "HU_RING":
+                    label = "\\u00B0";
+
+                    break;
+                case "HU_EURO":
+                    label = "\\u20AC";
+
+                    break;
+                case "HU_SS":
+                    label = "\\u00DF";
+
+                    break;
+                case "HU_AA":
+                    label = "\\u00E1";
+
+                    break;
+                case "HU_UEE":
+                    label = "\\u0171";
+
+                    break;
+                case "HU_PARA":
+                    label = "\\u00A7";
+
+                    break;
+                case "HU_II":
+                    label = "\\u00ED";
+
+                    break;
+                case "HU_ACUT":
+                    label = "\\u00B4";
+
+                    break;
+                case "HU_DIV":
+                    label = "\\u00F7";
+
+                    break;
+                case "HU_CRSS":
+                    label = "\\u00D7";
+
+                    break;
             }
 
             return (label, isGlyph);
