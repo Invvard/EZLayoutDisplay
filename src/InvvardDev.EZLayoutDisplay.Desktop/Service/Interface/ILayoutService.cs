@@ -7,6 +7,13 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Interface
     public interface ILayoutService
     {
         /// <summary>
+        /// Gets the <see cref="ErgodoxLayout"/> basic info.
+        /// </summary>
+        /// <param name="layoutHashId">The layout hash ID to get.</param>
+        /// <returns>The <see cref="ErgodoxLayout"/>.</returns>
+        Task<ErgodoxLayout> GetLayoutInfo(string layoutHashId);
+
+        /// <summary>
         /// Gets the <see cref="ErgodoxLayout"/>.
         /// </summary>
         /// <param name="layoutHashId">The layout hash ID to get.</param>
