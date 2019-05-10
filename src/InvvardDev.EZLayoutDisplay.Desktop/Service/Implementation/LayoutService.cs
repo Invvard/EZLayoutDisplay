@@ -32,20 +32,9 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
             Logger.TraceMethod();
             Logger.DebugInputParam(nameof(layoutHashId), layoutHashId);
 
-            ValidateLayoutHashId(layoutHashId);
-
-            var requestBody = string.Format(GetLayoutInfoRequestBody, layoutHashId);
-
-            var layout = await HttpClientCall(requestBody);
-
-            if (layout?.LayoutRoot?.Layout == null)
-            {
-                Logger.Error("Layout {0} does not exist", layoutHashId);
-
-                throw new ArgumentException(layoutHashId, $"Hash ID \"{layoutHashId}\" does not exist");
-            }
-
-            return layout.LayoutRoot.Layout;
+            var info = await QueryData(layoutHashId, GetLayoutInfoRequestBody);
+            
+            return info;
         }
 
         /// <inheritdoc />
@@ -54,51 +43,9 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
             Logger.TraceMethod();
             Logger.DebugInputParam(nameof(layoutHashId), layoutHashId);
 
-            ValidateLayoutHashId(layoutHashId);
-
-            var requestBody = string.Format(GetLayoutBody, layoutHashId);
-
-            var layout = await HttpClientCall(requestBody);
-
-            if (layout?.LayoutRoot?.Layout == null)
-            {
-                Logger.Error("Layout {0} does not exist", layoutHashId);
-
-                throw new ArgumentException(layoutHashId, $"Hash ID \"{layoutHashId}\" does not exist");
-            }
-
-            return layout.LayoutRoot.Layout;
-        }
-
-        private async Task<DataRoot> HttpClientCall(string requestBody)
-        {
-            DataRoot layout;
-
-            using (HttpClient client = new HttpClient())
-            {
-                Logger.Debug("Request body : {@body}", requestBody);
-
-                var response = await client.PostAsync(GetLayoutRequestUri, new StringContent(requestBody, Encoding.UTF8, "application/json"));
-                Logger.Debug("Response : {@response}", response);
-
-                var result = await response.Content.ReadAsStringAsync();
-                Logger.Debug("Content result : {@result}", result);
-
-                layout = JsonConvert.DeserializeObject<DataRoot>(result);
-                Logger.Debug("Deserialized layout : {@layout}", layout);
-            }
+            var layout = await QueryData(layoutHashId, GetLayoutBody);
 
             return layout;
-        }
-
-        private static void ValidateLayoutHashId(string layoutHashId)
-        {
-            if (!string.IsNullOrWhiteSpace(layoutHashId)) return;
-
-            Logger.Error("Layout {0} was not found", layoutHashId);
-
-            // ReSharper disable once LocalizableElement
-            throw new ArgumentNullException(nameof(layoutHashId), $"Layout hash ID '{layoutHashId}' was not found.");
         }
 
         /// <inheritdoc />
@@ -125,6 +72,55 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
         #endregion
 
         #region Private methods
+
+        private async Task<ErgodoxLayout> QueryData(string layoutHashId, string graphQlQuery)
+        {
+            ValidateLayoutHashId(layoutHashId);
+
+            var requestBody = string.Format(graphQlQuery, layoutHashId);
+
+            var layout = await HttpClientCall(requestBody);
+
+            if (layout?.LayoutRoot?.Layout == null)
+            {
+                Logger.Error("Layout {0} does not exist", layoutHashId);
+
+                throw new ArgumentException(layoutHashId, $"Hash ID \"{layoutHashId}\" does not exist");
+            }
+
+            return layout.LayoutRoot.Layout;
+        }
+
+        private static void ValidateLayoutHashId(string layoutHashId)
+        {
+            if (!string.IsNullOrWhiteSpace(layoutHashId)) return;
+
+            Logger.Error("Layout {0} was not found", layoutHashId);
+
+            // ReSharper disable once LocalizableElement
+            throw new ArgumentNullException(nameof(layoutHashId), $"Layout hash ID '{layoutHashId}' was not found.");
+        }
+
+        private async Task<DataRoot> HttpClientCall(string requestBody)
+        {
+            DataRoot layout;
+
+            using (HttpClient client = new HttpClient())
+            {
+                Logger.Debug("Request body : {@body}", requestBody);
+
+                var response = await client.PostAsync(GetLayoutRequestUri, new StringContent(requestBody, Encoding.UTF8, "application/json"));
+                Logger.Debug("Response : {@response}", response);
+
+                var result = await response.Content.ReadAsStringAsync();
+                Logger.Debug("Content result : {@result}", result);
+
+                layout = JsonConvert.DeserializeObject<DataRoot>(result);
+                Logger.Debug("Deserialized layout : {@layout}", layout);
+            }
+
+            return layout;
+        }
 
         private async Task<IEnumerable<KeyTemplate>> ReadLayoutDefinition()
         {
