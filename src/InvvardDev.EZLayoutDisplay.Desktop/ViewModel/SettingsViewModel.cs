@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
@@ -19,6 +20,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         #region Fields
 
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private Timer _updateLayoutInfoTimer;
 
         private readonly ISettingsService _settingsService;
         private readonly IWindowService _windowService;
@@ -129,9 +131,26 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             {
                 if (Set(ref _layoutUrlContent, value))
                 {
-                    UpdateButtonCanExecute();
+                    UrlContentUpdated();
                 }
             }
+        }
+
+        private void UrlContentUpdated()
+        {
+            UpdateButtonCanExecute();
+            UpdateErgoDoxInfo();
+        }
+
+        private void UpdateErgoDoxInfo()
+        {
+            Logger.TraceMethod();
+
+            var layoutHashId = ExtractLayoutHashId(LayoutUrlContent);
+
+            Logger.Debug("Layout Hash ID = {0}", layoutHashId);
+
+            var layoutInfo = _layoutService.GetLayoutInfo(layoutHashId);
         }
 
         public string AltModifierLabel
@@ -175,6 +194,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             _settingsService = settingsService;
             _windowService = windowService;
             _layoutService = layoutService;
+
+            _updateLayoutInfoTimer = new Timer(750);
 
             SetLabelUi();
 
@@ -304,7 +325,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             {
                 layoutHashId = match.Groups[layoutHashIdGroupName].Value;
             }
-            
+
             Logger.Debug("Layout URL = {0}", layoutUrl);
             Logger.Debug("Layout Hash ID = {0}", layoutHashId);
 
