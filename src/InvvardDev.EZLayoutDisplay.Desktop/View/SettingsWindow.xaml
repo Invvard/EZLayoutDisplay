@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" Background="{StaticResource WindowBackgroundBrush}"
         Title="{Binding WindowTitle}" Icon="{StaticResource WindowIcon}"
-        Width="600" Height="100" MinWidth="500" MinHeight="100"
+        Width="630" Height="400" MinWidth="500" MinHeight="100"
         WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
         DataContext="{Binding Settings, Source={StaticResource Locator}}">
 
@@ -15,25 +15,28 @@
             <RowDefinition Height="20" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="180" />
+            <ColumnDefinition />
             <ColumnDefinition />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
         <Label Content="{Binding LayoutUrlLabel}" d:LayoutOverrides="Height" HorizontalAlignment="Left"
                VerticalAlignment="Center" />
-        <TextBox TextWrapping="NoWrap"
-                 Text="{Binding LayoutUrlContent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1"
-                 Grid.Row="0" Margin="5,5,0,5" Grid.ColumnSpan="2" />
-        <Button Content="{Binding CancelCommandLabel}" HorizontalAlignment="Left" Width="75"  Grid.Column="0"
+        <StackPanel Margin="5,5,0,5" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3" Orientation="Horizontal">
+            <TextBox TextWrapping="NoWrap" Margin="0,0,5,0" Width="387"
+                     Text="{Binding LayoutUrlContent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Image Source="../Skins/Images/about-logo.png"></Image>
+        </StackPanel>
+        <Button Content="{Binding CancelCommandLabel}" HorizontalAlignment="Left" Width="75" Grid.Column="0"
                 Grid.Row="1" Command="{Binding CancelSettingsCommand}" />
-        <Button Content="{Binding UpdateCommandLabel}" Width="75" Grid.Row="1" x:Name="btnUpdate"
+        <Button Content="{Binding UpdateCommandLabel}" Width="75" Grid.Row="1" x:Name="BtnUpdate"
                 Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,85,0"
                 Command="{Binding UpdateLayoutCommand}" Visibility="Hidden" IsEnabled="False" />
         <Button Content="{Binding ApplyCommandLabel}" Width="75" Grid.Row="1"
-                Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,0"
+                Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,0"
                 Command="{Binding ApplySettingsCommand}" />
         <Button Content="{Binding CloseCommandLabel}" Command="{Binding CloseSettingsCommand}" Width="75"
-                HorizontalAlignment="Right" Grid.Row="1" Grid.Column="2" Margin="5,0,0,0" />
+                HorizontalAlignment="Right" Grid.Row="1" Grid.Column="3" Margin="5,0,0,0" />
 
     </Grid>
 </Window>
