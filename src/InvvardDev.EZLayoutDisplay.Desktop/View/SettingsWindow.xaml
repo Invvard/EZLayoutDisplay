@@ -12,6 +12,7 @@
     <Grid Margin="10,0,10,10">
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
+            <RowDefinition/>
             <RowDefinition Height="20" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -22,21 +23,18 @@
         </Grid.ColumnDefinitions>
         <Label Content="{Binding LayoutUrlLabel}" d:LayoutOverrides="Height" HorizontalAlignment="Left"
                VerticalAlignment="Center" />
-        <StackPanel Margin="5,5,0,5" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3" Orientation="Horizontal">
-            <TextBox TextWrapping="NoWrap" Margin="0,0,5,0" Width="387"
-                     Text="{Binding LayoutUrlContent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-            <Image Source="../Skins/Images/about-logo.png"></Image>
-        </StackPanel>
-        <Button Content="{Binding CancelCommandLabel}" HorizontalAlignment="Left" Width="75" Grid.Column="0"
-                Grid.Row="1" Command="{Binding CancelSettingsCommand}" />
-        <Button Content="{Binding UpdateCommandLabel}" Width="75" Grid.Row="1" x:Name="BtnUpdate"
-                Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,85,0"
+        <TextBox TextWrapping="NoWrap" HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3" Margin="5,5,0,5"
+                     Text="{Binding LayoutUrlContent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=650}" />
+        <Button Content="{Binding CancelCommandLabel}" HorizontalAlignment="Left" Width="75"
+                Grid.Row="2" Grid.Column="0" Command="{Binding CancelSettingsCommand}" />
+        <Button Content="{Binding UpdateCommandLabel}" Width="75" x:Name="BtnUpdate"
+                Grid.Row="2" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,85,0"
                 Command="{Binding UpdateLayoutCommand}" Visibility="Hidden" IsEnabled="False" />
-        <Button Content="{Binding ApplyCommandLabel}" Width="75" Grid.Row="1"
-                Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,0"
+        <Button Content="{Binding ApplyCommandLabel}" Width="75" 
+                Grid.Row="2" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,0"
                 Command="{Binding ApplySettingsCommand}" />
         <Button Content="{Binding CloseCommandLabel}" Command="{Binding CloseSettingsCommand}" Width="75"
-                HorizontalAlignment="Right" Grid.Row="1" Grid.Column="3" Margin="5,0,0,0" />
+                Grid.Row="2" Grid.Column="3" HorizontalAlignment="Right" Margin="5,0,0,0" />
 
     </Grid>
 </Window>
