@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Timers;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
@@ -20,7 +19,6 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         #region Fields
 
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        private Timer _updateLayoutInfoTimer;
 
         private readonly ISettingsService _settingsService;
         private readonly IWindowService _windowService;
@@ -129,17 +127,11 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             get => _layoutUrlContent;
             set
             {
-                if (Set(ref _layoutUrlContent, value))
-                {
-                    UrlContentUpdated();
-                }
-            }
-        }
+                if (!Set(ref _layoutUrlContent, value)) return;
 
-        private void UrlContentUpdated()
-        {
-            UpdateButtonCanExecute();
-            UpdateErgoDoxInfo();
+                UpdateButtonCanExecute();
+                UpdateErgoDoxInfo();
+            }
         }
 
         private void UpdateErgoDoxInfo()
@@ -147,8 +139,6 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             Logger.TraceMethod();
 
             var layoutHashId = ExtractLayoutHashId(LayoutUrlContent);
-
-            Logger.Debug("Layout Hash ID = {0}", layoutHashId);
 
             var layoutInfo = _layoutService.GetLayoutInfo(layoutHashId);
         }
@@ -194,8 +184,6 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             _settingsService = settingsService;
             _windowService = windowService;
             _layoutService = layoutService;
-
-            _updateLayoutInfoTimer = new Timer(750);
 
             SetLabelUi();
 
@@ -285,8 +273,6 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             Logger.TraceMethod();
 
             var layoutHashId = ExtractLayoutHashId(LayoutUrlContent);
-
-            Logger.Debug("Layout Hash ID = {0}", layoutHashId);
 
             try
             {
