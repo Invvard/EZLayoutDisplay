@@ -5,14 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" Background="{StaticResource WindowBackgroundBrush}"
         Title="{Binding WindowTitle}" Icon="{StaticResource WindowIcon}"
-        Width="630" Height="400" MinWidth="500" MinHeight="100"
+        Width="630" Height="297" MinWidth="500" MinHeight="100"
         WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
         DataContext="{Binding Settings, Source={StaticResource Locator}}">
 
     <Grid Margin="10,0,10,10">
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
-            <RowDefinition/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="20" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -23,18 +24,45 @@
         </Grid.ColumnDefinitions>
         <Label Content="{Binding LayoutUrlLabel}" d:LayoutOverrides="Height" HorizontalAlignment="Left"
                VerticalAlignment="Center" />
+
         <TextBox TextWrapping="NoWrap" HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3" Margin="5,5,0,5"
                      Text="{Binding LayoutUrlContent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=650}" />
-        <Button Content="{Binding CancelCommandLabel}" HorizontalAlignment="Left" Width="75"
-                Grid.Row="2" Grid.Column="0" Command="{Binding CancelSettingsCommand}" />
-        <Button Content="{Binding UpdateCommandLabel}" Width="75" x:Name="BtnUpdate"
-                Grid.Row="2" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,85,0"
-                Command="{Binding UpdateLayoutCommand}" Visibility="Hidden" IsEnabled="False" />
-        <Button Content="{Binding ApplyCommandLabel}" Width="75" 
-                Grid.Row="2" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,0"
-                Command="{Binding ApplySettingsCommand}" />
-        <Button Content="{Binding CloseCommandLabel}" Command="{Binding CloseSettingsCommand}" Width="75"
-                Grid.Row="2" Grid.Column="3" HorizontalAlignment="Right" Margin="5,0,0,0" />
+
+        <GroupBox Header="Layout Info" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" VerticalAlignment="Top">
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="25" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="120" />
+                </Grid.ColumnDefinitions>
+
+                <Label Content="Name :" HorizontalContentAlignment="Right" />
+                <Label Content="Keyboard model :" Grid.Row="1" HorizontalContentAlignment="Right" />
+                <Label Content="Tags :" Grid.Row="2" HorizontalContentAlignment="Right" />
+                <Label Content="Status :" Grid.Row="3" HorizontalContentAlignment="Right" />
+
+                <Button Content="HEX File" Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Margin="10" />
+                <Button Content="Sources zip" Grid.Row="2" Grid.Column="2" Grid.RowSpan="2" Margin="10" />
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="GroupBox" Grid.Row="2" Grid.ColumnSpan="4" Margin="0,0,0,5"/>
+        <StackPanel Grid.ColumnSpan="4" Grid.Row="3" Orientation="Horizontal" Height="20" HorizontalAlignment="Right">
+
+            <Button Content="{Binding UpdateCommandLabel}" Width="75" x:Name="BtnUpdate"
+                Command="{Binding UpdateLayoutCommand}" IsEnabled="False" d:LayoutOverrides="TopPosition, BottomPosition" Margin="0" />
+            <Button Content="{Binding CancelCommandLabel}" Width="75"
+                Command="{Binding CancelSettingsCommand}" d:LayoutOverrides="LeftPosition, RightPosition, TopPosition, BottomPosition" Margin="5,0,0,0" />
+            <Button Content="{Binding ApplyCommandLabel}" Width="75"
+                Command="{Binding ApplySettingsCommand}" d:LayoutOverrides="TopPosition, BottomPosition" Margin="5,0,0,0" />
+            <Button Content="{Binding CloseCommandLabel}" Command="{Binding CloseSettingsCommand}" Width="75" d:LayoutOverrides="TopPosition, BottomPosition" HorizontalAlignment="Right" Margin="5,0,0,0" />
+
+        </StackPanel>
 
     </Grid>
 </Window>
