@@ -29,13 +29,6 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private ICommand _closeSettingsCommand;
         private ICommand _cancelSettingsCommand;
 
-        private string _windowTitle;
-        private string _applyCommandLabel;
-        private string _updateCommandLabel;
-        private string _closeCommandLabel;
-        private string _cancelCommandLabel;
-        private string _layoutUrlLabel;
-        private string _hotkeyTitleLabel;
         private string _altModifierLabel;
         private string _ctrlModifierLabel;
         private string _shiftModifierLabel;
@@ -80,47 +73,17 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         #region Properties
 
-        public string WindowTitle
-        {
-            get => _windowTitle;
-            set => Set(ref _windowTitle, value);
-        }
+        public string WindowTitle { get; set; }
 
-        public string ApplyCommandLabel
-        {
-            get => _applyCommandLabel;
-            set => Set(ref _applyCommandLabel, value);
-        }
+        public string ApplyCommandLabel { get; set; }
 
-        public string UpdateCommandLabel
-        {
-            get => _updateCommandLabel;
-            set => Set(ref _updateCommandLabel, value);
-        }
+        public string UpdateCommandLabel { get; set; }
 
-        public string CloseCommandLabel
-        {
-            get => _closeCommandLabel;
-            set => Set(ref _closeCommandLabel, value);
-        }
+        public string CloseCommandLabel { get; set; }
 
-        public string CancelCommandLabel
-        {
-            get => _cancelCommandLabel;
-            set => Set(ref _cancelCommandLabel, value);
-        }
+        public string CancelCommandLabel { get; set; }
 
-        public string LayoutUrlLabel
-        {
-            get => _layoutUrlLabel;
-            set => Set(ref _layoutUrlLabel, value);
-        }
-
-        public string HotkeyTitleLabel
-        {
-            get => _hotkeyTitleLabel;
-            private set => Set(ref _hotkeyTitleLabel, value);
-        }
+        public string LayoutUrlLabel { get; set; }
 
         public string LayoutUrlContent
         {
@@ -134,14 +97,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             }
         }
 
-        private void UpdateErgoDoxInfo()
-        {
-            Logger.TraceMethod();
-
-            var layoutHashId = ExtractLayoutHashId(LayoutUrlContent);
-
-            var layoutInfo = _layoutService.GetLayoutInfo(layoutHashId);
-        }
+        public string HotkeyTitleLabel { get; set; }
 
         public string AltModifierLabel
         {
@@ -266,6 +222,15 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             var isDirty = _settingsService.ErgodoxLayoutUrl != _layoutUrlContent;
 
             return isDirty;
+        }
+
+        private void UpdateErgoDoxInfo()
+        {
+            Logger.TraceMethod();
+
+            var layoutHashId = ExtractLayoutHashId(LayoutUrlContent);
+
+            var layoutInfo = _layoutService.GetLayoutInfo(layoutHashId);
         }
 
         private async Task UpdateLayout()
