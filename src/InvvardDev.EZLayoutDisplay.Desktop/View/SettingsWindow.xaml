@@ -5,14 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" Background="{StaticResource WindowBackgroundBrush}"
         Title="{Binding WindowTitle}" Icon="{StaticResource WindowIcon}"
-        Width="630" Height="297" MinWidth="500" MinHeight="100"
-        WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
+        Width="630" Height="312" MinWidth="630" MinHeight="300"
+        WindowStartupLocation="CenterScreen"
         DataContext="{Binding Settings, Source={StaticResource Locator}}">
 
     <Grid Margin="10,0,10,10">
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
-            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="20" />
         </Grid.RowDefinitions>
@@ -25,16 +24,17 @@
         <Label Content="{Binding LayoutUrlLabel}" d:LayoutOverrides="Height" HorizontalAlignment="Left"
                VerticalAlignment="Center" />
 
-        <TextBox TextWrapping="NoWrap" HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3" Margin="5,5,0,5"
+        <TextBox TextWrapping="NoWrap" HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2" Margin="5,5,0,5"
                      Text="{Binding LayoutUrlContent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=650}" />
 
-        <GroupBox Header="Layout Info" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" VerticalAlignment="Top">
+        <GroupBox Header="Layout Info" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" VerticalAlignment="Top" Margin="0,0,0,5">
             <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="25" />
                     <RowDefinition Height="25" />
                     <RowDefinition Height="25" />
                     <RowDefinition Height="25" />
+                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="120" />
@@ -46,13 +46,26 @@
                 <Label Content="Keyboard model :" Grid.Row="1" HorizontalContentAlignment="Right" />
                 <Label Content="Tags :" Grid.Row="2" HorizontalContentAlignment="Right" />
                 <Label Content="Status :" Grid.Row="3" HorizontalContentAlignment="Right" />
+                <Label Content="Layers :" Grid.Row="4" HorizontalContentAlignment="Right" />
 
                 <Button Content="HEX File" Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Margin="10" />
                 <Button Content="Sources zip" Grid.Row="2" Grid.Column="2" Grid.RowSpan="2" Margin="10" />
+
+                <ListView Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                         Background="{x:Null}" BorderBrush="{x:Null}" Margin="0,3,0,0">
+                    <Label Content="ScrollViewer.HorizontalScrollBarVisibility" Padding="5,0,0,0"/>
+                    <Label Content="ScrollViewer.HorizontalScrollBarVisibility" Padding="5,0,0,0"/>
+                    <Label Content="Test" Padding="5,0,0,0"/>
+                    <Label Content="Test" Padding="5,0,0,0"/>
+                    <Label Content="ScrollViewer.HorizontalScrollBarVisibility" Padding="5,0,0,0"/>
+                    <Label Content="ScrollViewer.HorizontalScrollBarVisibility" Padding="5,0,0,0"/>
+                    <Label Content="Test" Padding="5,0,0,0"/>
+                </ListView>
+
             </Grid>
         </GroupBox>
-        <GroupBox Header="GroupBox" Grid.Row="2" Grid.ColumnSpan="4" Margin="0,0,0,5"/>
-        <StackPanel Grid.ColumnSpan="4" Grid.Row="3" Orientation="Horizontal" Height="20" HorizontalAlignment="Right">
+
+        <StackPanel Grid.ColumnSpan="4" Grid.Row="3" Grid.Column="0" Orientation="Horizontal" Height="20" HorizontalAlignment="Right">
 
             <Button Content="{Binding UpdateCommandLabel}" Width="75" x:Name="BtnUpdate"
                 Command="{Binding UpdateLayoutCommand}" IsEnabled="False" d:LayoutOverrides="TopPosition, BottomPosition" Margin="0" />
