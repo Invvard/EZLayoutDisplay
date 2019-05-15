@@ -54,12 +54,28 @@
 
                 <Label Content="{Binding LayoutTitle}" Grid.Row="0" Grid.Column="1"/>
                 <Label Content="{Binding KeyboardModel}" Grid.Row="1" Grid.Column="1"/>
-                <Label Content="{Binding Tags}" Grid.Row="2" Grid.Column="1"/>
+
+                <ListView Grid.Row="2" Grid.Column="1" Background="{x:Null}" BorderBrush="{x:Null}"
+                          ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                          ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                          ScrollViewer.CanContentScroll="True"
+                          ItemsSource="{Binding Tags}">
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Background="Transparent" Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Button Style="{StaticResource HyperlinkStyledButton}" Content="{Binding}"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
                 <Label Content="{Binding LayoutStatus}" Grid.Row="3" Grid.Column="1"/>
 
                 <ListView Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                          Background="{x:Null}" BorderBrush="{x:Null}" Margin="0,3,0,0"
-                         ItemsSource="{Binding Layers}">
+                         ItemsSource="{Binding Layers}" ScrollViewer.CanContentScroll="True" Padding="-7,0,0,0">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Label Content="{Binding}" Padding="5,0,0,0"/>
