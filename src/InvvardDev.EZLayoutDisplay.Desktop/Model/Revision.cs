@@ -16,13 +16,13 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
         /// Gets or sets the keyboard layout HEX file URL.
         /// </summary>
         [JsonProperty("hexUrl")]
-        public Uri HexUrl { get; set; }
+        public string HexUrl { get; set; }
 
         /// <summary>
-        /// Gets or sets the keyboard layout source zip URL.
+        /// Gets or sets the keyboard layout sources zip URL.
         /// </summary>
         [JsonProperty("zipUrl")]
-        public Uri SourceUrl { get; set; }
+        public string SourcesUrl { get; set; }
 
         /// <summary>
         /// Gets or sets the keyboard model.
