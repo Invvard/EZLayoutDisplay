@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:model="clr-namespace:InvvardDev.EZLayoutDisplay.Desktop.Model"
         mc:Ignorable="d" Background="{StaticResource WindowBackgroundBrush}"
         Title="{Binding WindowTitle}" Icon="{StaticResource WindowIcon}"
         Width="630" Height="312" MinWidth="630" MinHeight="300"
@@ -42,24 +43,28 @@
                     <ColumnDefinition Width="120" />
                 </Grid.ColumnDefinitions>
 
-                <Label Content="{Binding LayoutNameLabel}" HorizontalContentAlignment="Right" />
-                <Label Content="{Binding KeyboardModelLabel}" Grid.Row="1" HorizontalContentAlignment="Right" />
-                <Label Content="{Binding TagsLabel}" Grid.Row="2" HorizontalContentAlignment="Right" />
-                <Label Content="{Binding StatusLabel}" Grid.Row="3" HorizontalContentAlignment="Right" />
-                <Label Content="{Binding LayersLabel}" Grid.Row="4" HorizontalContentAlignment="Right" />
+                <Label Content="{Binding LayoutTitleLabel}" HorizontalContentAlignment="Right" />
+                <Label Content="{Binding KeyboardModelLabel}" Grid.Row="1" Grid.Column="0" HorizontalContentAlignment="Right" />
+                <Label Content="{Binding TagsLabel}" Grid.Row="2" Grid.Column="0" HorizontalContentAlignment="Right" />
+                <Label Content="{Binding StatusLabel}" Grid.Row="3" Grid.Column="0" HorizontalContentAlignment="Right" />
+                <Label Content="{Binding LayersLabel}" Grid.Row="4" Grid.Column="0" HorizontalContentAlignment="Right" />
 
                 <Button Content="{Binding HexFileCommandLabel}" Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Margin="10" />
                 <Button Content="{Binding SourcesZipCommandLabel}" Grid.Row="2" Grid.Column="2" Grid.RowSpan="2" Margin="10" />
 
+                <Label Content="{Binding LayoutTitle}" Grid.Row="0" Grid.Column="1"/>
+                <Label Content="{Binding KeyboardModel}" Grid.Row="1" Grid.Column="1"/>
+                <Label Content="{Binding Tags}" Grid.Row="2" Grid.Column="1"/>
+                <Label Content="{Binding LayoutStatus}" Grid.Row="3" Grid.Column="1"/>
+
                 <ListView Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                         Background="{x:Null}" BorderBrush="{x:Null}" Margin="0,3,0,0">
-                    <Label Content="ScrollViewer.HorizontalScrollBarVisibility" Padding="5,0,0,0"/>
-                    <Label Content="ScrollViewer.HorizontalScrollBarVisibility" Padding="5,0,0,0"/>
-                    <Label Content="Test" Padding="5,0,0,0"/>
-                    <Label Content="Test" Padding="5,0,0,0"/>
-                    <Label Content="ScrollViewer.HorizontalScrollBarVisibility" Padding="5,0,0,0"/>
-                    <Label Content="ScrollViewer.HorizontalScrollBarVisibility" Padding="5,0,0,0"/>
-                    <Label Content="Test" Padding="5,0,0,0"/>
+                         Background="{x:Null}" BorderBrush="{x:Null}" Margin="0,3,0,0"
+                         ItemsSource="{Binding Layers}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding}" Padding="5,0,0,0"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
                 </ListView>
 
             </Grid>
