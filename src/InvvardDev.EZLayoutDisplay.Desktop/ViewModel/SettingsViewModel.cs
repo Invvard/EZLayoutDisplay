@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -199,6 +200,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             _layoutService = layoutService;
 
             SetLabelUi();
+            SetDesignTimeLabelUi();
 
             SetSettingControls();
         }
@@ -226,6 +228,27 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             CtrlModifierLabel = "CTRL";
             ShiftModifierLabel = "SHIFT";
             WindowsModifierLabel = "Windows";
+        }
+
+        private void SetDesignTimeLabelUi()
+        {
+            if (IsInDesignMode)
+            {
+                LayoutTitle = "Layout title v1.0";
+                KeyboardModel = "ErgoDox EZ Glow";
+                Tags = new ObservableCollection<string>() {
+                                                              "Tag 1",
+                                                              "Tag 2"
+                                                          };
+                LayoutStatus = "Compiled";
+                Layers = new ObservableCollection<string>() {
+                                                                "Layer 1",
+                                                                "Layer 2",
+                                                                "Layer 3",
+                                                                "Layer 4",
+                                                                "Layer 5"
+                                                            };
+            }
         }
 
         private void SetSettingControls()
@@ -347,6 +370,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             if (!_layoutIsCompiled)
             {
                 LayoutStatus = "Not compiled";
+
                 return;
             }
 
