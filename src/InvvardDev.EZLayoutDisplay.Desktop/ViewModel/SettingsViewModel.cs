@@ -75,6 +75,22 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         public string WindowTitle { get; set; }
 
+        public string LayoutInfoGroupName { get; set; }
+
+        public string LayoutNameLabel { get; set; }
+
+        public string KeyboardModelLabel { get; set; }
+
+        public string TagsLabel { get; set; }
+
+        public string StatusLabel { get; set; }
+
+        public string LayersLabel { get; set; }
+
+        public string HexFileCommandLabel { get; set; }
+
+        public string SourcesZipCommandLabel { get; set; }
+
         public string ApplyCommandLabel { get; set; }
 
         public string UpdateCommandLabel { get; set; }
@@ -150,6 +166,16 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         {
             WindowTitle = "Settings";
             LayoutUrlLabel = "Configurator URL to your layout :";
+
+            LayoutInfoGroupName = "Layout information";
+            LayoutNameLabel = "Name :";
+            KeyboardModelLabel = "Keyboard model :";
+            TagsLabel = "Tags :";
+            StatusLabel = "Layout status :";
+            LayersLabel = "Layers :";
+            HexFileCommandLabel = "HEX File";
+            SourcesZipCommandLabel = "Sources zip";
+
             ApplyCommandLabel = "Apply";
             UpdateCommandLabel = "Update";
             CloseCommandLabel = "Close";
