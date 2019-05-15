@@ -34,5 +34,10 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
         /// </summary>
         [JsonProperty("color")]
         public string Color { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Title} {Position}";
+        }
     }
 }
