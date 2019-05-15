@@ -12,7 +12,10 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Design
         {
             Debug.WriteLine("Layout retrieved.");
 
-            return await new Task<ErgodoxLayout>(() => new ErgodoxLayout());
+            var layoutInfo = new ErgodoxLayout();
+            layoutInfo.Title = "Layout title v1.0";
+
+            return await new Task<ErgodoxLayout>(() => layoutInfo);
         }
 
         /// <inheritdoc />
