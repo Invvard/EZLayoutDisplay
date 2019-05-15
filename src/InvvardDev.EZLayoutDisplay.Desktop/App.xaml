@@ -20,6 +20,23 @@
 
             <SolidColorBrush x:Key="WindowBackgroundBrush" Color="WhiteSmoke" />
 
+            <Style TargetType="Button" x:Key="HyperlinkStyledButton">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <TextBlock Foreground="#FF0066CC"
+                                       Text="{TemplateBinding Content}"
+                                       TextDecorations="Underline"
+                                       FontFamily="Segoe UI"
+                                       FontSize="15"
+                                       Cursor="Hand" />
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="Margin" Value="5,0,0,0" />
+            </Style>
+
             <converter:KeyCodeToCharConverter x:Key="KeyCodeConverter" />
 
             <converter:BoolToVisibilityConverter x:Key="BoolToHiddenConverter"
