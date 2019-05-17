@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -19,6 +18,12 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 {
     public class SettingsViewModel : ViewModelBase
     {
+        #region Constants
+
+        private const string TagSearchBaseUri = "https://configure.ergodox-ez.com/{0}/search?q={1}";
+
+        #endregion
+
         #region Fields
 
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
@@ -26,7 +31,9 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private readonly ISettingsService _settingsService;
         private readonly IWindowService _windowService;
         private readonly ILayoutService _layoutService;
+        private readonly IProcessService _processService;
 
+        private ICommand _openTagSearchCommand;
         private ICommand _applySettingsCommand;
         private ICommand _updateLayoutCommand;
         private ICommand _closeSettingsCommand;
@@ -40,6 +47,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private Uri _hexFileUri;
         private Uri _sourcesZipUri;
         private bool _layoutIsCompiled;
+        private string _keyboardGeometry;
 
         private string _altModifierLabel;
         private string _ctrlModifierLabel;
@@ -52,6 +60,13 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         #endregion
 
         #region Relay commands
+
+        /// <summary>
+        /// Open tag search command.
+        /// </summary>
+        public ICommand OpenTagSearchCommand =>
+            _openTagSearchCommand
+            ?? (_openTagSearchCommand = new RelayCommand<string>(OpenTagSearchUrl));
 
         /// <summary>
         /// Cancel settings edition.
@@ -191,13 +206,14 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         #region Constructor
 
-        public SettingsViewModel(ISettingsService settingsService, IWindowService windowService, ILayoutService layoutService)
+        public SettingsViewModel(ISettingsService settingsService, IWindowService windowService, ILayoutService layoutService, IProcessService processService)
         {
             Logger.TraceConstructor();
 
             _settingsService = settingsService;
             _windowService = windowService;
             _layoutService = layoutService;
+            _processService = processService;
 
             SetLabelUi();
             SetDesignTimeLabelUi();
@@ -343,6 +359,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             Logger.TraceMethod();
 
             LayoutTitle = layoutInfo.Title;
+            _keyboardGeometry = layoutInfo.Geometry;
 
             if (layoutInfo.Tags != null && layoutInfo.Tags.Any())
             {
@@ -412,7 +429,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             Logger.TraceMethod();
 
             var layoutHashIdGroupName = "layoutHashId";
-            var pattern = $"https://configure.ergodox-ez.com/ergodox-ez/layouts/(?<{layoutHashIdGroupName}>default|[a-zA-Z0-9]{{4,}})(?:/latest/[0-9])?";
+            var pattern = $"https://configure.ergodox-ez.com/(?:ergodox|planck)-ez/layouts/(?<{layoutHashIdGroupName}>default|[a-zA-Z0-9]{{4,}})(?:/latest/[0-9])?";
             var layoutHashId = "default";
 
             var regex = new Regex(pattern);
@@ -427,6 +444,17 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             Logger.Debug("Layout Hash ID = {0}", layoutHashId);
 
             return layoutHashId;
+        }
+
+        private void OpenTagSearchUrl(string tag)
+        {
+            if (string.IsNullOrWhiteSpace(tag) || string.IsNullOrWhiteSpace(_keyboardGeometry))
+            {
+                return;
+            }
+
+            var tagSearchUri = string.Format(TagSearchBaseUri, _keyboardGeometry, tag);
+            _processService.StartWebUrl(tagSearchUri);
         }
 
         #endregion
