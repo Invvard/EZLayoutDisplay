@@ -34,6 +34,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private readonly IProcessService _processService;
 
         private ICommand _openTagSearchCommand;
+        private ICommand _downloadHexFileCommand;
+        private ICommand _downloadSourcesCommand;
         private ICommand _applySettingsCommand;
         private ICommand _updateLayoutCommand;
         private ICommand _closeSettingsCommand;
@@ -44,8 +46,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private string _layoutStatus;
         private ObservableCollection<string> _tags;
         private ObservableCollection<string> _layers;
-        private Uri _hexFileUri;
-        private Uri _sourcesZipUri;
+        private string _hexFileUri;
+        private string _sourcesZipUri;
         private bool _layoutIsCompiled;
         private string _keyboardGeometry;
 
@@ -67,6 +69,20 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         public ICommand OpenTagSearchCommand =>
             _openTagSearchCommand
             ?? (_openTagSearchCommand = new RelayCommand<string>(OpenTagSearchUrl));
+
+        /// <summary>
+        /// Download HEX file.
+        /// </summary>
+        public ICommand DownloadHexFileCommand =>
+            _downloadHexFileCommand
+            ?? (_downloadHexFileCommand = new RelayCommand(DownloadHexFile, LayoutIsCompiled));
+
+        /// <summary>
+        /// Download Sources ZIP.
+        /// </summary>
+        public ICommand DownloadSourcesCommand =>
+            _downloadSourcesCommand
+            ?? (_downloadSourcesCommand = new RelayCommand(DownloadSources, LayoutIsCompiled));
 
         /// <summary>
         /// Cancel settings edition.
@@ -330,6 +346,11 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             return isDirty;
         }
 
+        private bool LayoutIsCompiled()
+        {
+            return _layoutIsCompiled;
+        }
+
         private async void UpdateErgoDoxInfo()
         {
             Logger.TraceMethod();
@@ -384,16 +405,13 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
             _layoutIsCompiled = Uri.IsWellFormedUriString(revision.HexUrl, UriKind.Absolute) && Uri.IsWellFormedUriString(revision.SourcesUrl, UriKind.Absolute);
 
-            if (!_layoutIsCompiled)
-            {
-                LayoutStatus = "Not compiled";
+            ((RelayCommand)DownloadHexFileCommand).RaiseCanExecuteChanged();
+            ((RelayCommand)DownloadSourcesCommand).RaiseCanExecuteChanged();
 
-                return;
-            }
+            _hexFileUri = revision.HexUrl;
+            _sourcesZipUri = revision.SourcesUrl;
 
-            LayoutStatus = "Compiled";
-            _hexFileUri = new Uri(revision.HexUrl);
-            _sourcesZipUri = new Uri(revision.SourcesUrl);
+            LayoutStatus = !_layoutIsCompiled ? "Not compiled" : "Compiled";
         }
 
         private async Task UpdateLayout()
@@ -455,6 +473,16 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
             var tagSearchUri = string.Format(TagSearchBaseUri, _keyboardGeometry, tag);
             _processService.StartWebUrl(tagSearchUri);
+        }
+
+        private void DownloadHexFile()
+        {
+            _processService.StartWebUrl(_hexFileUri);
+        }
+
+        private void DownloadSources()
+        {
+            _processService.StartWebUrl(_sourcesZipUri);
         }
 
         #endregion
