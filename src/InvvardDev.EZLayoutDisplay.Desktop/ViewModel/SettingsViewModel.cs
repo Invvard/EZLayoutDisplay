@@ -291,7 +291,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         #endregion
 
-        #region Private methods
+        #region Command handlers
 
         private async void SaveSettings()
         {
@@ -331,6 +331,33 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             _windowService.CloseWindow<SettingsWindow>();
         }
 
+        private void OpenTagSearchUrl(string tag)
+        {
+            Logger.TraceRelayCommand();
+
+            if (string.IsNullOrWhiteSpace(tag) || string.IsNullOrWhiteSpace(_keyboardGeometry))
+            {
+                return;
+            }
+
+            var tagSearchUri = string.Format(TagSearchBaseUri, _keyboardGeometry, tag);
+            _processService.StartWebUrl(tagSearchUri);
+        }
+
+        private void DownloadHexFile()
+        {
+            Logger.TraceRelayCommand();
+
+            _processService.StartWebUrl(_hexFileUri);
+        }
+
+        private void DownloadSources()
+        {
+            Logger.TraceRelayCommand();
+
+            _processService.StartWebUrl(_sourcesZipUri);
+        }
+
         private void UpdateButtonCanExecute()
         {
             Logger.TraceMethod();
@@ -350,6 +377,10 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         {
             return _layoutIsCompiled;
         }
+
+        #endregion
+
+        #region Private methods
 
         private async void UpdateErgoDoxInfo()
         {
@@ -462,27 +493,6 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             Logger.Debug("Layout Hash ID = {0}", layoutHashId);
 
             return layoutHashId;
-        }
-
-        private void OpenTagSearchUrl(string tag)
-        {
-            if (string.IsNullOrWhiteSpace(tag) || string.IsNullOrWhiteSpace(_keyboardGeometry))
-            {
-                return;
-            }
-
-            var tagSearchUri = string.Format(TagSearchBaseUri, _keyboardGeometry, tag);
-            _processService.StartWebUrl(tagSearchUri);
-        }
-
-        private void DownloadHexFile()
-        {
-            _processService.StartWebUrl(_hexFileUri);
-        }
-
-        private void DownloadSources()
-        {
-            _processService.StartWebUrl(_sourcesZipUri);
         }
 
         #endregion
