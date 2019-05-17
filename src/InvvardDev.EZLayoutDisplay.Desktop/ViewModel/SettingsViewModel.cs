@@ -410,6 +410,9 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         {
             Logger.TraceMethod();
 
+            Tags?.Clear();
+            Layers?.Clear();             
+
             LayoutTitle = layoutInfo.Title;
             _keyboardGeometry = layoutInfo.Geometry;
 
