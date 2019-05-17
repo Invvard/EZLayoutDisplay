@@ -416,7 +416,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             LayoutTitle = layoutInfo.Title;
             _keyboardGeometry = layoutInfo.Geometry;
 
-            if (layoutInfo.Tags != null && layoutInfo.Tags.Any())
+            if (layoutInfo.Tags?.Any() != null)
             {
                 Tags = new ObservableCollection<string>(layoutInfo.Tags.Select(t => t.Name));
             }
