@@ -10,6 +10,10 @@
         WindowStartupLocation="CenterScreen"
         DataContext="{Binding Settings, Source={StaticResource Locator}}">
 
+    <Window.Resources>
+        <ResourceDictionary Source="../Skins/SettingsSkin.xaml"/>
+    </Window.Resources>
+
     <Grid Margin="10,0,10,10">
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
@@ -35,9 +39,9 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30" />
                     <RowDefinition Height="30" />
-                    <RowDefinition Height="40" />
                     <RowDefinition Height="30" />
-                    <RowDefinition Height="*" />
+                    <RowDefinition />
+                    <RowDefinition Height="45" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="120" />
@@ -45,56 +49,33 @@
                     <ColumnDefinition Width="120" />
                 </Grid.ColumnDefinitions>
 
-                <Label Content="{Binding LayoutTitleLabel}" HorizontalContentAlignment="Right" />
+                <Label Content="{Binding LayoutTitleLabel}" Style="{StaticResource TitleLabelStyle}" />
                 <Label Content="{Binding KeyboardModelLabel}" Grid.Row="1" Grid.Column="0"
-                       HorizontalContentAlignment="Right" />
-                <Label Content="{Binding TagsLabel}" Grid.Row="2" Grid.Column="0" HorizontalContentAlignment="Right" />
-                <Label Content="{Binding StatusLabel}" Grid.Row="3" Grid.Column="0" HorizontalContentAlignment="Right" />
-                <Label Content="{Binding LayersLabel}" Grid.Row="4" Grid.Column="0" HorizontalContentAlignment="Right" />
-
-                <Button Content="{Binding HexFileCommandLabel}" Grid.Row="0" Grid.Column="2" Grid.RowSpan="2"
-                        Margin="10" Height="40" Command="{Binding DownloadHexFileCommand}" />
-                <Button Content="{Binding SourcesZipCommandLabel}" Grid.Row="2" Grid.Column="2" Grid.RowSpan="2"
-                        Margin="10" Height="40" Command="{Binding DownloadSourcesCommand}" />
+                       Style="{StaticResource TitleLabelStyle}" />
+                <Label Content="{Binding StatusLabel}" Grid.Row="2" Grid.Column="0" Style="{StaticResource TitleLabelStyle}" />
+                <Label Content="{Binding LayersLabel}" Grid.Row="3" Grid.Column="0" Style="{StaticResource TitleLabelStyle}" />
+                <Label Content="{Binding TagsLabel}" Grid.Row="4" Grid.Column="0" Style="{StaticResource TitleLabelStyle}" />
 
                 <Label Content="{Binding LayoutTitle}" Grid.Row="0" Grid.Column="1" />
                 <Label Content="{Binding KeyboardModel}" Grid.Row="1" Grid.Column="1" />
+                <Label Content="{Binding LayoutStatus}" Grid.Row="2" Grid.Column="1" />
 
-                <ListView Grid.Row="2" Grid.Column="1" Background="{x:Null}" BorderBrush="{x:Null}"
-                          ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                          ScrollViewer.CanContentScroll="True"
-                          ItemsSource="{Binding Tags}" x:Name="LvTags">
-                    <ListView.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel Background="Transparent" Orientation="Horizontal" />
-                        </ItemsPanelTemplate>
-                    </ListView.ItemsPanel>
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Button Style="{StaticResource HyperlinkStyledButton}" Content="{Binding}"
-                                    Command="{Binding ElementName=LvTags, Path=DataContext.OpenTagSearchCommand}"
-                                    CommandParameter="{Binding}"/>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-                <Label Content="{Binding LayoutStatus}" Grid.Row="3" Grid.Column="1" />
+                <ListView x:Name="LvLayers" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"
+                          Style="{StaticResource LvLayersStyle}" ItemsSource="{Binding Layers}" />
 
-                <ListView Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2"
-                          ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                          Background="{x:Null}" BorderBrush="{x:Null}" Margin="0,3,0,0"
-                          ItemsSource="{Binding Layers}" ScrollViewer.CanContentScroll="True" Padding="-7,0,0,0">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Label Content="{Binding}" Padding="5,0,0,0" />
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                <ListView x:Name="LvTags" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2"
+                          Style="{StaticResource LvTagsStyle}" ItemsSource="{Binding Tags}"/>
+
+                <StackPanel x:Name="SpLayoutButtons" Grid.Row="0" Grid.RowSpan="3" Grid.Column="2">
+                    <Button Content="{Binding HexFileCommandLabel}" Height="40" Command="{Binding DownloadHexFileCommand}" Margin="5,0,5,5" />
+                    <Button Content="{Binding SourcesZipCommandLabel}" Height="40" Command="{Binding DownloadSourcesCommand}" Margin="5,0" />
+                </StackPanel>
 
             </Grid>
         </GroupBox>
 
-        <StackPanel Grid.ColumnSpan="4" Grid.Row="2" Grid.Column="0" Orientation="Horizontal" Height="20"
-                    HorizontalAlignment="Right">
+        <StackPanel Grid.ColumnSpan="4" Grid.Row="2" Grid.Column="0"
+                    Orientation="Horizontal" Height="20" HorizontalAlignment="Right">
 
             <Button Content="{Binding UpdateCommandLabel}" Width="75" x:Name="BtnUpdate"
                     Command="{Binding UpdateLayoutCommand}" IsEnabled="False"
