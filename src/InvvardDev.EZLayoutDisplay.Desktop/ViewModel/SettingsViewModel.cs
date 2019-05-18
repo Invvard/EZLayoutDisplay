@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -425,12 +426,34 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             {
                 var revision = layoutInfo.Revisions.First();
 
-                KeyboardModel = revision.Model;
+                KeyboardModel = GetKeyBoardDescription(_keyboardGeometry, revision.Model);
 
                 UpdateLayoutButtons(revision);
 
                 Layers = new ObservableCollection<string>(revision.Layers.Select(l => l.ToString()));
             }
+        }
+
+        private string GetKeyBoardDescription(string keyboardGeometry, string revisionModel)
+        {
+            string keyboardDescription;
+
+            switch (keyboardGeometry)
+            {
+                case "ergodox-ez":
+                    keyboardDescription = "ErgoDox EZ ";
+                    break;
+                case "planck-ez":
+                    keyboardDescription = "Planck EZ ";
+                    break;
+                default:
+                    keyboardDescription = $"{keyboardGeometry }";
+                    break;
+            }
+
+            keyboardDescription += char.ToUpper(revisionModel[0]) + revisionModel.Substring(1);
+
+            return keyboardDescription;
         }
 
         private void UpdateLayoutButtons(Revision revision)
