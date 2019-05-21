@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -265,23 +264,22 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         private void SetDesignTimeLabelUi()
         {
-            if (IsInDesignMode)
-            {
-                LayoutTitle = "Layout title v1.0";
-                KeyboardModel = "ErgoDox EZ Glow";
-                Tags = new ObservableCollection<string>() {
-                                                              "Tag 1",
-                                                              "Tag 2"
-                                                          };
-                LayoutStatus = "Compiled";
-                Layers = new ObservableCollection<string>() {
-                                                                "Layer 1",
-                                                                "Layer 2",
-                                                                "Layer 3",
-                                                                "Layer 4",
-                                                                "Layer 5"
-                                                            };
-            }
+            if (!IsInDesignMode) return;
+
+            LayoutTitle = "Layout title v1.0";
+            KeyboardModel = "ErgoDox EZ Glow";
+            Tags = new ObservableCollection<string>() {
+                                                          "Tag 1",
+                                                          "Tag 2"
+                                                      };
+            LayoutStatus = "Compiled";
+            Layers = new ObservableCollection<string>() {
+                                                            "Layer 1",
+                                                            "Layer 2",
+                                                            "Layer 3",
+                                                            "Layer 4",
+                                                            "Layer 5"
+                                                        };
         }
 
         private void SetSettingControls()
