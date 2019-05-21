@@ -391,7 +391,13 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             {
                 var layoutInfo = await _layoutService.GetLayoutInfo(layoutHashId);
                 Logger.Debug("LayoutInfo = {@value0}", layoutInfo);
-                UpdateLayoutInfo(layoutInfo);
+
+                ClearLayoutInfo();
+
+                if (layoutInfo != null)
+                {
+                    UpdateLayoutInfo(layoutInfo);
+                }
             }
             catch (ArgumentNullException anex)
             {
@@ -405,12 +411,22 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             }
         }
 
+        private void ClearLayoutInfo()
+        {
+            Tags?.Clear();
+            Layers?.Clear();
+
+            LayoutTitle = "";
+            KeyboardModel = "";
+            LayoutStatus = "";
+
+            _keyboardGeometry = "";
+            _layoutIsCompiled = false;
+        }
+
         private void UpdateLayoutInfo(ErgodoxLayout layoutInfo)
         {
             Logger.TraceMethod();
-
-            Tags?.Clear();
-            Layers?.Clear();             
 
             LayoutTitle = layoutInfo.Title;
             _keyboardGeometry = layoutInfo.Geometry;
@@ -425,8 +441,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
                 var revision = layoutInfo.Revisions.First();
 
                 KeyboardModel = GetKeyBoardDescription(_keyboardGeometry, revision.Model);
-
                 UpdateLayoutButtons(revision);
+                LayoutStatus = !_layoutIsCompiled ? "Not compiled" : "Compiled";
 
                 Layers = new ObservableCollection<string>(revision.Layers.Select(l => l.ToString()));
             }
@@ -440,12 +456,15 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             {
                 case "ergodox-ez":
                     keyboardDescription = "ErgoDox EZ ";
+
                     break;
                 case "planck-ez":
                     keyboardDescription = "Planck EZ ";
+
                     break;
                 default:
-                    keyboardDescription = $"{keyboardGeometry }";
+                    keyboardDescription = $"{keyboardGeometry}";
+
                     break;
             }
 
@@ -460,13 +479,11 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
             _layoutIsCompiled = Uri.IsWellFormedUriString(revision.HexUrl, UriKind.Absolute) && Uri.IsWellFormedUriString(revision.SourcesUrl, UriKind.Absolute);
 
-            ((RelayCommand)DownloadHexFileCommand).RaiseCanExecuteChanged();
-            ((RelayCommand)DownloadSourcesCommand).RaiseCanExecuteChanged();
+            ((RelayCommand) DownloadHexFileCommand).RaiseCanExecuteChanged();
+            ((RelayCommand) DownloadSourcesCommand).RaiseCanExecuteChanged();
 
             _hexFileUri = revision.HexUrl;
             _sourcesZipUri = revision.SourcesUrl;
-
-            LayoutStatus = !_layoutIsCompiled ? "Not compiled" : "Compiled";
         }
 
         private async Task UpdateLayout()
