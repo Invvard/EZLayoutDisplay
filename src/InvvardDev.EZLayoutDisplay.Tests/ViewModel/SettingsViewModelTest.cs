@@ -16,28 +16,20 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
         {
             //Arrange
             var tbContentInitial = "This is a test";
-            var settingsService = new Mock<ISettingsService>();
-            settingsService.Setup(s => s.ErgodoxLayoutUrl).Returns(tbContentInitial);
-            var windowService = new Mock<IWindowService>();
-            var layoutService = new Mock<ILayoutService>();
-            var processService = new Mock<IProcessService>();
+            var mockSettingsService = new Mock<ISettingsService>();
+            mockSettingsService.Setup(s => s.ErgodoxLayoutUrl).Returns(tbContentInitial);
+            var mockWindowService = new Mock<IWindowService>();
+            var mockLayoutService = new Mock<ILayoutService>();
+            mockLayoutService.Setup(s => s.GetLayoutInfo(It.IsAny<string>())).Returns(Task.FromResult(It.IsAny<ErgodoxLayout>()));
+            var mockProcessService = new Mock<IProcessService>();
 
             //Act
-            var settingsViewModel = new SettingsViewModel(settingsService.Object, windowService.Object, layoutService.Object, processService.Object);
+            var settingsViewModel = new SettingsViewModel(mockSettingsService.Object, mockWindowService.Object, mockLayoutService.Object, mockProcessService.Object);
 
             //Assert
             Assert.Equal("Settings", settingsViewModel.WindowTitle);
             Assert.Equal("Configurator URL to your layout :", settingsViewModel.LayoutUrlLabel);
-            Assert.Equal("Apply", settingsViewModel.ApplyCommandLabel);
-            Assert.Equal("Close", settingsViewModel.CloseCommandLabel);
-            Assert.Equal("Cancel", settingsViewModel.CancelCommandLabel);
             Assert.Equal(tbContentInitial, settingsViewModel.LayoutUrlContent);
-            Assert.Equal("Hotkey to display layout", settingsViewModel.HotkeyTitleLabel);
-            Assert.Equal("ALT", settingsViewModel.AltModifierLabel);
-            Assert.Equal("CTRL", settingsViewModel.CtrlModifierLabel);
-            Assert.Equal("SHIFT", settingsViewModel.ShiftModifierLabel);
-            Assert.Equal("Windows", settingsViewModel.WindowsModifierLabel);
-            Assert.Equal("Update", settingsViewModel.UpdateCommandLabel);
         }
 
         [ Theory ]
@@ -46,16 +38,16 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
         public void RelayCommand_CanExecute(string initialValue, string newValue, bool canExecute)
         {
             //Arrange
-            var settingsService = new Mock<ISettingsService>();
-            settingsService.Setup(s => s.ErgodoxLayoutUrl).Returns(initialValue);
-            var windowService = new Mock<IWindowService>();
+            var mockSettingsService = new Mock<ISettingsService>();
+            mockSettingsService.Setup(s => s.ErgodoxLayoutUrl).Returns(initialValue);
+            var mockWindowService = new Mock<IWindowService>();
             var mockLayoutService = new Mock<ILayoutService>();
-            var processService = new Mock<IProcessService>();
+            var mockProcessService = new Mock<IProcessService>();
 
             //Act
-            var settingsViewModel = new SettingsViewModel(settingsService.Object, windowService.Object, mockLayoutService.Object, processService.Object) {
-                                                                                                                                                             LayoutUrlContent = newValue
-                                                                                                                                                         };
+            var settingsViewModel = new SettingsViewModel(mockSettingsService.Object, mockWindowService.Object, mockLayoutService.Object, mockProcessService.Object) {
+                                                                                                                                                                         LayoutUrlContent = newValue
+                                                                                                                                                                     };
 
             //Assert
             if (canExecute)
@@ -78,22 +70,23 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             //Arrange
             var tbContentInitial = "This is a test";
             var tbContentNewValue = "new value";
-            var settingsService = new Mock<ISettingsService>();
-            settingsService.Setup(s => s.Save()).Verifiable();
-            settingsService.SetupProperty(s => s.ErgodoxLayoutUrl, tbContentInitial);
-            var windowService = new Mock<IWindowService>();
+            var mockSettingsService = new Mock<ISettingsService>();
+            mockSettingsService.Setup(s => s.Save()).Verifiable();
+            mockSettingsService.SetupProperty(s => s.ErgodoxLayoutUrl, tbContentInitial);
+            var mockWindowService = new Mock<IWindowService>();
             var mockLayoutService = new Mock<ILayoutService>();
-            var processService = new Mock<IProcessService>();
+            var mockProcessService = new Mock<IProcessService>();
 
             //Act
-            var settingsViewModel = new SettingsViewModel(settingsService.Object, windowService.Object, mockLayoutService.Object, processService.Object) {
-                                                                                                                                                             LayoutUrlContent = tbContentNewValue
-                                                                                                                                                         };
+            var settingsViewModel = new SettingsViewModel(mockSettingsService.Object, mockWindowService.Object, mockLayoutService.Object, mockProcessService.Object) {
+                                                                                                                                                                         LayoutUrlContent =
+                                                                                                                                                                             tbContentNewValue
+                                                                                                                                                                     };
             settingsViewModel.ApplySettingsCommand.Execute(null);
 
             //Assert
-            Assert.Equal(tbContentNewValue, settingsService.Object.ErgodoxLayoutUrl);
-            settingsService.Verify(s => s.Save());
+            Assert.Equal(tbContentNewValue, mockSettingsService.Object.ErgodoxLayoutUrl);
+            mockSettingsService.Verify(s => s.Save());
             Assert.False(settingsViewModel.ApplySettingsCommand.CanExecute(null));
             Assert.False(settingsViewModel.CancelSettingsCommand.CanExecute(null));
         }
@@ -104,22 +97,23 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             //Arrange
             var tbContentInitial = "This is a test";
             var tbContentNewValue = "new value";
-            var settingsService = new Mock<ISettingsService>();
-            settingsService.Setup(s => s.Cancel()).Verifiable();
-            settingsService.SetupProperty(s => s.ErgodoxLayoutUrl, tbContentInitial);
-            var windowService = new Mock<IWindowService>();
+            var mockSettingsService = new Mock<ISettingsService>();
+            mockSettingsService.Setup(s => s.Cancel()).Verifiable();
+            mockSettingsService.SetupProperty(s => s.ErgodoxLayoutUrl, tbContentInitial);
+            var mockWindowService = new Mock<IWindowService>();
             var mockLayoutService = new Mock<ILayoutService>();
-            var processService = new Mock<IProcessService>();
+            var mockProcessService = new Mock<IProcessService>();
 
             //Act
-            var settingsViewModel = new SettingsViewModel(settingsService.Object, windowService.Object, mockLayoutService.Object, processService.Object) {
-                                                                                                                                                             LayoutUrlContent = tbContentNewValue
-                                                                                                                                                         };
+            var settingsViewModel = new SettingsViewModel(mockSettingsService.Object, mockWindowService.Object, mockLayoutService.Object, mockProcessService.Object) {
+                                                                                                                                                                         LayoutUrlContent =
+                                                                                                                                                                             tbContentNewValue
+                                                                                                                                                                     };
             settingsViewModel.CancelSettingsCommand.Execute(null);
 
             //Assert
-            Assert.Equal(tbContentInitial, settingsService.Object.ErgodoxLayoutUrl);
-            settingsService.Verify(s => s.Cancel());
+            Assert.Equal(tbContentInitial, mockSettingsService.Object.ErgodoxLayoutUrl);
+            mockSettingsService.Verify(s => s.Cancel());
             Assert.False(settingsViewModel.ApplySettingsCommand.CanExecute(null));
             Assert.False(settingsViewModel.CancelSettingsCommand.CanExecute(null));
         }
@@ -132,16 +126,16 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             //Arrange
             var tbContentInitial = "This is a test";
             var tbContentNewValue = "new value";
-            var settingsService = new Mock<ISettingsService>();
-            settingsService.Setup(s => s.Save()).Verifiable();
-            settingsService.SetupProperty(s => s.ErgodoxLayoutUrl, tbContentInitial);
-            var windowService = new Mock<IWindowService>();
-            windowService.Setup(w => w.CloseWindow<SettingsWindow>()).Verifiable();
+            var mockSettingsService = new Mock<ISettingsService>();
+            mockSettingsService.Setup(s => s.Save()).Verifiable();
+            mockSettingsService.SetupProperty(s => s.ErgodoxLayoutUrl, tbContentInitial);
+            var mockWindowService = new Mock<IWindowService>();
+            mockWindowService.Setup(w => w.CloseWindow<SettingsWindow>()).Verifiable();
             var mockLayoutService = new Mock<ILayoutService>();
-            var processService = new Mock<IProcessService>();
+            var mockProcessService = new Mock<IProcessService>();
 
             //Act
-            var settingsViewModel = new SettingsViewModel(settingsService.Object, windowService.Object, mockLayoutService.Object, processService.Object);
+            var settingsViewModel = new SettingsViewModel(mockSettingsService.Object, mockWindowService.Object, mockLayoutService.Object, mockProcessService.Object);
 
             if (mustSave)
             {
@@ -153,19 +147,19 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             //Assert
             if (mustSave)
             {
-                Assert.Equal(tbContentNewValue, settingsService.Object.ErgodoxLayoutUrl);
-                settingsService.Verify(s => s.Save(), Times.Once);
+                Assert.Equal(tbContentNewValue, mockSettingsService.Object.ErgodoxLayoutUrl);
+                mockSettingsService.Verify(s => s.Save(), Times.Once);
                 Assert.False(settingsViewModel.ApplySettingsCommand.CanExecute(null));
                 Assert.False(settingsViewModel.CancelSettingsCommand.CanExecute(null));
-                windowService.Verify(w => w.CloseWindow<SettingsWindow>(), Times.Once);
+                mockWindowService.Verify(w => w.CloseWindow<SettingsWindow>(), Times.Once);
             }
             else
             {
-                Assert.Equal(tbContentInitial, settingsService.Object.ErgodoxLayoutUrl);
+                Assert.Equal(tbContentInitial, mockSettingsService.Object.ErgodoxLayoutUrl);
                 Assert.False(settingsViewModel.ApplySettingsCommand.CanExecute(null));
                 Assert.False(settingsViewModel.CancelSettingsCommand.CanExecute(null));
-                settingsService.Verify(s => s.Save(), Times.Never);
-                windowService.Verify(w => w.CloseWindow<SettingsWindow>(), Times.Once);
+                mockSettingsService.Verify(s => s.Save(), Times.Never);
+                mockWindowService.Verify(w => w.CloseWindow<SettingsWindow>(), Times.Once);
             }
         }
 
@@ -191,10 +185,10 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             var mockLayoutService = new Mock<ILayoutService>();
             mockLayoutService.Setup(l => l.GetErgodoxLayout(expectedHashId)).Returns(Task.FromResult(It.IsAny<ErgodoxLayout>())).Verifiable();
             mockLayoutService.Setup(l => l.PrepareEZLayout(It.IsAny<ErgodoxLayout>())).Verifiable();
-            var processService = new Mock<IProcessService>();
+            var mockProcessService = new Mock<IProcessService>();
 
             //Act
-            var settingsViewModel = new SettingsViewModel(mockSettingsService.Object, mockWindowService.Object, mockLayoutService.Object, processService.Object);
+            var settingsViewModel = new SettingsViewModel(mockSettingsService.Object, mockWindowService.Object, mockLayoutService.Object, mockProcessService.Object);
 
             settingsViewModel.UpdateLayoutCommand.Execute(null);
 
@@ -242,6 +236,35 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             // Assert
             mockLayoutService.Verify();
             mockWindowService.Verify();
+        }
+
+        [ Theory ]
+        [ InlineData(null, null, 0) ]
+        [ InlineData("", null, 0) ]
+        [ InlineData("  ", null, 0) ]
+        [ InlineData(null, "", 0) ]
+        [ InlineData(null, "  ", 0) ]
+        [ InlineData("tag", "geometry", 1) ]
+        public void OpenTagSearchCommandExecute_UrlNotOpened(string tag, string keyboardGeometry, int callNumber)
+        {
+            // Arrange
+            var mockSettingsService = new Mock<ISettingsService>();
+            mockSettingsService.SetupProperty(s => s.ErgodoxLayoutUrl, "");
+            var mockWindowService = new Mock<IWindowService>();
+            var mockLayoutService = new Mock<ILayoutService>();
+            mockLayoutService.Setup(l => l.GetLayoutInfo(It.IsAny<string>()))
+                             .Returns(Task.FromResult(new ErgodoxLayout() {
+                                                                              Geometry = keyboardGeometry
+                                                                          }));
+            var mockProcessService = new Mock<IProcessService>();
+            mockProcessService.Setup(p => p.StartWebUrl(It.IsAny<string>())).Verifiable();
+
+            // Act
+            var settingsViewModel = new SettingsViewModel(mockSettingsService.Object, mockWindowService.Object, mockLayoutService.Object, mockProcessService.Object);
+            settingsViewModel.OpenTagSearchCommand.Execute(tag);
+
+            // Assert
+            mockProcessService.Verify(p => p.StartWebUrl($"https://configure.ergodox-ez.com/{keyboardGeometry}/search?q={tag}"), Times.Exactly(callNumber));
         }
     }
 }
