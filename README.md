@@ -1,5 +1,5 @@
 # EZ Layout Display
-[![Azure DevOps builds](https://img.shields.io/azure-devops/build/invvard/GitHub.InvvardDev.EZLayoutDisplay/14.svg?label=Build)](https://dev.azure.com/invvard/GitHub.InvvardDev.EZLayoutDisplay/_build/results?buildId=143&view=results) 
+[![Azure DevOps builds](https://img.shields.io/azure-devops/build/invvard/ce17fcf7-f4dd-4c72-bba3-8d6415a27144/14.svg)](https://dev.azure.com/invvard/GitHub.InvvardDev.EZLayoutDisplay/_build/results?buildId=143&view=results) 
 [![Azure DevOps tests](https://img.shields.io/azure-devops/tests/invvard/GitHub.InvvardDev.EZLayoutDisplay/14.svg?label=Tests)](https://dev.azure.com/invvard/GitHub.InvvardDev.EZLayoutDisplay/_build/results?buildId=143&view=ms.vss-test-web.build-test-results-tab)
 [![Azure DevOps coverage](https://img.shields.io/azure-devops/coverage/invvard/GitHub.InvvardDev.EZLayoutDisplay/14.svg?label=Coverage)](https://dev.azure.com/invvard/GitHub.InvvardDev.EZLayoutDisplay/_build/results?buildId=143&view=codecoverage-tab)
 [![GitHub release](https://img.shields.io/github/release/invvard/ezlayoutdisplay.svg?label=Latest%20release)](https://github.com/Invvard/EZLayoutDisplay/releases/latest)
