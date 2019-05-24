@@ -176,13 +176,13 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         public ObservableCollection<string> Tags
         {
-            get => _tags;
+            get => _tags ?? (_tags = new ObservableCollection<string>());
             private set => Set(ref _tags, value);
         }
 
         public ObservableCollection<string> Layers
         {
-            get => _layers;
+            get => _layers ?? (_layers = new ObservableCollection<string>());
             private set => Set(ref _layers, value);
         }
 
@@ -413,8 +413,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         private void ClearLayoutInfo()
         {
-            Tags?.Clear();
-            Layers?.Clear();
+            Tags.Clear();
+            Layers.Clear();
 
             LayoutTitle = "";
             KeyboardModel = "";
