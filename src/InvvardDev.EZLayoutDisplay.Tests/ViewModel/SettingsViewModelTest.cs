@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Castle.Components.DictionaryAdapter;
 using InvvardDev.EZLayoutDisplay.Desktop.Model;
 using InvvardDev.EZLayoutDisplay.Desktop.Service.Interface;
 using InvvardDev.EZLayoutDisplay.Desktop.View;
@@ -262,7 +265,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
         [ InlineData(null, "", 0) ]
         [ InlineData(null, "  ", 0) ]
         [ InlineData("tag", "geometry", 1) ]
-        public void OpenTagSearchCommandExecute_UrlNotOpened(string tag, string keyboardGeometry, int callNumber)
+        public void OpenTagSearchCommandExecute(string tag, string keyboardGeometry, int callNumber)
         {
             // Arrange
             var mockSettingsService = new Mock<ISettingsService>();
@@ -282,6 +285,31 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
 
             // Assert
             mockProcessService.Verify(p => p.StartWebUrl($"https://configure.ergodox-ez.com/{keyboardGeometry}/search?q={tag}"), Times.Exactly(callNumber));
+        }
+
+        [ Fact ]
+        public void UpdateErgoDoxInfo_LayoutInfoNull()
+        {
+            // Arrange
+            var mockSettingsService = new Mock<ISettingsService>();
+            mockSettingsService.SetupProperty(s => s.ErgodoxLayoutUrl, "");
+            var mockWindowService = new Mock<IWindowService>();
+            var mockLayoutService = new Mock<ILayoutService>();
+            mockLayoutService.Setup(l => l.GetLayoutInfo(It.IsAny<string>())).Returns(Task.FromResult<ErgodoxLayout>(null));
+            var mockProcessService = new Mock<IProcessService>();
+
+            // Act
+            var settingsViewModel = new SettingsViewModel(mockSettingsService.Object, mockWindowService.Object, mockLayoutService.Object, mockProcessService.Object);
+
+            // Assert
+            Assert.Empty(settingsViewModel.Layers);
+            Assert.Empty(settingsViewModel.Tags);
+            Assert.Equal("", settingsViewModel.LayoutTitle);
+            Assert.Equal("", settingsViewModel.KeyboardModel);
+            Assert.Equal("", settingsViewModel.LayoutStatus);
+            Assert.Equal("", settingsViewModel.KeyboardModel);
+            Assert.False(settingsViewModel.DownloadHexFileCommand.CanExecute(null));
+            Assert.False(settingsViewModel.DownloadSourcesCommand.CanExecute(null));
         }
     }
 }
