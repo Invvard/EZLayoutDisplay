@@ -288,6 +288,46 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
         }
 
         [ Fact ]
+        public void OpenTagSearchCommandExecute_ArgumentNullException()
+        {
+            // Arrange
+            var mockSettingsService = new Mock<ISettingsService>();
+            mockSettingsService.SetupProperty(s => s.ErgodoxLayoutUrl, "");
+            var mockWindowService = new Mock<IWindowService>();
+            mockWindowService.Setup(w => w.ShowWarning("Value cannot be null.")).Verifiable();
+            var mockLayoutService = new Mock<ILayoutService>();
+            mockLayoutService.Setup(l => l.GetLayoutInfo(It.IsAny<string>())).Throws<ArgumentNullException>().Verifiable();
+            var mockProcessService = new Mock<IProcessService>();
+
+            // Act
+            var settingsViewModel = new SettingsViewModel(mockSettingsService.Object, mockWindowService.Object, mockLayoutService.Object, mockProcessService.Object);
+
+            // Assert
+            mockLayoutService.Verify();
+            mockWindowService.Verify();
+        }
+
+        [ Fact ]
+        public void OpenTagSearchCommandExecute_ArgumentException()
+        {
+            // Arrange
+            var mockSettingsService = new Mock<ISettingsService>();
+            mockSettingsService.SetupProperty(s => s.ErgodoxLayoutUrl, "");
+            var mockWindowService = new Mock<IWindowService>();
+            mockWindowService.Setup(w => w.ShowWarning("Value does not fall within the expected range.")).Verifiable();
+            var mockLayoutService = new Mock<ILayoutService>();
+            mockLayoutService.Setup(l => l.GetLayoutInfo(It.IsAny<string>())).Throws<ArgumentException>().Verifiable();
+            var mockProcessService = new Mock<IProcessService>();
+
+            // Act
+            var settingsViewModel = new SettingsViewModel(mockSettingsService.Object, mockWindowService.Object, mockLayoutService.Object, mockProcessService.Object);
+
+            // Assert
+            mockLayoutService.Verify();
+            mockWindowService.Verify();
+        }
+
+        [ Fact ]
         public void UpdateErgoDoxInfo_LayoutInfoNull()
         {
             // Arrange
