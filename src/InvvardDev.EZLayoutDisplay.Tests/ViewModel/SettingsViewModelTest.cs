@@ -307,7 +307,60 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             Assert.Equal("", settingsViewModel.LayoutTitle);
             Assert.Equal("", settingsViewModel.KeyboardModel);
             Assert.Equal("", settingsViewModel.LayoutStatus);
-            Assert.Equal("", settingsViewModel.KeyboardModel);
+            Assert.False(settingsViewModel.DownloadHexFileCommand.CanExecute(null));
+            Assert.False(settingsViewModel.DownloadSourcesCommand.CanExecute(null));
+        }
+
+        [ Theory ] 
+        [InlineData("ergodox-ez", "ErgoDox EZ Model")]
+        [InlineData("planck-ez", "Planck EZ Model")]
+        [InlineData("other", "other Model")]
+        public void UpdateErgoDoxInfo_LayoutInfoNotNull(string geometry, string expectedKeyboardModel)
+        {
+            // Arrange
+            var expectedLayoutStatus = "Not compiled";
+            var expectedInfo = new ErgodoxLayout() {
+                                                       Geometry = geometry,
+                                                       Title = "ezlayout",
+                                                       HashId = "asdf",
+                                                       Tags = new List<ErgodoxTag> {
+                                                                                       new ErgodoxTag {
+                                                                                                          Name = "Tag 1"
+                                                                                                      }
+                                                                                   },
+                                                       Revisions = new List<Revision> {
+                                                                                          new Revision {
+                                                                                                           HexUrl = "",
+                                                                                                           SourcesUrl = "",
+                                                                                                           Model = "Model",
+                                                                                                           Layers = new List<ErgodoxLayer> {
+                                                                                                                                               new ErgodoxLayer() {
+                                                                                                                                                                      Title = "Layer",    
+                                                                                                                                                                      Position = 1
+                                                                                                                                                                  }
+                                                                                                                                           }
+                                                                                                       }
+                                                                                      }
+                                                   };
+            var mockSettingsService = new Mock<ISettingsService>();
+            mockSettingsService.SetupProperty(s => s.ErgodoxLayoutUrl, "");
+            var mockWindowService = new Mock<IWindowService>();
+            var mockLayoutService = new Mock<ILayoutService>();
+            mockLayoutService.Setup(l => l.GetLayoutInfo(It.IsAny<string>())).Returns(Task.FromResult(expectedInfo));
+            var mockProcessService = new Mock<IProcessService>();
+
+            // Act
+            var settingsViewModel = new SettingsViewModel(mockSettingsService.Object, mockWindowService.Object, mockLayoutService.Object, mockProcessService.Object);
+
+            // Assert
+            Assert.Single(settingsViewModel.Layers);
+            Assert.Equal(expectedInfo.Revisions[0].Layers[0].ToString(), settingsViewModel.Layers[0]);
+            Assert.Single(settingsViewModel.Tags);
+            Assert.Equal(expectedInfo.Tags[0].Name, settingsViewModel.Tags[0]);
+
+            Assert.Equal(expectedInfo.Title, settingsViewModel.LayoutTitle);
+            Assert.Equal(expectedKeyboardModel, settingsViewModel.KeyboardModel);
+            Assert.Equal(expectedLayoutStatus, settingsViewModel.LayoutStatus);
             Assert.False(settingsViewModel.DownloadHexFileCommand.CanExecute(null));
             Assert.False(settingsViewModel.DownloadSourcesCommand.CanExecute(null));
         }
