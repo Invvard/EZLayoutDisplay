@@ -436,7 +436,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
                 Tags = new ObservableCollection<string>(layoutInfo.Tags.Select(t => t.Name));
             }
 
-            if (layoutInfo.Revisions.Any())
+            if (layoutInfo.Revisions?.Any() != null)
             {
                 var revision = layoutInfo.Revisions.First();
 
