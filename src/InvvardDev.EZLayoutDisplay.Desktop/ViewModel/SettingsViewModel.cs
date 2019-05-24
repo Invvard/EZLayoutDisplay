@@ -463,7 +463,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
                     break;
                 default:
-                    keyboardDescription = $"{keyboardGeometry}";
+                    keyboardDescription = $"{keyboardGeometry} ";
 
                     break;
             }
