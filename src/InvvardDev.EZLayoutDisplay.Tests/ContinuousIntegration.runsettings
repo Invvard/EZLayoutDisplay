@@ -31,6 +31,7 @@
                 <Function>.*\.Desktop\.Service\.Implementation\.LayoutService.*GetLayoutTemplate.*</Function>
                 <Function>.*\.Desktop\.Service\.Implementation\.LayoutService.*ReadLayoutDefinition.*</Function>
                 <Function>.*\.Desktop\.ViewModel\.DisplayLayoutViewModel\.LoadDesignTimeModel\(.*</Function>
+                <Function>.*\.Desktop\.ViewModel\.SettingsViewModel\.SetDesignTimeLabelUi\(.*</Function>
                 <Function>.*\.Desktop\.ViewModel\.ViewModelLocator.*</Function>
                 <Function>.*\.Desktop\.View\..*</Function>
               </Exclude>
