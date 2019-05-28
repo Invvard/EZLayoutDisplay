@@ -450,5 +450,99 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             Assert.Equal(expectedButtonStatus, settingsViewModel.DownloadHexFileCommand.CanExecute(null));
             Assert.Equal(expectedButtonStatus, settingsViewModel.DownloadSourcesCommand.CanExecute(null));
         }
+
+        [Theory]
+        [InlineData("https://url.com/hex-file", "", 0)]
+        [InlineData("", "https://url.com/source-file", 0)]
+        [InlineData("https://url.com/hex-file", "https://url.com/source-file", 1)]
+        public void DownloadHexFileCommand_Execute(string hexUrl, string sourcesUrl, int expectedCommandExecute)
+        {
+            // Arrange
+            var expectedInfo = new ErgodoxLayout()
+            {
+                Geometry = "",
+                Title = "ezlayout",
+                HashId = "asdf",
+                Tags = new List<ErgodoxTag> {
+                                                                                       new ErgodoxTag {
+                                                                                                          Name = "Tag 1"
+                                                                                                      }
+                                                                                   },
+                Revisions = new List<Revision> {
+                                                                                          new Revision {
+                                                                                                           HexUrl = hexUrl,
+                                                                                                           SourcesUrl = sourcesUrl,
+                                                                                                           Model = "Model",
+                                                                                                           Layers = new List<ErgodoxLayer> {
+                                                                                                                                               new ErgodoxLayer() {
+                                                                                                                                                                      Title = "Layer",
+                                                                                                                                                                      Position = 1
+                                                                                                                                                                  }
+                                                                                                                                           }
+                                                                                                       }
+                                                                                      }
+            };
+            var mockSettingsService = new Mock<ISettingsService>();
+            mockSettingsService.SetupProperty(s => s.ErgodoxLayoutUrl, "");
+            var mockWindowService = new Mock<IWindowService>();
+            var mockLayoutService = new Mock<ILayoutService>();
+            mockLayoutService.Setup(l => l.GetLayoutInfo(It.IsAny<string>())).Returns(Task.FromResult(expectedInfo));
+            var mockProcessService = new Mock<IProcessService>();
+            mockProcessService.Setup(p => p.StartWebUrl(hexUrl)).Verifiable();
+
+            // Act
+            var settingsViewModel = new SettingsViewModel(mockSettingsService.Object, mockWindowService.Object, mockLayoutService.Object, mockProcessService.Object);
+            settingsViewModel.DownloadHexFileCommand.Execute(null);
+
+            // Assert
+            mockProcessService.Verify(p => p.StartWebUrl(hexUrl), Times.Exactly(expectedCommandExecute));
+        }
+
+        [Theory]
+        [InlineData("https://url.com/hex-file", "", 0)]
+        [InlineData("", "https://url.com/source-file", 0)]
+        [InlineData("https://url.com/hex-file", "https://url.com/source-file", 1)]
+        public void DownloadSourcesCommand_Execute(string hexUrl, string sourcesUrl, int expectedCommandExecute)
+        {
+            // Arrange
+            var expectedInfo = new ErgodoxLayout()
+            {
+                Geometry = "",
+                Title = "ezlayout",
+                HashId = "asdf",
+                Tags = new List<ErgodoxTag> {
+                                                                                       new ErgodoxTag {
+                                                                                                          Name = "Tag 1"
+                                                                                                      }
+                                                                                   },
+                Revisions = new List<Revision> {
+                                                                                          new Revision {
+                                                                                                           HexUrl = hexUrl,
+                                                                                                           SourcesUrl = sourcesUrl,
+                                                                                                           Model = "Model",
+                                                                                                           Layers = new List<ErgodoxLayer> {
+                                                                                                                                               new ErgodoxLayer() {
+                                                                                                                                                                      Title = "Layer",
+                                                                                                                                                                      Position = 1
+                                                                                                                                                                  }
+                                                                                                                                           }
+                                                                                                       }
+                                                                                      }
+            };
+            var mockSettingsService = new Mock<ISettingsService>();
+            mockSettingsService.SetupProperty(s => s.ErgodoxLayoutUrl, "");
+            var mockWindowService = new Mock<IWindowService>();
+            var mockLayoutService = new Mock<ILayoutService>();
+            mockLayoutService.Setup(l => l.GetLayoutInfo(It.IsAny<string>())).Returns(Task.FromResult(expectedInfo));
+            var mockProcessService = new Mock<IProcessService>();
+            mockProcessService.Setup(p => p.StartWebUrl(hexUrl)).Verifiable();
+
+            // Act
+            var settingsViewModel = new SettingsViewModel(mockSettingsService.Object, mockWindowService.Object, mockLayoutService.Object, mockProcessService.Object);
+            settingsViewModel.DownloadSourcesCommand.Execute(null);
+
+            // Assert
+            mockProcessService.Verify(p => p.StartWebUrl(sourcesUrl), Times.Exactly(expectedCommandExecute));
+        }
     }
 }
