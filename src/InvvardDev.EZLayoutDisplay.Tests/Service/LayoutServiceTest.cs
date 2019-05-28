@@ -37,6 +37,32 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Service
         [ InlineData("EOEb", true) ]
         [ InlineData("default", true) ]
         [ InlineData("test", false) ]
+        public async Task GetLayoutInfo(string layoutHashId, bool exist)
+        {
+            // Arrange
+            ILayoutService layoutService = new LayoutService();
+
+            // Act
+            ErgodoxLayout response = null;
+
+            if (exist) { response = await layoutService.GetLayoutInfo(layoutHashId); }
+            else { await Assert.ThrowsAsync<ArgumentException>(() => layoutService.GetLayoutInfo(layoutHashId)); }
+
+            // Assert
+            if (exist)
+            {
+                Assert.NotNull(response);
+                Assert.IsType<ErgodoxLayout>(response);
+                Assert.Single(response.Revisions);
+                Assert.False(string.IsNullOrWhiteSpace(response.HashId));
+                Assert.False(string.IsNullOrWhiteSpace(response.Title));
+            }
+        }
+
+        [ Theory ]
+        [ InlineData("EOEb", true) ]
+        [ InlineData("default", true) ]
+        [ InlineData("test", false) ]
         public async Task GetErgodoxLayout(string layoutHashId, bool exist)
         {
             // Arrange
