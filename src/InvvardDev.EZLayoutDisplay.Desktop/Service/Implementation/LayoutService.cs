@@ -32,6 +32,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
             Logger.TraceMethod();
             Logger.DebugInputParam(nameof(layoutHashId), layoutHashId);
 
+            ValidateLayoutHashId(layoutHashId);
+
             var info = await QueryData(layoutHashId, GetLayoutInfoRequestBody);
             
             return info;
@@ -42,6 +44,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
         {
             Logger.TraceMethod();
             Logger.DebugInputParam(nameof(layoutHashId), layoutHashId);
+
+            ValidateLayoutHashId(layoutHashId);
 
             var layout = await QueryData(layoutHashId, GetLayoutBody);
 
@@ -75,8 +79,6 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
 
         private async Task<ErgodoxLayout> QueryData(string layoutHashId, string graphQlQuery)
         {
-            ValidateLayoutHashId(layoutHashId);
-
             var requestBody = string.Format(graphQlQuery, layoutHashId);
 
             var layout = await HttpClientCall(requestBody);
