@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -16,6 +18,12 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 {
     public class SettingsViewModel : ViewModelBase
     {
+        #region Constants
+
+        private const string TagSearchBaseUri = "https://configure.ergodox-ez.com/{0}/search?q={1}";
+
+        #endregion
+
         #region Fields
 
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
@@ -23,19 +31,26 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private readonly ISettingsService _settingsService;
         private readonly IWindowService _windowService;
         private readonly ILayoutService _layoutService;
+        private readonly IProcessService _processService;
 
+        private ICommand _openTagSearchCommand;
+        private ICommand _downloadHexFileCommand;
+        private ICommand _downloadSourcesCommand;
         private ICommand _applySettingsCommand;
         private ICommand _updateLayoutCommand;
         private ICommand _closeSettingsCommand;
         private ICommand _cancelSettingsCommand;
 
-        private string _windowTitle;
-        private string _applyCommandLabel;
-        private string _updateCommandLabel;
-        private string _closeCommandLabel;
-        private string _cancelCommandLabel;
-        private string _layoutUrlLabel;
-        private string _hotkeyTitleLabel;
+        private string _layoutTitle;
+        private string _keyboardModel;
+        private string _layoutStatus;
+        private ObservableCollection<string> _tags;
+        private ObservableCollection<string> _layers;
+        private string _hexFileUri;
+        private string _sourcesZipUri;
+        private bool _layoutIsCompiled;
+        private string _keyboardGeometry;
+
         private string _altModifierLabel;
         private string _ctrlModifierLabel;
         private string _shiftModifierLabel;
@@ -47,6 +62,27 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         #endregion
 
         #region Relay commands
+
+        /// <summary>
+        /// Open tag search command.
+        /// </summary>
+        public ICommand OpenTagSearchCommand =>
+            _openTagSearchCommand
+            ?? (_openTagSearchCommand = new RelayCommand<string>(OpenTagSearchUrl));
+
+        /// <summary>
+        /// Download HEX file.
+        /// </summary>
+        public ICommand DownloadHexFileCommand =>
+            _downloadHexFileCommand
+            ?? (_downloadHexFileCommand = new RelayCommand(DownloadHexFile, LayoutIsCompiled));
+
+        /// <summary>
+        /// Download Sources ZIP.
+        /// </summary>
+        public ICommand DownloadSourcesCommand =>
+            _downloadSourcesCommand
+            ?? (_downloadSourcesCommand = new RelayCommand(DownloadSources, LayoutIsCompiled));
 
         /// <summary>
         /// Cancel settings edition.
@@ -80,59 +116,77 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         #region Properties
 
-        public string WindowTitle
-        {
-            get => _windowTitle;
-            set => Set(ref _windowTitle, value);
-        }
+        public string WindowTitle { get; set; }
 
-        public string ApplyCommandLabel
-        {
-            get => _applyCommandLabel;
-            set => Set(ref _applyCommandLabel, value);
-        }
+        public string LayoutInfoGroupName { get; set; }
 
-        public string UpdateCommandLabel
-        {
-            get => _updateCommandLabel;
-            set => Set(ref _updateCommandLabel, value);
-        }
+        public string LayoutTitleLabel { get; set; }
 
-        public string CloseCommandLabel
-        {
-            get => _closeCommandLabel;
-            set => Set(ref _closeCommandLabel, value);
-        }
+        public string KeyboardModelLabel { get; set; }
 
-        public string CancelCommandLabel
-        {
-            get => _cancelCommandLabel;
-            set => Set(ref _cancelCommandLabel, value);
-        }
+        public string TagsLabel { get; set; }
 
-        public string LayoutUrlLabel
-        {
-            get => _layoutUrlLabel;
-            set => Set(ref _layoutUrlLabel, value);
-        }
+        public string StatusLabel { get; set; }
 
-        public string HotkeyTitleLabel
-        {
-            get => _hotkeyTitleLabel;
-            private set => Set(ref _hotkeyTitleLabel, value);
-        }
+        public string LayersLabel { get; set; }
+
+        public string HexFileCommandLabel { get; set; }
+
+        public string SourcesZipCommandLabel { get; set; }
+
+        public string ApplyCommandLabel { get; set; }
+
+        public string UpdateCommandLabel { get; set; }
+
+        public string CloseCommandLabel { get; set; }
+
+        public string CancelCommandLabel { get; set; }
+
+        public string LayoutUrlLabel { get; set; }
 
         public string LayoutUrlContent
         {
             get => _layoutUrlContent;
             set
             {
-                if (Set(ref _layoutUrlContent, value))
-                {
-                    UpdateButtonCanExecute();
-                }
+                if (!Set(ref _layoutUrlContent, value)) return;
+
+                UpdateButtonCanExecute();
+                UpdateErgoDoxInfo();
             }
         }
+
+        public string LayoutTitle
+        {
+            get => _layoutTitle;
+            private set => Set(ref _layoutTitle, value);
+        }
+
+        public string KeyboardModel
+        {
+            get => _keyboardModel;
+            private set => Set(ref _keyboardModel, value);
+        }
+
+        public string LayoutStatus
+        {
+            get => _layoutStatus;
+            private set => Set(ref _layoutStatus, value);
+        }
+
+        public ObservableCollection<string> Tags
+        {
+            get => _tags ?? (_tags = new ObservableCollection<string>());
+            private set => Set(ref _tags, value);
+        }
+
+        public ObservableCollection<string> Layers
+        {
+            get => _layers ?? (_layers = new ObservableCollection<string>());
+            private set => Set(ref _layers, value);
+        }
+
+        public string HotkeyTitleLabel { get; set; }
 
         public string AltModifierLabel
         {
@@ -168,15 +222,17 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         #region Constructor
 
-        public SettingsViewModel(ISettingsService settingsService, IWindowService windowService, ILayoutService layoutService)
+        public SettingsViewModel(ISettingsService settingsService, IWindowService windowService, ILayoutService layoutService, IProcessService processService)
         {
             Logger.TraceConstructor();
 
             _settingsService = settingsService;
             _windowService = windowService;
             _layoutService = layoutService;
+            _processService = processService;
 
             SetLabelUi();
+            SetDesignTimeLabelUi();
 
             SetSettingControls();
         }
@@ -185,6 +241,16 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         {
             WindowTitle = "Settings";
             LayoutUrlLabel = "Configurator URL to your layout :";
+
+            LayoutInfoGroupName = "Layout information";
+            LayoutTitleLabel = "Title :";
+            KeyboardModelLabel = "Keyboard model :";
+            TagsLabel = "Tags :";
+            StatusLabel = "Layout status :";
+            LayersLabel = "Layers :";
+            HexFileCommandLabel = "HEX File";
+            SourcesZipCommandLabel = "Sources zip";
+
             ApplyCommandLabel = "Apply";
             UpdateCommandLabel = "Update";
             CloseCommandLabel = "Close";
@@ -196,6 +262,26 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             WindowsModifierLabel = "Windows";
         }
 
+        private void SetDesignTimeLabelUi()
+        {
+            if (!IsInDesignMode) return;
+
+            LayoutTitle = "Layout title v1.0";
+            KeyboardModel = "ErgoDox EZ Glow";
+            Tags = new ObservableCollection<string>() {
+                                                          "Tag 1",
+                                                          "Tag 2"
+                                                      };
+            LayoutStatus = "Compiled";
+            Layers = new ObservableCollection<string>() {
+                                                            "Layer 1",
+                                                            "Layer 2",
+                                                            "Layer 3",
+                                                            "Layer 4",
+                                                            "Layer 5"
+                                                        };
+        }
+
         private void SetSettingControls()
         {
             LayoutUrlContent = _settingsService.ErgodoxLayoutUrl;
@@ -204,7 +290,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         #endregion
 
-        #region Private methods
+        #region Command handlers
 
         private async void SaveSettings()
         {
@@ -244,6 +330,33 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             _windowService.CloseWindow<SettingsWindow>();
         }
 
+        private void OpenTagSearchUrl(string tag)
+        {
+            Logger.TraceRelayCommand();
+
+            if (string.IsNullOrWhiteSpace(tag) || string.IsNullOrWhiteSpace(_keyboardGeometry))
+            {
+                return;
+            }
+
+            var tagSearchUri = string.Format(TagSearchBaseUri, _keyboardGeometry, tag);
+            _processService.StartWebUrl(tagSearchUri);
+        }
+
+        private void DownloadHexFile()
+        {
+            Logger.TraceRelayCommand();
+
+            _processService.StartWebUrl(_hexFileUri);
+        }
+
+        private void DownloadSources()
+        {
+            Logger.TraceRelayCommand();
+
+            _processService.StartWebUrl(_sourcesZipUri);
+        }
+
         private void UpdateButtonCanExecute()
         {
             Logger.TraceMethod();
@@ -259,13 +372,125 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             return isDirty;
         }
 
-        private async Task UpdateLayout()
+        private bool LayoutIsCompiled()
+        {
+            return _layoutIsCompiled;
+        }
+
+        #endregion
+
+        #region Private methods
+
+        private async void UpdateErgoDoxInfo()
         {
             Logger.TraceMethod();
 
             var layoutHashId = ExtractLayoutHashId(LayoutUrlContent);
 
-            Logger.Debug("Layout Hash ID = {0}", layoutHashId);
+            try
+            {
+                var layoutInfo = await _layoutService.GetLayoutInfo(layoutHashId);
+                Logger.Debug("LayoutInfo = {@value0}", layoutInfo);
+
+                ClearLayoutInfo();
+
+                if (layoutInfo != null)
+                {
+                    UpdateLayoutInfo(layoutInfo);
+                }
+            }
+            catch (ArgumentNullException anex)
+            {
+                Logger.Error(anex);
+                _windowService.ShowWarning(anex.Message);
+            }
+            catch (ArgumentException aex)
+            {
+                Logger.Error(aex);
+                _windowService.ShowWarning(aex.Message);
+            }
+        }
+
+        private void ClearLayoutInfo()
+        {
+            Tags.Clear();
+            Layers.Clear();
+
+            LayoutTitle = "";
+            KeyboardModel = "";
+            LayoutStatus = "";
+
+            _keyboardGeometry = "";
+            _layoutIsCompiled = false;
+        }
+
+        private void UpdateLayoutInfo(ErgodoxLayout layoutInfo)
+        {
+            Logger.TraceMethod();
+
+            LayoutTitle = layoutInfo.Title;
+            _keyboardGeometry = layoutInfo.Geometry;
+
+            if (layoutInfo.Tags?.Any() != null)
+            {
+                Tags = new ObservableCollection<string>(layoutInfo.Tags.Select(t => t.Name));
+            }
+
+            if (layoutInfo.Revisions?.Any() != null)
+            {
+                var revision = layoutInfo.Revisions.First();
+
+                KeyboardModel = GetKeyBoardDescription(_keyboardGeometry, revision.Model);
+                UpdateLayoutButtons(revision);
+                LayoutStatus = !_layoutIsCompiled ? "Not compiled" : "Compiled";
+
+                Layers = new ObservableCollection<string>(revision.Layers.Select(l => l.ToString()));
+            }
+        }
+
+        private string GetKeyBoardDescription(string keyboardGeometry, string revisionModel)
+        {
+            string keyboardDescription;
+
+            switch (keyboardGeometry)
+            {
+                case "ergodox-ez":
+                    keyboardDescription = "ErgoDox EZ ";
+
+                    break;
+                case "planck-ez":
+                    keyboardDescription = "Planck EZ ";
+
+                    break;
+                default:
+                    keyboardDescription = $"{keyboardGeometry} ";
+
+                    break;
+            }
+
+            keyboardDescription += char.ToUpper(revisionModel[0]) + revisionModel.Substring(1);
+
+            return keyboardDescription;
+        }
+
+        private void UpdateLayoutButtons(Revision revision)
+        {
+            Logger.TraceMethod();
+
+            _layoutIsCompiled = Uri.IsWellFormedUriString(revision.HexUrl, UriKind.Absolute) && Uri.IsWellFormedUriString(revision.SourcesUrl, UriKind.Absolute);
+
+            ((RelayCommand) DownloadHexFileCommand).RaiseCanExecuteChanged();
+            ((RelayCommand) DownloadSourcesCommand).RaiseCanExecuteChanged();
+
+            _hexFileUri = revision.HexUrl;
+            _sourcesZipUri = revision.SourcesUrl;
+        }
+
+        private async Task UpdateLayout()
+        {
+            Logger.TraceMethod();
+
+            var layoutHashId = ExtractLayoutHashId(LayoutUrlContent);
 
             try
             {
@@ -294,7 +519,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             Logger.TraceMethod();
 
             var layoutHashIdGroupName = "layoutHashId";
-            var pattern = $"https://configure.ergodox-ez.com/ergodox-ez/layouts/(?<{layoutHashIdGroupName}>default|[a-zA-Z0-9]{{4,}})(?:/latest/[0-9])?";
+            var pattern = $"https://configure.ergodox-ez.com/(?:ergodox|planck)-ez/layouts/(?<{layoutHashIdGroupName}>default|[a-zA-Z0-9]{{4,}})(?:/latest/[0-9])?";
             var layoutHashId = "default";
 
             var regex = new Regex(pattern);
@@ -304,7 +529,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             {
                 layoutHashId = match.Groups[layoutHashIdGroupName].Value;
             }
-            
+
             Logger.Debug("Layout URL = {0}", layoutUrl);
             Logger.Debug("Layout Hash ID = {0}", layoutHashId);
 

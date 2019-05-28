@@ -9,11 +9,11 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.View
     {
         public SettingsWindow()
         {
-            InitializeComponent();
+                InitializeComponent();
 
 #if DEBUG
-            btnUpdate.IsEnabled = true;
-            btnUpdate.Visibility = Visibility.Visible;
+            BtnUpdate.IsEnabled = true;
+            BtnUpdate.Visibility = Visibility.Visible;
 #endif
         }
     }
