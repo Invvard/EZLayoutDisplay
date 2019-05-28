@@ -12,10 +12,22 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
         public string HashId { get; set; }
 
         /// <summary>
+        /// Gets or sets the keyboard geometry.
+        /// </summary>
+        [JsonProperty("geometry")]
+        public string Geometry { get; set; }
+
+        /// <summary>
         /// Gets or sets the layout title.
         /// </summary>
         [JsonProperty("title")]
         public string Title { get; set; }
+
+        /// <summary>
+        /// Gets or sets the keyboard tags.
+        /// </summary>
+        [JsonProperty("tags", NullValueHandling = NullValueHandling.Ignore)]
+        public List<ErgodoxTag> Tags { get; set; }
 
         /// <summary>
         /// Gets or sets the list of <see cref="Revision"/>.

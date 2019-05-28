@@ -110,6 +110,7 @@
     <Compile Include="Helper\KeyContentTemplateSelector.cs" />
     <Compile Include="Helper\LoggerHelper.cs" />
     <Compile Include="Model\Enum\KeyDisplayType.cs" />
+    <Compile Include="Model\ErgodoxTag.cs" />
     <Compile Include="Model\KeyTemplate.cs" />
     <Compile Include="Model\Messenger\UpdatedLayoutMessage.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -171,6 +172,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Skins\DisplayLayoutSkin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Skins\SettingsSkin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
