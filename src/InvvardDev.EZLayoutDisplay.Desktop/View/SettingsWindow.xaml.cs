@@ -9,7 +9,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.View
     {
         public SettingsWindow()
         {
-                InitializeComponent();
+            InitializeComponent();
 
 #if DEBUG
             BtnUpdate.IsEnabled = true;

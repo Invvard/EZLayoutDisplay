@@ -79,7 +79,7 @@
 
             <Button Content="{Binding UpdateCommandLabel}" Width="75" x:Name="BtnUpdate"
                     Command="{Binding UpdateLayoutCommand}" IsEnabled="False"
-                    d:LayoutOverrides="TopPosition, BottomPosition" Margin="0" />
+                    d:LayoutOverrides="TopPosition, BottomPosition" Margin="0" Visibility="Hidden" />
             <Button Content="{Binding CancelCommandLabel}" Width="75"
                     Command="{Binding CancelSettingsCommand}"
                     d:LayoutOverrides="LeftPosition, RightPosition, TopPosition, BottomPosition" Margin="5,0,0,0" />
