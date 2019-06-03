@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
@@ -204,7 +205,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         /// </summary>
         public ICommand ScrollLayerCommand =>
             _scrollLayerCommand
-            ?? (_scrollLayerCommand = new RelayCommand(NextLayer, NextLayerCanExecute));
+            ?? (_scrollLayerCommand = new RelayCommand<RoutedEventArgs>(ScrollLayer));
 
         #endregion
 
@@ -376,6 +377,27 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         }
 
         private void NextLayer()
+        {
+            Logger.TraceRelayCommand();
+            var maxLayerIndex = _ezLayout.EZLayers.Count - 1;
+
+            switch (CurrentLayerIndex)
+            {
+                case var _ when maxLayerIndex == 0:
+                case var _ when CurrentLayerIndex >= maxLayerIndex:
+                    CurrentLayerIndex = 0;
+
+                    break;
+                case var _ when CurrentLayerIndex < maxLayerIndex:
+                    CurrentLayerIndex++;
+
+                    break;
+            }
+
+            SwitchLayer();
+        }
+
+        private void ScrollLayer(RoutedEventArgs e)
         {
             Logger.TraceRelayCommand();
             var maxLayerIndex = _ezLayout.EZLayers.Count - 1;
