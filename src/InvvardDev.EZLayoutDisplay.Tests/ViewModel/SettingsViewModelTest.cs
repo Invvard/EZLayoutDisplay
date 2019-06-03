@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Castle.Components.DictionaryAdapter;
 using InvvardDev.EZLayoutDisplay.Desktop.Model;
 using InvvardDev.EZLayoutDisplay.Desktop.Service.Interface;
 using InvvardDev.EZLayoutDisplay.Desktop.View;
@@ -300,7 +298,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             var mockProcessService = new Mock<IProcessService>();
 
             // Act
-            var settingsViewModel = new SettingsViewModel(mockSettingsService.Object, mockWindowService.Object, mockLayoutService.Object, mockProcessService.Object);
+            var _ = new SettingsViewModel(mockSettingsService.Object, mockWindowService.Object, mockLayoutService.Object, mockProcessService.Object);
 
             // Assert
             mockLayoutService.Verify();
@@ -320,7 +318,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             var mockProcessService = new Mock<IProcessService>();
 
             // Act
-            var settingsViewModel = new SettingsViewModel(mockSettingsService.Object, mockWindowService.Object, mockLayoutService.Object, mockProcessService.Object);
+            var _settingsViewModel = new SettingsViewModel(mockSettingsService.Object, mockWindowService.Object, mockLayoutService.Object, mockProcessService.Object);
 
             // Assert
             mockLayoutService.Verify();
