@@ -33,6 +33,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private ICommand _lostFocusCommand;
         private ICommand _hideWindowCommand;
         private ICommand _nextLayerCommand;
+        private ICommand _scrollLayerCommand;
 
         private List<List<KeyTemplate>> _layoutTemplates;
         private ObservableCollection<KeyTemplate> _currentLayoutTemplate;
@@ -197,6 +198,13 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         public ICommand NextLayerCommand =>
             _nextLayerCommand
             ?? (_nextLayerCommand = new RelayCommand(NextLayer, NextLayerCanExecute));
+
+        /// <summary>
+        /// Next layer command.
+        /// </summary>
+        public ICommand ScrollLayerCommand =>
+            _scrollLayerCommand
+            ?? (_scrollLayerCommand = new RelayCommand(NextLayer, NextLayerCanExecute));
 
         #endregion
 
