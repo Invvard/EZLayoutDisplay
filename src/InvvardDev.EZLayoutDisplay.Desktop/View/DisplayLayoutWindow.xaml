@@ -26,6 +26,9 @@
         <i:EventTrigger EventName="Deactivated">
             <command:EventToCommand Command="{Binding LostFocusCommand, Mode=OneWay}" />
         </i:EventTrigger>
+        <i:EventTrigger EventName="PreviewMouseWheel">
+            <command:EventToCommand Command="{Binding NextLayerCommand, Mode=OneWay}" />
+        </i:EventTrigger>
     </i:Interaction.Triggers>
     <Window.InputBindings>
         <KeyBinding Key="Escape" Command="{Binding HideWindowCommand, Mode=OneWay}" />
