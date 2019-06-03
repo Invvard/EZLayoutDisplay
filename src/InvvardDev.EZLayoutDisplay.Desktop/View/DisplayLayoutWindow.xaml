@@ -27,7 +27,7 @@
             <command:EventToCommand Command="{Binding LostFocusCommand, Mode=OneWay}" />
         </i:EventTrigger>
         <i:EventTrigger EventName="PreviewMouseWheel">
-            <command:EventToCommand Command="{Binding NextLayerCommand, Mode=OneWay}" />
+            <command:EventToCommand Command="{Binding ScrollLayerCommand, Mode=OneWay}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <Window.InputBindings>
