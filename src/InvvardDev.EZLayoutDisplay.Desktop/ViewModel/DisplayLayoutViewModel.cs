@@ -423,14 +423,12 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
             if (!(e is MouseWheelEventArgs mouseWheelEventArgs)) return;
 
-            var delta = mouseWheelEventArgs.Delta;
-
-            if (delta < 0)
+            if (mouseWheelEventArgs.Delta < 0)
             {
                 NextLayer();
             }
 
-            if (delta > 0)
+            if (mouseWheelEventArgs.Delta > 0)
             {
                 PreviousLayer();
             }
