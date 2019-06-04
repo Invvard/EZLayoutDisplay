@@ -205,7 +205,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         /// </summary>
         public ICommand ScrollLayerCommand =>
             _scrollLayerCommand
-            ?? (_scrollLayerCommand = new RelayCommand<RoutedEventArgs>(ScrollLayer));
+            ?? (_scrollLayerCommand = new RelayCommand<MouseWheelEventArgs>(ScrollLayer));
 
         #endregion
 
@@ -376,6 +376,27 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             _windowService.CloseWindow<DisplayLayoutWindow>();
         }
 
+        private void PreviousLayer()
+        {
+            Logger.TraceRelayCommand();
+            var maxLayerIndex = _ezLayout.EZLayers.Count - 1;
+
+            switch (CurrentLayerIndex)
+            {
+                case var _ when maxLayerIndex == 0:
+                case var _ when CurrentLayerIndex <= 0:
+                    CurrentLayerIndex = maxLayerIndex;
+
+                    break;
+                case var _ when CurrentLayerIndex > 0:
+                    CurrentLayerIndex--;
+
+                    break;
+            }
+
+            SwitchLayer();
+        }
+
         private void NextLayer()
         {
             Logger.TraceRelayCommand();
@@ -397,25 +418,24 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             SwitchLayer();
         }
 
-        private void ScrollLayer(RoutedEventArgs e)
+        private void ScrollLayer(MouseWheelEventArgs e)
         {
             Logger.TraceRelayCommand();
-            var maxLayerIndex = _ezLayout.EZLayers.Count - 1;
 
-            switch (CurrentLayerIndex)
+            if (e is MouseWheelEventArgs mouseWheelEventArgs)
             {
-                case var _ when maxLayerIndex == 0:
-                case var _ when CurrentLayerIndex >= maxLayerIndex:
-                    CurrentLayerIndex = 0;
+                var delta = mouseWheelEventArgs.Delta;
 
-                    break;
-                case var _ when CurrentLayerIndex < maxLayerIndex:
-                    CurrentLayerIndex++;
+                if (delta < 0)
+                {
+                    NextLayer();
+                }
 
-                    break;
+                if (delta > 0)
+                {
+                    PreviousLayer();
+                }
             }
-
-            SwitchLayer();
         }
 
         private bool NextLayerCanExecute()
