@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
@@ -422,19 +421,18 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         {
             Logger.TraceRelayCommand();
 
-            if (e is MouseWheelEventArgs mouseWheelEventArgs)
+            if (!(e is MouseWheelEventArgs mouseWheelEventArgs)) return;
+
+            var delta = mouseWheelEventArgs.Delta;
+
+            if (delta < 0)
             {
-                var delta = mouseWheelEventArgs.Delta;
+                NextLayer();
+            }
 
-                if (delta < 0)
-                {
-                    NextLayer();
-                }
-
-                if (delta > 0)
-                {
-                    PreviousLayer();
-                }
+            if (delta > 0)
+            {
+                PreviousLayer();
             }
         }
 
