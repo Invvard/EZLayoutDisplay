@@ -26,6 +26,10 @@
         <i:EventTrigger EventName="Deactivated">
             <command:EventToCommand Command="{Binding LostFocusCommand, Mode=OneWay}" />
         </i:EventTrigger>
+        <i:EventTrigger EventName="PreviewMouseWheel">
+            <command:EventToCommand Command="{Binding ScrollLayerCommand, Mode=OneWay}"
+                                    PassEventArgsToCommand="True" />
+        </i:EventTrigger>
     </i:Interaction.Triggers>
     <Window.InputBindings>
         <KeyBinding Key="Escape" Command="{Binding HideWindowCommand, Mode=OneWay}" />
@@ -50,24 +54,27 @@
         </StackPanel>
 
         <StackPanel Style="{StaticResource SpControlHintStyle}"
-            Visibility="{Binding NoLayoutAvailable, Converter={StaticResource BoolToVisibleConverter}}">
-            <ToggleButton x:Name="ToggleWindowPin" Content="{Binding ToggleBtnPinWindowContent}" ToolTip="{Binding ToggleBtnPinWindowTooltip}"
-                          IsChecked="{Binding IsWindowPinned}" Focusable="False" Style="{StaticResource ToggleButtonPinWindowStyle}" />
+                    Visibility="{Binding NoLayoutAvailable, Converter={StaticResource BoolToVisibleConverter}}">
+            <ToggleButton x:Name="ToggleWindowPin" Content="{Binding ToggleBtnPinWindowContent}"
+                          ToolTip="{Binding ToggleBtnPinWindowTooltip}"
+                          IsChecked="{Binding IsWindowPinned}" Focusable="False"
+                          Style="{StaticResource ToggleButtonPinWindowStyle}" />
             <TextBlock Text="{Binding ControlHintEscapeLabel}" Style="{StaticResource TbControlHintStyle}" />
-            <TextBlock Text="{Binding ControlHintSpaceLabel}" Style="{StaticResource TbControlHintStyle}" /> 
+            <TextBlock Text="{Binding ControlHintSpaceLabel}" Style="{StaticResource TbControlHintStyle}" />
         </StackPanel>
 
         <Grid Visibility="{Binding NoLayoutAvailable, Converter={StaticResource BoolToHiddenConverter}}" Width="350">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width=".25*"/>
-                <ColumnDefinition Width="10"/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width=".25*" />
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Image Grid.Column="0" Source="../Skins/Images/warning-sign.png"/>
-            <TextBlock Grid.Column="2" TextWrapping="WrapWithOverflow" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Left">
-                <Run Text="{Binding NoLayoutWarningFirstLine, Mode=OneWay}"/>
-                <LineBreak/>
-                <Run Text="{Binding NoLayoutWarningSecondLine, Mode=OneWay}"/>
+            <Image Grid.Column="0" Source="../Skins/Images/warning-sign.png" />
+            <TextBlock Grid.Column="2" TextWrapping="WrapWithOverflow" FontSize="18" VerticalAlignment="Center"
+                       HorizontalAlignment="Left">
+                <Run Text="{Binding NoLayoutWarningFirstLine, Mode=OneWay}" />
+                <LineBreak />
+                <Run Text="{Binding NoLayoutWarningSecondLine, Mode=OneWay}" />
             </TextBlock>
         </Grid>
     </Grid>

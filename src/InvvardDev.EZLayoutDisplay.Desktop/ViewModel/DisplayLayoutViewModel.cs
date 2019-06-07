@@ -33,6 +33,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private ICommand _lostFocusCommand;
         private ICommand _hideWindowCommand;
         private ICommand _nextLayerCommand;
+        private ICommand _scrollLayerCommand;
 
         private List<List<KeyTemplate>> _layoutTemplates;
         private ObservableCollection<KeyTemplate> _currentLayoutTemplate;
@@ -197,6 +198,13 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         public ICommand NextLayerCommand =>
             _nextLayerCommand
             ?? (_nextLayerCommand = new RelayCommand(NextLayer, NextLayerCanExecute));
+
+        /// <summary>
+        /// Next layer command.
+        /// </summary>
+        public ICommand ScrollLayerCommand =>
+            _scrollLayerCommand
+            ?? (_scrollLayerCommand = new RelayCommand<MouseWheelEventArgs>(ScrollLayer));
 
         #endregion
 
@@ -370,16 +378,50 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private void NextLayer()
         {
             Logger.TraceRelayCommand();
+
+            VaryLayer(1);
+        }
+
+        private void ScrollLayer(MouseWheelEventArgs e)
+        {
+            Logger.TraceRelayCommand();
+
+            if (e.Delta < 0)
+            {
+                VaryLayer(1);
+            }
+
+            if (e.Delta > 0)
+            {
+                VaryLayer(-1);
+            }
+        }
+
+        private void VaryLayer(int variation)
+        {
+            Logger.TraceRelayCommand();
+
             var maxLayerIndex = _ezLayout.EZLayers.Count - 1;
 
             switch (CurrentLayerIndex)
             {
-                case var _ when maxLayerIndex == 0:
-                case var _ when CurrentLayerIndex >= maxLayerIndex:
+                case var _ when maxLayerIndex <= 0:
                     CurrentLayerIndex = 0;
 
                     break;
-                case var _ when CurrentLayerIndex < maxLayerIndex:
+                case var _ when CurrentLayerIndex <= 0 && variation < 0:
+                    CurrentLayerIndex = maxLayerIndex;
+
+                    break;
+                case var _ when CurrentLayerIndex > 0 && variation < 0:
+                    CurrentLayerIndex--;
+
+                    break;
+                case var _ when CurrentLayerIndex >= maxLayerIndex && variation > 0:
+                    CurrentLayerIndex = 0;
+
+                    break;
+                case var _ when CurrentLayerIndex < maxLayerIndex && variation > 0:
                     CurrentLayerIndex++;
 
                     break;
