@@ -407,8 +407,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
             switch (CurrentLayerIndex)
             {
-                case var _ when maxLayerIndex == 0:
-                    CurrentLayerIndex = maxLayerIndex;
+                case var _ when maxLayerIndex <= 0:
+                    CurrentLayerIndex = 0;
 
                     break;
                 case var _ when CurrentLayerIndex <= 0 && variation < 0:
@@ -420,7 +420,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
                     break;
                 case var _ when CurrentLayerIndex >= maxLayerIndex && variation > 0:
-                    CurrentLayerIndex = maxLayerIndex;
+                    CurrentLayerIndex = 0;
 
                     break;
                 case var _ when CurrentLayerIndex < maxLayerIndex && variation > 0:
