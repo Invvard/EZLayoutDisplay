@@ -386,14 +386,12 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         {
             Logger.TraceRelayCommand();
 
-            if (!(e is MouseWheelEventArgs mouseWheelEventArgs)) return;
-
-            if (mouseWheelEventArgs.Delta < 0)
+            if (e.Delta < 0)
             {
                 VaryLayer(1);
             }
 
-            if (mouseWheelEventArgs.Delta > 0)
+            if (e.Delta > 0)
             {
                 VaryLayer(-1);
             }
