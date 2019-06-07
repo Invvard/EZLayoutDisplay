@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Windows.Input;
 using InvvardDev.EZLayoutDisplay.Desktop.Model;
 using InvvardDev.EZLayoutDisplay.Desktop.Service.Interface;
 using InvvardDev.EZLayoutDisplay.Desktop.View;
@@ -10,6 +12,23 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
 {
     public class DisplayLayoutViewModelTest
     {
+        private static EZLayout CreateLayers(int layerNumber)
+        {
+            var keyboardLayout = new EZLayout();
+
+            for (int i = 0 ; i < layerNumber ; i++)
+            {
+                keyboardLayout.EZLayers.Add(new EZLayer {
+                                                            Index = i,
+                                                            EZKeys = new List<EZKey> {
+                                                                                         new EZKey()
+                                                                                     }
+                                                        });
+            }
+
+            return keyboardLayout;
+        }
+
         [ Fact ]
         public void DisplayLayoutViewModel_Constructor()
         {
@@ -17,11 +36,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             var mockWindowService = new Mock<IWindowService>();
             var mockLayoutService = new Mock<ILayoutService>();
             var mockSettingsService = new Mock<ISettingsService>();
-            mockSettingsService.SetupProperty(s => s.EZLayout,
-                                              new EZLayout
-                                              {
-                                                  EZLayers = new List<EZLayer> { new EZLayer { EZKeys = new List<EZKey> { new EZKey { Label = new KeyLabel("A"), Modifier = new KeyLabel("a") } } } }
-                                              });
+            mockSettingsService.SetupProperty(s => s.EZLayout, CreateLayers(1));
 
             //Act
             var displayLayoutViewModel = new DisplayLayoutViewModel(mockWindowService.Object, mockLayoutService.Object, mockSettingsService.Object);
@@ -56,8 +71,8 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
         }
 
         [ Theory ]
-        [InlineData(true)]
-        [InlineData(false)]
+        [ InlineData(true) ]
+        [ InlineData(false) ]
         public void LostFocusCommand_CanExecute(bool isPinned)
         {
             //Arrange
@@ -82,7 +97,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             }
         }
 
-        [Fact]
+        [ Fact ]
         public void HideWindowCommand_Execute()
         {
             //Arrange
@@ -99,7 +114,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             mockWindowService.Verify(w => w.CloseWindow<DisplayLayoutWindow>(), Times.Once);
         }
 
-        [Theory ]
+        [ Theory ]
         [ InlineData(0, 1, true) ]
         [ InlineData(1, 2, false) ]
         [ InlineData(76, 2, false) ]
@@ -119,7 +134,10 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
 
             for (int i = 0 ; i < numberOfLayer ; i++)
             {
-                keyboardLayout.EZLayers.Add(new EZLayer { Index = i, EZKeys = new List<EZKey>(ezKeys) });
+                keyboardLayout.EZLayers.Add(new EZLayer {
+                                                            Index = i,
+                                                            EZKeys = new List<EZKey>(ezKeys)
+                                                        });
             }
 
             var mockWindowService = new Mock<IWindowService>();
@@ -143,12 +161,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
         public void NextLayerCommand_CanExecute(int layerNumber, bool expectedCanExecute)
         {
             //Arrange
-            var keyboardLayout = new EZLayout();
-
-            for (int i = 0 ; i < layerNumber ; i++)
-            {
-                keyboardLayout.EZLayers.Add(new EZLayer { Index = i, EZKeys = new List<EZKey> { new EZKey() } });
-            }
+            var keyboardLayout = CreateLayers(layerNumber);
 
             var layoutTemplate = new List<KeyTemplate>();
 
@@ -170,6 +183,52 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             Assert.Equal(expectedCanExecute, displayLayoutViewModel.NextLayerCommand.CanExecute(null));
         }
 
+        [ WpfTheory ]
+        [ InlineData(0, 0, 120) ]
+        [ InlineData(0, 0, -120) ]
+        [ InlineData(1, 0, 120) ]
+        [ InlineData(1, 0, -120) ]
+        [ InlineData(2, 1, -120) ]
+        [ InlineData(2, 1, 120) ]
+        [ InlineData(2, 0, 120, -120) ]
+        [ InlineData(2, 0, 120, 120) ]
+        [ InlineData(2, 1, 120, 120, -120) ]
+        [ InlineData(3, 2, 120) ]
+        [ InlineData(3, 1, -120) ]
+        [ InlineData(3, 2, -120, -120) ]
+        [ InlineData(3, 1, 120, 120) ]
+        [ InlineData(3, 0, -120, -120, -120) ]
+        [ InlineData(3, 0, 120, 120, 120) ]
+        public void ScrollLayerCommand_Execute(int layerNumber, int expectedCurrentLayerIndex, params int[] scrollingValues)
+        {
+            //Arrange
+            var keyboardLayout = CreateLayers(layerNumber);
+
+            var layoutTemplate = new List<KeyTemplate>();
+
+            for (int i = 0 ; i < 1 ; i++)
+            {
+                layoutTemplate.Add(new KeyTemplate(i, i, 54, 81));
+            }
+
+            var mockLayoutService = new Mock<ILayoutService>();
+            mockLayoutService.Setup(l => l.GetLayoutTemplate()).ReturnsAsync(layoutTemplate);
+            var mockWindowService = new Mock<IWindowService>();
+            var mockSettingsService = new Mock<ISettingsService>();
+            mockSettingsService.SetupProperty(s => s.EZLayout, keyboardLayout);
+
+            //Act
+            var displayLayoutViewModel = new DisplayLayoutViewModel(mockWindowService.Object, mockLayoutService.Object, mockSettingsService.Object);
+
+            foreach (var scrollingValue in scrollingValues)
+            {
+                displayLayoutViewModel.ScrollLayerCommand.Execute(new MouseWheelEventArgs(Mouse.PrimaryDevice, 0, scrollingValue));
+            }
+
+            //Assert
+            Assert.Equal(expectedCurrentLayerIndex, displayLayoutViewModel.CurrentLayerIndex);
+        }
+
         [ Theory ]
         [ InlineData(0, 0, 0) ]
         [ InlineData(1, 0, 0) ]
@@ -184,13 +243,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
         public void NextLayerCommand_Execute(int layerNumber, int nextLayerHit, int expectedCurrentLayerIndex)
         {
             //Arrange
-            var keyboardLayout = new EZLayout();
-
-            for (int i = 0 ; i < layerNumber ; i++)
-            {
-                keyboardLayout.EZLayers.Add(new EZLayer { Index = i, EZKeys = new List<EZKey> { new EZKey() } });
-            }
-
+            var keyboardLayout = CreateLayers(layerNumber);
             var layoutTemplate = new List<KeyTemplate>();
 
             for (int i = 0 ; i < 1 ; i++)
@@ -223,8 +276,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             var mockLayoutService = new Mock<ILayoutService>();
             var mockWindowService = new Mock<IWindowService>();
             var mockSettingsService = new Mock<ISettingsService>();
-            mockSettingsService.SetupProperty(s => s.EZLayout,
-                                              new EZLayout { EZLayers = new List<EZLayer>() });
+            mockSettingsService.SetupProperty(s => s.EZLayout, CreateLayers(0));
 
             // Act
             var displayLayoutViewModel = new DisplayLayoutViewModel(mockWindowService.Object, mockLayoutService.Object, mockSettingsService.Object);
