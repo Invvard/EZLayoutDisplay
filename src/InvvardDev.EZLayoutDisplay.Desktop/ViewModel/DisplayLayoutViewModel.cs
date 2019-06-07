@@ -375,46 +375,11 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             _windowService.CloseWindow<DisplayLayoutWindow>();
         }
 
-        private void PreviousLayer()
-        {
-            Logger.TraceRelayCommand();
-            var maxLayerIndex = _ezLayout.EZLayers.Count - 1;
-
-            switch (CurrentLayerIndex)
-            {
-                case var _ when maxLayerIndex == 0:
-                case var _ when CurrentLayerIndex <= 0:
-                    CurrentLayerIndex = maxLayerIndex;
-
-                    break;
-                case var _ when CurrentLayerIndex > 0:
-                    CurrentLayerIndex--;
-
-                    break;
-            }
-
-            SwitchLayer();
-        }
-
         private void NextLayer()
         {
             Logger.TraceRelayCommand();
-            var maxLayerIndex = _ezLayout.EZLayers.Count - 1;
 
-            switch (CurrentLayerIndex)
-            {
-                case var _ when maxLayerIndex == 0:
-                case var _ when CurrentLayerIndex >= maxLayerIndex:
-                    CurrentLayerIndex = 0;
-
-                    break;
-                case var _ when CurrentLayerIndex < maxLayerIndex:
-                    CurrentLayerIndex++;
-
-                    break;
-            }
-
-            SwitchLayer();
+            VaryLayer(1);
         }
 
         private void ScrollLayer(MouseWheelEventArgs e)
@@ -425,13 +390,46 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
             if (mouseWheelEventArgs.Delta < 0)
             {
-                NextLayer();
+                VaryLayer(1);
             }
 
             if (mouseWheelEventArgs.Delta > 0)
             {
-                PreviousLayer();
+                VaryLayer(-1);
             }
+        }
+
+        private void VaryLayer(int variation)
+        {
+            Logger.TraceRelayCommand();
+
+            var maxLayerIndex = _ezLayout.EZLayers.Count - 1;
+
+            switch (CurrentLayerIndex)
+            {
+                case var _ when maxLayerIndex == 0:
+                    CurrentLayerIndex = maxLayerIndex;
+
+                    break;
+                case var _ when CurrentLayerIndex <= 0 && variation < 0:
+                    CurrentLayerIndex = maxLayerIndex;
+
+                    break;
+                case var _ when CurrentLayerIndex > 0 && variation < 0:
+                    CurrentLayerIndex--;
+
+                    break;
+                case var _ when CurrentLayerIndex >= maxLayerIndex && variation > 0:
+                    CurrentLayerIndex = maxLayerIndex;
+
+                    break;
+                case var _ when CurrentLayerIndex < maxLayerIndex && variation > 0:
+                    CurrentLayerIndex++;
+
+                    break;
+            }
+
+            SwitchLayer();
         }
 
         private bool NextLayerCanExecute()
