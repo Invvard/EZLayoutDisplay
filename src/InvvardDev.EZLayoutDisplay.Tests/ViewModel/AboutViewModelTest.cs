@@ -29,7 +29,8 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             Assert.Equal("Pierre CAVAROC", aboutViewModel.CreatorInfoLabel);
             Assert.Equal("ErgoDox EZ Configurator", aboutViewModel.BasedOnInfoLabel);
             Assert.Equal("EZ Layout Display", aboutViewModel.ProjectHomeInfoLabel);
-            Assert.Equal("@Invvard", aboutViewModel.ContactInfoLabel);
+            Assert.Equal("@Invvard", aboutViewModel.TwitterInfoLabel);
+            Assert.Equal("r/EZLayoutDisplay", aboutViewModel.RedditInfoLabel);
             Assert.Equal("OK", aboutViewModel.CloseButtonLabel);
         }
 
@@ -84,7 +85,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
         }
 
         [ Fact ]
-        public void NavigateContactUrl_Execute()
+        public void NavigateTwitterUrl_Execute()
         {
             // Arrange
             var expectedUrl = "https://twitter.com/invvard";
@@ -94,7 +95,24 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
 
             // Act
             var aboutViewModel = new AboutViewModel(mockWindowService.Object, mockProcessService.Object);
-            aboutViewModel.NavigateContactUrlCommand.Execute(null);
+            aboutViewModel.NavigateTwitterUrlCommand.Execute(null);
+
+            // Assert
+            mockProcessService.Verify(p => p.StartWebUrl(expectedUrl));
+        }
+
+        [ Fact ]
+        public void NavigateRedditUrl_Execute()
+        {
+            // Arrange
+            var expectedUrl = "https://www.reddit.com/r/EZLayoutDisplay/";
+            var mockWindowService = new Mock<IWindowService>();
+            var mockProcessService = new Mock<IProcessService>();
+            mockProcessService.Setup(p => p.StartWebUrl(expectedUrl)).Verifiable();
+
+            // Act
+            var aboutViewModel = new AboutViewModel(mockWindowService.Object, mockProcessService.Object);
+            aboutViewModel.NavigateRedditUrlCommand.Execute(null);
 
             // Assert
             mockProcessService.Verify(p => p.StartWebUrl(expectedUrl));
