@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="{Binding WindowTitle}" Height="300" Width="500"
+        Title="{Binding WindowTitle}" Height="330" Width="500"
         ResizeMode="NoResize" Background="{StaticResource WindowBackgroundBrush}"
         WindowStartupLocation="CenterScreen" Icon="{StaticResource WindowIcon}"
         DataContext="{Binding About, Source={StaticResource Locator}}">
@@ -21,6 +21,7 @@
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
+            <RowDefinition/>
             <RowDefinition Height="10"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
@@ -29,7 +30,7 @@
             <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="19*"/>
         </Grid.ColumnDefinitions>
-        <Image Source="{StaticResource EzLogo}" Grid.RowSpan="8"/>
+        <Image Source="{StaticResource EzLogo}" Grid.RowSpan="9"/>
 
         <StackPanel Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2">
             <Label Content="{Binding AppTitleLabel}" Style="{StaticResource AppTitleStyle}"/>
@@ -56,11 +57,17 @@
 
         <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="2">
             <Image Source="/InvvardDev.EZLayoutDisplay.Desktop;component/Skins/Images/twitter-logo.png" Style="{StaticResource LogoInfoStyle}"/>
-            <Button Style="{StaticResource HyperlinkStyledButton}" Content="{Binding ContactInfoLabel}"
-                    Command="{Binding NavigateContactUrlCommand}" />
+            <Button Style="{StaticResource HyperlinkStyledButton}" Content="{Binding TwitterInfoLabel}"
+                    Command="{Binding NavigateTwitterUrlCommand}" />
         </StackPanel>
 
-        <Button Grid.Row="7" Grid.Column="2" Content="{Binding CloseButtonLabel}"
+        <StackPanel Orientation="Horizontal" Grid.Row="6" Grid.Column="2">
+            <Image Source="/InvvardDev.EZLayoutDisplay.Desktop;component/Skins/Images/reddit-logo.png" Style="{StaticResource LogoInfoStyle}"/>
+            <Button Style="{StaticResource HyperlinkStyledButton}" Content="{Binding RedditInfoLabel}"
+                    Command="{Binding NavigateRedditUrlCommand}" />
+        </StackPanel>
+
+        <Button Grid.Row="8" Grid.Column="2" Content="{Binding CloseButtonLabel}"
                 Command="{Binding CloseAboutCommand}"
                 Width="100" Margin="0,5,5,5" HorizontalAlignment="Right"/>
     </Grid>

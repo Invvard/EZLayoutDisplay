@@ -30,16 +30,19 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private string _creatorInfoLabel;
         private string _basedOnInfoLabel;
         private string _projectHomeInfoLabel;
-        private string _contactInfoLabel;
+        private string _twitterInfoLabel;
+        private string _redditInfoLabel;
         private string _closeButtonLabel;
 
         private readonly string _basedOnUrl;
         private readonly string _projectHomeUrl;
-        private readonly string _contactUrl;
+        private readonly string _twitterUrl;
+        private readonly string _redditUrl;
 
         private ICommand _navigateBasedOnUrlCommand;
         private ICommand _navigateProjectHomeUrlCommand;
-        private ICommand _navigateContactUrlCommand;
+        private ICommand _navigateTwitterUrlCommand;
+        private ICommand _navigateRedditUrlCommand;
         private ICommand _closeAboutCommand;
 
         #endregion
@@ -109,10 +112,16 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             set => Set(ref _projectHomeInfoLabel, value);
         }
 
-        public string ContactInfoLabel
+        public string TwitterInfoLabel
         {
-            get => _contactInfoLabel;
-            set => Set(ref _contactInfoLabel, value);
+            get => _twitterInfoLabel;
+            set => Set(ref _twitterInfoLabel, value);
+        }
+
+        public string RedditInfoLabel
+        {
+            get => _redditInfoLabel;
+            set => Set(ref _redditInfoLabel, value);
         }
 
         public string CloseButtonLabel
@@ -140,11 +149,18 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             ?? (_navigateProjectHomeUrlCommand = new RelayCommand(NavigateProjectHomeUrl));
 
         /// <summary>
-        /// Navigate to contact URL command.
+        /// Navigate to Twitter URL command.
         /// </summary>
-        public ICommand NavigateContactUrlCommand =>
-            _navigateContactUrlCommand
-            ?? (_navigateContactUrlCommand = new RelayCommand(NavigateContactUrl));
+        public ICommand NavigateTwitterUrlCommand =>
+            _navigateTwitterUrlCommand
+            ?? (_navigateTwitterUrlCommand = new RelayCommand(NavigateTwitterUrl));
+
+        /// <summary>
+        /// Navigate to Reddit URL command.
+        /// </summary>
+        public ICommand NavigateRedditUrlCommand =>
+            _navigateRedditUrlCommand
+            ?? (_navigateRedditUrlCommand = new RelayCommand(NavigateRedditUrl));
 
         /// <summary>
         /// Close about window command.
@@ -166,7 +182,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
             _basedOnUrl = "https://configure.ergodox-ez.com/layouts/default/latest/0";
             _projectHomeUrl = "https://github.com/Invvard/EZLayoutDisplay";
-            _contactUrl = "https://twitter.com/invvard";
+            _twitterUrl = "https://twitter.com/invvard";
+            _redditUrl = "https://www.reddit.com/r/EZLayoutDisplay/";
 
             SetLabelUi();
         }
@@ -189,7 +206,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             CreatorInfoLabel = "Pierre CAVAROC";
             BasedOnInfoLabel = "ErgoDox EZ Configurator";
             ProjectHomeInfoLabel = appTitle;
-            ContactInfoLabel = "@Invvard";
+            TwitterInfoLabel = "@Invvard";
+            RedditInfoLabel = "r/EZLayoutDisplay";
             CloseButtonLabel = "OK";
         }
 
@@ -229,10 +247,16 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             _processService.StartWebUrl(_projectHomeUrl);
         }
 
-        private void NavigateContactUrl()
+        private void NavigateTwitterUrl()
         {
             Logger.TraceRelayCommand();
-            _processService.StartWebUrl(_contactUrl);
+            _processService.StartWebUrl(_twitterUrl);
+        }
+
+        private void NavigateRedditUrl()
+        {
+            Logger.TraceRelayCommand();
+            _processService.StartWebUrl(_redditUrl);
         }
 
         private void CloseAboutWindow()
