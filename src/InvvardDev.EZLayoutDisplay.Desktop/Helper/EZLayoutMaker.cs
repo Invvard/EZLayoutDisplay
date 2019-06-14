@@ -56,7 +56,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
 
             foreach (var ergodoxKey in ergodoxLayer.Keys)
             {
-                EZKey key = PrepareKeyLabels(ergodoxKey);
+                EZKey key = PrepareKeyLabels(ergodoxKey, layer.Color);
 
                 layer.EZKeys.Add(key);
             }
@@ -66,7 +66,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
             return layer;
         }
 
-        private EZKey PrepareKeyLabels(ErgodoxKey ergodoxKey)
+        private EZKey PrepareKeyLabels(ErgodoxKey ergodoxKey, string layerColor)
         {
             Logger.TraceMethod();
             Logger.DebugInputParam(nameof(ergodoxKey), ergodoxKey);
@@ -91,7 +91,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
             EZKey key = new EZKey {
                                       KeyCategory = keyDefinition.KeyCategory,
                                       Label = new KeyLabel(keyDefinition.Label, keyDefinition.IsGlyph),
-                                      Color = GetColor(ergodoxKey.GlowColor),
+                                      Color = GetColor(ergodoxKey.GlowColor, layerColor),
                                       DisplayType = KeyDisplayType.SimpleLabel
                                   };
 
@@ -175,9 +175,9 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
             return key;
         }
 
-        private static string GetColor(string keyColor)
+        private static string GetColor(string keyColor, string defaultColor = "#777")
         {
-            var fontColor = string.IsNullOrWhiteSpace(keyColor) ? "#777" : keyColor;
+            var fontColor = string.IsNullOrWhiteSpace(keyColor) ? defaultColor : keyColor;
 
             return fontColor;
         }
