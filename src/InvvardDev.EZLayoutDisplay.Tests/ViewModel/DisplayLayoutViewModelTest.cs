@@ -47,7 +47,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             Assert.Equal("Please, go to the settings and update the layout.", displayLayoutViewModel.NoLayoutWarningSecondLine);
             Assert.Equal("Current layer :", displayLayoutViewModel.CurrentLayerNameTitle);
             Assert.Equal("", displayLayoutViewModel.CurrentLayerName);
-            Assert.Equal("Press 'Space' to display next layer", displayLayoutViewModel.ControlHintSpaceLabel);
+            Assert.Equal("Scroll up/down or press 'Space' to display next layer", displayLayoutViewModel.ControlHintSpaceLabel);
             Assert.Equal("Press 'Escape' to hide window", displayLayoutViewModel.ControlHintEscapeLabel);
             Assert.Equal("_Pin window", displayLayoutViewModel.ToggleBtnPinWindowContent);
             Assert.Equal("Press 'P' to toggle", displayLayoutViewModel.ToggleBtnPinWindowTooltip);
