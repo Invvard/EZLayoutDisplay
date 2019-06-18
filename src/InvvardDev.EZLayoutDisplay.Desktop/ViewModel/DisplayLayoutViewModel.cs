@@ -234,7 +234,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             NoLayoutWarningSecondLine = "Please, go to the settings and update the layout.";
             CurrentLayerNameTitle = "Current layer :";
             CurrentLayerName = "";
-            ControlHintSpaceLabel = "Press 'Space' to display next layer";
+            ControlHintSpaceLabel = "Scroll up/down or press 'Space' to display next layer";
             ControlHintEscapeLabel = "Press 'Escape' to hide window";
             ToggleBtnPinWindowContent = "_Pin window";
             ToggleBtnPinWindowTooltip = "Press 'P' to toggle";
