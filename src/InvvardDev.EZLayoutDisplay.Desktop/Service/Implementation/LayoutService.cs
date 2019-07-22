@@ -40,7 +40,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
         }
 
         /// <inheritdoc />
-        public async Task<ErgodoxLayout> GetErgodoxLayout(string layoutHashId)
+        public async Task<ErgodoxLayout> GetErgodoxLayout(string layoutHashId, string layoutRevisionId)
         {
             Logger.TraceMethod();
             Logger.DebugInputParam(nameof(layoutHashId), layoutHashId);
