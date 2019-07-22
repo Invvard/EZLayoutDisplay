@@ -519,7 +519,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             Logger.TraceMethod();
 
             var layoutHashIdGroupName = "layoutHashId";
-            var pattern = $"https://configure.ergodox-ez.com/(?:ergodox|planck)-ez/layouts/(?<{layoutHashIdGroupName}>default|[a-zA-Z0-9]{{4,}})(?:/latest/[0-9])?";
+            var layoutRevisionIdGroupName = "layoutRevisionId";
+            var pattern = $"https://configure.ergodox-ez.com/(?:ergodox|planck)-ez/layouts/(?<{layoutHashIdGroupName}>default|[a-zA-Z0-9]{{4,}})(?:/(?<{layoutRevisionIdGroupName}>latest|[a-zA-Z0-9]+)(?:/[0-9]{{1,2}})?)?";
             var layoutHashId = "default";
 
             var regex = new Regex(pattern);
