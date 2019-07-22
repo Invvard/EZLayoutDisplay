@@ -522,6 +522,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             var layoutRevisionIdGroupName = "layoutRevisionId";
             var pattern = $"https://configure.ergodox-ez.com/(?:ergodox|planck)-ez/layouts/(?<{layoutHashIdGroupName}>default|[a-zA-Z0-9]{{4,}})(?:/(?<{layoutRevisionIdGroupName}>latest|[a-zA-Z0-9]+)(?:/[0-9]{{1,2}})?)?";
             var layoutHashId = "default";
+            var layoutRevisionId = "latest";
 
             var regex = new Regex(pattern);
             var match = regex.Match(layoutUrl);
@@ -529,10 +530,12 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             if (match.Success)
             {
                 layoutHashId = match.Groups[layoutHashIdGroupName].Value;
+                layoutRevisionId = match.Groups[layoutRevisionIdGroupName]?.Value ?? layoutRevisionId;
             }
 
             Logger.Debug("Layout URL = {0}", layoutUrl);
             Logger.Debug("Layout Hash ID = {0}", layoutHashId);
+            Logger.Debug("Layout Revision ID = {0}", layoutRevisionId);
 
             return layoutHashId;
         }
