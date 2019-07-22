@@ -385,7 +385,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         {
             Logger.TraceMethod();
 
-            var layoutHashId = ExtractLayoutHashId(LayoutUrlContent).layoutHashId;
+            var layoutHashId = ExtractLayoutUrlIds(LayoutUrlContent).layoutHashId;
 
             try
             {
@@ -490,7 +490,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         {
             Logger.TraceMethod();
 
-            var (layoutHashId, layoutRevisionId) = ExtractLayoutHashId(LayoutUrlContent);
+            var (layoutHashId, layoutRevisionId) = ExtractLayoutUrlIds(LayoutUrlContent);
 
             try
             {
@@ -514,7 +514,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             }
         }
 
-        private (string layoutHashId, string layoutRevisionId) ExtractLayoutHashId(string layoutUrl)
+        private (string layoutHashId, string layoutRevisionId) ExtractLayoutUrlIds(string layoutUrl)
         {
             Logger.TraceMethod();
 
