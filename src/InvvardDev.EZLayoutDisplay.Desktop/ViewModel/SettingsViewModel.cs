@@ -494,7 +494,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
             try
             {
-                var ergodoxLayout = await _layoutService.GetErgodoxLayout(layoutHashId, layoutRevisionId);
+                var ergodoxLayout = await _layoutService.GetErgodoxLayout(layoutHashId);
                 Logger.Debug("ergodoxLayout = {@value0}", ergodoxLayout);
 
                 var ezLayout = _layoutService.PrepareEZLayout(ergodoxLayout);
