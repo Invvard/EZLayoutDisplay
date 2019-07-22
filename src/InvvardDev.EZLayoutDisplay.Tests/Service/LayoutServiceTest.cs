@@ -60,10 +60,10 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Service
         }
 
         [ Theory ]
-        [ InlineData("EOEb", true) ]
-        [ InlineData("default", true) ]
-        [ InlineData("test", false) ]
-        public async Task GetErgodoxLayout(string layoutHashId, bool exist)
+        [ InlineData("EOEb", "latest", true) ]
+        [ InlineData("default", "latest", true) ]
+        [ InlineData("test", "latest", false) ]
+        public async Task GetErgodoxLayout(string layoutHashId, string layoutRevisionId, bool exist)
         {
             // Arrange
             ILayoutService layoutService = new LayoutService();
@@ -71,8 +71,8 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Service
             // Act
             ErgodoxLayout response = null;
 
-            if (exist) { response = await layoutService.GetErgodoxLayout(layoutHashId); }
-            else { await Assert.ThrowsAsync<ArgumentException>(() => layoutService.GetErgodoxLayout(layoutHashId)); }
+            if (exist) { response = await layoutService.GetErgodoxLayout(layoutHashId, layoutRevisionId); }
+            else { await Assert.ThrowsAsync<ArgumentException>(() => layoutService.GetErgodoxLayout(layoutHashId, layoutRevisionId)); }
 
             // Assert
             if (exist)
@@ -190,9 +190,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Service
             ILayoutService layoutService = new LayoutService();
 
             // Act
-            await Assert.ThrowsAsync<ArgumentNullException>(() => layoutService.GetErgodoxLayout(""));
-
-            // Assert
+            await Assert.ThrowsAsync<ArgumentNullException>(() => layoutService.GetErgodoxLayout("", ""));
         }
     }
 }
