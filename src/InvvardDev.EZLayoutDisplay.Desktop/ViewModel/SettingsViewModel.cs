@@ -530,7 +530,9 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             if (match.Success)
             {
                 layoutHashId = match.Groups[layoutHashIdGroupName].Value;
-                layoutRevisionId = match.Groups[layoutRevisionIdGroupName]?.Value ?? layoutRevisionId;
+
+                var revisionId = match.Groups[layoutRevisionIdGroupName].Value;
+                layoutRevisionId = string.IsNullOrWhiteSpace(revisionId) ? layoutRevisionId : revisionId;
             }
 
             Logger.Debug("Layout URL = {0}", layoutUrl);
