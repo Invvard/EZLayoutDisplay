@@ -385,7 +385,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         {
             Logger.TraceMethod();
 
-            var layoutHashId = ExtractLayoutHashId(LayoutUrlContent);
+            var layoutHashId = ExtractLayoutHashId(LayoutUrlContent).layoutHashId;
 
             try
             {
@@ -490,11 +490,11 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         {
             Logger.TraceMethod();
 
-            var layoutHashId = ExtractLayoutHashId(LayoutUrlContent);
+            var (layoutHashId, layoutRevisionId) = ExtractLayoutHashId(LayoutUrlContent);
 
             try
             {
-                var ergodoxLayout = await _layoutService.GetErgodoxLayout(layoutHashId);
+                var ergodoxLayout = await _layoutService.GetErgodoxLayout(layoutHashId, layoutRevisionId);
                 Logger.Debug("ergodoxLayout = {@value0}", ergodoxLayout);
 
                 var ezLayout = _layoutService.PrepareEZLayout(ergodoxLayout);
@@ -514,7 +514,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             }
         }
 
-        private string ExtractLayoutHashId(string layoutUrl)
+        private (string layoutHashId, string layoutRevisionId) ExtractLayoutHashId(string layoutUrl)
         {
             Logger.TraceMethod();
 
@@ -537,7 +537,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             Logger.Debug("Layout Hash ID = {0}", layoutHashId);
             Logger.Debug("Layout Revision ID = {0}", layoutRevisionId);
 
-            return layoutHashId;
+            return (layoutHashId, layoutRevisionId);
         }
 
         #endregion
