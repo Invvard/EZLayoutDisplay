@@ -27,7 +27,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Design
         }
 
         /// <inheritdoc />
-        public EZLayout PrepareEZLayout(ErgodoxLayout ergodoxLayout)
+        public EZLayout PrepareEZLayout(ErgodoxLayout ergodoxLayout, string layoutRevisionIds)
         {
             Debug.WriteLine("Layout prepared");
 
