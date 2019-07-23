@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,6 +19,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Service
                                          HashId = "",
                                          Revisions = new List<Revision> {
                                                                             new Revision {
+                                                                                             HashId = "hashId-1",
                                                                                              Layers = new List<ErgodoxLayer> {
                                                                                                                                  new ErgodoxLayer() {
                                                                                                                                                         Color = "",
@@ -45,8 +45,14 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Service
             // Act
             ErgodoxLayout response = null;
 
-            if (exist) { response = await layoutService.GetLayoutInfo(layoutHashId); }
-            else { await Assert.ThrowsAsync<ArgumentException>(() => layoutService.GetLayoutInfo(layoutHashId)); }
+            if (exist)
+            {
+                response = await layoutService.GetLayoutInfo(layoutHashId);
+            }
+            else
+            {
+                await Assert.ThrowsAsync<ArgumentException>(() => layoutService.GetLayoutInfo(layoutHashId));
+            }
 
             // Assert
             if (exist)
@@ -71,8 +77,14 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Service
             // Act
             ErgodoxLayout response = null;
 
-            if (exist) { response = await layoutService.GetErgodoxLayout(layoutHashId); }
-            else { await Assert.ThrowsAsync<ArgumentException>(() => layoutService.GetErgodoxLayout(layoutHashId)); }
+            if (exist)
+            {
+                response = await layoutService.GetErgodoxLayout(layoutHashId);
+            }
+            else
+            {
+                await Assert.ThrowsAsync<ArgumentException>(() => layoutService.GetErgodoxLayout(layoutHashId));
+            }
 
             // Assert
             if (exist)
@@ -107,7 +119,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Service
             EZLayout ezLayoutResult;
 
             // Act
-            ezLayoutResult = layoutService.PrepareEZLayout(ergodoxLayout);
+            ezLayoutResult = layoutService.PrepareEZLayout(ergodoxLayout, ergodoxLayout.Revisions.First().HashId);
 
             // Assert
             Assert.Single(ezLayoutResult.EZLayers);
@@ -161,7 +173,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Service
             EZLayout ezLayoutResult;
 
             // Act
-            ezLayoutResult = layoutService.PrepareEZLayout(ergodoxLayout);
+            ezLayoutResult = layoutService.PrepareEZLayout(ergodoxLayout, ergodoxLayout.Revisions.First().HashId);
 
             // Assert
             Assert.Equal(2, ezLayoutResult.EZLayers.Count);
@@ -183,7 +195,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Service
             Assert.Equal(KeyCategory.Spacing, layer1KeyResults[1].KeyCategory);
         }
 
-        [Fact]
+        [ Fact ]
         public async Task GetErgodoxLayout_HashIdNull()
         {
             // Arrange
