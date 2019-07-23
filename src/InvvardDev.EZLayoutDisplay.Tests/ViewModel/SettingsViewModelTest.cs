@@ -182,33 +182,29 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
         }
 
         [ Theory ]
-        [ InlineData("https://configure.ergodox-ez.com/layouts/abcd/latest/0", "default", "latest") ]
-        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/abcd/latest/0", "abcd", "latest") ]
-        [ InlineData("https://configure.ergodox-ez.com/planck-ez/layouts/abcd/latest/0", "abcd", "latest") ]
-        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/1234/asdf/0", "1234", "asdf") ]
-        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/a2Vt/latest/0", "a2Vt", "latest") ]
-        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/default/erfdgbs/0", "default", "erfdgbs") ]
-        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/default/latest/0", "default", "latest") ]
-        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/j3o4", "j3o4", "latest") ]
-        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/j3o4/", "j3o4", "latest") ]
-        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/r2d2/lat/9", "r2d2", "lat") ]
-        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/def/latest/0", "default", "latest") ] // Less than 4 layout ID character length
-        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/def/sadfasdf/0", "default", "latest")] // Less than 4 layout ID character length
-        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/_t3s/latest/0", "default", "latest") ]
-        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/_t3s/asdf/0", "default", "latest") ]
-        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/t3s/latest/0", "default", "latest") ]
-        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/adbcd/latest/0", "adbcd", "latest") ]
-        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/asdfasdfasdfasdfgfasdffgasf/latest/0", "asdfasdfasdfasdfgfasdffgasf", "latest") ]
-        [ InlineData("https://configure.ergodox-ez.com/planck-ez/layouts/asdfasdfasdfasdfgfasdffgasf/latest/0", "asdfasdfasdfasdfgfasdffgasf", "latest") ]
-        [ InlineData("https://configure.ergodox-ez.com/plante-ez/layouts/asdfasdfasdfasdfgfasdffgasf/latest/0", "default", "latest") ]
-        public void UpdateLayoutCommand_Execute(string layoutUrl, string expectedHashId, string expectedRevisionId)
+        [ InlineData("https://configure.ergodox-ez.com/layouts/abcd/latest/0", "default") ]
+        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/abcd/latest/0", "abcd") ]
+        [ InlineData("https://configure.ergodox-ez.com/planck-ez/layouts/abcd/latest/0", "abcd") ]
+        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/1234/asdf/0", "1234") ]
+        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/a2Vt/latest/0", "a2Vt") ]
+        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/default/latest/0", "default") ]
+        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/j3o4", "j3o4") ]
+        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/j3o4/", "j3o4") ]
+        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/r2d2/lat/9", "r2d2") ]
+        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/def/latest/0", "default") ] // Less than 4 layout ID character length
+        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/_t3s/latest/0", "default") ]
+        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/t3s/latest/0", "default") ]
+        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/adbcd/latest/0", "adbcd") ]
+        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/asdfasdfasdfasdfgfasdffgasf/latest/0", "asdfasdfasdfasdfgfasdffgasf") ]
+        [ InlineData("https://configure.ergodox-ez.com/plante-ez/layouts/asdfasdfasdfasdfgfasdffgasf/latest/0", "default") ]
+        public void UpdateLayoutCommand_Execute(string layoutUrl, string expectedHashId)
         {
             //Arrange
             var mockSettingsService = new Mock<ISettingsService>();
             mockSettingsService.SetupProperty(s => s.ErgodoxLayoutUrl, layoutUrl);
             var mockWindowService = new Mock<IWindowService>();
             var mockLayoutService = new Mock<ILayoutService>();
-            mockLayoutService.Setup(l => l.GetErgodoxLayout(expectedHashId, expectedRevisionId)).Returns(Task.FromResult(It.IsAny<ErgodoxLayout>())).Verifiable();
+            mockLayoutService.Setup(l => l.GetErgodoxLayout(expectedHashId)).Returns(Task.FromResult(It.IsAny<ErgodoxLayout>())).Verifiable();
             mockLayoutService.Setup(l => l.PrepareEZLayout(It.IsAny<ErgodoxLayout>())).Verifiable();
             var mockProcessService = new Mock<IProcessService>();
 
@@ -230,7 +226,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             var mockWindowService = new Mock<IWindowService>();
             mockWindowService.Setup(w => w.ShowWarning(It.IsAny<string>())).Verifiable();
             var mockLayoutService = new Mock<ILayoutService>();
-            mockLayoutService.Setup(l => l.GetErgodoxLayout(It.IsAny<string>(), It.IsAny<string>())).Throws<ArgumentException>();
+            mockLayoutService.Setup(l => l.GetErgodoxLayout(It.IsAny<string>())).Throws<ArgumentException>();
             var processService = new Mock<IProcessService>();
 
             // Act
@@ -251,7 +247,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             var mockWindowService = new Mock<IWindowService>();
             mockWindowService.Setup(w => w.ShowWarning(It.IsAny<string>())).Verifiable();
             var mockLayoutService = new Mock<ILayoutService>();
-            mockLayoutService.Setup(l => l.GetErgodoxLayout(It.IsAny<string>(), It.IsAny<string>())).Throws<ArgumentNullException>();
+            mockLayoutService.Setup(l => l.GetErgodoxLayout(It.IsAny<string>())).Throws<ArgumentNullException>();
             var processService = new Mock<IProcessService>();
 
             // Act
