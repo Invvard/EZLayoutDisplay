@@ -58,7 +58,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
             Logger.TraceMethod();
 
             var ezLayoutMaker = new EZLayoutMaker();
-            EZLayout ezLayout = ezLayoutMaker.PrepareEZLayout(ergodoxLayout, layoutRevisionIds);
+            EZLayout ezLayout = ezLayoutMaker.PrepareEZLayout(ergodoxLayout, layoutRevisionId);
 
             return ezLayout;
         }
