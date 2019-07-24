@@ -21,6 +21,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         #region Constants
 
         private const string TagSearchBaseUri = "https://configure.ergodox-ez.com/{0}/search?q={1}";
+        private const string DefaultLatestRevisionId = "latest";
 
         #endregion
 
@@ -41,6 +42,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private ICommand _closeSettingsCommand;
         private ICommand _cancelSettingsCommand;
 
+        private string _currentLayoutHashId;
+        private string _currentLayoutRevisionId;
         private string _layoutTitle;
         private string _keyboardModel;
         private string _layoutStatus;
@@ -218,6 +221,18 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             set => Set(ref _hotkeyDisplayLayout, value);
         }
 
+        public string CurrentLayoutHashId
+        {
+            get => _currentLayoutHashId;
+            set => Set(ref _currentLayoutHashId, value);
+        }
+
+        public string CurrentLayoutRevisionId
+        {
+            get => _currentLayoutRevisionId;
+            set => Set(ref _currentLayoutRevisionId, value);
+        }
+
         #endregion
 
         #region Constructor
@@ -385,17 +400,18 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         {
             Logger.TraceMethod();
 
-            var layoutHashId = ExtractLayoutHashId(LayoutUrlContent);
+            (CurrentLayoutHashId, CurrentLayoutRevisionId) = ExtractLayoutUrlIds(LayoutUrlContent);
 
             try
             {
-                var layoutInfo = await _layoutService.GetLayoutInfo(layoutHashId);
+                var layoutInfo = await _layoutService.GetLayoutInfo(CurrentLayoutHashId);
                 Logger.Debug("LayoutInfo = {@value0}", layoutInfo);
 
                 ClearLayoutInfo();
 
                 if (layoutInfo != null)
                 {
+                    CheckLatestRevisionId(layoutInfo);
                     UpdateLayoutInfo(layoutInfo);
                 }
             }
@@ -409,6 +425,16 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
                 Logger.Error(aex);
                 _windowService.ShowWarning(aex.Message);
             }
+        }
+
+        private void CheckLatestRevisionId(ErgodoxLayout layoutInfo)
+        {
+            if (CurrentLayoutRevisionId.ToLower() != DefaultLatestRevisionId)
+            {
+                return;
+            }
+
+            CurrentLayoutRevisionId = layoutInfo.Revisions.Last().HashId;
         }
 
         private void ClearLayoutInfo()
@@ -436,9 +462,9 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
                 Tags = new ObservableCollection<string>(layoutInfo.Tags.Select(t => t.Name));
             }
 
-            if (layoutInfo.Revisions?.Any() != null)
+            if (layoutInfo.Revisions.Any(r => r.HashId == CurrentLayoutRevisionId))
             {
-                var revision = layoutInfo.Revisions.First();
+                var revision = layoutInfo.Revisions.First(r => r.HashId == CurrentLayoutRevisionId);
 
                 KeyboardModel = GetKeyBoardDescription(_keyboardGeometry, revision.Model);
                 UpdateLayoutButtons(revision);
@@ -490,14 +516,12 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         {
             Logger.TraceMethod();
 
-            var layoutHashId = ExtractLayoutHashId(LayoutUrlContent);
-
             try
             {
-                var ergodoxLayout = await _layoutService.GetErgodoxLayout(layoutHashId);
+                var ergodoxLayout = await _layoutService.GetErgodoxLayout(CurrentLayoutHashId);
                 Logger.Debug("ergodoxLayout = {@value0}", ergodoxLayout);
 
-                var ezLayout = _layoutService.PrepareEZLayout(ergodoxLayout);
+                var ezLayout = _layoutService.PrepareEZLayout(ergodoxLayout, CurrentLayoutRevisionId);
                 Logger.Debug("ezLayout = {@value0}", ezLayout);
 
                 _settingsService.EZLayout = ezLayout;
@@ -514,13 +538,16 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             }
         }
 
-        private string ExtractLayoutHashId(string layoutUrl)
+        private (string layoutHashId, string layoutRevisionId) ExtractLayoutUrlIds(string layoutUrl)
         {
             Logger.TraceMethod();
 
             var layoutHashIdGroupName = "layoutHashId";
-            var pattern = $"https://configure.ergodox-ez.com/(?:ergodox|planck)-ez/layouts/(?<{layoutHashIdGroupName}>default|[a-zA-Z0-9]{{4,}})(?:/latest/[0-9])?";
+            var layoutRevisionIdGroupName = "layoutRevisionId";
+            var pattern =
+                $"https://configure.ergodox-ez.com/(?:ergodox|planck)-ez/layouts/(?<{layoutHashIdGroupName}>default|[a-zA-Z0-9]{{4,}})(?:/(?<{layoutRevisionIdGroupName}>latest|[a-zA-Z0-9]+)(?:/[0-9]{{1,2}})?)?";
             var layoutHashId = "default";
+            var layoutRevisionId = "latest";
 
             var regex = new Regex(pattern);
             var match = regex.Match(layoutUrl);
@@ -528,12 +555,16 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             if (match.Success)
             {
                 layoutHashId = match.Groups[layoutHashIdGroupName].Value;
+
+                var revisionId = match.Groups[layoutRevisionIdGroupName].Value;
+                layoutRevisionId = string.IsNullOrWhiteSpace(revisionId) ? layoutRevisionId : revisionId;
             }
 
             Logger.Debug("Layout URL = {0}", layoutUrl);
             Logger.Debug("Layout Hash ID = {0}", layoutHashId);
+            Logger.Debug("Layout Revision ID = {0}", layoutRevisionId);
 
-            return layoutHashId;
+            return (layoutHashId, layoutRevisionId);
         }
 
         #endregion

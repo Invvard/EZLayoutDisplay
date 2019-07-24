@@ -12,6 +12,18 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
         public string HashId { get; set; }
 
         /// <summary>
+        /// Gets or sets the keyboard revision comment.
+        /// </summary>
+        [JsonProperty("title")]
+        public string Comment { get; set; }
+
+        /// <summary>
+        /// Gets or sets the keyboard model.
+        /// </summary>
+        [JsonProperty("model")]
+        public string Model { get; set; }
+
+        /// <summary>
         /// Gets or sets the keyboard layout HEX file URL.
         /// </summary>
         [JsonProperty("hexUrl")]
@@ -22,12 +34,6 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
         /// </summary>
         [JsonProperty("zipUrl")]
         public string SourcesUrl { get; set; }
-
-        /// <summary>
-        /// Gets or sets the keyboard model.
-        /// </summary>
-        [JsonProperty("model")]
-        public string Model { get; set; }
 
         /// <summary>
         /// Gets or sets the list of <see cref="ErgodoxLayer"/>.
