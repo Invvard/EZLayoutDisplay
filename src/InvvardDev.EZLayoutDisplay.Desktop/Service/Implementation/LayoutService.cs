@@ -53,7 +53,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
         }
 
         /// <inheritdoc />
-        public EZLayout PrepareEZLayout(ErgodoxLayout ergodoxLayout, string layoutRevisionIds)
+        public EZLayout PrepareEZLayout(ErgodoxLayout ergodoxLayout, string layoutRevisionId)
         {
             Logger.TraceMethod();
 
