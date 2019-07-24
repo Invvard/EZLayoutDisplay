@@ -198,7 +198,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             var appVersion = GetAppVersion();
             WindowTitle = $"About {appTitle}";
             AppTitleLabel = appTitle;
-            AppVersionLabel = $"v.{appVersion}";
+            AppVersionLabel = $"v{appVersion}";
             CreatedTitleLabel = "Created by";
             BasedOnTitleLabel = "Based on";
             ProjectHomeTitleLabel = "Project home";
