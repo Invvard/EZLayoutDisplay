@@ -213,7 +213,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
 
         [ Theory ]
         [ InlineData("https://configure.ergodox-ez.com/layouts/abcd/latest/0", "default") ]
-        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/abcd/latest/0", "abcd") ]
+        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/abcd/sdfs/0", "abcd") ]
         [ InlineData("https://configure.ergodox-ez.com/planck-ez/layouts/abcd/latest/0", "abcd") ]
         [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/1234/asdf/0", "1234") ]
         [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/a2Vt/latest/0", "a2Vt") ]
