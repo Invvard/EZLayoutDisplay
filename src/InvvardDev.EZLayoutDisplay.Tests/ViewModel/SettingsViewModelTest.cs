@@ -12,6 +12,38 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
 {
     public class SettingsViewModelTest
     {
+        private const string RevisionHashId = "hashId-1";
+
+        private static ErgodoxLayout PrepareLayoutTree(string geometry = "ergodox-ez", string tag = "Tag 1")
+        {
+            var expectedInfo = new ErgodoxLayout() {
+                                                       Geometry = geometry,
+                                                       Title = "ezlayout",
+                                                       HashId = "asdf",
+                                                       Tags = new List<ErgodoxTag> {
+                                                                                       new ErgodoxTag {
+                                                                                                          Name = tag
+                                                                                                      }
+                                                                                   },
+                                                       Revisions = new List<Revision> {
+                                                                                          new Revision {
+                                                                                                           HashId = RevisionHashId,
+                                                                                                           HexUrl = "",
+                                                                                                           SourcesUrl = "",
+                                                                                                           Model = "Model",
+                                                                                                           Layers = new List<ErgodoxLayer> {
+                                                                                                                                               new ErgodoxLayer() {
+                                                                                                                                                                      Title = "Layer",
+                                                                                                                                                                      Position = 1
+                                                                                                                                                                  }
+                                                                                                                                           }
+                                                                                                       }
+                                                                                      }
+                                                   };
+
+            return expectedInfo;
+        }
+
         [ Fact ]
         public void SettingsViewModel_Constructor()
         {
@@ -182,27 +214,31 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
         }
 
         [ Theory ]
-        [ InlineData("https://configure.ergodox-ez.com/layouts/abcd/latest/0", "default") ]
-        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/abcd/latest/0", "abcd") ]
-        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/1234/latest/0", "1234") ]
-        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/a2Vt/latest/0", "a2Vt") ]
-        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/default/latest/0", "default") ]
-        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/j3o4", "j3o4") ]
-        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/r2d2/lat/9", "r2d2") ]
-        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/def/latest/0", "default") ]
-        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/_t3s/latest/0", "default") ]
-        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/t3s/latest/0", "default") ]
-        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/adbcd/latest/0", "adbcd") ]
-        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/asdfasdfasdfasdfgfasdffgasf/latest/0", "asdfasdfasdfasdfgfasdffgasf") ]
-        public void UpdateLayoutCommand_Execute(string layoutUrl, string expectedHashId)
+        [ InlineData("https://configure.ergodox-ez.com/layouts/abcd/latest/0", "default", RevisionHashId) ]
+        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/abcd/sdfs/0", "abcd", "sdfs") ]
+        [ InlineData("https://configure.ergodox-ez.com/planck-ez/layouts/abcd/latest/0", "abcd", RevisionHashId) ]
+        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/1234/asdf/0", "1234", "asdf") ]
+        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/a2Vt/latest/0", "a2Vt", RevisionHashId) ]
+        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/default/latest/0", "default", RevisionHashId) ]
+        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/j3o4", "j3o4", RevisionHashId) ]
+        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/j3o4/", "j3o4", RevisionHashId) ]
+        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/r2d2/lat/9", "r2d2", "lat") ]
+        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/def/latest/0", "default", RevisionHashId) ] // Less than 4 layout ID character length
+        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/_t3s/latest/0", "default", RevisionHashId) ]
+        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/t3s/latest/0", "default", RevisionHashId) ]
+        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/adbcd/latest/0", "adbcd", RevisionHashId) ]
+        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/asdfasdfasdfasdfgfasdffgasf/latest/0", "asdfasdfasdfasdfgfasdffgasf", RevisionHashId) ]
+        [ InlineData("https://configure.ergodox-ez.com/plante-ez/layouts/asdfasdfasdfasdfgfasdffgasf/latest/0", "default", RevisionHashId) ]
+        public void UpdateLayoutCommand_Execute(string layoutUrl, string expectedHashId, string expectedRevisionHashId)
         {
             //Arrange
             var mockSettingsService = new Mock<ISettingsService>();
             mockSettingsService.SetupProperty(s => s.ErgodoxLayoutUrl, layoutUrl);
             var mockWindowService = new Mock<IWindowService>();
             var mockLayoutService = new Mock<ILayoutService>();
+            mockLayoutService.Setup(l => l.GetLayoutInfo(expectedHashId)).Returns(Task.FromResult(PrepareLayoutTree()));
             mockLayoutService.Setup(l => l.GetErgodoxLayout(expectedHashId)).Returns(Task.FromResult(It.IsAny<ErgodoxLayout>())).Verifiable();
-            mockLayoutService.Setup(l => l.PrepareEZLayout(It.IsAny<ErgodoxLayout>())).Verifiable();
+            mockLayoutService.Setup(l => l.PrepareEZLayout(It.IsAny<ErgodoxLayout>(), expectedRevisionHashId)).Verifiable();
             var mockProcessService = new Mock<IProcessService>();
 
             //Act
@@ -271,9 +307,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             var mockWindowService = new Mock<IWindowService>();
             var mockLayoutService = new Mock<ILayoutService>();
             mockLayoutService.Setup(l => l.GetLayoutInfo(It.IsAny<string>()))
-                             .Returns(Task.FromResult(new ErgodoxLayout() {
-                                                                              Geometry = keyboardGeometry
-                                                                          }));
+                             .Returns(Task.FromResult(PrepareLayoutTree(keyboardGeometry, tag)));
             var mockProcessService = new Mock<IProcessService>();
             mockProcessService.Setup(p => p.StartWebUrl(It.IsAny<string>())).Verifiable();
 
@@ -357,29 +391,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
         {
             // Arrange
             var expectedLayoutStatus = "Not compiled";
-            var expectedInfo = new ErgodoxLayout() {
-                                                       Geometry = geometry,
-                                                       Title = "ezlayout",
-                                                       HashId = "asdf",
-                                                       Tags = new List<ErgodoxTag> {
-                                                                                       new ErgodoxTag {
-                                                                                                          Name = "Tag 1"
-                                                                                                      }
-                                                                                   },
-                                                       Revisions = new List<Revision> {
-                                                                                          new Revision {
-                                                                                                           HexUrl = "",
-                                                                                                           SourcesUrl = "",
-                                                                                                           Model = "Model",
-                                                                                                           Layers = new List<ErgodoxLayer> {
-                                                                                                                                               new ErgodoxLayer() {
-                                                                                                                                                                      Title = "Layer",
-                                                                                                                                                                      Position = 1
-                                                                                                                                                                  }
-                                                                                                                                           }
-                                                                                                       }
-                                                                                      }
-                                                   };
+            var expectedInfo = PrepareLayoutTree(geometry);
             var mockSettingsService = new Mock<ISettingsService>();
             mockSettingsService.SetupProperty(s => s.ErgodoxLayoutUrl, "");
             var mockWindowService = new Mock<IWindowService>();
@@ -449,25 +461,25 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             Assert.Equal(expectedButtonStatus, settingsViewModel.DownloadSourcesCommand.CanExecute(null));
         }
 
-        [Theory]
-        [InlineData("https://url.com/hex-file", "", 0)]
-        [InlineData("", "https://url.com/source-file", 0)]
-        [InlineData("https://url.com/hex-file", "https://url.com/source-file", 1)]
+        [ Theory ]
+        [ InlineData("https://url.com/hex-file", "", 0) ]
+        [ InlineData("", "https://url.com/source-file", 0) ]
+        [ InlineData("https://url.com/hex-file", "https://url.com/source-file", 1) ]
         public void DownloadHexFileCommand_Execute(string hexUrl, string sourcesUrl, int expectedCommandExecute)
         {
             // Arrange
-            var expectedInfo = new ErgodoxLayout()
-            {
-                Geometry = "",
-                Title = "ezlayout",
-                HashId = "asdf",
-                Tags = new List<ErgodoxTag> {
+            var expectedInfo = new ErgodoxLayout() {
+                                                       Geometry = "",
+                                                       Title = "ezlayout",
+                                                       HashId = "asdf",
+                                                       Tags = new List<ErgodoxTag> {
                                                                                        new ErgodoxTag {
                                                                                                           Name = "Tag 1"
                                                                                                       }
                                                                                    },
-                Revisions = new List<Revision> {
+                                                       Revisions = new List<Revision> {
                                                                                           new Revision {
+                                                                                                           HashId = "hashId-1",
                                                                                                            HexUrl = hexUrl,
                                                                                                            SourcesUrl = sourcesUrl,
                                                                                                            Model = "Model",
@@ -479,7 +491,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
                                                                                                                                            }
                                                                                                        }
                                                                                       }
-            };
+                                                   };
             var mockSettingsService = new Mock<ISettingsService>();
             mockSettingsService.SetupProperty(s => s.ErgodoxLayoutUrl, "");
             var mockWindowService = new Mock<IWindowService>();
@@ -496,24 +508,23 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             mockProcessService.Verify(p => p.StartWebUrl(hexUrl), Times.Exactly(expectedCommandExecute));
         }
 
-        [Theory]
-        [InlineData("https://url.com/hex-file", "", 0)]
-        [InlineData("", "https://url.com/source-file", 0)]
-        [InlineData("https://url.com/hex-file", "https://url.com/source-file", 1)]
+        [ Theory ]
+        [ InlineData("https://url.com/hex-file", "", 0) ]
+        [ InlineData("", "https://url.com/source-file", 0) ]
+        [ InlineData("https://url.com/hex-file", "https://url.com/source-file", 1) ]
         public void DownloadSourcesCommand_Execute(string hexUrl, string sourcesUrl, int expectedCommandExecute)
         {
             // Arrange
-            var expectedInfo = new ErgodoxLayout()
-            {
-                Geometry = "",
-                Title = "ezlayout",
-                HashId = "asdf",
-                Tags = new List<ErgodoxTag> {
+            var expectedInfo = new ErgodoxLayout() {
+                                                       Geometry = "",
+                                                       Title = "ezlayout",
+                                                       HashId = "asdf",
+                                                       Tags = new List<ErgodoxTag> {
                                                                                        new ErgodoxTag {
                                                                                                           Name = "Tag 1"
                                                                                                       }
                                                                                    },
-                Revisions = new List<Revision> {
+                                                       Revisions = new List<Revision> {
                                                                                           new Revision {
                                                                                                            HexUrl = hexUrl,
                                                                                                            SourcesUrl = sourcesUrl,
@@ -526,7 +537,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
                                                                                                                                            }
                                                                                                        }
                                                                                       }
-            };
+                                                   };
             var mockSettingsService = new Mock<ISettingsService>();
             mockSettingsService.SetupProperty(s => s.ErgodoxLayoutUrl, "");
             var mockWindowService = new Mock<IWindowService>();
