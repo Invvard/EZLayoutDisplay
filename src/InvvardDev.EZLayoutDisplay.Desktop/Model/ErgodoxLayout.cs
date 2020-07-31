@@ -30,10 +30,10 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
         public List<ErgodoxTag> Tags { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of <see cref="Revision"/>.
+        /// Gets or sets the <see cref="Revision"/>.
         /// </summary>
-        [JsonProperty("revisions")]
-        public List<Revision> Revisions { get; set; }
+        [JsonProperty("revision")]
+        public Revision Revision { get; set; }
     }
 
     public class DataRoot
