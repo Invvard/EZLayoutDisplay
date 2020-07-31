@@ -26,9 +26,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Interface
         /// Transforms an <see cref="ErgodoxLayout"/> into a <see cref="EZLayout"/>.
         /// </summary>
         /// <param name="ergodoxLayout">The <see cref="ErgodoxLayout"/> to be transformed.</param>
-        /// <param name="layoutRevisionId">The layout revision identifier.</param>
         /// <returns>The <see cref="EZLayout"/> transformed into.</returns>
-        EZLayout PrepareEZLayout(ErgodoxLayout ergodoxLayout, string layoutRevisionId);
+        EZLayout PrepareEZLayout(ErgodoxLayout ergodoxLayout);
 
         /// <summary>
         /// Gets the list of <see cref="KeyTemplate"/> from the local repository.
