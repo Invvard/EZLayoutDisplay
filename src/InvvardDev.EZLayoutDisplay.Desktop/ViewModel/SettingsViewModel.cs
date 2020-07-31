@@ -434,7 +434,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
                 return;
             }
 
-            CurrentLayoutRevisionId = layoutInfo.Revisions.Last().HashId;
+            CurrentLayoutRevisionId = layoutInfo.Revision.HashId;
         }
 
         private void ClearLayoutInfo()
@@ -462,15 +462,13 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
                 Tags = new ObservableCollection<string>(layoutInfo.Tags.Select(t => t.Name));
             }
 
-            if (layoutInfo.Revisions.Any(r => r.HashId == CurrentLayoutRevisionId))
+            if (layoutInfo.Revision != null)
             {
-                var revision = layoutInfo.Revisions.First(r => r.HashId == CurrentLayoutRevisionId);
-
-                KeyboardModel = GetKeyBoardDescription(_keyboardGeometry, revision.Model);
-                UpdateLayoutButtons(revision);
+                KeyboardModel = GetKeyBoardDescription(_keyboardGeometry, layoutInfo.Revision.Model);
+                UpdateLayoutButtons(layoutInfo.Revision);
                 LayoutStatus = !_layoutIsCompiled ? "Not compiled" : "Compiled";
 
-                Layers = new ObservableCollection<string>(revision.Layers.Select(l => l.ToString()));
+                Layers = new ObservableCollection<string>(layoutInfo.Revision.Layers.Select(l => l.ToString()));
             }
         }
 
