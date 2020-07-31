@@ -29,7 +29,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
 
             var ezLayout = new EZLayout { HashId = ergodoxLayout.HashId, Name = ergodoxLayout.Title };
 
-            var ergodoxLayers = ergodoxLayout.Revisions.FirstOrDefault(r => r.HashId == layoutRevisionIds)?.Layers ?? ergodoxLayout.Revisions.First().Layers;
+            var ergodoxLayers = ergodoxLayout.Revision.Layers ?? ergodoxLayout.Revision.Layers;
 
             if (ergodoxLayers?.Any() != null)
             {
