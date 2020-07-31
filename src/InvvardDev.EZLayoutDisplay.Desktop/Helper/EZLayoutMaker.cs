@@ -22,7 +22,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
             _keyDefinitionDictionary = new KeyDefinitionDictionary();
         }
 
-        public EZLayout PrepareEZLayout(ErgodoxLayout ergodoxLayout, string layoutRevisionIds)
+        public EZLayout PrepareEZLayout(ErgodoxLayout ergodoxLayout)
         {
             Logger.TraceMethod();
             Logger.DebugInputParam(nameof(ergodoxLayout), ergodoxLayout);
