@@ -34,7 +34,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
 
             // Act
             var ezLayoutMaker = new EZLayoutMaker();
-            ezLayoutResult = ezLayoutMaker.PrepareEZLayout(ergodoxLayout, HashId);
+            ezLayoutResult = ezLayoutMaker.PrepareEZLayout(ergodoxLayout);
 
             // Assert
             Assert.Equal(expectedTitle, ezLayoutResult.Name);
@@ -56,7 +56,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
 
             // Act
             var ezLayoutMaker = new EZLayoutMaker();
-            ezLayoutResult = ezLayoutMaker.PrepareEZLayout(ergodoxLayout, HashId);
+            ezLayoutResult = ezLayoutMaker.PrepareEZLayout(ergodoxLayout);
 
             // Assert
             Assert.Single(ezLayoutResult.EZLayers);
@@ -86,7 +86,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
 
             // Act
             var ezLayoutMaker = new EZLayoutMaker();
-            ezLayoutResult = ezLayoutMaker.PrepareEZLayout(ergodoxLayout, HashId);
+            ezLayoutResult = ezLayoutMaker.PrepareEZLayout(ergodoxLayout);
 
             // Assert
             Assert.Equal(expectedColor, ezLayoutResult.EZLayers.First().EZKeys.First().Color);
@@ -104,7 +104,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
 
             // Act
             var ezLayoutMaker = new EZLayoutMaker();
-            ezLayoutResult = ezLayoutMaker.PrepareEZLayout(ergodoxLayout, HashId);
+            ezLayoutResult = ezLayoutMaker.PrepareEZLayout(ergodoxLayout);
 
             // Assert
             Assert.Single(ezLayoutResult.EZLayers);
@@ -126,7 +126,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
 
             // Act
             var ezLayoutMaker = new EZLayoutMaker();
-            ezLayoutResult = ezLayoutMaker.PrepareEZLayout(ergodoxLayout, HashId);
+            ezLayoutResult = ezLayoutMaker.PrepareEZLayout(ergodoxLayout);
 
             // Assert
             Assert.Single(ezLayoutResult.EZLayers);
@@ -162,7 +162,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
 
             // Act
             var ezLayoutMaker = new EZLayoutMaker();
-            ezLayoutResult = ezLayoutMaker.PrepareEZLayout(ergodoxLayout, HashId);
+            ezLayoutResult = ezLayoutMaker.PrepareEZLayout(ergodoxLayout);
 
             // Assert
             Assert.Single(ezLayoutResult.EZLayers);
@@ -188,7 +188,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
 
             // Act
             var ezLayoutMaker = new EZLayoutMaker();
-            ezLayoutResult = ezLayoutMaker.PrepareEZLayout(ergodoxLayout, HashId);
+            ezLayoutResult = ezLayoutMaker.PrepareEZLayout(ergodoxLayout);
 
             // Assert
             Assert.Single(ezLayoutResult.EZLayers);
@@ -228,7 +228,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
 
             // Act
             var ezLayoutMaker = new EZLayoutMaker();
-            ezLayoutResult = ezLayoutMaker.PrepareEZLayout(ergodoxLayout, HashId);
+            ezLayoutResult = ezLayoutMaker.PrepareEZLayout(ergodoxLayout);
 
             // Assert
             Assert.Single(ezLayoutResult.EZLayers);
@@ -257,7 +257,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
 
             // Act
             var ezLayoutMaker = new EZLayoutMaker();
-            ezLayoutResult = ezLayoutMaker.PrepareEZLayout(ergodoxLayout, HashId);
+            ezLayoutResult = ezLayoutMaker.PrepareEZLayout(ergodoxLayout);
 
             // Assert
             Assert.Single(ezLayoutResult.EZLayers);
@@ -299,7 +299,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
 
             // Act
             var ezLayoutMaker = new EZLayoutMaker();
-            ezLayoutResult = ezLayoutMaker.PrepareEZLayout(ergodoxLayout, HashId);
+            ezLayoutResult = ezLayoutMaker.PrepareEZLayout(ergodoxLayout);
 
             // Assert
             Assert.Single(ezLayoutResult.EZLayers);
@@ -330,7 +330,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
 
             // Act
             var ezLayoutMaker = new EZLayoutMaker();
-            ezLayoutResult = ezLayoutMaker.PrepareEZLayout(ergodoxLayout, HashId);
+            ezLayoutResult = ezLayoutMaker.PrepareEZLayout(ergodoxLayout);
 
             // Assert
             Assert.Single(ezLayoutResult.EZLayers);
@@ -364,7 +364,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
 
             // Act
             var ezLayoutMaker = new EZLayoutMaker();
-            ezLayoutResult = ezLayoutMaker.PrepareEZLayout(ergodoxLayout, HashId);
+            ezLayoutResult = ezLayoutMaker.PrepareEZLayout(ergodoxLayout);
 
             // Assert
             Assert.Single(ezLayoutResult.EZLayers);
@@ -433,7 +433,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Helper
 
             // Act
             var ezLayoutMaker = new EZLayoutMaker();
-            ezLayoutResult = ezLayoutMaker.PrepareEZLayout(ergodoxLayout, HashId);
+            ezLayoutResult = ezLayoutMaker.PrepareEZLayout(ergodoxLayout);
 
             // Assert
             Assert.Single(ezLayoutResult.EZLayers);
