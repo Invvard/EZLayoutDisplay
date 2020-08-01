@@ -45,11 +45,11 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Service
 
             if (exist)
             {
-                response = await layoutService.GetLayoutInfo(layoutHashId);
+                response = await layoutService.GetLayoutInfo(layoutHashId, "latest");
             }
             else
             {
-                await Assert.ThrowsAsync<ArgumentException>(() => layoutService.GetLayoutInfo(layoutHashId));
+                await Assert.ThrowsAsync<ArgumentException>(() => layoutService.GetLayoutInfo(layoutHashId, "latest"));
             }
 
             // Assert
@@ -77,11 +77,11 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Service
 
             if (exist)
             {
-                response = await layoutService.GetErgodoxLayout(layoutHashId);
+                response = await layoutService.GetErgodoxLayout(layoutHashId, "latest");
             }
             else
             {
-                await Assert.ThrowsAsync<ArgumentException>(() => layoutService.GetErgodoxLayout(layoutHashId));
+                await Assert.ThrowsAsync<ArgumentException>(() => layoutService.GetErgodoxLayout(layoutHashId, "latest"));
             }
 
             // Assert
@@ -117,7 +117,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Service
             EZLayout ezLayoutResult;
 
             // Act
-            ezLayoutResult = layoutService.PrepareEZLayout(ergodoxLayout, ergodoxLayout.Revision.HashId);
+            ezLayoutResult = layoutService.PrepareEZLayout(ergodoxLayout);
 
             // Assert
             Assert.Single(ezLayoutResult.EZLayers);
@@ -171,7 +171,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Service
             EZLayout ezLayoutResult;
 
             // Act
-            ezLayoutResult = layoutService.PrepareEZLayout(ergodoxLayout, ergodoxLayout.Revision.HashId);
+            ezLayoutResult = layoutService.PrepareEZLayout(ergodoxLayout);
 
             // Assert
             Assert.Equal(2, ezLayoutResult.EZLayers.Count);
@@ -200,7 +200,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Service
             ILayoutService layoutService = new LayoutService();
 
             // Act
-            await Assert.ThrowsAsync<ArgumentNullException>(() => layoutService.GetErgodoxLayout(""));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => layoutService.GetErgodoxLayout("", ""));
         }
     }
 }
