@@ -404,7 +404,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
             try
             {
-                var layoutInfo = await _layoutService.GetLayoutInfo(CurrentLayoutHashId);
+                var layoutInfo = await _layoutService.GetLayoutInfo(CurrentLayoutHashId, CurrentLayoutRevisionId);
                 Logger.Debug("LayoutInfo = {@value0}", layoutInfo);
 
                 ClearLayoutInfo();
@@ -434,7 +434,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
                 return;
             }
 
-            CurrentLayoutRevisionId = layoutInfo.Revisions.Last().HashId;
+            CurrentLayoutRevisionId = layoutInfo.Revision.HashId;
         }
 
         private void ClearLayoutInfo()
@@ -462,15 +462,13 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
                 Tags = new ObservableCollection<string>(layoutInfo.Tags.Select(t => t.Name));
             }
 
-            if (layoutInfo.Revisions.Any(r => r.HashId == CurrentLayoutRevisionId))
+            if (layoutInfo.Revision != null)
             {
-                var revision = layoutInfo.Revisions.First(r => r.HashId == CurrentLayoutRevisionId);
-
-                KeyboardModel = GetKeyBoardDescription(_keyboardGeometry, revision.Model);
-                UpdateLayoutButtons(revision);
+                KeyboardModel = GetKeyBoardDescription(_keyboardGeometry, layoutInfo.Revision.Model);
+                UpdateLayoutButtons(layoutInfo.Revision);
                 LayoutStatus = !_layoutIsCompiled ? "Not compiled" : "Compiled";
 
-                Layers = new ObservableCollection<string>(revision.Layers.Select(l => l.ToString()));
+                Layers = new ObservableCollection<string>(layoutInfo.Revision.Layers.Select(l => l.ToString()));
             }
         }
 
@@ -518,10 +516,10 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
             try
             {
-                var ergodoxLayout = await _layoutService.GetErgodoxLayout(CurrentLayoutHashId);
+                var ergodoxLayout = await _layoutService.GetErgodoxLayout(CurrentLayoutHashId, CurrentLayoutRevisionId);
                 Logger.Debug("ergodoxLayout = {@value0}", ergodoxLayout);
 
-                var ezLayout = _layoutService.PrepareEZLayout(ergodoxLayout, CurrentLayoutRevisionId);
+                var ezLayout = _layoutService.PrepareEZLayout(ergodoxLayout);
                 Logger.Debug("ezLayout = {@value0}", ezLayout);
 
                 _settingsService.EZLayout = ezLayout;

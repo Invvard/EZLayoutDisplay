@@ -13,38 +13,39 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
     public class SettingsViewModelTest
     {
         private const string RevisionHashId = "hashId-1";
+        private const string LatestRevisionHashId = "latest";
 
         private static ErgodoxLayout PrepareLayoutTree(string geometry = "ergodox-ez", string tag = "Tag 1")
         {
-            var expectedInfo = new ErgodoxLayout() {
-                                                       Geometry = geometry,
-                                                       Title = "ezlayout",
-                                                       HashId = "asdf",
-                                                       Tags = new List<ErgodoxTag> {
-                                                                                       new ErgodoxTag {
-                                                                                                          Name = tag
-                                                                                                      }
-                                                                                   },
-                                                       Revisions = new List<Revision> {
-                                                                                          new Revision {
-                                                                                                           HashId = RevisionHashId,
-                                                                                                           HexUrl = "",
-                                                                                                           SourcesUrl = "",
-                                                                                                           Model = "Model",
-                                                                                                           Layers = new List<ErgodoxLayer> {
-                                                                                                                                               new ErgodoxLayer() {
-                                                                                                                                                                      Title = "Layer",
-                                                                                                                                                                      Position = 1
-                                                                                                                                                                  }
-                                                                                                                                           }
-                                                                                                       }
-                                                                                      }
-                                                   };
+            var expectedInfo = new ErgodoxLayout()
+            {
+                Geometry = geometry,
+                Title = "ezlayout",
+                HashId = "asdf",
+                Tags = new List<ErgodoxTag> {
+                    new ErgodoxTag {
+                        Name = tag
+                    }
+                },
+                Revision = new Revision
+                {
+                    HashId = RevisionHashId,
+                    HexUrl = "",
+                    SourcesUrl = "",
+                    Model = "Model",
+                    Layers = new List<ErgodoxLayer> {
+                        new ErgodoxLayer() {
+                            Title = "Layer",
+                            Position = 1
+                        }
+                    }
+                }
+            };
 
             return expectedInfo;
         }
 
-        [ Fact ]
+        [Fact]
         public void SettingsViewModel_Constructor()
         {
             //Arrange
@@ -53,7 +54,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             mockSettingsService.Setup(s => s.ErgodoxLayoutUrl).Returns(tbContentInitial);
             var mockWindowService = new Mock<IWindowService>();
             var mockLayoutService = new Mock<ILayoutService>();
-            mockLayoutService.Setup(s => s.GetLayoutInfo(It.IsAny<string>())).Returns(Task.FromResult(It.IsAny<ErgodoxLayout>()));
+            mockLayoutService.Setup(s => s.GetLayoutInfo(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(It.IsAny<ErgodoxLayout>()));
             var mockProcessService = new Mock<IProcessService>();
 
             //Act
@@ -82,9 +83,9 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             Assert.Equal(tbContentInitial, settingsViewModel.LayoutUrlContent);
         }
 
-        [ Theory ]
-        [ InlineData("initial value", "initial value", false) ]
-        [ InlineData("initial value", "new value", true) ]
+        [Theory]
+        [InlineData("initial value", "initial value", false)]
+        [InlineData("initial value", "new value", true)]
         public void RelayCommand_CanExecute(string initialValue, string newValue, bool canExecute)
         {
             //Arrange
@@ -95,9 +96,10 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             var mockProcessService = new Mock<IProcessService>();
 
             //Act
-            var settingsViewModel = new SettingsViewModel(mockSettingsService.Object, mockWindowService.Object, mockLayoutService.Object, mockProcessService.Object) {
-                                                                                                                                                                         LayoutUrlContent = newValue
-                                                                                                                                                                     };
+            var settingsViewModel = new SettingsViewModel(mockSettingsService.Object, mockWindowService.Object, mockLayoutService.Object, mockProcessService.Object)
+            {
+                LayoutUrlContent = newValue
+            };
 
             //Assert
             if (canExecute)
@@ -114,7 +116,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             Assert.True(settingsViewModel.CloseSettingsCommand.CanExecute(null));
         }
 
-        [ Fact ]
+        [Fact]
         public void ApplyCommand_Execute()
         {
             //Arrange
@@ -128,10 +130,11 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             var mockProcessService = new Mock<IProcessService>();
 
             //Act
-            var settingsViewModel = new SettingsViewModel(mockSettingsService.Object, mockWindowService.Object, mockLayoutService.Object, mockProcessService.Object) {
-                                                                                                                                                                         LayoutUrlContent =
+            var settingsViewModel = new SettingsViewModel(mockSettingsService.Object, mockWindowService.Object, mockLayoutService.Object, mockProcessService.Object)
+            {
+                LayoutUrlContent =
                                                                                                                                                                              tbContentNewValue
-                                                                                                                                                                     };
+            };
             settingsViewModel.ApplySettingsCommand.Execute(null);
 
             //Assert
@@ -141,7 +144,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             Assert.False(settingsViewModel.CancelSettingsCommand.CanExecute(null));
         }
 
-        [ Fact ]
+        [Fact]
         public void CancelCommand_Execute()
         {
             //Arrange
@@ -155,10 +158,11 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             var mockProcessService = new Mock<IProcessService>();
 
             //Act
-            var settingsViewModel = new SettingsViewModel(mockSettingsService.Object, mockWindowService.Object, mockLayoutService.Object, mockProcessService.Object) {
-                                                                                                                                                                         LayoutUrlContent =
+            var settingsViewModel = new SettingsViewModel(mockSettingsService.Object, mockWindowService.Object, mockLayoutService.Object, mockProcessService.Object)
+            {
+                LayoutUrlContent =
                                                                                                                                                                              tbContentNewValue
-                                                                                                                                                                     };
+            };
             settingsViewModel.CancelSettingsCommand.Execute(null);
 
             //Assert
@@ -168,9 +172,9 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             Assert.False(settingsViewModel.CancelSettingsCommand.CanExecute(null));
         }
 
-        [ Theory ]
-        [ InlineData(false) ]
-        [ InlineData(true) ]
+        [Theory]
+        [InlineData(false)]
+        [InlineData(true)]
         public void CloseCommand_Execute(bool mustSave)
         {
             //Arrange
@@ -213,32 +217,32 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             }
         }
 
-        [ Theory ]
-        [ InlineData("https://configure.ergodox-ez.com/layouts/abcd/latest/0", "default", RevisionHashId) ]
-        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/abcd/sdfs/0", "abcd", "sdfs") ]
-        [ InlineData("https://configure.ergodox-ez.com/planck-ez/layouts/abcd/latest/0", "abcd", RevisionHashId) ]
-        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/1234/asdf/0", "1234", "asdf") ]
-        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/a2Vt/latest/0", "a2Vt", RevisionHashId) ]
-        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/default/latest/0", "default", RevisionHashId) ]
-        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/j3o4", "j3o4", RevisionHashId) ]
-        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/j3o4/", "j3o4", RevisionHashId) ]
-        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/r2d2/lat/9", "r2d2", "lat") ]
-        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/def/latest/0", "default", RevisionHashId) ] // Less than 4 layout ID character length
-        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/_t3s/latest/0", "default", RevisionHashId) ]
-        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/t3s/latest/0", "default", RevisionHashId) ]
-        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/adbcd/latest/0", "adbcd", RevisionHashId) ]
-        [ InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/asdfasdfasdfasdfgfasdffgasf/latest/0", "asdfasdfasdfasdfgfasdffgasf", RevisionHashId) ]
-        [ InlineData("https://configure.ergodox-ez.com/plante-ez/layouts/asdfasdfasdfasdfgfasdffgasf/latest/0", "default", RevisionHashId) ]
-        public void UpdateLayoutCommand_Execute(string layoutUrl, string expectedHashId, string expectedRevisionHashId)
+        [Theory]
+        [InlineData("https://configure.ergodox-ez.com/layouts/abcd/latest/0", LatestRevisionHashId, "default", RevisionHashId)]
+        [InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/abcd/sdfs/0", "sdfs", "abcd", "sdfs")]
+        [InlineData("https://configure.ergodox-ez.com/planck-ez/layouts/abcd/latest/0", LatestRevisionHashId, "abcd", RevisionHashId)]
+        [InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/1234/asdf/0", "asdf", "1234", "asdf")]
+        [InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/a2Vt/latest/0", LatestRevisionHashId, "a2Vt", RevisionHashId)]
+        [InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/default/latest/0", LatestRevisionHashId, "default", RevisionHashId)]
+        [InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/j3o4", LatestRevisionHashId, "j3o4", RevisionHashId)]
+        [InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/j3o4/", LatestRevisionHashId, "j3o4", RevisionHashId)]
+        [InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/r2d2/lat/9", "lat", "r2d2", "lat")]
+        [InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/def/latest/0", LatestRevisionHashId, "default", RevisionHashId)] // Less than 4 layout ID character length
+        [InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/_t3s/latest/0", LatestRevisionHashId, "default", RevisionHashId)]
+        [InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/t3s/latest/0", LatestRevisionHashId, "default", RevisionHashId)]
+        [InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/adbcd/latest/0", LatestRevisionHashId, "adbcd", RevisionHashId)]
+        [InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/asdfasdfasdfasdfgfasdffgasf/latest/0", LatestRevisionHashId, "asdfasdfasdfasdfgfasdffgasf", RevisionHashId)]
+        [InlineData("https://configure.ergodox-ez.com/plante-ez/layouts/asdfasdfasdfasdfgfasdffgasf/latest/0", LatestRevisionHashId, "default", RevisionHashId)]
+        public void UpdateLayoutCommand_Execute(string layoutUrl, string urlRevisionId, string expectedHashId, string expectedRevisionHashId)
         {
             //Arrange
             var mockSettingsService = new Mock<ISettingsService>();
             mockSettingsService.SetupProperty(s => s.ErgodoxLayoutUrl, layoutUrl);
             var mockWindowService = new Mock<IWindowService>();
             var mockLayoutService = new Mock<ILayoutService>();
-            mockLayoutService.Setup(l => l.GetLayoutInfo(expectedHashId)).Returns(Task.FromResult(PrepareLayoutTree()));
-            mockLayoutService.Setup(l => l.GetErgodoxLayout(expectedHashId)).Returns(Task.FromResult(It.IsAny<ErgodoxLayout>())).Verifiable();
-            mockLayoutService.Setup(l => l.PrepareEZLayout(It.IsAny<ErgodoxLayout>(), expectedRevisionHashId)).Verifiable();
+            mockLayoutService.Setup(l => l.GetLayoutInfo(expectedHashId, urlRevisionId)).Returns(Task.FromResult(PrepareLayoutTree()));
+            mockLayoutService.Setup(l => l.GetErgodoxLayout(expectedHashId, expectedRevisionHashId)).Returns(Task.FromResult(It.IsAny<ErgodoxLayout>())).Verifiable();
+            mockLayoutService.Setup(l => l.PrepareEZLayout(It.IsAny<ErgodoxLayout>())).Verifiable();
             var mockProcessService = new Mock<IProcessService>();
 
             //Act
@@ -250,7 +254,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             mockLayoutService.Verify();
         }
 
-        [ Fact ]
+        [Fact]
         public void UpdateLayoutCommandExecute_ArgumentExceptionRaised()
         {
             // Arrange
@@ -259,7 +263,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             var mockWindowService = new Mock<IWindowService>();
             mockWindowService.Setup(w => w.ShowWarning(It.IsAny<string>())).Verifiable();
             var mockLayoutService = new Mock<ILayoutService>();
-            mockLayoutService.Setup(l => l.GetErgodoxLayout(It.IsAny<string>())).Throws<ArgumentException>();
+            mockLayoutService.Setup(l => l.GetErgodoxLayout(It.IsAny<string>(), It.IsAny<string>())).Throws<ArgumentException>();
             var processService = new Mock<IProcessService>();
 
             // Act
@@ -271,7 +275,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             mockWindowService.Verify();
         }
 
-        [ Fact ]
+        [Fact]
         public void UpdateLayoutCommandExecute_ArgumentNullExceptionRaised()
         {
             // Arrange
@@ -280,7 +284,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             var mockWindowService = new Mock<IWindowService>();
             mockWindowService.Setup(w => w.ShowWarning(It.IsAny<string>())).Verifiable();
             var mockLayoutService = new Mock<ILayoutService>();
-            mockLayoutService.Setup(l => l.GetErgodoxLayout(It.IsAny<string>())).Throws<ArgumentNullException>();
+            mockLayoutService.Setup(l => l.GetErgodoxLayout(It.IsAny<string>(), It.IsAny<string>())).Throws<ArgumentNullException>();
             var processService = new Mock<IProcessService>();
 
             // Act
@@ -292,13 +296,13 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             mockWindowService.Verify();
         }
 
-        [ Theory ]
-        [ InlineData(null, null, 0) ]
-        [ InlineData("", null, 0) ]
-        [ InlineData("  ", null, 0) ]
-        [ InlineData(null, "", 0) ]
-        [ InlineData(null, "  ", 0) ]
-        [ InlineData("tag", "geometry", 1) ]
+        [Theory]
+        [InlineData(null, null, 0)]
+        [InlineData("", null, 0)]
+        [InlineData("  ", null, 0)]
+        [InlineData(null, "", 0)]
+        [InlineData(null, "  ", 0)]
+        [InlineData("tag", "geometry", 1)]
         public void OpenTagSearchCommandExecute(string tag, string keyboardGeometry, int callNumber)
         {
             // Arrange
@@ -306,7 +310,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             mockSettingsService.SetupProperty(s => s.ErgodoxLayoutUrl, "");
             var mockWindowService = new Mock<IWindowService>();
             var mockLayoutService = new Mock<ILayoutService>();
-            mockLayoutService.Setup(l => l.GetLayoutInfo(It.IsAny<string>()))
+            mockLayoutService.Setup(l => l.GetLayoutInfo(It.IsAny<string>(), It.IsAny<string>()))
                              .Returns(Task.FromResult(PrepareLayoutTree(keyboardGeometry, tag)));
             var mockProcessService = new Mock<IProcessService>();
             mockProcessService.Setup(p => p.StartWebUrl(It.IsAny<string>())).Verifiable();
@@ -319,7 +323,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             mockProcessService.Verify(p => p.StartWebUrl($"https://configure.ergodox-ez.com/{keyboardGeometry}/search?q={tag}"), Times.Exactly(callNumber));
         }
 
-        [ Fact ]
+        [Fact]
         public void OpenTagSearchCommandExecute_ArgumentNullException()
         {
             // Arrange
@@ -328,7 +332,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             var mockWindowService = new Mock<IWindowService>();
             mockWindowService.Setup(w => w.ShowWarning("Value cannot be null.")).Verifiable();
             var mockLayoutService = new Mock<ILayoutService>();
-            mockLayoutService.Setup(l => l.GetLayoutInfo(It.IsAny<string>())).Throws<ArgumentNullException>().Verifiable();
+            mockLayoutService.Setup(l => l.GetLayoutInfo(It.IsAny<string>(), It.IsAny<string>())).Throws<ArgumentNullException>().Verifiable();
             var mockProcessService = new Mock<IProcessService>();
 
             // Act
@@ -339,7 +343,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             mockWindowService.Verify();
         }
 
-        [ Fact ]
+        [Fact]
         public void OpenTagSearchCommandExecute_ArgumentException()
         {
             // Arrange
@@ -348,7 +352,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             var mockWindowService = new Mock<IWindowService>();
             mockWindowService.Setup(w => w.ShowWarning("Value does not fall within the expected range.")).Verifiable();
             var mockLayoutService = new Mock<ILayoutService>();
-            mockLayoutService.Setup(l => l.GetLayoutInfo(It.IsAny<string>())).Throws<ArgumentException>().Verifiable();
+            mockLayoutService.Setup(l => l.GetLayoutInfo(It.IsAny<string>(), It.IsAny<string>())).Throws<ArgumentException>().Verifiable();
             var mockProcessService = new Mock<IProcessService>();
 
             // Act
@@ -359,7 +363,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             mockWindowService.Verify();
         }
 
-        [ Fact ]
+        [Fact]
         public void UpdateErgoDoxInfo_LayoutInfoNull()
         {
             // Arrange
@@ -367,7 +371,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             mockSettingsService.SetupProperty(s => s.ErgodoxLayoutUrl, "");
             var mockWindowService = new Mock<IWindowService>();
             var mockLayoutService = new Mock<ILayoutService>();
-            mockLayoutService.Setup(l => l.GetLayoutInfo(It.IsAny<string>())).Returns(Task.FromResult<ErgodoxLayout>(null));
+            mockLayoutService.Setup(l => l.GetLayoutInfo(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<ErgodoxLayout>(null));
             var mockProcessService = new Mock<IProcessService>();
 
             // Act
@@ -383,10 +387,10 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             Assert.False(settingsViewModel.DownloadSourcesCommand.CanExecute(null));
         }
 
-        [ Theory ]
-        [ InlineData("ergodox-ez", "ErgoDox EZ Model") ]
-        [ InlineData("planck-ez", "Planck EZ Model") ]
-        [ InlineData("other", "other Model") ]
+        [Theory]
+        [InlineData("ergodox-ez", "ErgoDox EZ Model")]
+        [InlineData("planck-ez", "Planck EZ Model")]
+        [InlineData("other", "other Model")]
         public void UpdateErgoDoxInfo_LayoutInfoNotNull(string geometry, string expectedKeyboardModel)
         {
             // Arrange
@@ -396,7 +400,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             mockSettingsService.SetupProperty(s => s.ErgodoxLayoutUrl, "");
             var mockWindowService = new Mock<IWindowService>();
             var mockLayoutService = new Mock<ILayoutService>();
-            mockLayoutService.Setup(l => l.GetLayoutInfo(It.IsAny<string>())).Returns(Task.FromResult(expectedInfo));
+            mockLayoutService.Setup(l => l.GetLayoutInfo(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(expectedInfo));
             var mockProcessService = new Mock<IProcessService>();
 
             // Act
@@ -404,7 +408,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
 
             // Assert
             Assert.Single(settingsViewModel.Layers);
-            Assert.Equal(expectedInfo.Revisions[0].Layers[0].ToString(), settingsViewModel.Layers[0]);
+            Assert.Equal(expectedInfo.Revision.Layers[0].ToString(), settingsViewModel.Layers[0]);
             Assert.Single(settingsViewModel.Tags);
             Assert.Equal(expectedInfo.Tags[0].Name, settingsViewModel.Tags[0]);
 
@@ -415,41 +419,41 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             Assert.False(settingsViewModel.DownloadSourcesCommand.CanExecute(null));
         }
 
-        [ Theory ]
-        [ InlineData("https://url.com/hex-file", "", "Not compiled", false) ]
-        [ InlineData("", "https://url.com/source-file", "Not compiled", false) ]
-        [ InlineData("https://url.com/hex-file", "https://url.com/source-file", "Compiled", true) ]
+        [Theory]
+        [InlineData("https://url.com/hex-file", "", "Not compiled", false)]
+        [InlineData("", "https://url.com/source-file", "Not compiled", false)]
+        [InlineData("https://url.com/hex-file", "https://url.com/source-file", "Compiled", true)]
         public void UpdateErgoDoxInfo_DownloadUrls(string hexUrl, string sourcesUrl, string expectedLayoutStatus, bool expectedButtonStatus)
         {
             // Arrange
-            var expectedInfo = new ErgodoxLayout() {
-                                                       Geometry = "",
-                                                       Title = "ezlayout",
-                                                       HashId = "asdf",
-                                                       Tags = new List<ErgodoxTag> {
-                                                                                       new ErgodoxTag {
-                                                                                                          Name = "Tag 1"
-                                                                                                      }
-                                                                                   },
-                                                       Revisions = new List<Revision> {
-                                                                                          new Revision {
-                                                                                                           HexUrl = hexUrl,
-                                                                                                           SourcesUrl = sourcesUrl,
-                                                                                                           Model = "Model",
-                                                                                                           Layers = new List<ErgodoxLayer> {
-                                                                                                                                               new ErgodoxLayer() {
-                                                                                                                                                                      Title = "Layer",
-                                                                                                                                                                      Position = 1
-                                                                                                                                                                  }
-                                                                                                                                           }
-                                                                                                       }
-                                                                                      }
-                                                   };
+            var expectedInfo = new ErgodoxLayout()
+            {
+                Geometry = "",
+                Title = "ezlayout",
+                HashId = "asdf",
+                Tags = new List<ErgodoxTag> {
+                    new ErgodoxTag {
+                        Name = "Tag 1"
+                    }
+                },
+                Revision = new Revision
+                {
+                    HexUrl = hexUrl,
+                    SourcesUrl = sourcesUrl,
+                    Model = "Model",
+                    Layers = new List<ErgodoxLayer> {
+                        new ErgodoxLayer() {
+                            Title = "Layer",
+                            Position = 1
+                        }
+                    }
+                }
+            };
             var mockSettingsService = new Mock<ISettingsService>();
             mockSettingsService.SetupProperty(s => s.ErgodoxLayoutUrl, "");
             var mockWindowService = new Mock<IWindowService>();
             var mockLayoutService = new Mock<ILayoutService>();
-            mockLayoutService.Setup(l => l.GetLayoutInfo(It.IsAny<string>())).Returns(Task.FromResult(expectedInfo));
+            mockLayoutService.Setup(l => l.GetLayoutInfo(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(expectedInfo));
             var mockProcessService = new Mock<IProcessService>();
 
             // Act
@@ -461,42 +465,33 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             Assert.Equal(expectedButtonStatus, settingsViewModel.DownloadSourcesCommand.CanExecute(null));
         }
 
-        [ Theory ]
-        [ InlineData("https://url.com/hex-file", "", 0) ]
-        [ InlineData("", "https://url.com/source-file", 0) ]
-        [ InlineData("https://url.com/hex-file", "https://url.com/source-file", 1) ]
+        [Theory]
+        [InlineData("https://url.com/hex-file", "", 0)]
+        [InlineData("", "https://url.com/source-file", 0)]
+        [InlineData("https://url.com/hex-file", "https://url.com/source-file", 1)]
         public void DownloadHexFileCommand_Execute(string hexUrl, string sourcesUrl, int expectedCommandExecute)
         {
             // Arrange
-            var expectedInfo = new ErgodoxLayout() {
-                                                       Geometry = "",
-                                                       Title = "ezlayout",
-                                                       HashId = "asdf",
-                                                       Tags = new List<ErgodoxTag> {
-                                                                                       new ErgodoxTag {
-                                                                                                          Name = "Tag 1"
-                                                                                                      }
-                                                                                   },
-                                                       Revisions = new List<Revision> {
-                                                                                          new Revision {
-                                                                                                           HashId = "hashId-1",
-                                                                                                           HexUrl = hexUrl,
-                                                                                                           SourcesUrl = sourcesUrl,
-                                                                                                           Model = "Model",
-                                                                                                           Layers = new List<ErgodoxLayer> {
-                                                                                                                                               new ErgodoxLayer() {
-                                                                                                                                                                      Title = "Layer",
-                                                                                                                                                                      Position = 1
-                                                                                                                                                                  }
-                                                                                                                                           }
-                                                                                                       }
-                                                                                      }
-                                                   };
+            var expectedInfo = new ErgodoxLayout()
+            {
+                Geometry = "",
+                Title = "ezlayout",
+                HashId = "asdf",
+                Tags = new List<ErgodoxTag> { new ErgodoxTag { Name = "Tag 1" } },
+                Revision = new Revision
+                {
+                    HashId = "hashId-1",
+                    HexUrl = hexUrl,
+                    SourcesUrl = sourcesUrl,
+                    Model = "Model",
+                    Layers = new List<ErgodoxLayer> { new ErgodoxLayer() { Title = "Layer", Position = 1 } }
+                }
+            };
             var mockSettingsService = new Mock<ISettingsService>();
             mockSettingsService.SetupProperty(s => s.ErgodoxLayoutUrl, "");
             var mockWindowService = new Mock<IWindowService>();
             var mockLayoutService = new Mock<ILayoutService>();
-            mockLayoutService.Setup(l => l.GetLayoutInfo(It.IsAny<string>())).Returns(Task.FromResult(expectedInfo));
+            mockLayoutService.Setup(l => l.GetLayoutInfo(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(expectedInfo));
             var mockProcessService = new Mock<IProcessService>();
             mockProcessService.Setup(p => p.StartWebUrl(hexUrl)).Verifiable();
 
@@ -508,41 +503,32 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             mockProcessService.Verify(p => p.StartWebUrl(hexUrl), Times.Exactly(expectedCommandExecute));
         }
 
-        [ Theory ]
-        [ InlineData("https://url.com/hex-file", "", 0) ]
-        [ InlineData("", "https://url.com/source-file", 0) ]
-        [ InlineData("https://url.com/hex-file", "https://url.com/source-file", 1) ]
+        [Theory]
+        [InlineData("https://url.com/hex-file", "", 0)]
+        [InlineData("", "https://url.com/source-file", 0)]
+        [InlineData("https://url.com/hex-file", "https://url.com/source-file", 1)]
         public void DownloadSourcesCommand_Execute(string hexUrl, string sourcesUrl, int expectedCommandExecute)
         {
             // Arrange
-            var expectedInfo = new ErgodoxLayout() {
-                                                       Geometry = "",
-                                                       Title = "ezlayout",
-                                                       HashId = "asdf",
-                                                       Tags = new List<ErgodoxTag> {
-                                                                                       new ErgodoxTag {
-                                                                                                          Name = "Tag 1"
-                                                                                                      }
-                                                                                   },
-                                                       Revisions = new List<Revision> {
-                                                                                          new Revision {
-                                                                                                           HexUrl = hexUrl,
-                                                                                                           SourcesUrl = sourcesUrl,
-                                                                                                           Model = "Model",
-                                                                                                           Layers = new List<ErgodoxLayer> {
-                                                                                                                                               new ErgodoxLayer() {
-                                                                                                                                                                      Title = "Layer",
-                                                                                                                                                                      Position = 1
-                                                                                                                                                                  }
-                                                                                                                                           }
-                                                                                                       }
-                                                                                      }
-                                                   };
+            var expectedInfo = new ErgodoxLayout()
+            {
+                Geometry = "",
+                Title = "ezlayout",
+                HashId = "asdf",
+                Tags = new List<ErgodoxTag> { new ErgodoxTag { Name = "Tag 1" } },
+                Revision = new Revision
+                {
+                    HexUrl = hexUrl,
+                    SourcesUrl = sourcesUrl,
+                    Model = "Model",
+                    Layers = new List<ErgodoxLayer> { new ErgodoxLayer() { Title = "Layer", Position = 1 } }
+                }
+            };
             var mockSettingsService = new Mock<ISettingsService>();
             mockSettingsService.SetupProperty(s => s.ErgodoxLayoutUrl, "");
             var mockWindowService = new Mock<IWindowService>();
             var mockLayoutService = new Mock<ILayoutService>();
-            mockLayoutService.Setup(l => l.GetLayoutInfo(It.IsAny<string>())).Returns(Task.FromResult(expectedInfo));
+            mockLayoutService.Setup(l => l.GetLayoutInfo(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(expectedInfo));
             var mockProcessService = new Mock<IProcessService>();
             mockProcessService.Setup(p => p.StartWebUrl(hexUrl)).Verifiable();
 
