@@ -79,5 +79,25 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Properties {
                 return ((byte[])(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] layoutDefinition_ergodox {
+            get {
+                object obj = ResourceManager.GetObject("layoutDefinition.ergodox", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] layoutDefinition_moonlander {
+            get {
+                object obj = ResourceManager.GetObject("layoutDefinition.moonlander", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }
