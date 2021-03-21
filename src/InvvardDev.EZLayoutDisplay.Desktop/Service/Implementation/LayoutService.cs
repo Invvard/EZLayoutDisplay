@@ -66,11 +66,11 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
         }
 
         /// <inheritdoc />
-        public async Task<IEnumerable<KeyTemplate>> GetLayoutTemplate()
+        public async Task<IEnumerable<KeyTemplate>> GetLayoutTemplate(string geometry)
         {
             Logger.TraceMethod();
 
-            IEnumerable<KeyTemplate> layoutTemplate = await ReadLayoutDefinition();
+            IEnumerable<KeyTemplate> layoutTemplate = await ReadLayoutDefinition(geometry);
 
             return layoutTemplate;
         }
@@ -126,11 +126,26 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
             return layout;
         }
 
-        private async Task<IEnumerable<KeyTemplate>> ReadLayoutDefinition()
+        private async Task<IEnumerable<KeyTemplate>> ReadLayoutDefinition(string geometry)
         {
             Logger.TraceMethod();
 
-            if (Resources.layoutDefinition.Length <= 0)
+            byte[] layoutDefinitionJson;
+
+            switch (geometry)
+            {
+                case "ergodox-ez":
+                    layoutDefinitionJson = Resources.layoutDefinition_ergodox;
+                    break;
+                case "moonlander":
+                    layoutDefinitionJson = Resources.layoutDefinition_moonlander;
+                    break;
+                default:
+                    layoutDefinitionJson = Resources.layoutDefinition;
+                    break;
+            }
+
+            if (layoutDefinitionJson.Length <= 0)
             {
                 Logger.Warn("Layout definition is empty");
 
@@ -138,7 +153,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
             }
 
             var layoutTemplate = await Task.Run(() => {
-                                                    var json = Encoding.Default.GetString(Resources.layoutDefinition);
+                                                    var json = Encoding.Default.GetString(layoutDefinitionJson);
 
                                                     var layoutDefinition = JsonConvert.DeserializeObject<IEnumerable<KeyTemplate>>(json);
 

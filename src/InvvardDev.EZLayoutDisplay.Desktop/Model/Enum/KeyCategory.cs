@@ -30,6 +30,5 @@
         Spacing,
         Spanish,
         System,
-        Transparent,
     }
 }

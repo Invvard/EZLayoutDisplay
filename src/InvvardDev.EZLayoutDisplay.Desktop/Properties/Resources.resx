@@ -124,10 +124,10 @@
   <data name="layoutDefinition" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>layoutdefinition.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="layoutDefinition.ergodox" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="layoutDefinition_ergodox" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>layoutdefinition_ergodox.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="layoutDefinition.moonlander" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="layoutDefinition_moonlander" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>layoutdefinition_moonlander.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

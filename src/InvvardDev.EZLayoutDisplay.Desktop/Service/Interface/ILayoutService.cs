@@ -33,6 +33,6 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Interface
         /// Gets the list of <see cref="KeyTemplate"/> from the local repository.
         /// </summary>
         /// <returns>An <see cref="IEnumerable{KeyTemplate}"/></returns>
-        Task<IEnumerable<KeyTemplate>> GetLayoutTemplate();
+        Task<IEnumerable<KeyTemplate>> GetLayoutTemplate(string geometry);
     }
 }

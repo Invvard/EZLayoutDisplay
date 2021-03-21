@@ -35,7 +35,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Design
         }
 
         /// <inheritdoc />
-        public async Task<IEnumerable<KeyTemplate>> GetLayoutTemplate()
+        public async Task<IEnumerable<KeyTemplate>> GetLayoutTemplate(string geometry)
         {
             var layoutTemplate = new Task<IEnumerable<KeyTemplate>>(() => new List<KeyTemplate>());
 
