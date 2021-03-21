@@ -89,7 +89,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
             var key = new EZKey
                       {
                           KeyCategory = keyDefinition.KeyCategory,
-                          Label = new KeyLabel(keyDefinition.Label, keyDefinition.IsGlyph),
+                          Label = new KeyLabel(ergodoxKey.CustomLabel != null ? ergodoxKey.CustomLabel : keyDefinition.Label, keyDefinition.IsGlyph),
                           Color = GetColor(ergodoxKey.GlowColor, layerColor),
                           DisplayType = KeyDisplayType.SimpleLabel
                       };

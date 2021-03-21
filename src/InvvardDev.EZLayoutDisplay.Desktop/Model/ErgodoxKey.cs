@@ -45,5 +45,11 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
         /// </summary>
         [JsonProperty("modifiers", NullValueHandling = NullValueHandling.Ignore)]
         public ErgodoxModifiers Modifiers { get; set; }
+
+        /// <summary>
+        /// Gets or sets the custom label.
+        /// </summary>
+        [JsonProperty("customLabel", NullValueHandling = NullValueHandling.Ignore)]
+        public string CustomLabel { get; set; }
     }
 }
