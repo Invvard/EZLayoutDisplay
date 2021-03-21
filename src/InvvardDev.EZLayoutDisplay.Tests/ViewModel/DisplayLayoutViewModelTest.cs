@@ -43,8 +43,8 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
 
             //Assert
             Assert.Equal("ErgoDox Layout", displayLayoutViewModel.WindowTitle);
-            Assert.Equal("No layout available !", displayLayoutViewModel.NoLayoutWarningFirstLine);
-            Assert.Equal("Please, go to the settings and update the layout.", displayLayoutViewModel.NoLayoutWarningSecondLine);
+            Assert.Equal("Not supported!", displayLayoutViewModel.NoLayoutWarningFirstLine);
+            Assert.Equal("Sorry, your keyboard is not supported yet.", displayLayoutViewModel.NoLayoutWarningSecondLine);
             Assert.Equal("Current layer :", displayLayoutViewModel.CurrentLayerNameTitle);
             Assert.Equal("", displayLayoutViewModel.CurrentLayerName);
             Assert.Equal("Scroll up/down or press 'Space' to display next layer", displayLayoutViewModel.ControlHintSpaceLabel);
