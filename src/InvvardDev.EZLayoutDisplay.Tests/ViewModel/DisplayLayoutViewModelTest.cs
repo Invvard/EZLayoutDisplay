@@ -212,7 +212,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             }
 
             var mockLayoutService = new Mock<ILayoutService>();
-            mockLayoutService.Setup(l => l.GetLayoutTemplate("")).ReturnsAsync(layoutTemplate);
+            mockLayoutService.Setup(l => l.GetLayoutTemplate(null)).ReturnsAsync(layoutTemplate);
             var mockWindowService = new Mock<IWindowService>();
             var mockSettingsService = new Mock<ISettingsService>();
             mockSettingsService.SetupProperty(s => s.EZLayout, keyboardLayout);
