@@ -487,7 +487,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
                     break;
                 case "moonlander":
-                    keyboardDescription = "Moonlander Mk1 ";
+                    keyboardDescription = "Moonlander ";
                     break;
                 default:
                     keyboardDescription = $"{keyboardGeometry} ";

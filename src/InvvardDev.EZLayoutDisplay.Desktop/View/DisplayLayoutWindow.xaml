@@ -63,7 +63,7 @@
             <TextBlock Text="{Binding ControlHintSpaceLabel}" Style="{StaticResource TbControlHintStyle}" />
         </StackPanel>
 
-        <Grid Visibility="{Binding NoLayoutAvailable, Converter={StaticResource BoolToHiddenConverter}}" Width="350">
+        <Grid Visibility="{Binding NoLayoutAvailable, Converter={StaticResource BoolToHiddenConverter}}" Width="450">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width=".25*" />
                 <ColumnDefinition Width="10" />
@@ -72,9 +72,9 @@
             <Image Grid.Column="0" Source="../Skins/Images/warning-sign.png" />
             <TextBlock Grid.Column="2" TextWrapping="WrapWithOverflow" FontSize="18" VerticalAlignment="Center"
                        HorizontalAlignment="Left">
-                <Run Text="{Binding NoLayoutWarningFirstLine, Mode=OneWay}" />
+                <Run Text="{Binding NoLayoutWarningFirstLine, Mode=OneWay}" FontWeight="Medium" />
                 <LineBreak />
-                <Run Text="{Binding NoLayoutWarningSecondLine, Mode=OneWay}" />
+                <Run Text="{Binding NoLayoutWarningSecondLine, Mode=OneWay}" FontSize="16" />
             </TextBlock>
         </Grid>
     </Grid>

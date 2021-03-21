@@ -230,8 +230,6 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private void SetLabelUi()
         {
             WindowTitle = "ErgoDox Layout";
-            NoLayoutWarningFirstLine = "No layout available !";
-            NoLayoutWarningSecondLine = "Please, go to the settings and update the layout.";
             CurrentLayerNameTitle = "Current layer :";
             CurrentLayerName = "";
             ControlHintSpaceLabel = "Scroll up/down or press 'Space' to display next layer";
@@ -267,6 +265,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
                 || !_ezLayout.EZLayers.SelectMany(l => l.EZKeys).Any())
             {
                 Logger.Info("No layout available");
+                NoLayoutWarningFirstLine = "No layout available!";
+                NoLayoutWarningSecondLine = "Please, go to the settings and update the layout.";
                 NoLayoutAvailable = true;
 
                 return;
@@ -274,6 +274,14 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
             NoLayoutAvailable = false;
             await PopulateLayoutTemplates(_ezLayout.Geometry);
+
+            if (_layoutTemplates.Count == 0)
+            {
+                Logger.Info("Geometry not supported");
+                NoLayoutWarningFirstLine = "Not supported!";
+                NoLayoutWarningSecondLine = "Sorry, your keyboard is not supported yet.";
+                NoLayoutAvailable = true;
+            }
 
             SwitchLayer();
         }
@@ -326,6 +334,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             foreach (var t in _ezLayout.EZLayers)
             {
                 if (!(await LoadLayoutDefinition(geometry) is List<KeyTemplate> layoutTemplate)) break;
+
+                if (layoutTemplate.Count == 0) return;
 
                 for (int j = 0 ; j < layoutTemplate.Count ; j++)
                 {
