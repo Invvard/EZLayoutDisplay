@@ -1,1 +1,474 @@
-[{"x":"0","y":"0","width":"1.5","voffset":".37"},{"x":"1.5","y":"0","voffset":".37","glow":"true"},{"x":"2.5","y":"0","voffset":".129","glow":"true"},{"x":"3.5","y":"0","glow":"true"},{"x":"4.5","y":"0","voffset":".129","glow":"true"},{"x":"5.5","y":"0","voffset":".24","glow":"true"},{"x":"6.5","y":"0","voffset":".24"},{"x":"0","y":"1","width":"1.5","voffset":".37"},{"x":"1.5","y":"1","voffset":".37","glow":"true"},{"x":"2.5","y":"1","voffset":".129","glow":"true"},{"x":"3.5","y":"1","glow":"true"},{"x":"4.5","y":"1","voffset":".129","glow":"true"},{"x":"5.5","y":"1","voffset":".24","glow":"true"},{"x":"6.5","y":"1","voffset":".24","height":"1.5"},{"x":"0","y":"2","width":"1.5","voffset":".37"},{"x":"1.5","y":"2","voffset":".37","glow":"true"},{"x":"2.5","y":"2","voffset":".129","glow":"true"},{"x":"3.5","y":"2","glow":"true"},{"x":"4.5","y":"2","voffset":".129","glow":"true"},{"x":"5.5","y":"2","voffset":".24","glow":"true"},{"x":"0","y":"3","width":"1.5","voffset":".37"},{"x":"1.5","y":"3","voffset":".37","glow":"true"},{"x":"2.5","y":"3","voffset":".129","glow":"true"},{"x":"3.5","y":"3","glow":"true"},{"x":"4.5","y":"3","voffset":".129","glow":"true"},{"x":"5.5","y":"3","voffset":".24","glow":"true"},{"x":"6.5","y":"3","voffset":"-.26","height":"1.5"},{"x":".5","y":"4","width":"1","voffset":".37"},{"x":"1.5","y":"4","voffset":".37","glow":"true"},{"x":"2.5","y":"4","voffset":".129","glow":"true"},{"x":"3.5","y":"4","glow":"true"},{"x":"4.5","y":"4","voffset":".129","glow":"true"},{"x":"7.5","y":"3","height":"1","hoffset":".37","voffset":".87","rotate":"30"},{"x":"8.5","y":"3","height":"1","hoffset":".24","voffset":"1.37","rotate":"30"},{"x":"8.5","y":"4","height":"1","hoffset":"-.26","voffset":"1.24","rotate":"30"},{"x":"6.5","y":"4","height":"2","voffset":".24","rotate":"30"},{"x":"7.5","y":"4","height":"2","hoffset":"-.13","voffset":".74","rotate":"30"},{"x":"8.5","y":"5","height":"1","hoffset":"-.76","voffset":"1.11","rotate":"30"},{"x":"12","y":"0","voffset":".24"},{"x":"13","y":"0","voffset":".24","glow":"true"},{"x":"14","y":"0","voffset":".129","glow":"true"},{"x":"15","y":"0","glow":"true"},{"x":"16","y":"0","voffset":".129","glow":"true"},{"x":"17","y":"0","voffset":".37","glow":"true"},{"x":"18","y":"0","width":"1.5","voffset":".37"},{"x":"12","y":"1","voffset":".24","height":"1.5"},{"x":"13","y":"1","voffset":".24","glow":"true"},{"x":"14","y":"1","voffset":".129","glow":"true"},{"x":"15","y":"1","glow":"true"},{"x":"16","y":"1","voffset":".129","glow":"true"},{"x":"17","y":"1","voffset":".37","glow":"true"},{"x":"18","y":"1","width":"1.5","voffset":".37"},{"x":"13","y":"2","voffset":".24","glow":"true"},{"x":"14","y":"2","voffset":".129","glow":"true"},{"x":"15","y":"2","glow":"true"},{"x":"16","y":"2","voffset":".129","glow":"true"},{"x":"17","y":"2","voffset":".37","glow":"true"},{"x":"18","y":"2","width":"1.5","voffset":".37"},{"x":"12","y":"3","voffset":"-.26","height":"1.5"},{"x":"13","y":"3","voffset":".24","glow":"true"},{"x":"14","y":"3","voffset":".129","glow":"true"},{"x":"15","y":"3","glow":"true"},{"x":"16","y":"3","voffset":".129","glow":"true"},{"x":"17","y":"3","voffset":".37","glow":"true"},{"x":"18","y":"3","width":"1.5","voffset":".37"},{"x":"14","y":"4","voffset":".129","glow":"true"},{"x":"15","y":"4","glow":"true"},{"x":"16","y":"4","voffset":".129","glow":"true"},{"x":"17","y":"4","voffset":".37","glow":"true"},{"x":"18","y":"4","width":"1","voffset":".37"},{"x":"10","y":"3","height":"1","hoffset":"-.24","voffset":"1.37","rotate":"-30","origin":"1,0"},{"x":"11","y":"3","height":"1","hoffset":"-.37","voffset":".87","rotate":"-30","origin":"1,0"},{"x":"10","y":"4","height":"1","hoffset":".26","voffset":"1.24","rotate":"-30","origin":"1,0"},{"x":"10","y":"5","height":"1","hoffset":".76","voffset":"1.11","rotate":"-30","origin":"1,0"},{"x":"11","y":"4","height":"2","hoffset":".13","voffset":".74","rotate":"-30","origin":"1,0"},{"x":"12","y":"4","height":"2","voffset":".24","rotate":"-30","origin":"1,0"}]
+[
+    {
+        "x": "0",
+        "y": "0",
+        "width": "1.5",
+        "voffset": ".37"
+    },
+    {
+        "x": "1.5",
+        "y": "0",
+        "voffset": ".37",
+        "glow": "true"
+    },
+    {
+        "x": "2.5",
+        "y": "0",
+        "voffset": ".129",
+        "glow": "true"
+    },
+    {
+        "x": "3.5",
+        "y": "0",
+        "glow": "true"
+    },
+    {
+        "x": "4.5",
+        "y": "0",
+        "voffset": ".129",
+        "glow": "true"
+    },
+    {
+        "x": "5.5",
+        "y": "0",
+        "voffset": ".24",
+        "glow": "true"
+    },
+    {
+        "x": "6.5",
+        "y": "0",
+        "voffset": ".24"
+    },
+    {
+        "x": "0",
+        "y": "1",
+        "width": "1.5",
+        "voffset": ".37"
+    },
+    {
+        "x": "1.5",
+        "y": "1",
+        "voffset": ".37",
+        "glow": "true"
+    },
+    {
+        "x": "2.5",
+        "y": "1",
+        "voffset": ".129",
+        "glow": "true"
+    },
+    {
+        "x": "3.5",
+        "y": "1",
+        "glow": "true"
+    },
+    {
+        "x": "4.5",
+        "y": "1",
+        "voffset": ".129",
+        "glow": "true"
+    },
+    {
+        "x": "5.5",
+        "y": "1",
+        "voffset": ".24",
+        "glow": "true"
+    },
+    {
+        "x": "6.5",
+        "y": "1",
+        "voffset": ".24",
+        "height": "1.5"
+    },
+    {
+        "x": "0",
+        "y": "2",
+        "width": "1.5",
+        "voffset": ".37"
+    },
+    {
+        "x": "1.5",
+        "y": "2",
+        "voffset": ".37",
+        "glow": "true"
+    },
+    {
+        "x": "2.5",
+        "y": "2",
+        "voffset": ".129",
+        "glow": "true"
+    },
+    {
+        "x": "3.5",
+        "y": "2",
+        "glow": "true"
+    },
+    {
+        "x": "4.5",
+        "y": "2",
+        "voffset": ".129",
+        "glow": "true"
+    },
+    {
+        "x": "5.5",
+        "y": "2",
+        "voffset": ".24",
+        "glow": "true"
+    },
+    {
+        "x": "0",
+        "y": "3",
+        "width": "1.5",
+        "voffset": ".37"
+    },
+    {
+        "x": "1.5",
+        "y": "3",
+        "voffset": ".37",
+        "glow": "true"
+    },
+    {
+        "x": "2.5",
+        "y": "3",
+        "voffset": ".129",
+        "glow": "true"
+    },
+    {
+        "x": "3.5",
+        "y": "3",
+        "glow": "true"
+    },
+    {
+        "x": "4.5",
+        "y": "3",
+        "voffset": ".129",
+        "glow": "true"
+    },
+    {
+        "x": "5.5",
+        "y": "3",
+        "voffset": ".24",
+        "glow": "true"
+    },
+    {
+        "x": "6.5",
+        "y": "3",
+        "voffset": "-.26",
+        "height": "1.5"
+    },
+    {
+        "x": ".5",
+        "y": "4",
+        "width": "1",
+        "voffset": ".37"
+    },
+    {
+        "x": "1.5",
+        "y": "4",
+        "voffset": ".37",
+        "glow": "true"
+    },
+    {
+        "x": "2.5",
+        "y": "4",
+        "voffset": ".129",
+        "glow": "true"
+    },
+    {
+        "x": "3.5",
+        "y": "4",
+        "glow": "true"
+    },
+    {
+        "x": "4.5",
+        "y": "4",
+        "voffset": ".129",
+        "glow": "true"
+    },
+    {
+        "x": "7.5",
+        "y": "3",
+        "height": "1",
+        "hoffset": ".37",
+        "voffset": ".87",
+        "rotate": "30"
+    },
+    {
+        "x": "8.5",
+        "y": "3",
+        "height": "1",
+        "hoffset": ".24",
+        "voffset": "1.37",
+        "rotate": "30"
+    },
+    {
+        "x": "8.5",
+        "y": "4",
+        "height": "1",
+        "hoffset": "-.26",
+        "voffset": "1.24",
+        "rotate": "30"
+    },
+    {
+        "x": "6.5",
+        "y": "4",
+        "height": "2",
+        "voffset": ".24",
+        "rotate": "30"
+    },
+    {
+        "x": "7.5",
+        "y": "4",
+        "height": "2",
+        "hoffset": "-.13",
+        "voffset": ".74",
+        "rotate": "30"
+    },
+    {
+        "x": "8.5",
+        "y": "5",
+        "height": "1",
+        "hoffset": "-.76",
+        "voffset": "1.11",
+        "rotate": "30"
+    },
+    {
+        "x": "12",
+        "y": "0",
+        "voffset": ".24"
+    },
+    {
+        "x": "13",
+        "y": "0",
+        "voffset": ".24",
+        "glow": "true"
+    },
+    {
+        "x": "14",
+        "y": "0",
+        "voffset": ".129",
+        "glow": "true"
+    },
+    {
+        "x": "15",
+        "y": "0",
+        "glow": "true"
+    },
+    {
+        "x": "16",
+        "y": "0",
+        "voffset": ".129",
+        "glow": "true"
+    },
+    {
+        "x": "17",
+        "y": "0",
+        "voffset": ".37",
+        "glow": "true"
+    },
+    {
+        "x": "18",
+        "y": "0",
+        "width": "1.5",
+        "voffset": ".37"
+    },
+    {
+        "x": "12",
+        "y": "1",
+        "voffset": ".24",
+        "height": "1.5"
+    },
+    {
+        "x": "13",
+        "y": "1",
+        "voffset": ".24",
+        "glow": "true"
+    },
+    {
+        "x": "14",
+        "y": "1",
+        "voffset": ".129",
+        "glow": "true"
+    },
+    {
+        "x": "15",
+        "y": "1",
+        "glow": "true"
+    },
+    {
+        "x": "16",
+        "y": "1",
+        "voffset": ".129",
+        "glow": "true"
+    },
+    {
+        "x": "17",
+        "y": "1",
+        "voffset": ".37",
+        "glow": "true"
+    },
+    {
+        "x": "18",
+        "y": "1",
+        "width": "1.5",
+        "voffset": ".37"
+    },
+    {
+        "x": "13",
+        "y": "2",
+        "voffset": ".24",
+        "glow": "true"
+    },
+    {
+        "x": "14",
+        "y": "2",
+        "voffset": ".129",
+        "glow": "true"
+    },
+    {
+        "x": "15",
+        "y": "2",
+        "glow": "true"
+    },
+    {
+        "x": "16",
+        "y": "2",
+        "voffset": ".129",
+        "glow": "true"
+    },
+    {
+        "x": "17",
+        "y": "2",
+        "voffset": ".37",
+        "glow": "true"
+    },
+    {
+        "x": "18",
+        "y": "2",
+        "width": "1.5",
+        "voffset": ".37"
+    },
+    {
+        "x": "12",
+        "y": "3",
+        "voffset": "-.26",
+        "height": "1.5"
+    },
+    {
+        "x": "13",
+        "y": "3",
+        "voffset": ".24",
+        "glow": "true"
+    },
+    {
+        "x": "14",
+        "y": "3",
+        "voffset": ".129",
+        "glow": "true"
+    },
+    {
+        "x": "15",
+        "y": "3",
+        "glow": "true"
+    },
+    {
+        "x": "16",
+        "y": "3",
+        "voffset": ".129",
+        "glow": "true"
+    },
+    {
+        "x": "17",
+        "y": "3",
+        "voffset": ".37",
+        "glow": "true"
+    },
+    {
+        "x": "18",
+        "y": "3",
+        "width": "1.5",
+        "voffset": ".37"
+    },
+    {
+        "x": "14",
+        "y": "4",
+        "voffset": ".129",
+        "glow": "true"
+    },
+    {
+        "x": "15",
+        "y": "4",
+        "glow": "true"
+    },
+    {
+        "x": "16",
+        "y": "4",
+        "voffset": ".129",
+        "glow": "true"
+    },
+    {
+        "x": "17",
+        "y": "4",
+        "voffset": ".37",
+        "glow": "true"
+    },
+    {
+        "x": "18",
+        "y": "4",
+        "width": "1",
+        "voffset": ".37"
+    },
+    {
+        "x": "10",
+        "y": "3",
+        "height": "1",
+        "hoffset": "-.24",
+        "voffset": "1.37",
+        "rotate": "-30",
+        "origin": "1,0"
+    },
+    {
+        "x": "11",
+        "y": "3",
+        "height": "1",
+        "hoffset": "-.37",
+        "voffset": ".87",
+        "rotate": "-30",
+        "origin": "1,0"
+    },
+    {
+        "x": "10",
+        "y": "4",
+        "height": "1",
+        "hoffset": ".26",
+        "voffset": "1.24",
+        "rotate": "-30",
+        "origin": "1,0"
+    },
+    {
+        "x": "10",
+        "y": "5",
+        "height": "1",
+        "hoffset": ".76",
+        "voffset": "1.11",
+        "rotate": "-30",
+        "origin": "1,0"
+    },
+    {
+        "x": "11",
+        "y": "4",
+        "height": "2",
+        "hoffset": ".13",
+        "voffset": ".74",
+        "rotate": "-30",
+        "origin": "1,0"
+    },
+    {
+        "x": "12",
+        "y": "4",
+        "height": "2",
+        "voffset": ".24",
+        "rotate": "-30",
+        "origin": "1,0"
+    }
+]

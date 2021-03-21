@@ -27,7 +27,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
             Logger.TraceMethod();
             Logger.DebugInputParam(nameof(ergodoxLayout), ergodoxLayout);
 
-            var ezLayout = new EZLayout { HashId = ergodoxLayout.HashId, Name = ergodoxLayout.Title };
+            var ezLayout = new EZLayout { HashId = ergodoxLayout.HashId, Name = ergodoxLayout.Title, Geometry = ergodoxLayout.Geometry };
 
             var ergodoxLayers = ergodoxLayout.Revision.Layers ?? ergodoxLayout.Revision.Layers;
 

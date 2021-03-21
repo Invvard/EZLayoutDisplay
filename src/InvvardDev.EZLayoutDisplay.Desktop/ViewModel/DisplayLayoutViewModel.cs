@@ -273,7 +273,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             }
 
             NoLayoutAvailable = false;
-            await PopulateLayoutTemplates();
+            await PopulateLayoutTemplates(_ezLayout.Geometry);
 
             SwitchLayer();
         }
@@ -319,13 +319,13 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             }
         }
 
-        private async Task PopulateLayoutTemplates()
+        private async Task PopulateLayoutTemplates(string geometry)
         {
             Logger.TraceMethod();
 
             foreach (var t in _ezLayout.EZLayers)
             {
-                if (!(await LoadLayoutDefinition() is List<KeyTemplate> layoutTemplate)) break;
+                if (!(await LoadLayoutDefinition(geometry) is List<KeyTemplate> layoutTemplate)) break;
 
                 for (int j = 0 ; j < layoutTemplate.Count ; j++)
                 {
@@ -336,10 +336,10 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             }
         }
 
-        private async Task<IEnumerable<KeyTemplate>> LoadLayoutDefinition()
+        private async Task<IEnumerable<KeyTemplate>> LoadLayoutDefinition(string geometry)
         {
             Logger.TraceMethod();
-            var layoutDefinition = await _layoutService.GetLayoutTemplate();
+            var layoutDefinition = await _layoutService.GetLayoutTemplate(geometry);
 
             return layoutDefinition;
         }
