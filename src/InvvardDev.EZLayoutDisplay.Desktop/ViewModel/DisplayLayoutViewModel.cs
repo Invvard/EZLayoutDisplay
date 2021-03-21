@@ -270,18 +270,19 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
                 NoLayoutAvailable = true;
 
                 return;
-            }
-
-            NoLayoutAvailable = false;
-            await PopulateLayoutTemplates(_ezLayout.Geometry);
-
-            if (_layoutTemplates.Count == 0)
+            } else if (!_layoutService.SupportsGeometry(_ezLayout.Geometry))
             {
                 Logger.Info("Geometry not supported");
                 NoLayoutWarningFirstLine = "Not supported!";
                 NoLayoutWarningSecondLine = "Sorry, your keyboard is not supported yet.";
                 NoLayoutAvailable = true;
+
+                return;
             }
+
+            NoLayoutAvailable = false;
+
+            await PopulateLayoutTemplates(_ezLayout.Geometry);
 
             SwitchLayer();
         }

@@ -41,5 +41,11 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Design
 
             return await layoutTemplate;
         }
+
+        /// <inheritdoc />
+        public bool SupportsGeometry(string geometry)
+        {
+            return true;
+        }
     }
 }

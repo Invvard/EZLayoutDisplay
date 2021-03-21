@@ -16,6 +16,15 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
+        /// <summary>
+        /// Supported keyboards and their layout definition resources.
+        /// </summary>
+        private static readonly Dictionary<string, byte[]> LayoutDefinitions = new Dictionary<string, byte[]>()
+        {
+            { "ergodox-ez", Resources.layoutDefinition_ergodox },
+            { "moonlander", Resources.layoutDefinition_moonlander }
+        };
+
         private readonly string GetLayoutBody =
             "{{\"operationName\":\"getLayout\",\"variables\":{{\"hashId\":\"{0}\",\"revisionId\":\"{1}\"}},\"query\":\"query getLayout($hashId: String!, $revisionId: String!) {{\\n  Layout(hashId: $hashId, revisionId: $revisionId) {{\\n ...LayoutData\\n }}\\n}}\\n\\nfragment LayoutData on Layout {{\\n geometry\\n hashId\\n title\\n tags {{\\n id\\n hashId\\n name\\n }}\\n revision {{\\n ...RevisionData\\n }}\\n}}\\n\\nfragment RevisionData on Revision {{\\n hashId\\n model\\n title\\n swatch\\n hexUrl\\n zipUrl\\n  qmkVersion\\n  qmkUptodate\\n  config\\n layers {{\\n hashId\\n keys\\n position\\n title\\n color\\n}}\\n}}\\n\"}}";
 
@@ -75,6 +84,12 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
             return layoutTemplate;
         }
 
+        /// <inheritdoc />
+        public bool SupportsGeometry(string geometry)
+        {
+            return LayoutDefinitions.ContainsKey(geometry);
+        }
+
         #endregion
 
         #region Private methods
@@ -132,17 +147,9 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
 
             byte[] layoutDefinitionJson;
 
-            switch (geometry)
+            if (!LayoutDefinitions.TryGetValue(geometry, out layoutDefinitionJson))
             {
-                case "ergodox-ez":
-                    layoutDefinitionJson = Resources.layoutDefinition_ergodox;
-                    break;
-                case "moonlander":
-                    layoutDefinitionJson = Resources.layoutDefinition_moonlander;
-                    break;
-                default:
-                    layoutDefinitionJson = Resources.layoutDefinition;
-                    break;
+                layoutDefinitionJson = Resources.layoutDefinition;
             }
 
             if (layoutDefinitionJson.Length <= 0)

@@ -34,5 +34,11 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Interface
         /// </summary>
         /// <returns>An <see cref="IEnumerable{KeyTemplate}"/></returns>
         Task<IEnumerable<KeyTemplate>> GetLayoutTemplate(string geometry);
+
+        /// <summary>
+        /// Returns whether the keyboard geometry is supported.
+        /// </summary>
+        /// <returns>true if supported, false if not</returns>
+        bool SupportsGeometry(string geometry);
     }
 }
