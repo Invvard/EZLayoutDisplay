@@ -14,14 +14,12 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Service
     {
         private static ErgodoxLayout InitializeDataTree()
         {
-            return new ErgodoxLayout
-            {
-                Title = "",
-                HashId = "",
-                Revision = new Revision
-                {
-                    HashId = "hashId-1",
-                    Layers = new List<ErgodoxLayer> {
+            return new ErgodoxLayout {
+                                         Title = "",
+                                         HashId = "",
+                                         Revision = new Revision { 
+                                                                        HashId = "hashId-1",
+                                                                        Layers = new List<ErgodoxLayer> {
                                                                                                             new ErgodoxLayer() {
                                                                                                                                 Color = "",
                                                                                                                                 Title = "",
@@ -29,14 +27,14 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Service
                                                                                                                                 Keys = new List<ErgodoxKey>()
                                                                                                                             }
                                                                                                         }
-                }
-            };
+                                                                   }
+                                     };
         }
 
-        [Theory]
-        [InlineData("EOEb", true)]
-        [InlineData("default", true)]
-        [InlineData("test", false)]
+        [ Theory ]
+        [ InlineData("EOEb", true) ]
+        [ InlineData("default", true) ]
+        [ InlineData("test", false) ]
         public async Task GetLayoutInfo(string layoutHashId, bool exist)
         {
             // Arrange
@@ -65,10 +63,10 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Service
             }
         }
 
-        [Theory]
-        [InlineData("EOEb", true)]
-        [InlineData("default", true)]
-        [InlineData("test", false)]
+        [ Theory ]
+        [ InlineData("EOEb", true) ]
+        [ InlineData("default", true) ]
+        [ InlineData("test", false) ]
         public async Task GetErgodoxLayout(string layoutHashId, bool exist)
         {
             // Arrange
@@ -97,28 +95,25 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Service
             }
         }
 
-        [Fact]
+        [ Fact ]
         public void PrepareEZLayout_OneLayer_ManyKeys()
         {
             // Arrange
             ILayoutService layoutService = new LayoutService();
             ErgodoxLayout ergodoxLayout = InitializeDataTree();
             var keys = ergodoxLayout.Revision.Layers.First().Keys;
-            keys.Add(new ErgodoxKey()
-            {
-                GlowColor = "",
-                Code = "KC_A"
-            });
-            keys.Add(new ErgodoxKey()
-            {
-                GlowColor = "",
-                Code = "KC_0"
-            });
-            keys.Add(new ErgodoxKey()
-            {
-                GlowColor = "",
-                Code = "KC_TRANSPARENT"
-            });
+            keys.Add(new ErgodoxKey() {
+                                          GlowColor = "",
+                                          Code = "KC_A"
+                                      });
+            keys.Add(new ErgodoxKey() {
+                                          GlowColor = "",
+                                          Code = "KC_0"
+                                      });
+            keys.Add(new ErgodoxKey() {
+                                          GlowColor = "",
+                                          Code = "KC_TRANSPARENT"
+                                      });
             EZLayout ezLayoutResult;
 
             // Act
@@ -137,48 +132,42 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Service
             Assert.Equal(KeyCategory.Other, keyResults[2].KeyCategory);
         }
 
-        [Fact]
+        [ Fact ]
         public void PrepareEZLayout_TwoLayer_ManyKeys()
         {
             // Arrange
             ILayoutService layoutService = new LayoutService();
             ErgodoxLayout ergodoxLayout = InitializeDataTree();
             var layer0Keys = ergodoxLayout.Revision.Layers.First().Keys;
-            layer0Keys.Add(new ErgodoxKey()
-            {
-                GlowColor = "",
-                Code = "KC_A"
-            });
-            layer0Keys.Add(new ErgodoxKey()
-            {
-                GlowColor = "",
-                Code = "KC_0"
-            });
-            layer0Keys.Add(new ErgodoxKey()
-            {
-                GlowColor = "",
-                Code = "KC_TRANSPARENT"
-            });
+            layer0Keys.Add(new ErgodoxKey() {
+                                                GlowColor = "",
+                                                Code = "KC_A"
+                                            });
+            layer0Keys.Add(new ErgodoxKey() {
+                                                GlowColor = "",
+                                                Code = "KC_0"
+                                            });
+            layer0Keys.Add(new ErgodoxKey() {
+                                                GlowColor = "",
+                                                Code = "KC_TRANSPARENT"
+                                            });
 
             ergodoxLayout.Revision
-                         .Layers.Add(new ErgodoxLayer
-                         {
-                             Color = "color",
-                             Title = "Layer 2",
-                             Position = 1,
-                             Keys = new List<ErgodoxKey>()
-                         });
+                         .Layers.Add(new ErgodoxLayer {
+                                                          Color = "color",
+                                                          Title = "Layer 2",
+                                                          Position = 1,
+                                                          Keys = new List<ErgodoxKey>()
+                                                      });
             var layer1Keys = ergodoxLayout.Revision.Layers[1].Keys;
-            layer1Keys.Add(new ErgodoxKey()
-            {
-                GlowColor = "",
-                Code = "KC_F1"
-            });
-            layer1Keys.Add(new ErgodoxKey()
-            {
-                GlowColor = "",
-                Code = "KC_SPACE"
-            });
+            layer1Keys.Add(new ErgodoxKey() {
+                                                GlowColor = "",
+                                                Code = "KC_F1"
+                                            });
+            layer1Keys.Add(new ErgodoxKey() {
+                                                GlowColor = "",
+                                                Code = "KC_SPACE"
+                                            });
             EZLayout ezLayoutResult;
 
             // Act
@@ -204,7 +193,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Service
             Assert.Equal(KeyCategory.Spacing, layer1KeyResults[1].KeyCategory);
         }
 
-        [Fact]
+        [ Fact ]
         public async Task GetErgodoxLayout_HashIdNull()
         {
             // Arrange
@@ -214,11 +203,11 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Service
             await Assert.ThrowsAsync<ArgumentNullException>(() => layoutService.GetErgodoxLayout("", ""));
         }
 
-        [Theory]
-        [InlineData("ergodox-ez", true)]
-        [InlineData("moonlander", true)]
-        [InlineData("planck-ez", false)]
-        [InlineData("foobarbaz", false)]
+        [ Theory ]
+        [ InlineData("ergodox-ez", true) ]
+        [ InlineData("moonlander", true) ]
+        [ InlineData("planck-ez", false) ]
+        [ InlineData("foobarbaz", false) ]
         public void SupportsGeometry(string geometry, bool expected)
         {
             // Arrange
