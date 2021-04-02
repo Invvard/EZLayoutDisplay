@@ -224,6 +224,8 @@
     <None Include="packages.config" />
     <None Include="Properties\keyDefinitions.json" />
     <None Include="Properties\layoutDefinition.json" />
+    <None Include="Properties\layoutDefinition_ergodox.json" />
+    <None Include="Properties\layoutDefinition_moonlander.json" />
     <None Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -202,5 +202,22 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Service
             // Act
             await Assert.ThrowsAsync<ArgumentNullException>(() => layoutService.GetErgodoxLayout("", ""));
         }
+
+        [ Theory ]
+        [ InlineData("ergodox-ez", true) ]
+        [ InlineData("moonlander", true) ]
+        [ InlineData("planck-ez", false) ]
+        [ InlineData("foobarbaz", false) ]
+        public void SupportsGeometry(string geometry, bool expected)
+        {
+            // Arrange
+            ILayoutService layoutService = new LayoutService();
+
+            // Act
+            bool actual = layoutService.SupportsGeometry(geometry);
+
+            // Assert
+            Assert.Equal(expected, actual);
+        }
     }
 }

@@ -230,8 +230,6 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private void SetLabelUi()
         {
             WindowTitle = "ErgoDox Layout";
-            NoLayoutWarningFirstLine = "No layout available !";
-            NoLayoutWarningSecondLine = "Please, go to the settings and update the layout.";
             CurrentLayerNameTitle = "Current layer :";
             CurrentLayerName = "";
             ControlHintSpaceLabel = "Scroll up/down or press 'Space' to display next layer";
@@ -267,13 +265,24 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
                 || !_ezLayout.EZLayers.SelectMany(l => l.EZKeys).Any())
             {
                 Logger.Info("No layout available");
+                NoLayoutWarningFirstLine = "No layout available!";
+                NoLayoutWarningSecondLine = "Please, go to the settings and update the layout.";
+                NoLayoutAvailable = true;
+
+                return;
+            } else if (!_layoutService.SupportsGeometry(_ezLayout.Geometry))
+            {
+                Logger.Info("Geometry not supported");
+                NoLayoutWarningFirstLine = "Not supported!";
+                NoLayoutWarningSecondLine = "Sorry, your keyboard is not supported yet.";
                 NoLayoutAvailable = true;
 
                 return;
             }
 
             NoLayoutAvailable = false;
-            await PopulateLayoutTemplates();
+
+            await PopulateLayoutTemplates(_ezLayout.Geometry);
 
             SwitchLayer();
         }
@@ -319,13 +328,15 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             }
         }
 
-        private async Task PopulateLayoutTemplates()
+        private async Task PopulateLayoutTemplates(string geometry)
         {
             Logger.TraceMethod();
 
             foreach (var t in _ezLayout.EZLayers)
             {
-                if (!(await LoadLayoutDefinition() is List<KeyTemplate> layoutTemplate)) break;
+                if (!(await LoadLayoutDefinition(geometry) is List<KeyTemplate> layoutTemplate)) break;
+
+                if (layoutTemplate.Count == 0) return;
 
                 for (int j = 0 ; j < layoutTemplate.Count ; j++)
                 {
@@ -336,10 +347,10 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             }
         }
 
-        private async Task<IEnumerable<KeyTemplate>> LoadLayoutDefinition()
+        private async Task<IEnumerable<KeyTemplate>> LoadLayoutDefinition(string geometry)
         {
             Logger.TraceMethod();
-            var layoutDefinition = await _layoutService.GetLayoutTemplate();
+            var layoutDefinition = await _layoutService.GetLayoutTemplate(geometry);
 
             return layoutDefinition;
         }
