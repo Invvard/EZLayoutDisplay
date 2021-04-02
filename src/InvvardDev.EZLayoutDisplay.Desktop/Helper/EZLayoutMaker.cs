@@ -27,7 +27,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
             Logger.TraceMethod();
             Logger.DebugInputParam(nameof(ergodoxLayout), ergodoxLayout);
 
-            var ezLayout = new EZLayout { HashId = ergodoxLayout.HashId, Name = ergodoxLayout.Title };
+            var ezLayout = new EZLayout { HashId = ergodoxLayout.HashId, Name = ergodoxLayout.Title, Geometry = ergodoxLayout.Geometry };
 
             var ergodoxLayers = ergodoxLayout.Revision.Layers ?? ergodoxLayout.Revision.Layers;
 
@@ -89,7 +89,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
             var key = new EZKey
                       {
                           KeyCategory = keyDefinition.KeyCategory,
-                          Label = new KeyLabel(keyDefinition.Label, keyDefinition.IsGlyph),
+                          Label = new KeyLabel(ergodoxKey.CustomLabel != null ? ergodoxKey.CustomLabel : keyDefinition.Label, keyDefinition.IsGlyph),
                           Color = GetColor(ergodoxKey.GlowColor, layerColor),
                           DisplayType = KeyDisplayType.SimpleLabel
                       };

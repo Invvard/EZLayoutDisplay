@@ -486,6 +486,9 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
                     keyboardDescription = "Planck EZ ";
 
                     break;
+                case "moonlander":
+                    keyboardDescription = "Moonlander ";
+                    break;
                 default:
                     keyboardDescription = $"{keyboardGeometry} ";
 
@@ -543,7 +546,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             var layoutHashIdGroupName = "layoutHashId";
             var layoutRevisionIdGroupName = "layoutRevisionId";
             var pattern =
-                $"https://configure.ergodox-ez.com/(?:ergodox|planck)-ez/layouts/(?<{layoutHashIdGroupName}>default|[a-zA-Z0-9]{{4,}})(?:/(?<{layoutRevisionIdGroupName}>latest|[a-zA-Z0-9]+)(?:/[0-9]{{1,2}})?)?";
+                $"https://configure.(?:ergodox-ez.com|zsa.io)/(?:ergodox-ez|planck-ez|moonlander)/layouts/(?<{layoutHashIdGroupName}>default|[a-zA-Z0-9]{{4,}})(?:/(?<{layoutRevisionIdGroupName}>latest|[a-zA-Z0-9]+)(?:/[0-9]{{1,2}})?)?";
             var layoutHashId = "default";
             var layoutRevisionId = "latest";
 

@@ -15,6 +15,11 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
         public string Name { get; set; }
 
         /// <summary>
+        /// Gets or sets the geometry.
+        /// </summary>
+        public string Geometry { get; set; }
+
+        /// <summary>
         /// Gets or sets the layout list of layers.
         /// </summary>
         public List<EZLayer> EZLayers { get; set; }
