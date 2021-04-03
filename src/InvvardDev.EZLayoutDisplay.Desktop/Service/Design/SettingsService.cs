@@ -14,7 +14,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Design
         public SettingsService()
         {
             HotkeyShowLayout = new Hotkey(0x60, ModifierKeys.Alt);
-            ErgodoxLayoutUrl = "https://configure.ergodox-ez.com/layouts/default/latest/0";
+            ErgodoxLayoutUrl = "https://configure.zsa.io/ergodox-ez/layouts/default/latest/0";
         }
 
         public void Save()

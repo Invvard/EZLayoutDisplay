@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="ErgodoxLayoutUrl" Type="System.String" Scope="User">
-      <Value Profile="(Default)">https://configure.ergodox-ez.com/ergodox-ez/layouts/default/latest/0</Value>
+      <Value Profile="(Default)">https://configure.zsa.io/ergodox-ez/layouts/default/latest/0</Value>
     </Setting>
     <Setting Name="HotkeyShowLayout" Type="System.String" Scope="User">
       <Value Profile="(Default)">{"modifiers":[0,1,2,4],"keycode":32}</Value>

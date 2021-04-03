@@ -25,7 +25,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://configure.ergodox-ez.com/ergodox-ez/layouts/default/latest/0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://configure.zsa.io/ergodox-ez/layouts/default/latest/0")]
         public string ErgodoxLayoutUrl {
             get {
                 return ((string)(this["ErgodoxLayoutUrl"]));

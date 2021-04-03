@@ -31,7 +31,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
         private readonly string GetLayoutInfoRequestBody =
             "{{\"operationName\":\"getLayout\",\"variables\":{{\"hashId\":\"{0}\",\"revisionId\":\"{1}\"}},\"query\":\"query getLayout($hashId: String!, $revisionId: String!) {{\\n Layout(hashId: $hashId, revisionId: $revisionId) {{\\n ...LayoutData\\n __typename\\n }}\\n}}\\n\\nfragment LayoutData on Layout {{\\n geometry\\n hashId\\n title\\n tags {{\\n id\\n hashId\\n name\\n }}\\n revision {{\\n hashId\\n title\\n hexUrl\\n model\\n zipUrl\\n  qmkVersion\\n  qmkUptodate\\n layers {{\\n position\\n title\\n }}\\n }}\\n __typename\\n}}\\n\"}}";
 
-        private const string GetLayoutRequestUri = "https://oryx.ergodox-ez.com/graphql";
+        private const string GetLayoutRequestUri = "https://oryx.zsa.io/graphql";
 
         #region ILayoutService implementation
 
