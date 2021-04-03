@@ -21,7 +21,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             // Assert
             Assert.Equal("About EZ Layout Display", aboutViewModel.WindowTitle);
             Assert.Equal("EZ Layout Display", aboutViewModel.AppTitleLabel);
-            Assert.Equal("v1.1.4", aboutViewModel.AppVersionLabel);
+            Assert.Equal("v1.2.0", aboutViewModel.AppVersionLabel);
             Assert.Equal("Created by", aboutViewModel.CreatedTitleLabel);
             Assert.Equal("Based on", aboutViewModel.BasedOnTitleLabel);
             Assert.Equal("Project home", aboutViewModel.ProjectHomeTitleLabel);
@@ -31,6 +31,8 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             Assert.Equal("EZ Layout Display", aboutViewModel.ProjectHomeInfoLabel);
             Assert.Equal("@Invvard", aboutViewModel.TwitterInfoLabel);
             Assert.Equal("r/EZLayoutDisplay", aboutViewModel.RedditInfoLabel);
+            Assert.Equal("Contributors", aboutViewModel.ContributorsTitleLabel);
+            Assert.Equal("Vlad Zaharia", aboutViewModel.VladZahariaLabel);
             Assert.Equal("OK", aboutViewModel.CloseButtonLabel);
         }
 
@@ -54,7 +56,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
         public void NavigateBasedOnUrl_Execute()
         {
             // Arrange
-            var expectedUrl = "https://configure.ergodox-ez.com/layouts/default/latest/0";
+            var expectedUrl = "https://configure.zsa.io/ergodox-ez/";
             var mockWindowService = new Mock<IWindowService>();
             var mockProcessService = new Mock<IProcessService>();
             mockProcessService.Setup(p => p.StartWebUrl(expectedUrl)).Verifiable();
@@ -113,6 +115,23 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             // Act
             var aboutViewModel = new AboutViewModel(mockWindowService.Object, mockProcessService.Object);
             aboutViewModel.NavigateRedditUrlCommand.Execute(null);
+
+            // Assert
+            mockProcessService.Verify(p => p.StartWebUrl(expectedUrl));
+        }
+
+        [ Fact ]
+        public void NavigateGithubVZUrl_Execute()
+        {
+            // Arrange
+            var expectedUrl = "https://github.com/vladzaharia";
+            var mockWindowService = new Mock<IWindowService>();
+            var mockProcessService = new Mock<IProcessService>();
+            mockProcessService.Setup(p => p.StartWebUrl(expectedUrl)).Verifiable();
+
+            // Act
+            var aboutViewModel = new AboutViewModel(mockWindowService.Object, mockProcessService.Object);
+            aboutViewModel.NavigateGithubVZUrlCommand.Execute(null);
 
             // Assert
             mockProcessService.Verify(p => p.StartWebUrl(expectedUrl));
