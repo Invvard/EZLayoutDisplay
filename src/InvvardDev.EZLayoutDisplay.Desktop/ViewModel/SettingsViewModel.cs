@@ -20,7 +20,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
     {
         #region Constants
 
-        private const string TagSearchBaseUri = "https://configure.ergodox-ez.com/{0}/search?q={1}";
+        private const string TagSearchBaseUri = "https://configure.zsa.io/{0}/search?q={1}";
         private const string DefaultLatestRevisionId = "latest";
 
         #endregion

@@ -218,21 +218,21 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
         }
 
         [Theory]
-        [InlineData("https://configure.ergodox-ez.com/layouts/abcd/latest/0", LatestRevisionHashId, "default", RevisionHashId)]
-        [InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/abcd/sdfs/0", "sdfs", "abcd", "sdfs")]
-        [InlineData("https://configure.ergodox-ez.com/planck-ez/layouts/abcd/latest/0", LatestRevisionHashId, "abcd", RevisionHashId)]
-        [InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/1234/asdf/0", "asdf", "1234", "asdf")]
-        [InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/a2Vt/latest/0", LatestRevisionHashId, "a2Vt", RevisionHashId)]
-        [InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/default/latest/0", LatestRevisionHashId, "default", RevisionHashId)]
-        [InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/j3o4", LatestRevisionHashId, "j3o4", RevisionHashId)]
-        [InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/j3o4/", LatestRevisionHashId, "j3o4", RevisionHashId)]
-        [InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/r2d2/lat/9", "lat", "r2d2", "lat")]
-        [InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/def/latest/0", LatestRevisionHashId, "default", RevisionHashId)] // Less than 4 layout ID character length
-        [InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/_t3s/latest/0", LatestRevisionHashId, "default", RevisionHashId)]
-        [InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/t3s/latest/0", LatestRevisionHashId, "default", RevisionHashId)]
-        [InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/adbcd/latest/0", LatestRevisionHashId, "adbcd", RevisionHashId)]
-        [InlineData("https://configure.ergodox-ez.com/ergodox-ez/layouts/asdfasdfasdfasdfgfasdffgasf/latest/0", LatestRevisionHashId, "asdfasdfasdfasdfgfasdffgasf", RevisionHashId)]
-        [InlineData("https://configure.ergodox-ez.com/plante-ez/layouts/asdfasdfasdfasdfgfasdffgasf/latest/0", LatestRevisionHashId, "default", RevisionHashId)]
+        [InlineData("https://configure.zsa.io/layouts/abcd/latest/0", LatestRevisionHashId, "default", RevisionHashId)]
+        [InlineData("https://configure.zsa.io/ergodox-ez/layouts/abcd/sdfs/0", "sdfs", "abcd", "sdfs")]
+        [InlineData("https://configure.zsa.io/planck-ez/layouts/abcd/latest/0", LatestRevisionHashId, "abcd", RevisionHashId)]
+        [InlineData("https://configure.zsa.io/ergodox-ez/layouts/1234/asdf/0", "asdf", "1234", "asdf")]
+        [InlineData("https://configure.zsa.io/ergodox-ez/layouts/a2Vt/latest/0", LatestRevisionHashId, "a2Vt", RevisionHashId)]
+        [InlineData("https://configure.zsa.io/ergodox-ez/layouts/default/latest/0", LatestRevisionHashId, "default", RevisionHashId)]
+        [InlineData("https://configure.zsa.io/ergodox-ez/layouts/j3o4", LatestRevisionHashId, "j3o4", RevisionHashId)]
+        [InlineData("https://configure.zsa.io/ergodox-ez/layouts/j3o4/", LatestRevisionHashId, "j3o4", RevisionHashId)]
+        [InlineData("https://configure.zsa.io/ergodox-ez/layouts/r2d2/lat/9", "lat", "r2d2", "lat")]
+        [InlineData("https://configure.zsa.io/ergodox-ez/layouts/def/latest/0", LatestRevisionHashId, "default", RevisionHashId)] // Less than 4 layout ID character length
+        [InlineData("https://configure.zsa.io/ergodox-ez/layouts/_t3s/latest/0", LatestRevisionHashId, "default", RevisionHashId)]
+        [InlineData("https://configure.zsa.ioergodox-ez/layouts/t3s/latest/0", LatestRevisionHashId, "default", RevisionHashId)]
+        [InlineData("https://configure.zsa.io/ergodox-ez/layouts/adbcd/latest/0", LatestRevisionHashId, "adbcd", RevisionHashId)]
+        [InlineData("https://configure.zsa.io/ergodox-ez/layouts/asdfasdfasdfasdfgfasdffgasf/latest/0", LatestRevisionHashId, "asdfasdfasdfasdfgfasdffgasf", RevisionHashId)]
+        [InlineData("https://configure.zsa.io/plante-ez/layouts/asdfasdfasdfasdfgfasdffgasf/latest/0", LatestRevisionHashId, "default", RevisionHashId)]
         public void UpdateLayoutCommand_Execute(string layoutUrl, string urlRevisionId, string expectedHashId, string expectedRevisionHashId)
         {
             //Arrange
@@ -320,7 +320,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             settingsViewModel.OpenTagSearchCommand.Execute(tag);
 
             // Assert
-            mockProcessService.Verify(p => p.StartWebUrl($"https://configure.ergodox-ez.com/{keyboardGeometry}/search?q={tag}"), Times.Exactly(callNumber));
+            mockProcessService.Verify(p => p.StartWebUrl($"https://configure.zsa.io/{keyboardGeometry}/search?q={tag}"), Times.Exactly(callNumber));
         }
 
         [Fact]
