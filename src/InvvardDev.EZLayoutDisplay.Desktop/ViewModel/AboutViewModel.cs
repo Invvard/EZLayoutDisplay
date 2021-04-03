@@ -28,21 +28,25 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private string _projectHomeTitleLabel;
         private string _contactTitleLabel;
         private string _creatorInfoLabel;
+        private string _contributorsLabel;
         private string _basedOnInfoLabel;
         private string _projectHomeInfoLabel;
         private string _twitterInfoLabel;
         private string _redditInfoLabel;
+        private string _vladZahariaLabel;
         private string _closeButtonLabel;
 
         private readonly string _basedOnUrl;
         private readonly string _projectHomeUrl;
         private readonly string _twitterUrl;
         private readonly string _redditUrl;
+        private readonly string _githubVZUrl;
 
         private ICommand _navigateBasedOnUrlCommand;
         private ICommand _navigateProjectHomeUrlCommand;
         private ICommand _navigateTwitterUrlCommand;
         private ICommand _navigateRedditUrlCommand;
+        private ICommand _navigateGithubVZUrlCommand;
         private ICommand _closeAboutCommand;
 
         #endregion
@@ -100,6 +104,12 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             set => Set(ref _creatorInfoLabel, value);
         }
 
+        public string ContributorsTitleLabel
+        {
+            get => _contributorsLabel;
+            set => Set(ref _contributorsLabel, value);
+        }
+
         public string BasedOnInfoLabel
         {
             get => _basedOnInfoLabel;
@@ -122,6 +132,12 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         {
             get => _redditInfoLabel;
             set => Set(ref _redditInfoLabel, value);
+        }
+
+        public string VladZahariaLabel
+        {
+            get => _vladZahariaLabel;
+            set => Set(ref _vladZahariaLabel, value);
         }
 
         public string CloseButtonLabel
@@ -163,6 +179,13 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             ?? (_navigateRedditUrlCommand = new RelayCommand(NavigateRedditUrl));
 
         /// <summary>
+        /// Navigate to Vlad Zaharia Github URL command.
+        /// </summary>
+        public ICommand NavigateGithubVZUrlCommand =>
+            _navigateGithubVZUrlCommand
+            ?? (_navigateGithubVZUrlCommand = new RelayCommand(NavigateGithubVZUrl));
+
+        /// <summary>
         /// Close about window command.
         /// </summary>
         public ICommand CloseAboutCommand =>
@@ -180,10 +203,11 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             _windowService = windowService;
             _processService = processService;
 
-            _basedOnUrl = "https://configure.ergodox-ez.com/layouts/default/latest/0";
+            _basedOnUrl = "https://configure.zsa.io/ergodox-ez/";
             _projectHomeUrl = "https://github.com/Invvard/EZLayoutDisplay";
             _twitterUrl = "https://twitter.com/invvard";
             _redditUrl = "https://www.reddit.com/r/EZLayoutDisplay/";
+            _githubVZUrl = "https://github.com/vladzaharia";
 
             SetLabelUi();
         }
@@ -208,6 +232,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             ProjectHomeInfoLabel = appTitle;
             TwitterInfoLabel = "@Invvard";
             RedditInfoLabel = "r/EZLayoutDisplay";
+            ContributorsTitleLabel = "Contributors";
+            VladZahariaLabel = "Vlad Zaharia";
             CloseButtonLabel = "OK";
         }
 
@@ -257,6 +283,12 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         {
             Logger.TraceRelayCommand();
             _processService.StartWebUrl(_redditUrl);
+        }
+
+        private void NavigateGithubVZUrl()
+        {
+            Logger.TraceRelayCommand();
+            _processService.StartWebUrl(_githubVZUrl);
         }
 
         private void CloseAboutWindow()
