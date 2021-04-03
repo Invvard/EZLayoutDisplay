@@ -36,7 +36,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
         #region ILayoutService implementation
 
         /// <inheritdoc />
-        public async Task<ErgodoxLayout> GetLayoutInfo(string layoutHashId, string layoutRevisionId)
+        public async Task<ErgodoxLayout> GetLayoutInfo(string layoutHashId, string geometry, string layoutRevisionId)
         {
             Logger.TraceMethod();
             Logger.DebugInputParam(nameof(layoutHashId), layoutHashId);
@@ -44,13 +44,13 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
 
             ValidateLayoutHashId(layoutHashId);
 
-            var info = await QueryData(layoutHashId, layoutRevisionId, GetLayoutInfoRequestBody);
+            var info = await QueryData(layoutHashId, geometry, layoutRevisionId, GetLayoutInfoRequestBody);
             
             return info;
         }
 
         /// <inheritdoc />
-        public async Task<ErgodoxLayout> GetErgodoxLayout(string layoutHashId, string layoutRevisionId)
+        public async Task<ErgodoxLayout> GetErgodoxLayout(string layoutHashId, string geometry, string layoutRevisionId)
         {
             Logger.TraceMethod();
             Logger.DebugInputParam(nameof(layoutHashId), layoutHashId);
@@ -58,7 +58,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
 
             ValidateLayoutHashId(layoutHashId);
 
-            var layout = await QueryData(layoutHashId, layoutRevisionId, GetLayoutBody);
+            var layout = await QueryData(layoutHashId, geometry, layoutRevisionId, GetLayoutBody);
 
             return layout;
         }
@@ -94,9 +94,9 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
 
         #region Private methods
 
-        private async Task<ErgodoxLayout> QueryData(string layoutHashId, string layoutRevisionId, string graphQlQuery)
+        private async Task<ErgodoxLayout> QueryData(string layoutHashId, string geometry, string layoutRevisionId, string graphQlQuery)
         {
-            var requestBody = string.Format(graphQlQuery, layoutHashId, layoutRevisionId);
+            var requestBody = string.Format(graphQlQuery, layoutHashId, geometry, layoutRevisionId);
 
             var layout = await HttpClientCall(requestBody);
 
