@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="{Binding WindowTitle}" Height="330" Width="500"
+        Title="{Binding WindowTitle}" Height="350" Width="500"
         ResizeMode="NoResize" Background="{StaticResource WindowBackgroundBrush}"
         WindowStartupLocation="CenterScreen" Icon="{StaticResource WindowIcon}"
         DataContext="{Binding About, Source={StaticResource Locator}}">
@@ -17,6 +17,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"/>
             <RowDefinition Height="10"/>
+            <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
@@ -67,7 +68,13 @@
                     Command="{Binding NavigateRedditUrlCommand}" />
         </StackPanel>
 
-        <Button Grid.Row="8" Grid.Column="2" Content="{Binding CloseButtonLabel}"
+        <Label Grid.Row="7" Grid.Column="1" Content="{Binding ContributorsTitleLabel}" Style="{StaticResource TitleLabelStyle}" />
+        <StackPanel Orientation="Horizontal" Grid.Row="7" Grid.Column="2">
+            <Button Style="{StaticResource HyperlinkStyledButton}" Content="{Binding VladZahariaLabel}"
+                    Command="{Binding NavigateGithubVZUrlCommand}" />
+        </StackPanel>
+
+        <Button Grid.Row="9" Grid.Column="2" Content="{Binding CloseButtonLabel}"
                 Command="{Binding CloseAboutCommand}"
                 Width="100" Margin="0,5,5,5" HorizontalAlignment="Right"/>
     </Grid>
