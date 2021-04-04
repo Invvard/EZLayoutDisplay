@@ -54,7 +54,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             mockSettingsService.Setup(s => s.ErgodoxLayoutUrl).Returns(tbContentInitial);
             var mockWindowService = new Mock<IWindowService>();
             var mockLayoutService = new Mock<ILayoutService>();
-            mockLayoutService.Setup(s => s.GetLayoutInfo(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(It.IsAny<ErgodoxLayout>()));
+            mockLayoutService.Setup(s => s.GetLayoutInfo(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(It.IsAny<ErgodoxLayout>()));
             var mockProcessService = new Mock<IProcessService>();
 
             //Act
@@ -218,30 +218,31 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
         }
 
         [Theory]
-        [InlineData("https://configure.zsa.io/layouts/abcd/latest/0", LatestRevisionHashId, "default", RevisionHashId)]
-        [InlineData("https://configure.zsa.io/ergodox-ez/layouts/abcd/sdfs/0", "sdfs", "abcd", "sdfs")]
-        [InlineData("https://configure.zsa.io/planck-ez/layouts/abcd/latest/0", LatestRevisionHashId, "abcd", RevisionHashId)]
-        [InlineData("https://configure.zsa.io/ergodox-ez/layouts/1234/asdf/0", "asdf", "1234", "asdf")]
-        [InlineData("https://configure.zsa.io/ergodox-ez/layouts/a2Vt/latest/0", LatestRevisionHashId, "a2Vt", RevisionHashId)]
-        [InlineData("https://configure.zsa.io/ergodox-ez/layouts/default/latest/0", LatestRevisionHashId, "default", RevisionHashId)]
-        [InlineData("https://configure.zsa.io/ergodox-ez/layouts/j3o4", LatestRevisionHashId, "j3o4", RevisionHashId)]
-        [InlineData("https://configure.zsa.io/ergodox-ez/layouts/j3o4/", LatestRevisionHashId, "j3o4", RevisionHashId)]
-        [InlineData("https://configure.zsa.io/ergodox-ez/layouts/r2d2/lat/9", "lat", "r2d2", "lat")]
-        [InlineData("https://configure.zsa.io/ergodox-ez/layouts/def/latest/0", LatestRevisionHashId, "default", RevisionHashId)] // Less than 4 layout ID character length
-        [InlineData("https://configure.zsa.io/ergodox-ez/layouts/_t3s/latest/0", LatestRevisionHashId, "default", RevisionHashId)]
-        [InlineData("https://configure.zsa.ioergodox-ez/layouts/t3s/latest/0", LatestRevisionHashId, "default", RevisionHashId)]
-        [InlineData("https://configure.zsa.io/ergodox-ez/layouts/adbcd/latest/0", LatestRevisionHashId, "adbcd", RevisionHashId)]
-        [InlineData("https://configure.zsa.io/ergodox-ez/layouts/asdfasdfasdfasdfgfasdffgasf/latest/0", LatestRevisionHashId, "asdfasdfasdfasdfgfasdffgasf", RevisionHashId)]
-        [InlineData("https://configure.zsa.io/plante-ez/layouts/asdfasdfasdfasdfgfasdffgasf/latest/0", LatestRevisionHashId, "default", RevisionHashId)]
-        public void UpdateLayoutCommand_Execute(string layoutUrl, string urlRevisionId, string expectedHashId, string expectedRevisionHashId)
+        [InlineData("https://configure.zsa.io/layouts/abcd/latest/0", LatestRevisionHashId, "default", "ergodox-ez", RevisionHashId)]
+        [InlineData("https://configure.zsa.io/ergodox-ez/layouts/abcd/sdfs/0", "sdfs", "abcd", "ergodox-ez", "sdfs")]
+        [InlineData("https://configure.zsa.io/planck-ez/layouts/abcd/latest/0", LatestRevisionHashId, "abcd", "planck-ez", RevisionHashId)]
+        [InlineData("https://configure.zsa.io/moonlander/layouts/abcd/latest/0", LatestRevisionHashId, "abcd", "moonlander", RevisionHashId)]
+        [InlineData("https://configure.zsa.io/ergodox-ez/layouts/1234/asdf/0", "asdf", "1234", "ergodox-ez", "asdf")]
+        [InlineData("https://configure.zsa.io/ergodox-ez/layouts/a2Vt/latest/0", LatestRevisionHashId, "a2Vt", "ergodox-ez", RevisionHashId)]
+        [InlineData("https://configure.zsa.io/ergodox-ez/layouts/default/latest/0", LatestRevisionHashId, "default", "ergodox-ez", RevisionHashId)]
+        [InlineData("https://configure.zsa.io/ergodox-ez/layouts/j3o4", LatestRevisionHashId, "j3o4", "ergodox-ez", RevisionHashId)]
+        [InlineData("https://configure.zsa.io/ergodox-ez/layouts/j3o4/", LatestRevisionHashId, "j3o4", "ergodox-ez", RevisionHashId)]
+        [InlineData("https://configure.zsa.io/ergodox-ez/layouts/r2d2/lat/9", "lat", "r2d2", "ergodox-ez", "lat")]
+        [InlineData("https://configure.zsa.io/ergodox-ez/layouts/def/latest/0", LatestRevisionHashId, "default", "ergodox-ez", RevisionHashId)] // Less than 4 layout ID character length
+        [InlineData("https://configure.zsa.io/ergodox-ez/layouts/_t3s/latest/0", LatestRevisionHashId, "default", "ergodox-ez", RevisionHashId)]
+        [InlineData("https://configure.zsa.io/ergodox-ez/layouts/t3s/latest/0", LatestRevisionHashId, "default", "ergodox-ez", RevisionHashId)]
+        [InlineData("https://configure.zsa.io/ergodox-ez/layouts/adbcd/latest/0", LatestRevisionHashId, "adbcd", "ergodox-ez", RevisionHashId)]
+        [InlineData("https://configure.zsa.io/ergodox-ez/layouts/asdfasdfasdfasdfgfasdffgasf/latest/0", LatestRevisionHashId, "asdfasdfasdfasdfgfasdffgasf", "ergodox-ez", RevisionHashId)]
+        [InlineData("https://configure.zsa.io/plante-ez/layouts/asdfasdfasdfasdfgfasdffgasf/latest/0", LatestRevisionHashId, "default", "ergodox-ez", RevisionHashId)]
+        public void UpdateLayoutCommand_Execute(string layoutUrl, string urlRevisionId, string expectedHashId, string expectedGeometry, string expectedRevisionHashId)
         {
             //Arrange
             var mockSettingsService = new Mock<ISettingsService>();
             mockSettingsService.SetupProperty(s => s.ErgodoxLayoutUrl, layoutUrl);
             var mockWindowService = new Mock<IWindowService>();
             var mockLayoutService = new Mock<ILayoutService>();
-            mockLayoutService.Setup(l => l.GetLayoutInfo(expectedHashId, urlRevisionId)).Returns(Task.FromResult(PrepareLayoutTree()));
-            mockLayoutService.Setup(l => l.GetErgodoxLayout(expectedHashId, expectedRevisionHashId)).Returns(Task.FromResult(It.IsAny<ErgodoxLayout>())).Verifiable();
+            mockLayoutService.Setup(l => l.GetLayoutInfo(expectedHashId, expectedGeometry, urlRevisionId)).Returns(Task.FromResult(PrepareLayoutTree(expectedGeometry)));
+            mockLayoutService.Setup(l => l.GetErgodoxLayout(expectedHashId, expectedGeometry, expectedRevisionHashId)).Returns(Task.FromResult(It.IsAny<ErgodoxLayout>())).Verifiable();
             mockLayoutService.Setup(l => l.PrepareEZLayout(It.IsAny<ErgodoxLayout>())).Verifiable();
             var mockProcessService = new Mock<IProcessService>();
 
@@ -263,7 +264,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             var mockWindowService = new Mock<IWindowService>();
             mockWindowService.Setup(w => w.ShowWarning(It.IsAny<string>())).Verifiable();
             var mockLayoutService = new Mock<ILayoutService>();
-            mockLayoutService.Setup(l => l.GetErgodoxLayout(It.IsAny<string>(), It.IsAny<string>())).Throws<ArgumentException>();
+            mockLayoutService.Setup(l => l.GetErgodoxLayout(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Throws<ArgumentException>();
             var processService = new Mock<IProcessService>();
 
             // Act
@@ -284,7 +285,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             var mockWindowService = new Mock<IWindowService>();
             mockWindowService.Setup(w => w.ShowWarning(It.IsAny<string>())).Verifiable();
             var mockLayoutService = new Mock<ILayoutService>();
-            mockLayoutService.Setup(l => l.GetErgodoxLayout(It.IsAny<string>(), It.IsAny<string>())).Throws<ArgumentNullException>();
+            mockLayoutService.Setup(l => l.GetErgodoxLayout(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Throws<ArgumentNullException>();
             var processService = new Mock<IProcessService>();
 
             // Act
@@ -302,7 +303,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
         [InlineData("  ", null, 0)]
         [InlineData(null, "", 0)]
         [InlineData(null, "  ", 0)]
-        [InlineData("tag", "geometry", 1)]
+        [InlineData("tag", "ergodox-ez", 1)]
         public void OpenTagSearchCommandExecute(string tag, string keyboardGeometry, int callNumber)
         {
             // Arrange
@@ -310,7 +311,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             mockSettingsService.SetupProperty(s => s.ErgodoxLayoutUrl, "");
             var mockWindowService = new Mock<IWindowService>();
             var mockLayoutService = new Mock<ILayoutService>();
-            mockLayoutService.Setup(l => l.GetLayoutInfo(It.IsAny<string>(), It.IsAny<string>()))
+            mockLayoutService.Setup(l => l.GetLayoutInfo(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                              .Returns(Task.FromResult(PrepareLayoutTree(keyboardGeometry, tag)));
             var mockProcessService = new Mock<IProcessService>();
             mockProcessService.Setup(p => p.StartWebUrl(It.IsAny<string>())).Verifiable();
@@ -332,7 +333,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             var mockWindowService = new Mock<IWindowService>();
             mockWindowService.Setup(w => w.ShowWarning("Value cannot be null.")).Verifiable();
             var mockLayoutService = new Mock<ILayoutService>();
-            mockLayoutService.Setup(l => l.GetLayoutInfo(It.IsAny<string>(), It.IsAny<string>())).Throws<ArgumentNullException>().Verifiable();
+            mockLayoutService.Setup(l => l.GetLayoutInfo(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Throws<ArgumentNullException>().Verifiable();
             var mockProcessService = new Mock<IProcessService>();
 
             // Act
@@ -352,7 +353,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             var mockWindowService = new Mock<IWindowService>();
             mockWindowService.Setup(w => w.ShowWarning("Value does not fall within the expected range.")).Verifiable();
             var mockLayoutService = new Mock<ILayoutService>();
-            mockLayoutService.Setup(l => l.GetLayoutInfo(It.IsAny<string>(), It.IsAny<string>())).Throws<ArgumentException>().Verifiable();
+            mockLayoutService.Setup(l => l.GetLayoutInfo(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Throws<ArgumentException>().Verifiable();
             var mockProcessService = new Mock<IProcessService>();
 
             // Act
@@ -371,7 +372,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             mockSettingsService.SetupProperty(s => s.ErgodoxLayoutUrl, "");
             var mockWindowService = new Mock<IWindowService>();
             var mockLayoutService = new Mock<ILayoutService>();
-            mockLayoutService.Setup(l => l.GetLayoutInfo(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<ErgodoxLayout>(null));
+            mockLayoutService.Setup(l => l.GetLayoutInfo(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<ErgodoxLayout>(null));
             var mockProcessService = new Mock<IProcessService>();
 
             // Act
@@ -400,7 +401,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             mockSettingsService.SetupProperty(s => s.ErgodoxLayoutUrl, "");
             var mockWindowService = new Mock<IWindowService>();
             var mockLayoutService = new Mock<ILayoutService>();
-            mockLayoutService.Setup(l => l.GetLayoutInfo(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(expectedInfo));
+            mockLayoutService.Setup(l => l.GetLayoutInfo(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(expectedInfo));
             var mockProcessService = new Mock<IProcessService>();
 
             // Act
@@ -428,7 +429,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             // Arrange
             var expectedInfo = new ErgodoxLayout()
             {
-                Geometry = "",
+                Geometry = "ergodox-ez",
                 Title = "ezlayout",
                 HashId = "asdf",
                 Tags = new List<ErgodoxTag> {
@@ -453,7 +454,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             mockSettingsService.SetupProperty(s => s.ErgodoxLayoutUrl, "");
             var mockWindowService = new Mock<IWindowService>();
             var mockLayoutService = new Mock<ILayoutService>();
-            mockLayoutService.Setup(l => l.GetLayoutInfo(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(expectedInfo));
+            mockLayoutService.Setup(l => l.GetLayoutInfo(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(expectedInfo));
             var mockProcessService = new Mock<IProcessService>();
 
             // Act
@@ -491,7 +492,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             mockSettingsService.SetupProperty(s => s.ErgodoxLayoutUrl, "");
             var mockWindowService = new Mock<IWindowService>();
             var mockLayoutService = new Mock<ILayoutService>();
-            mockLayoutService.Setup(l => l.GetLayoutInfo(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(expectedInfo));
+            mockLayoutService.Setup(l => l.GetLayoutInfo(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(expectedInfo));
             var mockProcessService = new Mock<IProcessService>();
             mockProcessService.Setup(p => p.StartWebUrl(hexUrl)).Verifiable();
 
@@ -528,7 +529,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.ViewModel
             mockSettingsService.SetupProperty(s => s.ErgodoxLayoutUrl, "");
             var mockWindowService = new Mock<IWindowService>();
             var mockLayoutService = new Mock<ILayoutService>();
-            mockLayoutService.Setup(l => l.GetLayoutInfo(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(expectedInfo));
+            mockLayoutService.Setup(l => l.GetLayoutInfo(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(expectedInfo));
             var mockProcessService = new Mock<IProcessService>();
             mockProcessService.Setup(p => p.StartWebUrl(hexUrl)).Verifiable();
 
