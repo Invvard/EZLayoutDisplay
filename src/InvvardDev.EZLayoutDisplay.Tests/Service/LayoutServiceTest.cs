@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using InvvardDev.EZLayoutDisplay.Desktop.Model;
+﻿using InvvardDev.EZLayoutDisplay.Desktop.Model;
 using InvvardDev.EZLayoutDisplay.Desktop.Model.Enum;
 using InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation;
 using InvvardDev.EZLayoutDisplay.Desktop.Service.Interface;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace InvvardDev.EZLayoutDisplay.Tests.Service
@@ -32,24 +32,25 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Service
         }
 
         [ Theory ]
-        [ InlineData("EOEb", true) ]
-        [ InlineData("default", true) ]
-        [ InlineData("test", false) ]
-        public async Task GetLayoutInfo(string layoutHashId, bool exist)
+        [ InlineData("EOEb", "ergodox-ez", "ergodox-ez", true) ]
+        [ InlineData("EOEb", "planck-ez", "ergodox-ez", true) ]
+        [ InlineData("default", "ergodox-ez", "ergodox-ez", true) ]
+        [ InlineData("default", "moonlander", "moonlander", true) ]
+        [ InlineData("test", "ergodox-ez", "ergodox-ez", false) ]
+        public async Task GetLayoutInfo(string layoutHashId, string geometry, string expectedGeometry, bool exist)
         {
             // Arrange
             ILayoutService layoutService = new LayoutService();
-
-            // Act
             ErgodoxLayout response = null;
 
+            // Act
             if (exist)
             {
-                response = await layoutService.GetLayoutInfo(layoutHashId, "latest");
+                response = await layoutService.GetLayoutInfo(layoutHashId, geometry, "latest");
             }
             else
             {
-                await Assert.ThrowsAsync<ArgumentException>(() => layoutService.GetLayoutInfo(layoutHashId, "latest"));
+                await Assert.ThrowsAsync<ArgumentException>(() => layoutService.GetLayoutInfo(layoutHashId, geometry, "latest"));
             }
 
             // Assert
@@ -60,6 +61,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Service
                 Assert.NotNull(response.Revision);
                 Assert.False(string.IsNullOrWhiteSpace(response.HashId));
                 Assert.False(string.IsNullOrWhiteSpace(response.Title));
+                Assert.Equal(expectedGeometry, response.Geometry);
             }
         }
 
@@ -77,11 +79,11 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Service
 
             if (exist)
             {
-                response = await layoutService.GetErgodoxLayout(layoutHashId, "latest");
+                response = await layoutService.GetErgodoxLayout(layoutHashId, "ergodox-ez", "latest");
             }
             else
             {
-                await Assert.ThrowsAsync<ArgumentException>(() => layoutService.GetErgodoxLayout(layoutHashId, "latest"));
+                await Assert.ThrowsAsync<ArgumentException>(() => layoutService.GetErgodoxLayout(layoutHashId, "ergodox-ez", "latest"));
             }
 
             // Assert
@@ -114,10 +116,9 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Service
                                           GlowColor = "",
                                           Code = "KC_TRANSPARENT"
                                       });
-            EZLayout ezLayoutResult;
 
             // Act
-            ezLayoutResult = layoutService.PrepareEZLayout(ergodoxLayout);
+            var ezLayoutResult = layoutService.PrepareEZLayout(ergodoxLayout);
 
             // Assert
             Assert.Single(ezLayoutResult.EZLayers);
@@ -168,10 +169,9 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Service
                                                 GlowColor = "",
                                                 Code = "KC_SPACE"
                                             });
-            EZLayout ezLayoutResult;
 
             // Act
-            ezLayoutResult = layoutService.PrepareEZLayout(ergodoxLayout);
+            var ezLayoutResult = layoutService.PrepareEZLayout(ergodoxLayout);
 
             // Assert
             Assert.Equal(2, ezLayoutResult.EZLayers.Count);
@@ -200,7 +200,7 @@ namespace InvvardDev.EZLayoutDisplay.Tests.Service
             ILayoutService layoutService = new LayoutService();
 
             // Act
-            await Assert.ThrowsAsync<ArgumentNullException>(() => layoutService.GetErgodoxLayout("", ""));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => layoutService.GetErgodoxLayout("", "", ""));
         }
 
         [ Theory ]

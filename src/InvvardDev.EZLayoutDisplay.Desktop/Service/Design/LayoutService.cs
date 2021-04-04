@@ -8,18 +8,17 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Design
 {
     public class LayoutService : ILayoutService
     {
-        public async Task<ErgodoxLayout> GetLayoutInfo(string layoutHashId, string layoutRevisionId)
+        public async Task<ErgodoxLayout> GetLayoutInfo(string layoutHashId, string geometry, string layoutRevisionId)
         {
             Debug.WriteLine("Layout retrieved.");
 
-            var layoutInfo = new ErgodoxLayout();
-            layoutInfo.Title = "Layout title v1.0";
+            var layoutInfo = new ErgodoxLayout {Title = "Layout title v1.0"};
 
             return await new Task<ErgodoxLayout>(() => layoutInfo);
         }
 
         /// <inheritdoc />
-        public async Task<ErgodoxLayout> GetErgodoxLayout(string layoutHashId, string layoutRevisionId)
+        public async Task<ErgodoxLayout> GetErgodoxLayout(string layoutHashId, string geometry, string layoutRevisionId)
         {
             Debug.WriteLine("Layout retrieved.");
 

@@ -26,17 +26,17 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
         };
 
         private readonly string GetLayoutBody =
-            "{{\"operationName\":\"getLayout\",\"variables\":{{\"hashId\":\"{0}\",\"revisionId\":\"{1}\"}},\"query\":\"query getLayout($hashId: String!, $revisionId: String!) {{\\n  Layout(hashId: $hashId, revisionId: $revisionId) {{\\n ...LayoutData\\n }}\\n}}\\n\\nfragment LayoutData on Layout {{\\n geometry\\n hashId\\n title\\n tags {{\\n id\\n hashId\\n name\\n }}\\n revision {{\\n ...RevisionData\\n }}\\n}}\\n\\nfragment RevisionData on Revision {{\\n hashId\\n model\\n title\\n swatch\\n hexUrl\\n zipUrl\\n  qmkVersion\\n  qmkUptodate\\n  config\\n layers {{\\n hashId\\n keys\\n position\\n title\\n color\\n}}\\n}}\\n\"}}";
+            "{{\"operationName\":\"getLayout\",\"variables\":{{\"hashId\":\"{0}\",\"geometry\":\"{1}\",\"revisionId\":\"{2}\"}},\"query\":\"query getLayout($hashId: String!, $revisionId: String!, $geometry: String) {{\\n Layout(hashId: $hashId, geometry: $geometry, revisionId: $revisionId) {{\\n ...LayoutData\\n }}\\n}}\\n\\nfragment LayoutData on Layout {{\\n geometry\\n hashId\\n title\\n tags {{\\n id\\n hashId\\n name\\n }}\\n revision {{\\n ...RevisionData\\n }}\\n}}\\n\\nfragment RevisionData on Revision {{\\n hashId\\n model\\n title\\n swatch\\n hexUrl\\n zipUrl\\n qmkVersion\\n qmkUptodate\\n config\\n layers {{\\n hashId\\n keys\\n position\\n title\\n color\\n}}\\n}}\\n\"}}";
 
         private readonly string GetLayoutInfoRequestBody =
-            "{{\"operationName\":\"getLayout\",\"variables\":{{\"hashId\":\"{0}\",\"revisionId\":\"{1}\"}},\"query\":\"query getLayout($hashId: String!, $revisionId: String!) {{\\n Layout(hashId: $hashId, revisionId: $revisionId) {{\\n ...LayoutData\\n __typename\\n }}\\n}}\\n\\nfragment LayoutData on Layout {{\\n geometry\\n hashId\\n title\\n tags {{\\n id\\n hashId\\n name\\n }}\\n revision {{\\n hashId\\n title\\n hexUrl\\n model\\n zipUrl\\n  qmkVersion\\n  qmkUptodate\\n layers {{\\n position\\n title\\n }}\\n }}\\n __typename\\n}}\\n\"}}";
+            "{{\"operationName\":\"getLayout\",\"variables\":{{\"hashId\":\"{0}\",\"geometry\":\"{1}\",\"revisionId\":\"{2}\"}},\"query\":\"query getLayout($hashId: String!, $revisionId: String!, $geometry: String) {{\\n Layout(hashId: $hashId, geometry: $geometry, revisionId: $revisionId) {{\\n ...LayoutData\\n }}\\n}}\\n\\nfragment LayoutData on Layout {{\\n geometry\\n hashId\\n title\\n tags {{\\n id\\n hashId\\n name\\n }}\\n revision {{\\n hashId\\n title\\n hexUrl\\n model\\n zipUrl\\n  qmkVersion\\n  qmkUptodate\\n layers {{\\n position\\n title\\n }}\\n }}\\n}}\\n\"}}";
 
         private const string GetLayoutRequestUri = "https://oryx.zsa.io/graphql";
 
         #region ILayoutService implementation
 
         /// <inheritdoc />
-        public async Task<ErgodoxLayout> GetLayoutInfo(string layoutHashId, string layoutRevisionId)
+        public async Task<ErgodoxLayout> GetLayoutInfo(string layoutHashId, string geometry, string layoutRevisionId)
         {
             Logger.TraceMethod();
             Logger.DebugInputParam(nameof(layoutHashId), layoutHashId);
@@ -44,13 +44,13 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
 
             ValidateLayoutHashId(layoutHashId);
 
-            var info = await QueryData(layoutHashId, layoutRevisionId, GetLayoutInfoRequestBody);
+            var info = await QueryData(layoutHashId, geometry, layoutRevisionId, GetLayoutInfoRequestBody);
             
             return info;
         }
 
         /// <inheritdoc />
-        public async Task<ErgodoxLayout> GetErgodoxLayout(string layoutHashId, string layoutRevisionId)
+        public async Task<ErgodoxLayout> GetErgodoxLayout(string layoutHashId, string geometry, string layoutRevisionId)
         {
             Logger.TraceMethod();
             Logger.DebugInputParam(nameof(layoutHashId), layoutHashId);
@@ -58,7 +58,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
 
             ValidateLayoutHashId(layoutHashId);
 
-            var layout = await QueryData(layoutHashId, layoutRevisionId, GetLayoutBody);
+            var layout = await QueryData(layoutHashId, geometry, layoutRevisionId, GetLayoutBody);
 
             return layout;
         }
@@ -94,9 +94,9 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
 
         #region Private methods
 
-        private async Task<ErgodoxLayout> QueryData(string layoutHashId, string layoutRevisionId, string graphQlQuery)
+        private async Task<ErgodoxLayout> QueryData(string layoutHashId, string geometry, string layoutRevisionId, string graphQlQuery)
         {
-            var requestBody = string.Format(graphQlQuery, layoutHashId, layoutRevisionId);
+            var requestBody = string.Format(graphQlQuery, layoutHashId, geometry, layoutRevisionId);
 
             var layout = await HttpClientCall(requestBody);
 
