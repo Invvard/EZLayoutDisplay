@@ -332,7 +332,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         {
             Logger.TraceMethod();
 
-            foreach (var t in _ezLayout.EZLayers)
+            foreach (var ezLayer in _ezLayout.EZLayers)
             {
                 if (!(await LoadLayoutDefinition(geometry) is List<KeyTemplate> layoutTemplate)) break;
 
@@ -340,7 +340,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
                 for (int j = 0 ; j < layoutTemplate.Count ; j++)
                 {
-                    layoutTemplate[j].EZKey = t.EZKeys[j];
+                    layoutTemplate[j].EZKey = ezLayer.EZKeys[j];
                 }
 
                 _layoutTemplates.Add(layoutTemplate);
