@@ -43,6 +43,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private ICommand _cancelSettingsCommand;
 
         private string _currentLayoutHashId;
+        private string _currentGeometry;
         private string _currentLayoutRevisionId;
         private string _layoutTitle;
         private string _keyboardModel;
@@ -52,7 +53,6 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private string _hexFileUri;
         private string _sourcesZipUri;
         private bool _layoutIsCompiled;
-        private string _keyboardGeometry;
 
         private string _altModifierLabel;
         private string _ctrlModifierLabel;
@@ -227,6 +227,12 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             set => Set(ref _currentLayoutHashId, value);
         }
 
+        public string CurrentGeometry
+        {
+            get => _currentGeometry;
+            set => Set(ref _currentGeometry, value);
+        }
+
         public string CurrentLayoutRevisionId
         {
             get => _currentLayoutRevisionId;
@@ -349,12 +355,12 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         {
             Logger.TraceRelayCommand();
 
-            if (string.IsNullOrWhiteSpace(tag) || string.IsNullOrWhiteSpace(_keyboardGeometry))
+            if (string.IsNullOrWhiteSpace(tag))
             {
                 return;
             }
 
-            var tagSearchUri = string.Format(TagSearchBaseUri, _keyboardGeometry, tag);
+            var tagSearchUri = string.Format(TagSearchBaseUri, CurrentGeometry, tag);
             _processService.StartWebUrl(tagSearchUri);
         }
 
@@ -400,11 +406,11 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         {
             Logger.TraceMethod();
 
-            (CurrentLayoutHashId, CurrentLayoutRevisionId) = ExtractLayoutUrlIds(LayoutUrlContent);
+            ExtractLayoutUrlIds(LayoutUrlContent);
 
             try
             {
-                var layoutInfo = await _layoutService.GetLayoutInfo(CurrentLayoutHashId, CurrentLayoutRevisionId);
+                var layoutInfo = await _layoutService.GetLayoutInfo(CurrentLayoutHashId, CurrentGeometry, CurrentLayoutRevisionId);
                 Logger.Debug("LayoutInfo = {@value0}", layoutInfo);
 
                 ClearLayoutInfo();
@@ -445,8 +451,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             LayoutTitle = "";
             KeyboardModel = "";
             LayoutStatus = "";
-
-            _keyboardGeometry = "";
+            
             _layoutIsCompiled = false;
         }
 
@@ -455,7 +460,6 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             Logger.TraceMethod();
 
             LayoutTitle = layoutInfo.Title;
-            _keyboardGeometry = layoutInfo.Geometry;
 
             if (layoutInfo.Tags?.Any() != null)
             {
@@ -464,7 +468,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
             if (layoutInfo.Revision != null)
             {
-                KeyboardModel = GetKeyBoardDescription(_keyboardGeometry, layoutInfo.Revision.Model);
+                KeyboardModel = GetKeyBoardDescription(layoutInfo.Geometry, layoutInfo.Revision.Model);
                 UpdateLayoutButtons(layoutInfo.Revision);
                 LayoutStatus = !_layoutIsCompiled ? "Not compiled" : "Compiled";
 
@@ -519,7 +523,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
             try
             {
-                var ergodoxLayout = await _layoutService.GetErgodoxLayout(CurrentLayoutHashId, CurrentLayoutRevisionId);
+                var ergodoxLayout = await _layoutService.GetErgodoxLayout(CurrentLayoutHashId, CurrentGeometry, CurrentLayoutRevisionId);
                 Logger.Debug("ergodoxLayout = {@value0}", ergodoxLayout);
 
                 var ezLayout = _layoutService.PrepareEZLayout(ergodoxLayout);
@@ -539,33 +543,35 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             }
         }
 
-        private (string layoutHashId, string layoutRevisionId) ExtractLayoutUrlIds(string layoutUrl)
+        private void ExtractLayoutUrlIds(string layoutUrl)
         {
             Logger.TraceMethod();
 
             var layoutHashIdGroupName = "layoutHashId";
+            var geometryGroupName = "geometry";
             var layoutRevisionIdGroupName = "layoutRevisionId";
             var pattern =
-                $"https://configure.(?:ergodox-ez.com|zsa.io)/(?:ergodox-ez|planck-ez|moonlander)/layouts/(?<{layoutHashIdGroupName}>default|[a-zA-Z0-9]{{4,}})(?:/(?<{layoutRevisionIdGroupName}>latest|[a-zA-Z0-9]+)(?:/[0-9]{{1,2}})?)?";
-            var layoutHashId = "default";
-            var layoutRevisionId = "latest";
+                $"https://configure.(?:ergodox-ez.com|zsa.io)/(?<{geometryGroupName}>ergodox-ez|planck-ez|moonlander)/layouts/(?<{layoutHashIdGroupName}>default|[a-zA-Z0-9]{{4,}})(?:/(?<{layoutRevisionIdGroupName}>latest|[a-zA-Z0-9]+)(?:/[0-9]{{1,2}})?)?";
+            CurrentLayoutHashId = "default";
+            CurrentGeometry = "ergodox-ez";
+            CurrentLayoutRevisionId = "latest";
 
             var regex = new Regex(pattern);
             var match = regex.Match(layoutUrl);
 
             if (match.Success)
             {
-                layoutHashId = match.Groups[layoutHashIdGroupName].Value;
-
+                CurrentLayoutHashId = match.Groups[layoutHashIdGroupName].Value;
+                CurrentGeometry = match.Groups[geometryGroupName].Value;
                 var revisionId = match.Groups[layoutRevisionIdGroupName].Value;
-                layoutRevisionId = string.IsNullOrWhiteSpace(revisionId) ? layoutRevisionId : revisionId;
+                CurrentLayoutRevisionId = string.IsNullOrWhiteSpace(revisionId) ? CurrentLayoutRevisionId : revisionId;
             }
 
-            Logger.Debug("Layout URL = {0}", layoutUrl);
-            Logger.Debug("Layout Hash ID = {0}", layoutHashId);
-            Logger.Debug("Layout Revision ID = {0}", layoutRevisionId);
-
-            return (layoutHashId, layoutRevisionId);
+            Logger.Debug($"Layout URL = {layoutUrl}");
+            Logger.Debug($"Layout URL has {(match.Success ? "": "NOT ")}been matched");
+            Logger.Debug($"Layout Hash ID = {CurrentLayoutHashId}");
+            Logger.Debug($"Keyboard geometry = {CurrentGeometry}");
+            Logger.Debug($"Layout Revision ID = {CurrentLayoutRevisionId}");
         }
 
         #endregion

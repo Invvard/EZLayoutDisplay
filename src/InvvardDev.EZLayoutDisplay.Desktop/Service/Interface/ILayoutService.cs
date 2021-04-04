@@ -10,17 +10,19 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Interface
         /// Gets the <see cref="ErgodoxLayout"/> basic info.
         /// </summary>
         /// <param name="layoutHashId">The layout hash ID to get.</param>
+        /// <param name="geometry">The keyboard geometry to get.</param>
         /// <param name="layoutRevisionId">The layout revision ID to get.</param>
         /// <returns>The <see cref="ErgodoxLayout"/>.</returns>
-        Task<ErgodoxLayout> GetLayoutInfo(string layoutHashId, string layoutRevisionId);
+        Task<ErgodoxLayout> GetLayoutInfo(string layoutHashId, string geometry, string layoutRevisionId);
 
         /// <summary>
         /// Gets the <see cref="ErgodoxLayout"/>.
         /// </summary>
         /// <param name="layoutHashId">The layout hash ID to get.</param>
+        /// <param name="geometry">The keyboard geometry to get.</param>
         /// <param name="layoutRevisionId">The layout revision ID to get.</param>
         /// <returns>The <see cref="ErgodoxLayout"/>.</returns>
-        Task<ErgodoxLayout> GetErgodoxLayout(string layoutHashId, string layoutRevisionId);
+        Task<ErgodoxLayout> GetErgodoxLayout(string layoutHashId, string geometry, string layoutRevisionId);
 
         /// <summary>
         /// Transforms an <see cref="ErgodoxLayout"/> into a <see cref="EZLayout"/>.
