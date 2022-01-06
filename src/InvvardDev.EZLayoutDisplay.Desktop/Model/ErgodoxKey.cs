@@ -5,46 +5,34 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
     public class ErgodoxKey
     {
         /// <summary>
-        /// Gets or sets the supported OS name.
+        /// Gets or sets the Tap key feature.
         /// </summary>
-        [JsonProperty("os", NullValueHandling = NullValueHandling.Ignore)]
-        public string SupportedOsName { get; set; }
+        [JsonProperty("tap")]
+        public ErgodoxKeyFeature Tap { get; set; }
 
         /// <summary>
-        /// Gets or sets the key code.
+        /// Gets or sets the Hold key feature.
         /// </summary>
-        [JsonProperty("code")]
-        public string Code { get; set; }
+        [JsonProperty("hold")]
+        public ErgodoxKeyFeature Hold { get; set; }
 
         /// <summary>
-        /// Gets or sets the Color.
+        /// Gets or sets the Tap-Hold key feature.
         /// </summary>
-        [JsonProperty("color", NullValueHandling = NullValueHandling.Ignore)]
-        public string Color { get; set; }
+        [JsonProperty("tapHold")]
+        public ErgodoxKeyFeature TapHold { get; set; }
 
         /// <summary>
-        /// Gets or sets the layer index.
+        /// Gets or sets the Double Tap key feature.
         /// </summary>
-        [JsonProperty("layer", NullValueHandling = NullValueHandling.Ignore)]
-        public int? Layer { get; set; }
-
-        /// <summary>
-        /// Gets or sets the primary command.
-        /// </summary>
-        [JsonProperty("command", NullValueHandling = NullValueHandling.Ignore)]
-        public string Command { get; set; }
+        [JsonProperty("doubleTap")]
+        public ErgodoxKeyFeature DoubleTap { get; set; }
 
         /// <summary>
         /// Gets or sets the GlowColor.
         /// </summary>
         [JsonProperty("glowColor", NullValueHandling = NullValueHandling.Ignore)]
         public string GlowColor { get; set; }
-
-        /// <summary>
-        /// Gets or sets the modifiers.
-        /// </summary>
-        [JsonProperty("modifiers", NullValueHandling = NullValueHandling.Ignore)]
-        public ErgodoxModifiers Modifiers { get; set; }
 
         /// <summary>
         /// Gets or sets the custom label.
