@@ -4,6 +4,28 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
 {
     public class EZKey
     {
+        public KeyFeature Primary { get; set; }
+
+        public KeyFeature Secondary { get; set; }
+
+        /// <summary>
+        /// Gets or sets the key glowing color.
+        /// </summary>
+        public string Color { get; set; }
+
+        /// <summary>
+        /// Gets or sets the key category.
+        /// </summary>
+        public KeyCategory KeyCategory { get; set; }
+
+        /// <summary>
+        /// Gets or sets the type of display for this key.
+        /// </summary>
+        public KeyDisplayType DisplayType { get; set; }
+    }
+
+   public class KeyFeature
+    {
         /// <summary>
         /// Gets or sets the key main label.
         /// </summary>
@@ -15,24 +37,10 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
         public KeyLabel Modifier { get; set; }
 
         /// <summary>
-        /// Gets or sets the key glowing color.
-        /// </summary>
-        public string Color { get; set; }
-
-        /// <summary>
         /// Gets or sets the key international hint.
         /// </summary>
         public string InternationalHint { get; set; }
 
-        /// <summary>
-        /// Gets or sets the key category.
-        /// </summary>
-        public KeyCategory KeyCategory { get; set; }
-
-        /// <summary>
-        /// Gets or sets the type of display for this key.
-        /// </summary>
-        public KeyDisplayType DisplayType { get; set; }
     }
 
     public class KeyLabel

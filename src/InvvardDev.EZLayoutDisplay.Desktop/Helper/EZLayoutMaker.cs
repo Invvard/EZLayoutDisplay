@@ -88,22 +88,17 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
              **/
             var key = new EZKey
                       {
+                          Primary = new KeyFeature
+                          {
+                              Label = new KeyLabel(ergodoxKey.CustomLabel != null ? ergodoxKey.CustomLabel : keyDefinition.Label, keyDefinition.IsGlyph)
+                          },
                           KeyCategory = keyDefinition.KeyCategory,
-                          Label = new KeyLabel(ergodoxKey.CustomLabel != null ? ergodoxKey.CustomLabel : keyDefinition.Label, keyDefinition.IsGlyph),
                           Color = GetColor(ergodoxKey.GlowColor, layerColor),
-                          DisplayType = KeyDisplayType.SimpleLabel
+                          DisplayType = KeyDisplayType.CustomLabel
                       };
 
             switch (keyDefinition.KeyCategory)
             {
-                case KeyCategory.DualFunction:
-
-                    if (AddCommandLabel(ergodoxKey, key))
-                        key.DisplayType = KeyDisplayType.ModifierUnder;
-                    else
-                        key.KeyCategory = KeyCategory.Modifier;
-
-                    break;
                 case KeyCategory.Layer:
                 case KeyCategory.LayerShortcuts:
                     key.Label.Content = string.Format(key.Label.Content, ergodoxKey.Layer.ToString());
@@ -127,7 +122,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
                 case KeyCategory.Nav:
                 case KeyCategory.Spacing:
                 case KeyCategory.Shine:
-                    key.DisplayType = KeyDisplayType.SimpleLabel;
+                    key.DisplayType = KeyDisplayType.CustomLabel;
 
                     break;
 
@@ -208,9 +203,9 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
 
         private void ProcessModifiers(ErgodoxKey ergodoxKey, EZKey key)
         {
-            if (ergodoxKey.Modifiers == null) return;
+            if (ergodoxKey.Tap.Modifiers == null && ergodoxKey.Hold.Modifiers == null) return;
 
-            var mods = GetModifiersApplied(ergodoxKey.Modifiers);
+            var mods = GetModifiersApplied(ergodoxKey.Tap.Modifiers);
 
             if (!mods.Any()) return;
 
