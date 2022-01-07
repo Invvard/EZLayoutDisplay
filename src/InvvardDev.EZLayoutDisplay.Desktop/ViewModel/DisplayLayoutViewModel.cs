@@ -270,7 +270,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
                 NoLayoutAvailable = true;
 
                 return;
-            } else if (!_layoutService.SupportsGeometry(_ezLayout.Geometry))
+            }
+            else if (!_layoutService.SupportsGeometry(_ezLayout.Geometry))
             {
                 Logger.Info("Geometry not supported");
                 NoLayoutWarningFirstLine = "Not supported!";
@@ -301,30 +302,39 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
             // ReSharper disable once UseObjectOrCollectionInitializer
             CurrentLayoutTemplate = new ObservableCollection<KeyTemplate>(layoutDefinition);
-            CurrentLayoutTemplate[0].EZKey = new EZKey {
-                                                           Label = new KeyLabel("="),
-                                                           Modifier = new KeyLabel("Left Shift"),
-                                                           DisplayType = KeyDisplayType.ModifierOnTop,
-                                                           KeyCategory = KeyCategory.DualFunction,
-                                                           Color = "#111"
-                                                       };
-
-            CurrentLayoutTemplate[1].EZKey = new EZKey {
-                                                           Label = new KeyLabel("LT \u2192 1"),
-                                                           DisplayType = KeyDisplayType.SimpleLabel,
-                                                           KeyCategory = KeyCategory.DualFunction,
-                                                           Color = "#BBB"
-                                                       };
-
-            for (int i = 2 ; i < CurrentLayoutTemplate.Count ; i++)
+            CurrentLayoutTemplate[0].EZKey = new EZKey
             {
-                CurrentLayoutTemplate[i].EZKey = new EZKey {
-                                                               Label = new KeyLabel("E"),
-                                                               Modifier = new KeyLabel("Left Shift"),
-                                                               KeyCategory = KeyCategory.French,
-                                                               InternationalHint = "fr",
-                                                               Color = "#777"
-                                                           };
+                Primary = new KeyFeature
+                {
+                    Label = new KeyLabel("="),
+                    Modifier = new KeyLabel("Shift")
+                },
+                DisplayType = KeyDisplayType.ModifierOnTop,
+                KeyCategory = KeyCategory.DualFunction,
+                Color = "#111"
+            };
+
+            CurrentLayoutTemplate[1].EZKey = new EZKey
+            {
+                Primary = new KeyFeature { Label = new KeyLabel("LT \u2192 1") },
+                DisplayType = KeyDisplayType.CustomLabel,
+                KeyCategory = KeyCategory.DualFunction,
+                Color = "#BBB"
+            };
+
+            for (int i = 2; i < CurrentLayoutTemplate.Count; i++)
+            {
+                CurrentLayoutTemplate[i].EZKey = new EZKey
+                {
+                    Primary = new KeyFeature
+                    {
+                        Label = new KeyLabel("E"),
+                        Modifier = new KeyLabel("Left Shift"),
+                        InternationalHint = "fr",
+                    },
+                    KeyCategory = KeyCategory.French,
+                    Color = "#777"
+                };
             }
         }
 
@@ -338,7 +348,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
                 if (layoutTemplate.Count == 0) return;
 
-                for (int j = 0 ; j < layoutTemplate.Count ; j++)
+                for (int j = 0; j < layoutTemplate.Count; j++)
                 {
                     layoutTemplate[j].EZKey = ezLayer.EZKeys[j];
                 }

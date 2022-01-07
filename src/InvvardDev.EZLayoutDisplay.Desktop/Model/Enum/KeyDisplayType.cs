@@ -8,18 +8,29 @@
         None = 0,
 
         /// <summary>
-        /// Display the main label.
+        /// Display a Tap label.
         /// </summary>
-        SimpleLabel = 1,
+        Tap,
 
         /// <summary>
-        /// Display a label with a modifier under.
+        /// Display a Hold label.
         /// </summary>
-        ModifierUnder = 2,
+        Hold,
 
         /// <summary>
-        /// Display a label with a modifier on top.
+        /// Display a custom label.
         /// </summary>
-        ModifierOnTop = 3
+        CustomLabel,
+
+        /// <summary>
+        /// Display Tap & Hold label.
+        /// </summary>
+        TapHold,
+
+        TapMod,
+        HoldMod,
+        TapModHold,
+        TapHoldMod,
+        TapModHoldMod,
     }
 }
