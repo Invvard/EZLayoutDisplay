@@ -112,7 +112,7 @@
     <Compile Include="Helper\LoggerHelper.cs" />
     <Compile Include="Model\Enum\KeyDisplayType.cs" />
     <Compile Include="Model\ErgodoxTag.cs" />
-    <Compile Include="Model\ErgodoxTap.cs" />
+    <Compile Include="Model\ErgodoxKeyFeature.cs" />
     <Compile Include="Model\KeyTemplate.cs" />
     <Compile Include="Model\Messenger\UpdatedLayoutMessage.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
