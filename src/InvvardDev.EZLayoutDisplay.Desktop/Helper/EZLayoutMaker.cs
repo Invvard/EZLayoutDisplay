@@ -64,12 +64,13 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
             return layer;
         }
 
+        // TODO : refactor
         private EZKey PrepareKeyLabels(ErgodoxKey ergodoxKey, string layerColor)
         {
             Logger.TraceMethod();
             Logger.DebugInputParam(nameof(ergodoxKey), ergodoxKey);
 
-            var keyDefinition = GetKeyDefinition(ergodoxKey.Code);
+            var keyDefinition = GetKeyDefinition(ergodoxKey.Tap.Code);
 
             /** Every category has a label, so no need to make a special case :
              *
@@ -87,75 +88,15 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
              *
              **/
             var key = new EZKey
-                      {
-                          Primary = new KeyFeature
-                          {
-                              Label = new KeyLabel(ergodoxKey.CustomLabel != null ? ergodoxKey.CustomLabel : keyDefinition.Label, keyDefinition.IsGlyph)
-                          },
-                          KeyCategory = keyDefinition.KeyCategory,
-                          Color = GetColor(ergodoxKey.GlowColor, layerColor),
-                          DisplayType = KeyDisplayType.CustomLabel
-                      };
-
-            switch (keyDefinition.KeyCategory)
             {
-                case KeyCategory.Layer:
-                case KeyCategory.LayerShortcuts:
-                    key.Label.Content = string.Format(key.Label.Content, ergodoxKey.Layer.ToString());
-
-                    if (AddCommandLabel(ergodoxKey, key)) key.DisplayType = KeyDisplayType.ModifierUnder;
-
-                    break;
-
-                case KeyCategory.Modifier:
-
-                    if (ergodoxKey.Code == KeyCodeOsm && !IsCommandEmpty(ergodoxKey.Command))
-                    {
-                        var commandDefinition = GetKeyDefinition(ergodoxKey.Command);
-                        key.Modifier = new KeyLabel(commandDefinition.Label);
-                        key.DisplayType = KeyDisplayType.ModifierOnTop;
-                    }
-
-                    break;
-                case KeyCategory.Media:
-                case KeyCategory.Mouse:
-                case KeyCategory.Nav:
-                case KeyCategory.Spacing:
-                case KeyCategory.Shine:
-                    key.DisplayType = KeyDisplayType.CustomLabel;
-
-                    break;
-
-                case KeyCategory.Shortcuts:
-
-                    if (!IsCommandEmpty(ergodoxKey.Command))
-                    {
-                        var commandDefinition = GetKeyDefinition(ergodoxKey.Command);
-                        key.Label.Content = $"{key.Label.Content} + {commandDefinition.Label}";
-                    }
-
-                    break;
-                case KeyCategory.French:
-                    key.InternationalHint = "fr";
-
-                    break;
-                case KeyCategory.German:
-                    key.InternationalHint = "de";
-
-                    break;
-                case KeyCategory.Hungarian:
-                    key.InternationalHint = "hu";
-
-                    break;
-                case KeyCategory.Spanish:
-                    key.InternationalHint = "es";
-
-                    break;
-                case KeyCategory.Nordic:
-                    key.InternationalHint = "no";
-
-                    break;
-            }
+                Primary = new KeyFeature
+                {
+                    Label = new KeyLabel(ergodoxKey.CustomLabel != null ? ergodoxKey.CustomLabel : keyDefinition.Label, keyDefinition.IsGlyph)
+                },
+                KeyCategory = keyDefinition.KeyCategory,
+                Color = GetColor(ergodoxKey.GlowColor, layerColor),
+                DisplayType = KeyDisplayType.CustomLabel
+            };
 
             ProcessModifiers(ergodoxKey, key);
 
@@ -184,23 +125,6 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
             return keyDefinition;
         }
 
-        /// <summary>
-        ///     Apply the command label.
-        /// </summary>
-        /// <param name="ergodoxKey">The <see cref="ErgodoxKey" /> containing the command to be applied.</param>
-        /// <param name="key">The <see cref="EZKey" /> to apply the command to.</param>
-        /// <returns><c>True</c> if command has been applied.</returns>
-        private bool AddCommandLabel(ErgodoxKey ergodoxKey, EZKey key)
-        {
-            if (IsCommandEmpty(ergodoxKey.Command)) return false;
-
-            var commandDefinition = GetKeyDefinition(ergodoxKey.Command);
-            key.Modifier = key.Label;
-            key.Label = new KeyLabel(commandDefinition.Label, commandDefinition.IsGlyph);
-
-            return true;
-        }
-
         private void ProcessModifiers(ErgodoxKey ergodoxKey, EZKey key)
         {
             if (ergodoxKey.Tap.Modifiers == null && ergodoxKey.Hold.Modifiers == null) return;
@@ -209,8 +133,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
 
             if (!mods.Any()) return;
 
-            key.Modifier = new KeyLabel(AggregateModifierLabels(mods));
-            key.DisplayType = KeyDisplayType.ModifierOnTop;
+            key.Primary.Modifier = new KeyLabel(AggregateModifierLabels(mods));
+            key.DisplayType = KeyDisplayType.TapMod;
         }
 
         private List<EZModifier> GetModifiersApplied(ErgodoxModifiers ergodoxModifiers)
@@ -258,13 +182,6 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
             }
 
             return subLabel;
-        }
-
-        private bool IsCommandEmpty(string command)
-        {
-            var isEmpty = string.IsNullOrWhiteSpace(command) || command == NoCommand || command == KeyCodeOsm;
-
-            return isEmpty;
         }
     }
 }

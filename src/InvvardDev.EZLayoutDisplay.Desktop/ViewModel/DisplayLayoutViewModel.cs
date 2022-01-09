@@ -309,7 +309,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
                     Label = new KeyLabel("="),
                     Modifier = new KeyLabel("Shift")
                 },
-                DisplayType = KeyDisplayType.ModifierOnTop,
+                DisplayType = KeyDisplayType.TapMod,
                 KeyCategory = KeyCategory.DualFunction,
                 Color = "#111"
             };
