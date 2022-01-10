@@ -3,11 +3,8 @@ using Newtonsoft.Json;
 
 namespace InvvardDev.EZLayoutDisplay.Tool.KeyDefinitionProvider.Models
 {
-    public class OryxKeyDefinition
+    internal class OryxKeyDefinition
     {
-        [JsonProperty("key_category_id")]
-        public int KeyCategoryId { get; set; }
-
         [JsonProperty("code")]
         public string? Code { get; set; }
 
@@ -18,17 +15,20 @@ namespace InvvardDev.EZLayoutDisplay.Tool.KeyDefinitionProvider.Models
         public string? Tag { get; set; }
 
         [JsonProperty("glyph")]
-        public string? Glyph { get; set; }
+        public string? GlyphName { get; set; }
 
         public string? GlyphCode { get; set; }
+
+        public bool IsGlyph => !string.IsNullOrWhiteSpace(GlyphCode);
 
         public static implicit operator KeyDefinition(OryxKeyDefinition oryxKey)
         {
             return new KeyDefinition
             {
-                Label = oryxKey.Label,
-                GlyphCode = oryxKey.GlyphCode,
-                KeyCode = oryxKey.Code
+                KeyCode = oryxKey.Code,
+                Label = !oryxKey.IsGlyph ? oryxKey.Label : oryxKey.GlyphCode,
+                IsGlyph = oryxKey.IsGlyph,
+                Tag = oryxKey.Tag,
             };
         }
     }
