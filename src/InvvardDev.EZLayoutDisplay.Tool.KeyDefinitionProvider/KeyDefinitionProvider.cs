@@ -48,8 +48,8 @@ internal class KeyDefinitionProvider
 
         foreach (Match match in Regex.Matches(glyphCss, GlyphPattern, RegexOptions.IgnoreCase))
         {
-            var key = _oryxMetadata!.Keys.FirstOrDefault(k => k.GlyphName == match.Groups["glyphName"].Value);
-            if (key != null)
+            var keys = _oryxMetadata!.Keys.Where(k => k.GlyphName == match.Groups["glyphName"].Value);
+            foreach (var key in keys)
             {
                 key.GlyphCode = $@"\u{match.Groups["glyphCode"].Value}";
             }
