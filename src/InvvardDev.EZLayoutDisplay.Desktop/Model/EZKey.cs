@@ -14,14 +14,9 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
         public string Color { get; set; }
 
         /// <summary>
-        /// Gets or sets the key category.
+        /// Gets or sets the display mode for this key.
         /// </summary>
-        public KeyCategory KeyCategory { get; set; }
-
-        /// <summary>
-        /// Gets or sets the type of display for this key.
-        /// </summary>
-        public KeyDisplayType DisplayType { get; set; }
+        public KeyDisplayMode DisplayMode { get; set; }
     }
 
    public class KeyFeature
@@ -29,29 +24,35 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
         /// <summary>
         /// Gets or sets the key main label.
         /// </summary>
-        public KeyLabel Label { get; set; }
+        public KeyLabel Content { get; set; }
 
         /// <summary>
-        /// Gets or sets the key secondary label.
+        /// Gets or sets the key modifier.
         /// </summary>
-        public KeyLabel Modifier { get; set; }
+        public string Modifier { get; set; }
 
         /// <summary>
-        /// Gets or sets the key international hint.
+        /// Gets or sets the key tag.
         /// </summary>
-        public string InternationalHint { get; set; }
+        public string Tag { get; set; }
 
+        public KeyFeature(string content, bool isGlyph = false, string tag = "", string modifier = "")
+        {
+            Content = new KeyLabel(content, isGlyph);
+            Modifier = modifier;
+            Tag = tag;
+        }
     }
 
     public class KeyLabel
     {
-        public string Content { get; set; }
+        public string Label { get; set; }
 
         public bool IsGlyph { get; }
 
         public KeyLabel(string content, bool isGlyph = false)
         {
-            Content = content;
+            Label = content;
             IsGlyph = isGlyph;
         }
     }

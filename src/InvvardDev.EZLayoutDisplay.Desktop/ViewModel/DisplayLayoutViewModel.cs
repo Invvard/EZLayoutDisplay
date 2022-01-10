@@ -304,21 +304,16 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             CurrentLayoutTemplate = new ObservableCollection<KeyTemplate>(layoutDefinition);
             CurrentLayoutTemplate[0].EZKey = new EZKey
             {
-                Primary = new KeyFeature
-                {
-                    Label = new KeyLabel("="),
-                    Modifier = new KeyLabel("Shift")
-                },
-                DisplayType = KeyDisplayType.TapMod,
-                KeyCategory = KeyCategory.DualFunction,
+                Primary = new KeyFeature ("=", modifier: "Shift"),
+                DisplayMode = KeyDisplayMode.SingleFeature,
                 Color = "#111"
             };
 
             CurrentLayoutTemplate[1].EZKey = new EZKey
             {
-                Primary = new KeyFeature { Label = new KeyLabel("LT \u2192 1") },
-                DisplayType = KeyDisplayType.CustomLabel,
-                KeyCategory = KeyCategory.DualFunction,
+                Primary = new KeyFeature("LT \u2192 1"),
+                Secondary = new KeyFeature("LT \u2192 1"),
+                DisplayMode = KeyDisplayMode.DoubleFeature,
                 Color = "#BBB"
             };
 
@@ -326,13 +321,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             {
                 CurrentLayoutTemplate[i].EZKey = new EZKey
                 {
-                    Primary = new KeyFeature
-                    {
-                        Label = new KeyLabel("E"),
-                        Modifier = new KeyLabel("Left Shift"),
-                        InternationalHint = "fr",
-                    },
-                    KeyCategory = KeyCategory.French,
+                    Primary = new KeyFeature("E", modifier: "Shift", tag: "fr"),
+                    DisplayMode = KeyDisplayMode.SingleFeature,
                     Color = "#777"
                 };
             }

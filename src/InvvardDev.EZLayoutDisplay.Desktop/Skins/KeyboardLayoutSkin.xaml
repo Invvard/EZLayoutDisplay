@@ -87,9 +87,16 @@
         </Canvas>
     </DataTemplate>
 
-    <Style TargetType="TextBlock" x:Key="InternationalHint">
+    <Style TargetType="TextBlock" x:Key="PrimaryTag">
         <Setter Property="FontSize" Value="10" />
         <Setter Property="HorizontalAlignment" Value="Right" />
+        <Setter Property="Margin" Value="0 -2 2 0" />
+    </Style>
+
+    <Style TargetType="TextBlock" x:Key="SecondaryTag">
+        <Setter Property="FontSize" Value="10" />
+        <Setter Property="HorizontalAlignment" Value="Right" />
+        <Setter Property="VerticalAlignment" Value="Bottom" />
         <Setter Property="Margin" Value="0 -2 2 0" />
     </Style>
 
@@ -119,20 +126,18 @@
         </Setter>
     </Style>
 
-    <!-- ReSharper disable Xaml.BindingWithContextNotResolved -->
-    <DataTemplate x:Key="LabelDataTemplate">
+    <DataTemplate x:Key="CustomLabelDataTemplate">
         <Canvas>
             <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource KeyBaseDataTemplate}" />
             <Grid Style="{StaticResource ContentGridBase}">
-                <TextBlock Style="{StaticResource InternationalHint}" Text="{Binding EZKey.InternationalHint}" />
                 <Viewbox Style="{StaticResource LabelViewBox}" Grid.Column="0" Grid.Row="0">
-                    <Label Style="{StaticResource LabelStyle}" Content="{Binding EZKey.Primary.Label.Content}" />
+                    <Label Style="{StaticResource LabelStyle}" Content="{Binding EZKey.Primary.Content.Label}" />
                 </Viewbox>
             </Grid>
         </Canvas>
     </DataTemplate>
 
-    <DataTemplate x:Key="LabelModDataTemplate">
+    <DataTemplate x:Key="SingleFeatureDataTemplate">
         <Canvas>
             <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource KeyBaseDataTemplate}" />
             <Grid Style="{StaticResource ContentGridBase}">
@@ -141,81 +146,16 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <Viewbox Style="{StaticResource ModifierViewBox}" VerticalAlignment="Bottom" Grid.Column="0" Grid.Row="0">
-                    <Label Style="{StaticResource LabelStyle}" Content="{Binding EZKey.Primary.Modifier.Content}" />
+                    <Label Style="{StaticResource LabelStyle}" Content="{Binding EZKey.Primary.Modifier}" />
                 </Viewbox>
                 <Viewbox Style="{StaticResource LabelViewBox}" VerticalAlignment="Top" Grid.Column="0" Grid.Row="1">
-                    <Label Style="{StaticResource LabelStyle}" Content="{Binding EZKey.Primary.Label.Content}" />
+                    <Label Style="{StaticResource LabelStyle}" Content="{Binding EZKey.Primary.Content.Label}" />
                 </Viewbox>
             </Grid>
         </Canvas>
     </DataTemplate>
 
-    <DataTemplate x:Key="TapHoldDataTemplate">
-        <Canvas>
-            <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource KeyBaseDataTemplate}" />
-            <Grid Style="{StaticResource ContentGridBase}">
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <TextBlock Style="{StaticResource InternationalHint}" Text="{Binding EZKey.InternationalHint}" />
-                <Viewbox Style="{StaticResource LabelViewBox}" Grid.Column="0" Grid.Row="0">
-                    <Label Style="{StaticResource LabelStyle}" Content="{Binding EZKey.Primary.Label.Content}" />
-                </Viewbox>
-                <Viewbox Style="{StaticResource LabelViewBox}" Grid.Column="0" Grid.Row="1">
-                    <Label Style="{StaticResource LabelStyle}" Content="{Binding EZKey.Secondary.Label.Content}" />
-                </Viewbox>
-            </Grid>
-        </Canvas>
-    </DataTemplate>
-
-    <DataTemplate x:Key="TapModHoldDataTemplate">
-        <Canvas>
-            <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource KeyBaseDataTemplate}" />
-            <Grid Style="{StaticResource ContentGridBase}">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height=".5*"/>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
-                </Grid.RowDefinitions>
-                <TextBlock Style="{StaticResource InternationalHint}" Text="{Binding EZKey.InternationalHint}" />
-                <Viewbox Style="{StaticResource LabelViewBox}" Grid.Column="0" Grid.Row="0">
-                    <Label Style="{StaticResource LabelStyle}" Content="{Binding EZKey.Primary.Modifier.Content}" />
-                </Viewbox>
-                <Viewbox Style="{StaticResource LabelViewBox}" Grid.Column="0" Grid.Row="1">
-                    <Label Style="{StaticResource LabelStyle}" Content="{Binding EZKey.Primary.Label.Content}" />
-                </Viewbox>
-                <Viewbox Style="{StaticResource LabelViewBox}" Grid.Column="0" Grid.Row="2">
-                    <Label Style="{StaticResource LabelStyle}" Content="{Binding EZKey.Secondary.Label.Content}" />
-                </Viewbox>
-            </Grid>
-        </Canvas>
-    </DataTemplate>
-
-    <DataTemplate x:Key="TapHoldModDataTemplate">
-        <Canvas>
-            <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource KeyBaseDataTemplate}" />
-            <Grid Style="{StaticResource ContentGridBase}">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height=".5*"/>
-                    <RowDefinition Height="1*"/>
-                </Grid.RowDefinitions>
-                <TextBlock Style="{StaticResource InternationalHint}" Text="{Binding EZKey.InternationalHint}" />
-                <Viewbox Style="{StaticResource LabelViewBox}" Grid.Column="0" Grid.Row="1">
-                    <Label Style="{StaticResource LabelStyle}" Content="{Binding EZKey.Primary.Label.Content}" />
-                </Viewbox>
-                <Viewbox Style="{StaticResource LabelViewBox}" Grid.Column="0" Grid.Row="0">
-                    <Label Style="{StaticResource LabelStyle}" Content="{Binding EZKey.Secondary.Modifier.Content}" />
-                </Viewbox>
-                <Viewbox Style="{StaticResource LabelViewBox}" Grid.Column="0" Grid.Row="2">
-                    <Label Style="{StaticResource LabelStyle}" Content="{Binding EZKey.Secondary.Label.Content}" />
-                </Viewbox>
-            </Grid>
-        </Canvas>
-    </DataTemplate>
-
-    <DataTemplate x:Key="TapModHoldModDataTemplate">
+    <DataTemplate x:Key="DoubleFeatureDataTemplate">
         <Canvas>
             <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource KeyBaseDataTemplate}" />
             <Grid Style="{StaticResource ContentGridBase}">
@@ -225,30 +165,28 @@
                     <RowDefinition Height=".5*"/>
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
-                <TextBlock Style="{StaticResource InternationalHint}" Text="{Binding EZKey.InternationalHint}" />
-                <Viewbox Style="{StaticResource LabelViewBox}" Grid.Column="0" Grid.Row="0">
-                    <Label Style="{StaticResource LabelStyle}" Content="{Binding EZKey.Primary.Modifier.Content}" />
+                <TextBlock Style="{StaticResource PrimaryTag}" Text="{Binding EZKey.Primary.Tag}" />
+                <TextBlock Style="{StaticResource SecondaryTag}" Text="{Binding EZKey.Secondary.Tag}" />
+
+                <Viewbox Style="{StaticResource ModifierViewBox}" Grid.Column="0" Grid.Row="0">
+                    <Label Style="{StaticResource LabelStyle}" Content="{Binding EZKey.Primary.Modifier}" />
                 </Viewbox>
                 <Viewbox Style="{StaticResource LabelViewBox}" Grid.Column="0" Grid.Row="1">
-                    <Label Style="{StaticResource LabelStyle}" Content="{Binding EZKey.Primary.Label.Content}" />
+                    <Label Style="{StaticResource LabelStyle}" Content="{Binding EZKey.Primary.Content.Label}" />
                 </Viewbox>
-                <Viewbox Style="{StaticResource LabelViewBox}" Grid.Column="0" Grid.Row="0">
-                    <Label Style="{StaticResource LabelStyle}" Content="{Binding EZKey.Secondary.Modifier.Content}" />
+                <Viewbox Style="{StaticResource ModifierViewBox}" Grid.Column="0" Grid.Row="2">
+                    <Label Style="{StaticResource LabelStyle}" Content="{Binding EZKey.Secondary.Modifier}" />
                 </Viewbox>
-                <Viewbox Style="{StaticResource LabelViewBox}" Grid.Column="0" Grid.Row="2">
-                    <Label Style="{StaticResource LabelStyle}" Content="{Binding EZKey.Secondary.Label.Content}" />
+                <Viewbox Style="{StaticResource LabelViewBox}" Grid.Column="0" Grid.Row="3">
+                    <Label Style="{StaticResource LabelStyle}" Content="{Binding EZKey.Secondary.Content.Label}" />
                 </Viewbox>
             </Grid>
         </Canvas>
     </DataTemplate>
-    <!-- ReSharper restore Xaml.BindingWithContextNotResolved -->
 
     <helper:KeyContentTemplateSelector x:Key="KeyContentTemplateSelector"
-                                       LabelDataTemplate="{StaticResource LabelDataTemplate}"
-                                       LabelModDataTemplate="{StaticResource LabelModDataTemplate}"
-                                       TapHoldDataTemplate="{StaticResource TapHoldDataTemplate}"
-                                       TapModHoldDataTemplate="{StaticResource TapModHoldDataTemplate}"
-                                       TapHoldModDataTemplate="{StaticResource TapHoldModDataTemplate}"
-                                       TapModHoldModDataTemplate="{StaticResource TapModHoldModDataTemplate}" />
+                                       CustomLabelDataTemplate="{StaticResource CustomLabelDataTemplate}"
+                                       SingleFeatureDataTemplate="{StaticResource SingleFeatureDataTemplate}"
+                                       DoubleFeatureDataTemplate="{StaticResource DoubleFeatureDataTemplate}" />
 
 </ResourceDictionary>
