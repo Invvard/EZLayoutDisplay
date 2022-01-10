@@ -17,15 +17,15 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
         public string Label { get; set; }
         
         /// <summary>
-        /// Gets the key glyph code.
+        /// Gets the key label.
         /// </summary>
-        [JsonProperty("glyph_code", NullValueHandling = NullValueHandling.Ignore)]
-        public string GlyphCode { get; set; }
-
+        [JsonProperty("tag", NullValueHandling = NullValueHandling.Ignore)]
+        public string Tag { get; set; }
+        
         /// <summary>
         /// Gets indicator that this key is a glyph or not.
         /// </summary>
-        [JsonIgnore]
-        public bool IsGlyph => !string.IsNullOrEmpty(GlyphCode);
+        [JsonProperty("is_glyph", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public bool IsGlyph { get; set; }
     }
 }
