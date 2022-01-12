@@ -19,7 +19,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
         public KeyDisplayMode DisplayMode { get; set; }
     }
 
-   public class KeyFeature
+    public class KeyFeature
     {
         /// <summary>
         /// Gets or sets the key main label.
@@ -36,6 +36,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
         /// </summary>
         public string Tag { get; set; }
 
+        public KeyFeature() { }
+
         public KeyFeature(string content, bool isGlyph = false, string tag = "", string modifier = "")
         {
             Content = new KeyLabel(content, isGlyph);
@@ -48,7 +50,9 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
     {
         public string Label { get; set; }
 
-        public bool IsGlyph { get; }
+        public bool IsGlyph { get; set; }
+
+        public KeyLabel() { }
 
         public KeyLabel(string content, bool isGlyph = false)
         {
