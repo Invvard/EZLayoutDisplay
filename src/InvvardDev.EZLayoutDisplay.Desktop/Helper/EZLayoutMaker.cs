@@ -11,10 +11,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
     public class EZLayoutMaker
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-
-        private const string NoCommand = "KC_NO";
         private const string TransparentKey = "KC_TRANSPARENT";
-        private const string KeyCodeOsm = "OSM";
         private readonly KeyDefinitionDictionary _keyDefinitionDictionary;
 
         public EZLayoutMaker()
@@ -82,7 +79,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
                 _ when !string.IsNullOrWhiteSpace(ergodoxKey.CustomLabel) => KeyDisplayMode.CustomLabel,
                 1 => KeyDisplayMode.SingleFeature,
                 > 1 => KeyDisplayMode.DoubleFeature,
-                _ => throw new NotImplementedException(),
+                _ => KeyDisplayMode.None,
             };
 
             return displayMode;

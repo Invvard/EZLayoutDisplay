@@ -26,7 +26,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
         /// Gets or sets the primary command.
         /// </summary>
         [JsonProperty("macro", NullValueHandling = NullValueHandling.Ignore)]
-        public string Macro { get; set; }
+        public object Macro { get; set; }
 
         /// <summary>
         /// Gets or sets the modifiers.
