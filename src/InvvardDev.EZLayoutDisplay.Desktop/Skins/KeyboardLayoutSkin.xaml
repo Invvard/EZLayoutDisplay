@@ -6,26 +6,28 @@
     <FontFamily x:Key="LatoFontFamily">/InvvardDev.EZLayoutDisplay.Desktop;component/Skins/Fonts/#Lato</FontFamily>
     <FontFamily x:Key="OryxFontFamily">/InvvardDev.EZLayoutDisplay.Desktop;component/Skins/Fonts/#Oryx</FontFamily>
 
-    <SolidColorBrush x:Key="BaseDefaultBackgroundBrush" Color="#f4f4f4" />
-    <SolidColorBrush x:Key="BaseDualFunctionBackgroundBrush" Color="#d5e1f9" />
-    <SolidColorBrush x:Key="BaseModifierBackgroundBrush" Color="#e1f5d7" />
-    <SolidColorBrush x:Key="BaseShineBackgroundBrush" Color="#f1e5b6" />
+    <SolidColorBrush x:Key="DefaultBackgroundBrush" Color="#FFFFFF" />
+    <SolidColorBrush x:Key="ColorControlBackgroundBrush" Color="#FFF1BA" />
+    <SolidColorBrush x:Key="CustomLabelBackgroundBrush" Color="#FFBFA3" />
+    <SolidColorBrush x:Key="DualFunctionBackgroundBrush" Color="#E1EBFF" />
+    <SolidColorBrush x:Key="MacroBackgroundBrush" Color="#E0DBFF" />
+    <SolidColorBrush x:Key="ModifierBackgroundBrush" Color="#EBFFE1" />
 
     <SolidColorBrush x:Key="TopDefaultBackgroundBrush" Color="#fcfcfc" />
     <SolidColorBrush x:Key="TopDualFunctionBackgroundBrush" Color="#e1ebff" />
     <SolidColorBrush x:Key="TopModifierBackgroundBrush" Color="#ebffe1" />
-    <SolidColorBrush x:Key="TopShineBackgroundBrush" Color="#fff1ba" />
 
-    <converter:KeyCategoryToBrushConverter x:Key="KeyCategoryToBaseBrushConverter"
-                                           DefaultBackgroundBrush="{StaticResource BaseDefaultBackgroundBrush}"
-                                           DualFunctionBackgroundBrush="{StaticResource BaseDualFunctionBackgroundBrush}"
-                                           ModifierBackgroundBrush="{StaticResource BaseModifierBackgroundBrush}"
-                                           ShineBackgroundBrush="{StaticResource BaseShineBackgroundBrush}"/>
+    <converter:KeyCategoryToBrushConverter x:Key="KeyCategoryToBrushConverter"
+                                           DefaultBackgroundBrush="{StaticResource DefaultBackgroundBrush}"
+                                           ColorControlBackgroundBrush="{StaticResource ColorControlBackgroundBrush}"
+                                           CustomLabelBackgroundBrush="{StaticResource CustomLabelBackgroundBrush}"
+                                           DualFunctionBackgroundBrush="{StaticResource DualFunctionBackgroundBrush}"
+                                           MacroBackgroundBrush="{StaticResource MacroBackgroundBrush}"
+                                           ModifierBackgroundBrush="{StaticResource ModifierBackgroundBrush}"/>
     <converter:KeyCategoryToBrushConverter x:Key="KeyCategoryToTopBrushConverter"
                                            DefaultBackgroundBrush="{StaticResource TopDefaultBackgroundBrush}"
                                            DualFunctionBackgroundBrush="{StaticResource TopDualFunctionBackgroundBrush}"
-                                           ModifierBackgroundBrush="{StaticResource TopModifierBackgroundBrush}"
-                                           ShineBackgroundBrush="{StaticResource TopShineBackgroundBrush}" />
+                                           ModifierBackgroundBrush="{StaticResource TopModifierBackgroundBrush}" />
 
     <SolidColorBrush x:Key="KeyBaseBorderColorBrush" Color="#c7c7c7" />
     <SolidColorBrush x:Key="KeyTopBorderColorBrush" Color="#1affffff" />
@@ -45,7 +47,7 @@
     <Style TargetType="Rectangle" BasedOn="{StaticResource BaseKey}" x:Key="KeyBase">
         <Setter Property="RadiusX" Value="5" />
         <Setter Property="RadiusY" Value="5" />
-        <Setter Property="Fill" Value="{Binding EZKey.KeyCategory, Converter={StaticResource KeyCategoryToBaseBrushConverter}}" />
+        <Setter Property="Fill" Value="{Binding EZKey.KeyCategory, Converter={StaticResource KeyCategoryToBrushConverter}}" />
         <Setter Property="Stroke" Value="{StaticResource KeyBaseBorderColorBrush}" />
         <Setter Property="Canvas.Top" Value="{Binding BaseKeyY}" />
         <Setter Property="Canvas.Left" Value="{Binding BaseKeyX}" />
@@ -66,12 +68,12 @@
 
     <Style TargetType="Label" x:Key="LabelStyle">
         <Style.Triggers>
-            <DataTrigger Binding="{Binding EZKey.Label.IsGlyph}" Value="true">
+            <DataTrigger Binding="{Binding EZKey.Primary.Content.IsGlyph}" Value="true">
                 <Setter Property="FontFamily" Value="{StaticResource OryxFontFamily}" />
                 <Setter Property="FontSize" Value="18" />
                 <Setter Property="Foreground" Value="{Binding EZKey.Color}" />
             </DataTrigger>
-            <DataTrigger Binding="{Binding EZKey.Label.IsGlyph}" Value="false">
+            <DataTrigger Binding="{Binding EZKey.Primary.Content.IsGlyph}" Value="false">
                 <Setter Property="FontFamily" Value="{StaticResource LatoFontFamily}" />
                 <Setter Property="FontSize" Value="22" />
                 <Setter Property="FontWeight" Value="Bold" />

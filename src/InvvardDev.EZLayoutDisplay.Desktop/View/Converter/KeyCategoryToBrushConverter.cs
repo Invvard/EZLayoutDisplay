@@ -11,38 +11,36 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.View.Converter
     public class KeyCategoryToBrushConverter : IValueConverter
     {
         public SolidColorBrush DefaultBackgroundBrush { private get; set; }
+        public SolidColorBrush ColorControlBackgroundBrush { private get; set; }
+        public SolidColorBrush CustomLabelBackgroundBrush { private get; set; }
         public SolidColorBrush DualFunctionBackgroundBrush { private get; set; }
+        public SolidColorBrush MacroBackgroundBrush { private get; set; }
         public SolidColorBrush ModifierBackgroundBrush { private get; set; }
-        public SolidColorBrush ShineBackgroundBrush { private get; set; }
 
         public KeyCategoryToBrushConverter()
         {
-            DefaultBackgroundBrush = Application.Current.Resources["BaseDefaultBackgroundBrush"] as SolidColorBrush;
-            DualFunctionBackgroundBrush = Application.Current.Resources["BaseDualFunctionBackgroundBrush"] as SolidColorBrush;
-            ModifierBackgroundBrush = Application.Current.Resources["BaseModifierBackgroundBrush"] as SolidColorBrush;
-            ShineBackgroundBrush = Application.Current.Resources["BaseShineBackgroundBrush"] as SolidColorBrush;
+            DefaultBackgroundBrush = Application.Current.Resources["DefaultBackgroundBrush"] as SolidColorBrush;
+            ColorControlBackgroundBrush = Application.Current.Resources["ColorControlBackgroundBrush"] as SolidColorBrush;
+            CustomLabelBackgroundBrush = Application.Current.Resources["CustomLabelBackgroundBrush"] as SolidColorBrush;
+            DualFunctionBackgroundBrush = Application.Current.Resources["DualFunctionBackgroundBrush"] as SolidColorBrush;
+            MacroBackgroundBrush = Application.Current.Resources["MacroBackgroundBrush"] as SolidColorBrush;
+            ModifierBackgroundBrush = Application.Current.Resources["ModifierBackgroundBrush"] as SolidColorBrush;
         }
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (!(value is KeyCategory)) return null;
-
-            SolidColorBrush brush;
-            switch ((KeyCategory)value)
+            SolidColorBrush brush = null;
+            if (value is KeyCategory category)
             {
-                case KeyCategory.LayerShortcuts:
-                case KeyCategory.DualFunction:
-                    brush = DualFunctionBackgroundBrush;
-                    break;
-                case KeyCategory.Modifier:
-                    brush = ModifierBackgroundBrush;
-                    break;
-                case KeyCategory.Shine:
-                    brush = ShineBackgroundBrush;
-                    break;
-                default:
-                    brush = DefaultBackgroundBrush;
-                    break;
+                brush = category switch
+                {
+                    KeyCategory.ColorControl => ColorControlBackgroundBrush,
+                    KeyCategory.CustomLabel => CustomLabelBackgroundBrush,
+                    KeyCategory.DualFunction => DualFunctionBackgroundBrush,
+                    KeyCategory.Macro => MacroBackgroundBrush,
+                    KeyCategory.Modifier => ModifierBackgroundBrush,
+                    _ => DefaultBackgroundBrush
+                };
             }
 
             return brush;
