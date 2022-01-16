@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using InvvardDev.EZLayoutDisplay.Desktop.Model.Ez;
 using Newtonsoft.Json;
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.Model
@@ -82,7 +83,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
         // ReSharper restore MemberCanBePrivate.Global
         // ReSharper restore UnusedMember.Global
 
-        public EZKey EZKey { get; set; }
+        public Key Key { get; set; }
 
         public KeyTemplate()
         {

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using InvvardDev.EZLayoutDisplay.Desktop.Model.ZsaModels;
 using Newtonsoft.Json;
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.Model

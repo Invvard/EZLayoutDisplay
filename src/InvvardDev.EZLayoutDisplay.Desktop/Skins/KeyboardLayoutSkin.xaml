@@ -24,6 +24,7 @@
                                            DualFunctionBackgroundBrush="{StaticResource DualFunctionBackgroundBrush}"
                                            MacroBackgroundBrush="{StaticResource MacroBackgroundBrush}"
                                            ModifierBackgroundBrush="{StaticResource ModifierBackgroundBrush}"/>
+    
     <converter:KeyCategoryToBrushConverter x:Key="KeyCategoryToTopBrushConverter"
                                            DefaultBackgroundBrush="{StaticResource TopDefaultBackgroundBrush}"
                                            DualFunctionBackgroundBrush="{StaticResource TopDualFunctionBackgroundBrush}"
@@ -47,7 +48,7 @@
     <Style TargetType="Rectangle" BasedOn="{StaticResource BaseKey}" x:Key="KeyBase">
         <Setter Property="RadiusX" Value="5" />
         <Setter Property="RadiusY" Value="5" />
-        <Setter Property="Fill" Value="{Binding EZKey.KeyCategory, Converter={StaticResource KeyCategoryToBrushConverter}}" />
+        <Setter Property="Fill" Value="{Binding Key.KeyCategory, Converter={StaticResource KeyCategoryToBrushConverter}}" />
         <Setter Property="Stroke" Value="{StaticResource KeyBaseBorderColorBrush}" />
         <Setter Property="Canvas.Top" Value="{Binding BaseKeyY}" />
         <Setter Property="Canvas.Left" Value="{Binding BaseKeyX}" />

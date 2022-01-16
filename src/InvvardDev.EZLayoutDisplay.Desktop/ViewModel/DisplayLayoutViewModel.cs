@@ -262,7 +262,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
             if (_ezLayout?.EZLayers == null
                 || !_ezLayout.EZLayers.Any()
-                || !_ezLayout.EZLayers.SelectMany(l => l.EZKeys).Any())
+                || !_ezLayout.EZLayers.SelectMany(l => l.Keys).Any())
             {
                 Logger.Info("No layout available");
                 NoLayoutWarningFirstLine = "No layout available!";
@@ -340,7 +340,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
                 for (int j = 0; j < layoutTemplate.Count; j++)
                 {
-                    layoutTemplate[j].EZKey = ezLayer.EZKeys[j];
+                    layoutTemplate[j].EZKey = ezLayer.Keys[j];
                 }
 
                 _layoutTemplates.Add(layoutTemplate);
