@@ -30,15 +30,15 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.View.Converter
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             SolidColorBrush brush = null;
-            if (value is KeyCategory category)
+            if (value is KeyDisplayMode displayMode)
             {
-                brush = category switch
+                brush = displayMode switch
                 {
-                    KeyCategory.ColorControl => ColorControlBackgroundBrush,
-                    KeyCategory.CustomLabel => CustomLabelBackgroundBrush,
-                    KeyCategory.DualFunction => DualFunctionBackgroundBrush,
-                    KeyCategory.Macro => MacroBackgroundBrush,
-                    KeyCategory.Modifier => ModifierBackgroundBrush,
+                    KeyDisplayMode.ColorControl => ColorControlBackgroundBrush,
+                    KeyDisplayMode.CustomLabel => CustomLabelBackgroundBrush,
+                    KeyDisplayMode.DualFunction => DualFunctionBackgroundBrush,
+                    KeyDisplayMode.Macro => MacroBackgroundBrush,
+                    KeyDisplayMode.Modifier => ModifierBackgroundBrush,
                     _ => DefaultBackgroundBrush
                 };
             }
