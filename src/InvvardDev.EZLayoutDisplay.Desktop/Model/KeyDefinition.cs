@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using InvvardDev.EZLayoutDisplay.Desktop.Model.Enum;
+using Newtonsoft.Json;
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.Model
 {
@@ -27,5 +28,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
         /// </summary>
         [JsonProperty("is_glyph", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public bool IsGlyph { get; set; }
+
+        [JsonProperty("category")]
+        public KeyCategory Category { get; set; }
     }
 }

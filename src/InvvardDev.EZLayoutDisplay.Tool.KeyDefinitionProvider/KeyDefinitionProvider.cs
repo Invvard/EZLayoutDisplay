@@ -6,9 +6,10 @@ using System.Text.RegularExpressions;
 internal class KeyDefinitionProvider
 {
     private const string MetadataUrl = "https://oryx.zsa.io/metadata";
-    private const string OryxGlyphUrl = "https://configure.zsa.io/assets/index.2327d444.css";
+    private const string OryxGlyphUrl = "https://configure.zsa.io/assets/index.d0847e58.css";
     private const string GlyphPattern = @".icon-(?<glyphName>[a-z_]*):before{content:""\\(?<glyphCode>[a-f0-9]{4})""}";
     private const string KeyDefinitionOutputFilename = "keyDefinitions.output.json";
+    private const string KeyCategoriesOutputFilename = "keyCategories.output.json";
 
     private OryxMetadataModel? _oryxMetadata;
 
@@ -17,7 +18,8 @@ internal class KeyDefinitionProvider
         await LoadZsaOryxMedadata();
         await LoadZsaOryxGlyphs();
         List<KeyDefinition> ezKeys = PrepareEZLayoutKeys();
-        WriteJsonFile(ezKeys);
+        WriteJsonFile(ezKeys, KeyDefinitionOutputFilename);
+        WriteJsonFile(_oryxMetadata!.Categories.OrderBy(c => c.CategoryId), KeyCategoriesOutputFilename);
     }
 
     private async Task LoadZsaOryxMedadata()
@@ -51,23 +53,23 @@ internal class KeyDefinitionProvider
             var keys = _oryxMetadata!.Keys.Where(k => k.GlyphName == match.Groups["glyphName"].Value);
             foreach (var key in keys)
             {
-                key.GlyphCode = $@"\u{match.Groups["glyphCode"].Value}";
+                key.GlyphCode = @$"\u{match.Groups["glyphCode"].Value}";
             }
         }
     }
 
     private List<KeyDefinition> PrepareEZLayoutKeys()
     {
-        var ezKeys = _oryxMetadata!.Keys.Select(k => (KeyDefinition) k).ToList();
+        var ezKeys = _oryxMetadata!.Keys.Select((k) => (KeyDefinition) k).ToList();
 
         return ezKeys;
     }
 
-    private void WriteJsonFile(List<KeyDefinition> keyDefinitions)
+    private static void WriteJsonFile(object dataToWrite, string outputFilename)
     {
-        var json = JsonConvert.SerializeObject(keyDefinitions);
+        var json = JsonConvert.SerializeObject(dataToWrite);
         json = json.Replace(@"\\u", @"\u");
 
-        File.WriteAllText(KeyDefinitionOutputFilename, json);
+        File.WriteAllText(outputFilename, json);
     }
 }

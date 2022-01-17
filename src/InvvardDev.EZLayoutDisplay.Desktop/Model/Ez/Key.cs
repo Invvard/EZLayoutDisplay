@@ -17,6 +17,6 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Ez
         /// <summary>
         /// Gets or sets the key category.
         /// </summary>
-        public KeyCategory Category { get; set; }
+        public KeyDisplayMode DisplayMode { get; set; }
     }
 }

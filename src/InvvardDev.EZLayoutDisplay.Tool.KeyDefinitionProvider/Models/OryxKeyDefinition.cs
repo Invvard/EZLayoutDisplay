@@ -1,9 +1,10 @@
 ﻿using InvvardDev.EZLayoutDisplay.Desktop.Model;
+using InvvardDev.EZLayoutDisplay.Desktop.Model.Enum;
 using Newtonsoft.Json;
 
 namespace InvvardDev.EZLayoutDisplay.Tool.KeyDefinitionProvider.Models
 {
-    internal class OryxKeyDefinition
+    public class OryxKeyDefinition
     {
         [JsonProperty("code")]
         public string? Code { get; set; }
@@ -17,6 +18,9 @@ namespace InvvardDev.EZLayoutDisplay.Tool.KeyDefinitionProvider.Models
         [JsonProperty("glyph")]
         public string? GlyphName { get; set; }
 
+        [JsonProperty("key_category_id")]
+        public int? Category { get; set; }
+
         public string? GlyphCode { get; set; }
 
         public bool IsGlyph => !string.IsNullOrWhiteSpace(GlyphCode);
@@ -29,6 +33,7 @@ namespace InvvardDev.EZLayoutDisplay.Tool.KeyDefinitionProvider.Models
                 Label = !oryxKey.IsGlyph ? oryxKey.Label : oryxKey.GlyphCode,
                 IsGlyph = oryxKey.IsGlyph,
                 Tag = oryxKey.Tag,
+                Category = (KeyCategory)oryxKey.Category!,
             };
         }
     }

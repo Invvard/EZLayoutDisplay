@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -13,6 +13,25 @@
 
   <ItemGroup>
     <ProjectReference Include="..\InvvardDev.EZLayoutDisplay.Desktop\InvvardDev.EZLayoutDisplay.Desktop.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="KeyCategory.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>KeyCategory.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="KeyCategory.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>KeyCategory.cs</LastGenOutput>
+    </None>
   </ItemGroup>
 
 </Project>

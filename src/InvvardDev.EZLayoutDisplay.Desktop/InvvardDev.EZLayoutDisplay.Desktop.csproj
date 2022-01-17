@@ -83,11 +83,12 @@
     </ApplicationDefinition>
     <Compile Include="Helper\KeyContentTemplateSelector.cs" />
     <Compile Include="Helper\LoggerHelper.cs" />
-    <Compile Include="Model\Enum\KeyDisplayType.cs" />
+    <Compile Include="Model\Enum\KeyDisplayMode.cs" />
     <Compile Include="Model\Ez\Content\BaseContent.cs" />
     <Compile Include="Model\Ez\Content\ColorPicker.cs" />
     <Compile Include="Model\Ez\Content\Glyph.cs" />
     <Compile Include="Model\Ez\Content\Layer.cs" />
+    <Compile Include="Model\Enum\KeyCategory.cs" />
     <Compile Include="Model\ZsaModels\ErgodoxTag.cs" />
     <Compile Include="Model\ZsaModels\ErgodoxKeyFeature.cs" />
     <Compile Include="Model\KeyTemplate.cs" />
@@ -109,7 +110,6 @@
     <Compile Include="Model\Ez\Key.cs" />
     <Compile Include="Model\EZLayout.cs" />
     <Compile Include="Model\EZModifier.cs" />
-    <Compile Include="Model\Enum\KeyCategory.cs" />
     <Compile Include="Model\Dictionary\KeyDefinitionDictionary.cs" />
     <Compile Include="Model\Enum\SettingsName.cs" />
     <Compile Include="Model\EZLayer.cs" />

@@ -1,0 +1,53 @@
+﻿<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="Newtonsoft.Json" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="Newtonsoft.Json.Linq" #>
+<#
+    void SaveFile(string folder, string fileName, string content)
+    {
+        using (FileStream fs = new (Path.Combine(folder, fileName), FileMode.Create))
+        using (StreamWriter str = new (fs))
+        {
+            str.WriteLine(content);
+            str.Flush();
+        }
+    }
+    
+    string rootPath = Directory.GetParent(Path.GetDirectoryName(this.Host.TemplateFile)).FullName;
+    string inputFileName = "keyCategories.output.json";
+    string inputFilePath = this.Host.ResolvePath($@"{rootPath}\InvvardDev.EZLayoutDisplay.Tool.KeyDefinitionProvider\bin\Debug\net6.0\{inputFileName}");
+    string outputFilename = "KeyCategory.cs";
+    string outputAssemblyPath = @"InvvardDev.EZLayoutDisplay.Desktop\Model\Enum";
+    string outputFilePath = $@"{rootPath}\{outputAssemblyPath}";
+    
+    var oryxMetadata = JArray.Parse(File.ReadAllText(inputFilePath));
+#>
+/// <summary>
+/// <#= outputFilename #> auto generated enumeration
+/// Generated on : <#= DateTime.UtcNow #> (UTC)
+/// </summary>
+namespace <#= outputAssemblyPath.Replace(@"\", ".") #>
+{
+    public enum KeyCategory
+    {
+<#   
+    foreach (var item in oryxMetadata!.Children())
+    {
+        var code = item["code"].ToString();
+        var upperCode = string.Concat(code[0].ToString().ToUpper(), code.Substring(1));
+        var id = item["id"];
+        WriteLine($"        {upperCode} = {item["id"]},");
+    }
+#>
+    }
+}
+<#
+    SaveFile(outputFilePath, outputFilename, this.GenerationEnvironment.ToString());
+    this.GenerationEnvironment.Remove(0, this.GenerationEnvironment.Length);
+#>
+/// <summary>
+/// Moved to <see cref="<#= outputAssemblyPath.Replace(@"\", ".") #>.KeyCategory">
+/// </summary>

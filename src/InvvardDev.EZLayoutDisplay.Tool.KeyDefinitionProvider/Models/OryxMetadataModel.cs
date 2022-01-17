@@ -2,7 +2,7 @@
 
 namespace InvvardDev.EZLayoutDisplay.Tool.KeyDefinitionProvider.Models
 {
-    internal class OryxMetadataModel
+    public class OryxMetadataModel
     {
         [JsonProperty("keys")]
         public List<OryxKeyDefinition> Keys { get; set; } = new List<OryxKeyDefinition>();

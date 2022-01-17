@@ -11,12 +11,14 @@ using GalaSoft.MvvmLight.Messaging;
 using InvvardDev.EZLayoutDisplay.Desktop.Helper;
 using InvvardDev.EZLayoutDisplay.Desktop.Model;
 using InvvardDev.EZLayoutDisplay.Desktop.Model.Enum;
+using InvvardDev.EZLayoutDisplay.Desktop.Model.Ez.Content;
 using InvvardDev.EZLayoutDisplay.Desktop.Model.Messenger;
 using InvvardDev.EZLayoutDisplay.Desktop.Properties;
 using InvvardDev.EZLayoutDisplay.Desktop.Service.Interface;
 using InvvardDev.EZLayoutDisplay.Desktop.View;
 using Newtonsoft.Json;
 using NLog;
+using Key = InvvardDev.EZLayoutDisplay.Desktop.Model.Ez.Key;
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 {
@@ -182,29 +184,25 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         /// Lost focus command.
         /// </summary>
         public ICommand LostFocusCommand =>
-            _lostFocusCommand
-            ?? (_lostFocusCommand = new RelayCommand(LostFocus, LostFocusCanExecute));
+            _lostFocusCommand ??= new RelayCommand(LostFocus, LostFocusCanExecute);
 
         /// <summary>
         /// Hide window command.
         /// </summary>
         public ICommand HideWindowCommand =>
-            _hideWindowCommand
-            ?? (_hideWindowCommand = new RelayCommand(LostFocus));
+            _hideWindowCommand ??= new RelayCommand(LostFocus);
 
         /// <summary>
         /// Next layer command.
         /// </summary>
         public ICommand NextLayerCommand =>
-            _nextLayerCommand
-            ?? (_nextLayerCommand = new RelayCommand(NextLayer, NextLayerCanExecute));
+            _nextLayerCommand ??= new RelayCommand(NextLayer, NextLayerCanExecute);
 
         /// <summary>
         /// Next layer command.
         /// </summary>
         public ICommand ScrollLayerCommand =>
-            _scrollLayerCommand
-            ?? (_scrollLayerCommand = new RelayCommand<MouseWheelEventArgs>(ScrollLayer));
+            _scrollLayerCommand ??= new RelayCommand<MouseWheelEventArgs>(ScrollLayer);
 
         #endregion
 
@@ -302,28 +300,28 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
             // ReSharper disable once UseObjectOrCollectionInitializer
             CurrentLayoutTemplate = new ObservableCollection<KeyTemplate>(layoutDefinition);
-            CurrentLayoutTemplate[0].EZKey = new EZKey
+            CurrentLayoutTemplate[0].Key = new Key
             {
-                Primary = new KeyFeature ("=", modifier: "Shift"),
-                DisplayMode = KeyDisplayMode.SingleFeature,
-                Color = "#111"
+                Primary = new BaseContent { Label = "Shift + =" },
+                DisplayMode = KeyDisplayMode.Base,
+                GlowColor = "#111"
             };
 
-            CurrentLayoutTemplate[1].EZKey = new EZKey
+            CurrentLayoutTemplate[1].Key = new Key
             {
-                Primary = new KeyFeature("LT \u2192 1"),
-                Secondary = new KeyFeature("LT \u2192 1"),
-                DisplayMode = KeyDisplayMode.DoubleFeature,
-                Color = "#BBB"
+                Primary = new Layer { Label = "\u2192", Id = 1 },
+                Secondary = new Layer { Label = "\u2192", Id = 2 },
+                DisplayMode = KeyDisplayMode.DualFunction,
+                GlowColor = "#BBB"
             };
 
             for (int i = 2; i < CurrentLayoutTemplate.Count; i++)
             {
-                CurrentLayoutTemplate[i].EZKey = new EZKey
+                CurrentLayoutTemplate[i].Key = new Key
                 {
-                    Primary = new KeyFeature("E", modifier: "Shift", tag: "fr"),
-                    DisplayMode = KeyDisplayMode.SingleFeature,
-                    Color = "#777"
+                    Primary = new BaseContent { Label = "Shift + E", Tag = "fr" },
+                    DisplayMode = KeyDisplayMode.Base,
+                    GlowColor = "#777"
                 };
             }
         }
@@ -334,13 +332,14 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
             foreach (var ezLayer in _ezLayout.EZLayers)
             {
-                if (!(await LoadLayoutDefinition(geometry) is List<KeyTemplate> layoutTemplate)) break;
+                if (await LoadLayoutDefinition(geometry) is not List<KeyTemplate> layoutTemplate)
+                    break;
 
                 if (layoutTemplate.Count == 0) return;
 
                 for (int j = 0; j < layoutTemplate.Count; j++)
                 {
-                    layoutTemplate[j].EZKey = ezLayer.Keys[j];
+                    layoutTemplate[j].Key = ezLayer.Keys[j];
                 }
 
                 _layoutTemplates.Add(layoutTemplate);
