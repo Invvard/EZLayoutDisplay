@@ -19,7 +19,10 @@ internal class KeyDefinitionProvider
         await LoadZsaOryxGlyphs();
         List<KeyDefinition> ezKeys = PrepareEZLayoutKeys();
         WriteJsonFile(ezKeys, KeyDefinitionOutputFilename);
-        WriteJsonFile(_oryxMetadata!.Categories.OrderBy(c => c.CategoryId), KeyCategoriesOutputFilename);
+        var categories = _oryxMetadata!.Categories
+            .Where(c => !c.IsDeleted)
+            .OrderBy(c => c.CategoryId);
+        WriteJsonFile(categories, KeyCategoriesOutputFilename);
     }
 
     private async Task LoadZsaOryxMedadata()

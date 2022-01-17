@@ -12,5 +12,8 @@ namespace InvvardDev.EZLayoutDisplay.Tool.KeyDefinitionProvider.Models
 
         [JsonProperty("name")]
         public string? Name { get; set; }
+
+        [JsonProperty("deleted")]
+        public bool IsDeleted { get; set; }
     }
 }
