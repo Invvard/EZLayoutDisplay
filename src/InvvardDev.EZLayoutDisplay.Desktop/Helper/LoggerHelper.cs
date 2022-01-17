@@ -58,24 +58,12 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
 
         internal static LogLevel GetLogLevel(string value)
         {
-            LogLevel level;
-
-            switch (value.ToLower())
+            LogLevel level = value.ToLower() switch
             {
-                case "debug":
-                    level = LogLevel.Debug;
-
-                    break;
-                case "trace":
-                    level = LogLevel.Trace;
-
-                    break;
-                default:
-                    level = LogLevel.Warn;
-
-                    break;
-            }
-
+                "debug" => LogLevel.Debug,
+                "trace" => LogLevel.Trace,
+                _ => LogLevel.Warn,
+            };
             return level;
         }
 

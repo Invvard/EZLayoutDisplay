@@ -388,7 +388,6 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private void NextLayer()
         {
             Logger.TraceRelayCommand();
-
             VaryLayer(1);
         }
 
@@ -396,15 +395,14 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         {
             Logger.TraceRelayCommand();
 
-            if (e.Delta < 0)
+            var variation = e switch
             {
-                VaryLayer(1);
-            }
+                { Delta: < 0 } => 1,
+                { Delta: > 0 } => -1,
+                _ => 0
+            };
 
-            if (e.Delta > 0)
-            {
-                VaryLayer(-1);
-            }
+            VaryLayer(variation);
         }
 
         private void VaryLayer(int variation)
@@ -413,46 +411,21 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
             var maxLayerIndex = _ezLayout.EZLayers.Count - 1;
 
-            switch (CurrentLayerIndex)
+            CurrentLayerIndex = variation switch
             {
-                case var _ when maxLayerIndex <= 0:
-                    CurrentLayerIndex = 0;
-
-                    break;
-                case var _ when CurrentLayerIndex <= 0 && variation < 0:
-                    CurrentLayerIndex = maxLayerIndex;
-
-                    break;
-                case var _ when CurrentLayerIndex > 0 && variation < 0:
-                    CurrentLayerIndex--;
-
-                    break;
-                case var _ when CurrentLayerIndex >= maxLayerIndex && variation > 0:
-                    CurrentLayerIndex = 0;
-
-                    break;
-                case var _ when CurrentLayerIndex < maxLayerIndex && variation > 0:
-                    CurrentLayerIndex++;
-
-                    break;
-            }
+                < 0 when CurrentLayerIndex <= 0 => maxLayerIndex,
+                < 0 when CurrentLayerIndex > 0 => --CurrentLayerIndex,
+                > 0 when CurrentLayerIndex >= maxLayerIndex => 0,
+                > 0 when CurrentLayerIndex < maxLayerIndex => ++CurrentLayerIndex,
+                _ => CurrentLayerIndex
+            };
 
             SwitchLayer();
         }
 
-        private bool NextLayerCanExecute()
-        {
-            var canExecute = _layoutTemplates.Any();
+        private bool NextLayerCanExecute() => _layoutTemplates.Any();
 
-            return canExecute;
-        }
-
-        private bool LostFocusCanExecute()
-        {
-            var canExecute = !IsWindowPinned;
-
-            return canExecute;
-        }
+        private bool LostFocusCanExecute() => !IsWindowPinned;
 
         #endregion
 
