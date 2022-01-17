@@ -1,6 +1,6 @@
 /// <summary>
 /// KeyCategory.cs auto generated enumeration
-/// Generated on : 01/17/2022 00:00:29 (UTC)
+/// Generated on : 01/17/2022 03:00:46 (UTC)
 /// </summary>
 namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Enum
 {
@@ -9,7 +9,6 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Enum
         Letters = 61,
         Digit = 62,
         Modifier = 63,
-        DualFunction = 64,
         Layer = 65,
         Punct = 66,
         ShiftedPunct = 67,
@@ -17,9 +16,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Enum
         Fn = 69,
         Fw = 70,
         Lang = 71,
-        LayerShortcuts = 72,
         Media = 73,
-        Momentary = 74,
         Mouse = 75,
         Nav = 76,
         Numpad = 77,
@@ -27,11 +24,9 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Enum
         Other = 79,
         Shine = 80,
         Spacing = 81,
-        Special = 82,
         System = 83,
         Audio = 84,
         Macro = 85,
-        Toggle = 86,
         Belgian = 87,
         Bepo = 88,
         Brazilian = 89,

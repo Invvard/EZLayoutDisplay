@@ -2,11 +2,12 @@
 {
     public enum KeyDisplayMode
     {
-        Base = 0,
-        DualFunction = 1,
-        Macro = 2,
-        CustomLabel = 3,
-        Modifier = 4,
-        ColorControl = 5
+        Empty = 0,
+        Base,
+        DualFunction,
+        Macro,
+        CustomLabel,
+        Modifier,
+        ColorControl
     }
 }
