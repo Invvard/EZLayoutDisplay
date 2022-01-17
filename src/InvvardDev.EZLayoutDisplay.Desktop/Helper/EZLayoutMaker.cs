@@ -1,9 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using InvvardDev.EZLayoutDisplay.Desktop.Model;
 using InvvardDev.EZLayoutDisplay.Desktop.Model.Dictionary;
 using InvvardDev.EZLayoutDisplay.Desktop.Model.Enum;
+using InvvardDev.EZLayoutDisplay.Desktop.Model.Ez;
+using InvvardDev.EZLayoutDisplay.Desktop.Model.Ez.Content;
+using InvvardDev.EZLayoutDisplay.Desktop.Model.ZsaModels;
 using NLog;
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
@@ -53,10 +55,10 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
             foreach (var ergodoxKey in ergodoxLayer.Keys)
             {
                 var keyDisplayMode = SelectKeyDisplayMode(ergodoxKey);
-                var key = PrepareKeyLabels(ergodoxKey, keyDisplayMode);
-                key.Color = GetColor(ergodoxKey.GlowColor, layer.Color);
+                var key = PrepareKeyContent(ergodoxKey, keyDisplayMode);
+                key.GlowColor = GetColor(ergodoxKey.GlowColor, layer.Color);
 
-                layer.EZKeys.Add(key);
+                layer.Keys.Add(key);
             }
 
             Logger.DebugOutputParam(nameof(layer), layer);
@@ -66,45 +68,73 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
 
         private KeyDisplayMode SelectKeyDisplayMode(ErgodoxKey ergodoxKey)
         {
-            var featureCount = new List<ErgodoxKeyFeature> {
+            var features = new List<ErgodoxKeyFeature> {
                 ergodoxKey.Tap,
                 ergodoxKey.Hold,
                 ergodoxKey.DoubleTap,
                 ergodoxKey.TapHold
             }.Where(f => f != null)
-            .Count();
+            .ToList();
 
-            var displayMode = featureCount switch
+            var featureCount = features.Count;
+            KeyDefinition firstKeyDefinition = null;
+            if (features.Any())
             {
-                _ when !string.IsNullOrWhiteSpace(ergodoxKey.CustomLabel) => KeyDisplayMode.CustomLabel,
-                1 => KeyDisplayMode.SingleFeature,
-                > 1 => KeyDisplayMode.DoubleFeature,
-                _ => KeyDisplayMode.None,
+                firstKeyDefinition = GetKeyDefinition(features.First().Code);
+            }
+
+            var category = featureCount switch
+            {
+                0 => KeyDisplayMode.Empty,
+                1 when ergodoxKey.Tap?.Macro != null => KeyDisplayMode.Macro,
+                1 when firstKeyDefinition.Category == KeyCategory.Modifier => KeyDisplayMode.Modifier,
+                1 when firstKeyDefinition.Category == KeyCategory.Shine => KeyDisplayMode.ColorControl,
+                1 when !string.IsNullOrWhiteSpace(ergodoxKey.CustomLabel) => KeyDisplayMode.CustomLabel,
+                >= 2 => KeyDisplayMode.DualFunction,
+                _ => KeyDisplayMode.Base
             };
 
-            return displayMode;
+            return category;
         }
 
-        private EZKey PrepareKeyLabels(ErgodoxKey ergodoxKey, KeyDisplayMode displayMode)
+        private Key PrepareKeyContent(ErgodoxKey ergodoxKey, KeyDisplayMode displayMode)
         {
             Logger.TraceMethod();
             Logger.DebugInputParam(nameof(ergodoxKey), ergodoxKey);
+            Logger.DebugInputParam(nameof(displayMode), displayMode);
 
-            var key = new EZKey
-            {
-                DisplayMode = displayMode
-            };
+            var features = new List<ErgodoxKeyFeature> {
+                ergodoxKey.Tap,
+                ergodoxKey.Hold,
+                ergodoxKey.DoubleTap,
+                ergodoxKey.TapHold }
+            .Where(f => f != null)
+            .ToList();
 
-            switch (key.DisplayMode)
+            var key = new Key() { DisplayMode = displayMode };
+
+            switch (displayMode)
             {
                 case KeyDisplayMode.CustomLabel:
-                    key.Primary = new KeyFeature(ergodoxKey.CustomLabel);
+                    key.Primary = new BaseContent { Label = ergodoxKey.CustomLabel };
                     break;
-                case KeyDisplayMode.SingleFeature:
-                    (key.Primary, _) = GetDisplayedFeature(ergodoxKey);
+                case KeyDisplayMode.Macro:
+                    key.Primary = new BaseContent { Label = "Macro" };
                     break;
-                case KeyDisplayMode.DoubleFeature:
-                    (key.Primary, key.Secondary) = GetDisplayedFeature(ergodoxKey, 2);
+                case KeyDisplayMode.Base:
+                case KeyDisplayMode.Modifier:
+                case KeyDisplayMode.ColorControl:
+                    key.Primary = GetDisplayedFeature(features[0]);
+                    break;
+                case KeyDisplayMode.DualFunction:
+                    key.Primary = GetDisplayedFeature(features[0]);
+                    key.Secondary = GetDisplayedFeature(features[1]);
+
+                    if (key.Primary.Label.Length > 1) key.Primary.Tag = "";
+                    if (key.Secondary.Label.Length > 1) key.Secondary.Tag = "";
+                    break;
+                default:
+                    key.Primary = new BaseContent { Label = string.Empty };
                     break;
             }
 
@@ -113,29 +143,24 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
             return key;
         }
 
-        private (KeyFeature, KeyFeature) GetDisplayedFeature(ErgodoxKey ergodoxKey, int count = 1)
+        private BaseContent GetDisplayedFeature(ErgodoxKeyFeature feature)
         {
-            var features = new List<ErgodoxKeyFeature> {
-                ergodoxKey.Tap,
-                ergodoxKey.Hold,
-                ergodoxKey.DoubleTap,
-                ergodoxKey.TapHold }.Where(f => f != null).ToList();
+            var mods = ProcessModifiers(feature.Modifiers);
+            var keyDefinition = GetKeyDefinition(feature.Code);
 
-            KeyFeature[] keyFeatures = new KeyFeature[2];
-
-            for (int i = 0; i < count; i++)
+            var keyFeature = keyDefinition switch
             {
-                var feature = features.Count >= i + 1 ? features[i] : null;
-                if (feature != null)
-                {
-                    var mods = ProcessModifiers(feature.Modifiers);
-                    var keyDefinition = GetKeyDefinition(feature.Code);
+                // ColorControl Key - Color picker 
+                { KeyCode: "RGB" } => new ColorPicker { Label = keyDefinition.Label, ColorCode = feature.Color },
+                // Layer toggle key
+                { Category: KeyCategory.Layer } => new Layer { Label = keyDefinition.Label, Id = feature.Layer.Value },
+                { IsGlyph: true } => new Glyph { Label = keyDefinition.Label, Modifier = mods },
+                // Modded label
+                _ when !string.IsNullOrWhiteSpace(mods) => new BaseContent { Label = $"{mods}+{keyDefinition.Label}", Tag = keyDefinition.Tag },
+                _ => new BaseContent { Label = keyDefinition.Label, Tag = keyDefinition.Tag }
+            };
 
-                    keyFeatures[i] = new KeyFeature(keyDefinition.Label, keyDefinition.IsGlyph, keyDefinition.Tag, mods);
-                }
-            }
-
-            return (keyFeatures[0], keyFeatures[1]);
+            return keyFeature;
         }
 
         private static string GetColor(string keyColor, string defaultColor = "#777")
