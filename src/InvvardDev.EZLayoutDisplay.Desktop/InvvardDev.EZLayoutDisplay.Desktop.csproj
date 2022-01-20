@@ -213,7 +213,7 @@
       <SubType>Designer</SubType>
     </None>
     <AppDesigner Include="Properties\" />
-    <Resource Include="Skins\Fonts\Lato.ttf" />
+    <Resource Include="Skins\Fonts\Inter.ttf" />
     <Resource Include="Skins\Fonts\Oryx.ttf" />
   </ItemGroup>
   <ItemGroup>
