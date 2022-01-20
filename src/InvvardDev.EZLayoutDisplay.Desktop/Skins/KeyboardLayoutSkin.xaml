@@ -3,8 +3,8 @@
                     xmlns:helper="clr-namespace:InvvardDev.EZLayoutDisplay.Desktop.Helper"
                     xmlns:converter="clr-namespace:InvvardDev.EZLayoutDisplay.Desktop.View.Converter">
 
-    <FontFamily x:Key="LatoFontFamily">/InvvardDev.EZLayoutDisplay.Desktop;component/Skins/Fonts/#Lato</FontFamily>
-    <FontFamily x:Key="OryxFontFamily">/InvvardDev.EZLayoutDisplay.Desktop;component/Skins/Fonts/#Oryx</FontFamily>
+    <FontFamily x:Key="InterFontFamily">/Skins/Fonts/#Inter</FontFamily>
+    <FontFamily x:Key="OryxFontFamily">/Skins/Fonts/#Oryx</FontFamily>
 
     <SolidColorBrush x:Key="KeyLabelForeground" Color="#323546" />
     <SolidColorBrush x:Key="DefaultBackgroundBrush" Color="#FFFFFF" />
@@ -24,19 +24,7 @@
 
     <SolidColorBrush x:Key="KeyBorderColorBrush" Color="#c7c7c7" />
 
-    <Style TargetType="Rectangle" x:Key="BaseKey">
-        <Setter Property="StrokeThickness" Value="1" />
-        <Setter Property="RenderTransform">
-            <Setter.Value>
-                <TransformGroup>
-                    <RotateTransform Angle="{Binding RotationAngle}" />
-                </TransformGroup>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="RenderTransformOrigin" Value="{Binding RotationOrigin}" />
-    </Style>
-
-    <Style TargetType="Rectangle" BasedOn="{StaticResource BaseKey}" x:Key="KeyBase">
+    <Style TargetType="Rectangle" x:Key="KeyBase">
         <Setter Property="RadiusX" Value="5" />
         <Setter Property="RadiusY" Value="5" />
         <Setter Property="Fill" Value="{Binding Key.DisplayMode, Converter={StaticResource KeyCategoryToBrushConverter}}" />
@@ -45,21 +33,29 @@
         <Setter Property="Canvas.Left" Value="{Binding BaseKeyX}" />
         <Setter Property="Height" Value="{Binding BaseKeyHeight}" />
         <Setter Property="Width" Value="{Binding BaseKeyWidth}" />
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="RenderTransformOrigin" Value="{Binding RotationOrigin}" />
+        <Setter Property="RenderTransform">
+            <Setter.Value>
+                <TransformGroup>
+                    <RotateTransform Angle="{Binding RotationAngle}" />
+                </TransformGroup>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <Style TargetType="Label" x:Key="BaseLabelStyle">
-        <Setter Property="Padding" Value="2 0" />
         <Setter Property="Foreground" Value="{StaticResource KeyLabelForeground}" />
     </Style>
 
     <Style TargetType="Label" x:Key="LabelStyle" BasedOn="{StaticResource BaseLabelStyle}">
-        <Setter Property="FontFamily" Value="{StaticResource LatoFontFamily}" />
-        <Setter Property="FontSize" Value="22" />
+        <Setter Property="FontFamily" Value="{StaticResource InterFontFamily}" />
+        <Setter Property="FontSize" Value="20" />
     </Style>
 
     <Style TargetType="Label" x:Key="GlyphStyle" BasedOn="{StaticResource BaseLabelStyle}">
         <Setter Property="FontFamily" Value="{StaticResource OryxFontFamily}" />
-        <Setter Property="FontSize" Value="18" />
+        <Setter Property="FontSize" Value="22" />
     </Style>
 
     <DataTemplate x:Key="KeyDataTemplate">
@@ -85,14 +81,9 @@
 
     <Style TargetType="Viewbox" x:Key="LabelViewBox">
         <Setter Property="Height" Value="30" />
-        <Setter Property="Margin" Value="1 0" />
         <Setter Property="Stretch" Value="Uniform" />
-        <Setter Property="StretchDirection" Value="Both" />
+        <Setter Property="StretchDirection" Value="DownOnly" />
         <Setter Property="VerticalAlignment" Value="Center" />
-    </Style>
-
-    <Style TargetType="Viewbox" x:Key="ModifierViewBox" BasedOn="{StaticResource LabelViewBox}">
-        <Setter Property="Height" Value="18" />
     </Style>
 
     <Style TargetType="Grid" x:Key="ContentGridBase">
@@ -136,7 +127,10 @@
 
     <DataTemplate x:Key="ColorPickerDataTemplate">
         <Viewbox Style="{StaticResource LabelViewBox}">
-            <Label Style="{StaticResource GlyphStyle}" Content="{Binding Label}" />
+            <Grid>
+                <Ellipse Width="10" Height="10" Fill="{Binding ColorCode}" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0 -10 -8 0"/>
+                <Label Style="{StaticResource GlyphStyle}" Content="{Binding Label}" FontSize="30"/>
+            </Grid>
         </Viewbox>
     </DataTemplate>
 
@@ -151,7 +145,9 @@
         <Canvas>
             <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource KeyDataTemplate}" />
             <Grid Style="{StaticResource ContentGridBase}">
-                <TextBlock Style="{StaticResource PrimaryTag}" Text="{Binding Key.Primary.Tag}" />
+                <Viewbox VerticalAlignment="Top" HorizontalAlignment="Right" Stretch="None">
+                    <TextBlock Style="{StaticResource PrimaryTag}" Text="{Binding Key.Primary.Tag}" />
+                </Viewbox>
                 <ContentControl ContentTemplateSelector="{StaticResource KeyFeatureTemplateSelector}" Content="{Binding Key.Primary}" />
             </Grid>
         </Canvas>
@@ -165,8 +161,12 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <TextBlock Style="{StaticResource PrimaryTag}" Text="{Binding Key.Primary.Tag}" />
-                <TextBlock Style="{StaticResource SecondaryTag}" Text="{Binding Key.Secondary.Tag}" />
+                <Viewbox Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Right" Stretch="None">
+                    <TextBlock Style="{StaticResource PrimaryTag}" Text="{Binding Key.Primary.Tag}" />
+                </Viewbox>
+                <Viewbox Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Stretch="None">
+                    <TextBlock Style="{StaticResource SecondaryTag}" Text="{Binding Key.Secondary.Tag}" />
+                </Viewbox>
 
                 <ContentControl ContentTemplateSelector="{StaticResource KeyFeatureTemplateSelector}"
                                 Content="{Binding Key.Primary}"

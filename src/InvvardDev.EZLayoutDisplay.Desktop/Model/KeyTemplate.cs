@@ -69,19 +69,15 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
         [DefaultValue(false)]
         public bool IsGlowing { get; set; }
 
-        // ReSharper disable UnusedMember.Global : Used in XAML
-        // ReSharper disable MemberCanBePrivate.Global : Used in XAML
         public double BaseKeyX => HorizontalOffset * KeyUnitSize + BaseRelativeLeft * KeyUnitSize;
         public double BaseKeyY => VerticalOffset * KeyUnitSize + BaseRelativeTop * KeyUnitSize;
-        public double TopKeyX => BaseKeyX + 3;
-        public double TopKeyY => BaseKeyY + 3;
+        public double TopKeyX => BaseKeyX + 2;
+        public double TopKeyY => BaseKeyY + 2;
 
         public double BaseKeyWidth => BaseRelativeWidth * KeyUnitSize;
         public double BaseKeyHeight => BaseRelativeHeight * KeyUnitSize;
-        public double TopKeyWidth => BaseKeyWidth - 6;
-        public double TopKeyHeight => BaseKeyHeight - 11;
-        // ReSharper restore MemberCanBePrivate.Global
-        // ReSharper restore UnusedMember.Global
+        public double TopKeyWidth => BaseKeyWidth - 4;
+        public double TopKeyHeight => BaseKeyHeight - 4;
 
         public Key Key { get; set; }
 
