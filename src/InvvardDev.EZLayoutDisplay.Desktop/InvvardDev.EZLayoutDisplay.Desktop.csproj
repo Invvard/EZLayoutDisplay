@@ -81,6 +81,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Helper\KeyFeatureTemplateSelector.cs" />
     <Compile Include="Helper\KeyContentTemplateSelector.cs" />
     <Compile Include="Helper\LoggerHelper.cs" />
     <Compile Include="Model\Enum\KeyDisplayMode.cs" />
