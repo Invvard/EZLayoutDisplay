@@ -12,6 +12,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.View.Converter
     {
         public SolidColorBrush DefaultBackgroundBrush { private get; set; }
         public SolidColorBrush ColorControlBackgroundBrush { private get; set; }
+        public SolidColorBrush ComplexFeatureBackgroundBrush { private get; set; }
         public SolidColorBrush CustomLabelBackgroundBrush { private get; set; }
         public SolidColorBrush DualFunctionBackgroundBrush { private get; set; }
         public SolidColorBrush MacroBackgroundBrush { private get; set; }
@@ -21,6 +22,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.View.Converter
         {
             DefaultBackgroundBrush = Application.Current.Resources["DefaultBackgroundBrush"] as SolidColorBrush;
             ColorControlBackgroundBrush = Application.Current.Resources["ColorControlBackgroundBrush"] as SolidColorBrush;
+            ComplexFeatureBackgroundBrush = Application.Current.Resources["ComplexFeatureBackgroundBrush"] as SolidColorBrush;
             CustomLabelBackgroundBrush = Application.Current.Resources["CustomLabelBackgroundBrush"] as SolidColorBrush;
             DualFunctionBackgroundBrush = Application.Current.Resources["DualFunctionBackgroundBrush"] as SolidColorBrush;
             MacroBackgroundBrush = Application.Current.Resources["MacroBackgroundBrush"] as SolidColorBrush;
@@ -35,6 +37,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.View.Converter
                 brush = displayMode switch
                 {
                     KeyDisplayMode.ColorControl => ColorControlBackgroundBrush,
+                    KeyDisplayMode.ComplexFeature => ComplexFeatureBackgroundBrush,
                     KeyDisplayMode.CustomLabel => CustomLabelBackgroundBrush,
                     KeyDisplayMode.DualFunction => DualFunctionBackgroundBrush,
                     KeyDisplayMode.Macro => MacroBackgroundBrush,

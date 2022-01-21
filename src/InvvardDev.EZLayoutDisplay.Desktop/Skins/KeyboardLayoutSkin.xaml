@@ -18,6 +18,7 @@
     <converter:KeyCategoryToBrushConverter x:Key="KeyCategoryToBrushConverter"
                                            DefaultBackgroundBrush="{StaticResource DefaultBackgroundBrush}"
                                            ColorControlBackgroundBrush="{StaticResource ColorControlBackgroundBrush}"
+                                           ComplexFeatureBackgroundBrush="{StaticResource DualFunctionBackgroundBrush}"
                                            CustomLabelBackgroundBrush="{StaticResource CustomLabelBackgroundBrush}"
                                            DualFunctionBackgroundBrush="{StaticResource DualFunctionBackgroundBrush}"
                                            MacroBackgroundBrush="{StaticResource MacroBackgroundBrush}"

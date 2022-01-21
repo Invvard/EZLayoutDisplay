@@ -77,6 +77,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
             .ToList();
 
             var featureCount = features.Count;
+            var isComplexFeature = featureCount == 1 && (ergodoxKey.DoubleTap != null || ergodoxKey.TapHold != null);
             KeyDefinition firstKeyDefinition = null;
             if (features.Any())
             {
@@ -87,8 +88,9 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
             {
                 0 => KeyDisplayMode.Empty,
                 1 when ergodoxKey.Tap?.Macro != null => KeyDisplayMode.Macro,
-                1 when firstKeyDefinition.Category == KeyCategory.Modifier => KeyDisplayMode.Modifier,
                 1 when firstKeyDefinition.Category == KeyCategory.Shine => KeyDisplayMode.ColorControl,
+                1 when isComplexFeature => KeyDisplayMode.ComplexFeature,
+                1 when firstKeyDefinition.Category == KeyCategory.Modifier => KeyDisplayMode.Modifier,
                 1 when !string.IsNullOrWhiteSpace(ergodoxKey.CustomLabel) => KeyDisplayMode.CustomLabel,
                 >= 2 => KeyDisplayMode.DualFunction,
                 _ => KeyDisplayMode.Base
@@ -122,6 +124,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
                     key.Primary = new BaseContent { Label = "Macro" };
                     break;
                 case KeyDisplayMode.Base:
+                case KeyDisplayMode.ComplexFeature:
                 case KeyDisplayMode.Modifier:
                 case KeyDisplayMode.ColorControl:
                     key.Primary = GetDisplayedFeature(features[0]);

@@ -8,6 +8,7 @@
         Macro,
         CustomLabel,
         Modifier,
-        ColorControl
+        ColorControl,
+        ComplexFeature
     }
 }
