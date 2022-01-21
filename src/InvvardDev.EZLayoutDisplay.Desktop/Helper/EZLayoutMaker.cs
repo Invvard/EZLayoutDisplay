@@ -153,7 +153,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Helper
                 // ColorControl Key - Color picker 
                 { KeyCode: "RGB" } => new ColorPicker { Label = keyDefinition.Label, ColorCode = feature.Color },
                 // Layer toggle key
-                { Category: KeyCategory.Layer } => new Layer { Label = keyDefinition.Label, Id = feature.Layer.Value },
+                { Category: KeyCategory.Layer } => new Layer { Label = keyDefinition.Label, Id = feature.Layer.Value, Tag = keyDefinition.Tag },
                 { IsGlyph: true } => new Glyph { Label = keyDefinition.Label, Modifier = mods },
                 // Modded label
                 _ when !string.IsNullOrWhiteSpace(mods) => new BaseContent { Label = $"{mods}+{keyDefinition.Label}", Tag = keyDefinition.Tag },
