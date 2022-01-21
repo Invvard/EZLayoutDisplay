@@ -62,14 +62,12 @@
     </Style>
 
     <Style TargetType="Viewbox" x:Key="ModifiedLabelViewBox" BasedOn="{StaticResource LabelViewBox}">
-        <Setter Property="Height" Value="20" />
         <Setter Property="StretchDirection" Value="Both" />
-        <Setter Property="VerticalAlignment" Value="Top" />
-        <Setter Property="Margin" Value="0 -3 0 0" />
+        <Setter Property="Margin" Value="0 -5 0 0" />
     </Style>
 
     <Style TargetType="Viewbox" x:Key="ModifierViewBox" BasedOn="{StaticResource ModifiedLabelViewBox}">
-        <Setter Property="Height" Value="10" />
+        <Setter Property="Height" Value="20" />
     </Style>
 
     <Style TargetType="Grid" x:Key="ContentGridBase">
@@ -121,7 +119,8 @@
     </Style>
 
     <Style TargetType="Label" x:Key="LayerGlyphStyle" BasedOn="{StaticResource GlyphStyle}">
-        <Setter Property="FontSize" Value="30" />
+        <Setter Property="FontSize" Value="25" />
+        <Setter Property="VerticalAlignment" Value="Center" />
     </Style>
 
     <Style TargetType="Label" x:Key="LayerIdLabel" BasedOn="{StaticResource LabelStyle}">
@@ -130,7 +129,7 @@
         <Setter Property="Foreground" Value="{StaticResource LayerIdForegroundBrush}" />
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="FontSize" Value="11" />
-        <Setter Property="Margin" Value="0 4 0 0" />
+        <Setter Property="Margin" Value="-1 2 0 0" />
     </Style>
 
     <DataTemplate x:Key="KeyDataTemplate">
@@ -152,7 +151,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="ModdedGlyphDataTemplate">
-        <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Vertical" VerticalAlignment="Center">
             <Viewbox Style="{StaticResource ModifierViewBox}">
                 <Label Style="{StaticResource LabelStyle}" Content="{Binding Modifier}" />
             </Viewbox>
@@ -210,16 +209,16 @@
                 <Viewbox Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Right" Stretch="None">
                     <TextBlock Style="{StaticResource PrimaryTag}" Text="{Binding Key.Primary.Tag}" />
                 </Viewbox>
-                <Viewbox Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Stretch="None">
+                <Viewbox Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Stretch="Uniform" Width="17">
                     <TextBlock Style="{StaticResource SecondaryTag}" Text="{Binding Key.Secondary.Tag}" />
                 </Viewbox>
 
                 <ContentControl ContentTemplateSelector="{StaticResource KeyFeatureTemplateSelector}"
                                 Content="{Binding Key.Primary}"
-                                 Grid.Column="0" Grid.Row="0"/>
+                                Grid.Column="0" Grid.Row="0" />
                 <ContentControl ContentTemplateSelector="{StaticResource KeyFeatureTemplateSelector}"
                                 Content="{Binding Key.Secondary}"
-                                 Grid.Column="0" Grid.Row="1"/>
+                                Grid.Column="0" Grid.Row="1" />
             </Grid>
         </Canvas>
     </DataTemplate>
