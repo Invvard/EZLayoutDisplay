@@ -7,6 +7,7 @@
     <FontFamily x:Key="OryxFontFamily">/Skins/Fonts/#Oryx</FontFamily>
 
     <SolidColorBrush x:Key="KeyLabelForeground" Color="#323546" />
+    <SolidColorBrush x:Key="LayerIdForegroundBrush" Color="#F7F8F8" />
     <SolidColorBrush x:Key="DefaultBackgroundBrush" Color="#FFFFFF" />
     <SolidColorBrush x:Key="ColorControlBackgroundBrush" Color="#FFF1BA" />
     <SolidColorBrush x:Key="CustomLabelBackgroundBrush" Color="#FFBFA3" />
@@ -44,46 +45,30 @@
         </Setter>
     </Style>
 
-    <Style TargetType="Label" x:Key="BaseLabelStyle">
-        <Setter Property="Foreground" Value="{StaticResource KeyLabelForeground}" />
-    </Style>
-
-    <Style TargetType="Label" x:Key="LabelStyle" BasedOn="{StaticResource BaseLabelStyle}">
-        <Setter Property="FontFamily" Value="{StaticResource InterFontFamily}" />
-        <Setter Property="FontSize" Value="20" />
-    </Style>
-
-    <Style TargetType="Label" x:Key="GlyphStyle" BasedOn="{StaticResource BaseLabelStyle}">
-        <Setter Property="FontFamily" Value="{StaticResource OryxFontFamily}" />
-        <Setter Property="FontSize" Value="22" />
-    </Style>
-
-    <DataTemplate x:Key="KeyDataTemplate">
-        <Canvas>
-            <Rectangle x:Name="KeyRect" Style="{DynamicResource KeyBase}" />
-        </Canvas>
-    </DataTemplate>
-
-    <Style TargetType="TextBlock" x:Key="BaseTag">
-        <Setter Property="FontSize" Value="10" />
-        <Setter Property="Foreground" Value="{StaticResource KeyLabelForeground}" />
-        <Setter Property="Margin" Value="0 -2 2 0" />
-        <Setter Property="Canvas.Right" Value="0" />
-    </Style>
-
-    <Style TargetType="TextBlock" x:Key="PrimaryTag" BasedOn="{StaticResource BaseTag}">
-        <Setter Property="Canvas.Top" Value="0" />
-    </Style>
-
-    <Style TargetType="TextBlock" x:Key="SecondaryTag" BasedOn="{StaticResource BaseTag}">
-        <Setter Property="Canvas.Bottom" Value="0" />
+    <Style TargetType="Ellipse" x:Key="ColorPickerAccentStyle">
+        <Setter Property="Width" Value="10" />
+        <Setter Property="Height" Value="10" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="HorizontalAlignment" Value="Right" />
+        <Setter Property="Margin" Value="0 -4 -3 0" />
     </Style>
 
     <Style TargetType="Viewbox" x:Key="LabelViewBox">
-        <Setter Property="Height" Value="30" />
+        <Setter Property="Height" Value="40" />
         <Setter Property="Stretch" Value="Uniform" />
         <Setter Property="StretchDirection" Value="DownOnly" />
         <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+
+    <Style TargetType="Viewbox" x:Key="ModifiedLabelViewBox" BasedOn="{StaticResource LabelViewBox}">
+        <Setter Property="Height" Value="20" />
+        <Setter Property="StretchDirection" Value="Both" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="Margin" Value="0 -3 0 0" />
+    </Style>
+
+    <Style TargetType="Viewbox" x:Key="ModifierViewBox" BasedOn="{StaticResource ModifiedLabelViewBox}">
+        <Setter Property="Height" Value="10" />
     </Style>
 
     <Style TargetType="Grid" x:Key="ContentGridBase">
@@ -101,6 +86,58 @@
         </Setter>
     </Style>
 
+    <Style TargetType="Grid" x:Key="LayerGrid">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+    </Style>
+
+    <Style TargetType="TextBlock" x:Key="BaseTag">
+        <Setter Property="FontSize" Value="10" />
+        <Setter Property="Foreground" Value="{StaticResource KeyLabelForeground}" />
+        <Setter Property="Margin" Value="0 -2 2 0" />
+        <Setter Property="Canvas.Right" Value="0" />
+    </Style>
+
+    <Style TargetType="TextBlock" x:Key="PrimaryTag" BasedOn="{StaticResource BaseTag}">
+        <Setter Property="Canvas.Top" Value="0" />
+    </Style>
+
+    <Style TargetType="TextBlock" x:Key="SecondaryTag" BasedOn="{StaticResource BaseTag}">
+        <Setter Property="Canvas.Bottom" Value="0" />
+    </Style>
+    <Style TargetType="Label" x:Key="BaseLabelStyle">
+        <Setter Property="Foreground" Value="{StaticResource KeyLabelForeground}" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="LabelStyle" BasedOn="{StaticResource BaseLabelStyle}">
+        <Setter Property="FontFamily" Value="{StaticResource InterFontFamily}" />
+        <Setter Property="FontSize" Value="20" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="GlyphStyle" BasedOn="{StaticResource BaseLabelStyle}">
+        <Setter Property="FontFamily" Value="{StaticResource OryxFontFamily}" />
+        <Setter Property="FontSize" Value="22" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="LayerGlyphStyle" BasedOn="{StaticResource GlyphStyle}">
+        <Setter Property="FontSize" Value="30" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="LayerIdLabel" BasedOn="{StaticResource LabelStyle}">
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="Foreground" Value="{StaticResource LayerIdForegroundBrush}" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="FontSize" Value="11" />
+        <Setter Property="Margin" Value="0 4 0 0" />
+    </Style>
+
+    <DataTemplate x:Key="KeyDataTemplate">
+        <Canvas>
+            <Rectangle x:Name="KeyRect" Style="{DynamicResource KeyBase}" />
+        </Canvas>
+    </DataTemplate>
+
     <DataTemplate x:Key="SimpleLabelDataTemplate">
         <Viewbox Style="{StaticResource LabelViewBox}">
             <Label Style="{StaticResource LabelStyle}" Content="{Binding Label}" />
@@ -114,21 +151,29 @@
     </DataTemplate>
 
     <DataTemplate x:Key="ModdedGlyphDataTemplate">
-        <Viewbox Style="{StaticResource LabelViewBox}">
-            <Label Style="{StaticResource GlyphStyle}" Content="{Binding Label}" />
-        </Viewbox>
+        <StackPanel Orientation="Vertical">
+            <Viewbox Style="{StaticResource ModifierViewBox}">
+                <Label Style="{StaticResource LabelStyle}" Content="{Binding Modifier}" />
+            </Viewbox>
+            <Viewbox Style="{StaticResource ModifiedLabelViewBox}">
+                <Label Style="{StaticResource GlyphStyle}" Content="{Binding Label}" />
+            </Viewbox>
+        </StackPanel>
     </DataTemplate>
 
     <DataTemplate x:Key="LayerDataTemplate">
         <Viewbox Style="{StaticResource LabelViewBox}">
-            <Label Style="{StaticResource GlyphStyle}" Content="{Binding Label}" />
+            <Grid Style="{StaticResource LayerGrid}" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Label Style="{StaticResource LayerGlyphStyle}" Content="{Binding Label}" />
+                <Label Style="{StaticResource LayerIdLabel}" Content="{Binding Id}" />
+            </Grid>
         </Viewbox>
     </DataTemplate>
 
     <DataTemplate x:Key="ColorPickerDataTemplate">
         <Viewbox Style="{StaticResource LabelViewBox}">
             <Grid>
-                <Ellipse Width="10" Height="10" Fill="{Binding ColorCode}" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0 -10 -8 0"/>
+                <Ellipse Style="{StaticResource ColorPickerAccentStyle}" Fill="{Binding ColorCode}" />
                 <Label Style="{StaticResource GlyphStyle}" Content="{Binding Label}" FontSize="30"/>
             </Grid>
         </Viewbox>
