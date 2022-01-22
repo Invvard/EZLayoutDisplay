@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using InvvardDev.EZLayoutDisplay.Desktop.Model.Ez;
+using System.Collections.Generic;
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.Model
 {
@@ -17,7 +18,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
         /// <summary>
         /// Gets or sets the layer list of keys.
         /// </summary>
-        public List<EZKey> EZKeys { get; set; }
+        public List<Key> Keys { get; set; }
 
         /// <summary>
         /// Gets or sets the layer color.
@@ -26,7 +27,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
 
         public EZLayer()
         {
-            EZKeys = new List<EZKey>();
+            Keys = new List<Key>();
         }
     }
 }

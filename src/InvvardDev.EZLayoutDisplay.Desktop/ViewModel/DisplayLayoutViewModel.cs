@@ -11,12 +11,14 @@ using GalaSoft.MvvmLight.Messaging;
 using InvvardDev.EZLayoutDisplay.Desktop.Helper;
 using InvvardDev.EZLayoutDisplay.Desktop.Model;
 using InvvardDev.EZLayoutDisplay.Desktop.Model.Enum;
+using InvvardDev.EZLayoutDisplay.Desktop.Model.Ez.Content;
 using InvvardDev.EZLayoutDisplay.Desktop.Model.Messenger;
 using InvvardDev.EZLayoutDisplay.Desktop.Properties;
 using InvvardDev.EZLayoutDisplay.Desktop.Service.Interface;
 using InvvardDev.EZLayoutDisplay.Desktop.View;
 using Newtonsoft.Json;
 using NLog;
+using Key = InvvardDev.EZLayoutDisplay.Desktop.Model.Ez.Key;
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 {
@@ -182,29 +184,25 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         /// Lost focus command.
         /// </summary>
         public ICommand LostFocusCommand =>
-            _lostFocusCommand
-            ?? (_lostFocusCommand = new RelayCommand(LostFocus, LostFocusCanExecute));
+            _lostFocusCommand ??= new RelayCommand(LostFocus, LostFocusCanExecute);
 
         /// <summary>
         /// Hide window command.
         /// </summary>
         public ICommand HideWindowCommand =>
-            _hideWindowCommand
-            ?? (_hideWindowCommand = new RelayCommand(LostFocus));
+            _hideWindowCommand ??= new RelayCommand(LostFocus);
 
         /// <summary>
         /// Next layer command.
         /// </summary>
         public ICommand NextLayerCommand =>
-            _nextLayerCommand
-            ?? (_nextLayerCommand = new RelayCommand(NextLayer, NextLayerCanExecute));
+            _nextLayerCommand ??= new RelayCommand(NextLayer, NextLayerCanExecute);
 
         /// <summary>
         /// Next layer command.
         /// </summary>
         public ICommand ScrollLayerCommand =>
-            _scrollLayerCommand
-            ?? (_scrollLayerCommand = new RelayCommand<MouseWheelEventArgs>(ScrollLayer));
+            _scrollLayerCommand ??= new RelayCommand<MouseWheelEventArgs>(ScrollLayer);
 
         #endregion
 
@@ -262,7 +260,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
             if (_ezLayout?.EZLayers == null
                 || !_ezLayout.EZLayers.Any()
-                || !_ezLayout.EZLayers.SelectMany(l => l.EZKeys).Any())
+                || !_ezLayout.EZLayers.SelectMany(l => l.Keys).Any())
             {
                 Logger.Info("No layout available");
                 NoLayoutWarningFirstLine = "No layout available!";
@@ -270,7 +268,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
                 NoLayoutAvailable = true;
 
                 return;
-            } else if (!_layoutService.SupportsGeometry(_ezLayout.Geometry))
+            }
+            else if (!_layoutService.SupportsGeometry(_ezLayout.Geometry))
             {
                 Logger.Info("Geometry not supported");
                 NoLayoutWarningFirstLine = "Not supported!";
@@ -301,30 +300,29 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
             // ReSharper disable once UseObjectOrCollectionInitializer
             CurrentLayoutTemplate = new ObservableCollection<KeyTemplate>(layoutDefinition);
-            CurrentLayoutTemplate[0].EZKey = new EZKey {
-                                                           Label = new KeyLabel("="),
-                                                           Modifier = new KeyLabel("Left Shift"),
-                                                           DisplayType = KeyDisplayType.ModifierOnTop,
-                                                           KeyCategory = KeyCategory.DualFunction,
-                                                           Color = "#111"
-                                                       };
-
-            CurrentLayoutTemplate[1].EZKey = new EZKey {
-                                                           Label = new KeyLabel("LT \u2192 1"),
-                                                           DisplayType = KeyDisplayType.SimpleLabel,
-                                                           KeyCategory = KeyCategory.DualFunction,
-                                                           Color = "#BBB"
-                                                       };
-
-            for (int i = 2 ; i < CurrentLayoutTemplate.Count ; i++)
+            CurrentLayoutTemplate[0].Key = new Key
             {
-                CurrentLayoutTemplate[i].EZKey = new EZKey {
-                                                               Label = new KeyLabel("E"),
-                                                               Modifier = new KeyLabel("Left Shift"),
-                                                               KeyCategory = KeyCategory.French,
-                                                               InternationalHint = "fr",
-                                                               Color = "#777"
-                                                           };
+                Primary = new BaseContent { Label = "Shift + =" },
+                DisplayMode = KeyDisplayMode.Base,
+                GlowColor = "#111"
+            };
+
+            CurrentLayoutTemplate[1].Key = new Key
+            {
+                Primary = new Layer { Label = "\u2192", Id = 1 },
+                Secondary = new Layer { Label = "\u2192", Id = 2 },
+                DisplayMode = KeyDisplayMode.DualFunction,
+                GlowColor = "#BBB"
+            };
+
+            for (int i = 2; i < CurrentLayoutTemplate.Count; i++)
+            {
+                CurrentLayoutTemplate[i].Key = new Key
+                {
+                    Primary = new BaseContent { Label = "Shift + E", Tag = "fr" },
+                    DisplayMode = KeyDisplayMode.Base,
+                    GlowColor = "#777"
+                };
             }
         }
 
@@ -334,13 +332,14 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
             foreach (var ezLayer in _ezLayout.EZLayers)
             {
-                if (!(await LoadLayoutDefinition(geometry) is List<KeyTemplate> layoutTemplate)) break;
+                if (await LoadLayoutDefinition(geometry) is not List<KeyTemplate> layoutTemplate)
+                    break;
 
                 if (layoutTemplate.Count == 0) return;
 
-                for (int j = 0 ; j < layoutTemplate.Count ; j++)
+                for (int j = 0; j < layoutTemplate.Count; j++)
                 {
-                    layoutTemplate[j].EZKey = ezLayer.EZKeys[j];
+                    layoutTemplate[j].Key = ezLayer.Keys[j];
                 }
 
                 _layoutTemplates.Add(layoutTemplate);
@@ -389,7 +388,6 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         private void NextLayer()
         {
             Logger.TraceRelayCommand();
-
             VaryLayer(1);
         }
 
@@ -397,15 +395,14 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         {
             Logger.TraceRelayCommand();
 
-            if (e.Delta < 0)
+            var variation = e switch
             {
-                VaryLayer(1);
-            }
+                { Delta: < 0 } => 1,
+                { Delta: > 0 } => -1,
+                _ => 0
+            };
 
-            if (e.Delta > 0)
-            {
-                VaryLayer(-1);
-            }
+            VaryLayer(variation);
         }
 
         private void VaryLayer(int variation)
@@ -414,46 +411,21 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
             var maxLayerIndex = _ezLayout.EZLayers.Count - 1;
 
-            switch (CurrentLayerIndex)
+            CurrentLayerIndex = variation switch
             {
-                case var _ when maxLayerIndex <= 0:
-                    CurrentLayerIndex = 0;
-
-                    break;
-                case var _ when CurrentLayerIndex <= 0 && variation < 0:
-                    CurrentLayerIndex = maxLayerIndex;
-
-                    break;
-                case var _ when CurrentLayerIndex > 0 && variation < 0:
-                    CurrentLayerIndex--;
-
-                    break;
-                case var _ when CurrentLayerIndex >= maxLayerIndex && variation > 0:
-                    CurrentLayerIndex = 0;
-
-                    break;
-                case var _ when CurrentLayerIndex < maxLayerIndex && variation > 0:
-                    CurrentLayerIndex++;
-
-                    break;
-            }
+                < 0 when CurrentLayerIndex <= 0 => maxLayerIndex,
+                < 0 when CurrentLayerIndex > 0 => --CurrentLayerIndex,
+                > 0 when CurrentLayerIndex >= maxLayerIndex => 0,
+                > 0 when CurrentLayerIndex < maxLayerIndex => ++CurrentLayerIndex,
+                _ => CurrentLayerIndex
+            };
 
             SwitchLayer();
         }
 
-        private bool NextLayerCanExecute()
-        {
-            var canExecute = _layoutTemplates.Any();
+        private bool NextLayerCanExecute() => _layoutTemplates.Any();
 
-            return canExecute;
-        }
-
-        private bool LostFocusCanExecute()
-        {
-            var canExecute = !IsWindowPinned;
-
-            return canExecute;
-        }
+        private bool LostFocusCanExecute() => !IsWindowPinned;
 
         #endregion
 

@@ -33,7 +33,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model.Dictionary
 
             try
             {
-                var json = Encoding.Default.GetString(Resources.keyDefinitions);
+                var json = Encoding.UTF8.GetString(Resources.keyDefinitions);
                 Logger.Debug($"Resource content = {json}");
 
                 var keyDefinitions = JsonConvert.DeserializeObject<List<KeyDefinition>>(json);

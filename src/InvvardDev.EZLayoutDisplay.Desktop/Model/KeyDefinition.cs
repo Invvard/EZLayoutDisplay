@@ -1,13 +1,10 @@
 ﻿using InvvardDev.EZLayoutDisplay.Desktop.Model.Enum;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.Model
 {
     public class KeyDefinition
     {
-        #region Properties
-
         /// <summary>
         /// Gets the key code.
         /// </summary>
@@ -19,38 +16,20 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
         /// </summary>
         [JsonProperty("label")]
         public string Label { get; set; }
-
+        
         /// <summary>
-        /// Gets the key category.
+        /// Gets the key label.
         /// </summary>
-        [JsonProperty("category")]
-        [JsonConverter(typeof(StringEnumConverter))]
-        public KeyCategory KeyCategory { get; set; }
-
+        [JsonProperty("tag", NullValueHandling = NullValueHandling.Ignore)]
+        public string Tag { get; set; }
+        
         /// <summary>
-        /// Gets the key description.
+        /// Gets indicator that this key is a glyph or not.
         /// </summary>
-        [JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)]
-        public string Description { get; set; }
-
-        /// <summary>
-        /// Gets the key secondary command.
-        /// </summary>
-        [JsonProperty("command", NullValueHandling = NullValueHandling.Ignore)]
-        public string SecondaryCommand { get; set; }
-
-        /// <summary>
-        /// Gets the key glyph name to display.
-        /// </summary>
-        [JsonProperty("isglyph", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [JsonProperty("is_glyph", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public bool IsGlyph { get; set; }
 
-        /// <summary>
-        /// Gets the key preceding key indicator (blocks the targeted layer).
-        /// </summary>
-        [JsonProperty("precedingKey", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        public bool PrecedingKey { get; set; }
-
-        #endregion
+        [JsonProperty("category")]
+        public KeyCategory Category { get; set; }
     }
 }

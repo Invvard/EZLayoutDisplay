@@ -1,15 +1,9 @@
 ﻿using Newtonsoft.Json;
 
-namespace InvvardDev.EZLayoutDisplay.Desktop.Model
+namespace InvvardDev.EZLayoutDisplay.Desktop.Model.ZsaModels
 {
-    public class ErgodoxKey
+    public class ErgodoxKeyFeature
     {
-        /// <summary>
-        /// Gets or sets the supported OS name.
-        /// </summary>
-        [JsonProperty("os", NullValueHandling = NullValueHandling.Ignore)]
-        public string SupportedOsName { get; set; }
-
         /// <summary>
         /// Gets or sets the key code.
         /// </summary>
@@ -31,14 +25,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
         /// <summary>
         /// Gets or sets the primary command.
         /// </summary>
-        [JsonProperty("command", NullValueHandling = NullValueHandling.Ignore)]
-        public string Command { get; set; }
-
-        /// <summary>
-        /// Gets or sets the GlowColor.
-        /// </summary>
-        [JsonProperty("glowColor", NullValueHandling = NullValueHandling.Ignore)]
-        public string GlowColor { get; set; }
+        [JsonProperty("macro", NullValueHandling = NullValueHandling.Ignore)]
+        public object Macro { get; set; }
 
         /// <summary>
         /// Gets or sets the modifiers.
@@ -46,10 +34,5 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
         [JsonProperty("modifiers", NullValueHandling = NullValueHandling.Ignore)]
         public ErgodoxModifiers Modifiers { get; set; }
 
-        /// <summary>
-        /// Gets or sets the custom label.
-        /// </summary>
-        [JsonProperty("customLabel", NullValueHandling = NullValueHandling.Ignore)]
-        public string CustomLabel { get; set; }
     }
 }

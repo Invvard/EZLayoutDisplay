@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using InvvardDev.EZLayoutDisplay.Desktop.Model.Enum;
 
 namespace InvvardDev.EZLayoutDisplay.Desktop.Model
 {
@@ -32,18 +31,12 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Model
         public int Index { get; }
 
         /// <summary>
-        /// Gets the <see cref="KeyModifier"/> type.
-        /// </summary>
-        public KeyModifier KeyModifier { get; }
-
-        /// <summary>
         /// Gets the labels.
         /// </summary>
         public Dictionary<LabelSize, string> Labels { get; }
 
-        public EZModifier(KeyModifier keyModifier, int index, string smallLabel, string mediumLabel, string largeLabel)
+        public EZModifier(int index, string smallLabel, string mediumLabel, string largeLabel)
         {
-            KeyModifier = keyModifier;
             Index = index;
             Labels = new Dictionary<LabelSize, string> {
                                                            { LabelSize.Small, smallLabel },

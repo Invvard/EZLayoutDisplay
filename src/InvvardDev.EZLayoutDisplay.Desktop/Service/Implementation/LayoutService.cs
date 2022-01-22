@@ -19,7 +19,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
         /// <summary>
         /// Supported keyboards and their layout definition resources.
         /// </summary>
-        private static readonly Dictionary<string, byte[]> LayoutDefinitions = new Dictionary<string, byte[]>()
+        private static readonly Dictionary<string, byte[]> LayoutDefinitions = new()
         {
             { "ergodox-ez", Resources.layoutDefinition_ergodox },
             { "moonlander", Resources.layoutDefinition_moonlander }
@@ -45,7 +45,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
             ValidateLayoutHashId(layoutHashId);
 
             var info = await QueryData(layoutHashId, geometry, layoutRevisionId, GetLayoutInfoRequestBody);
-            
+
             return info;
         }
 
@@ -68,8 +68,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
         {
             Logger.TraceMethod();
 
-            var ezLayoutMaker = new EZLayoutMaker();
-            EZLayout ezLayout = ezLayoutMaker.PrepareEZLayout(ergodoxLayout);
+            EZLayout ezLayout = new EZLayoutMaker().PrepareEZLayout(ergodoxLayout);
 
             return ezLayout;
         }
@@ -124,19 +123,18 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
         {
             DataRoot layout;
 
-            using (HttpClient client = new HttpClient())
-            {
-                Logger.Debug("Request body : {@body}", requestBody);
+            using var client = new HttpClient();
 
-                var response = await client.PostAsync(GetLayoutRequestUri, new StringContent(requestBody, Encoding.UTF8, "application/json"));
-                Logger.Debug("Response : {@response}", response);
+            Logger.Debug("Request body : {@body}", requestBody);
 
-                var result = await response.Content.ReadAsStringAsync();
-                Logger.Debug("Content result : {@result}", result);
+            var response = await client.PostAsync(GetLayoutRequestUri, new StringContent(requestBody, Encoding.UTF8, "application/json"));
+            Logger.Debug("Response : {@response}", response);
 
-                layout = JsonConvert.DeserializeObject<DataRoot>(result);
-                Logger.Debug("Deserialized layout : {@layout}", layout);
-            }
+            var result = await response.Content.ReadAsStringAsync();
+            Logger.Debug("Content result : {@result}", result);
+
+            layout = JsonConvert.DeserializeObject<DataRoot>(result);
+            Logger.Debug("Deserialized layout : {@layout}", layout);
 
             return layout;
         }
@@ -145,9 +143,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
         {
             Logger.TraceMethod();
 
-            byte[] layoutDefinitionJson;
-
-            if (!LayoutDefinitions.TryGetValue(geometry, out layoutDefinitionJson))
+            if (!LayoutDefinitions.TryGetValue(geometry, out byte[] layoutDefinitionJson))
             {
                 layoutDefinitionJson = Resources.layoutDefinition;
             }
@@ -159,13 +155,14 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
                 return new List<KeyTemplate>();
             }
 
-            var layoutTemplate = await Task.Run(() => {
-                                                    var json = Encoding.Default.GetString(layoutDefinitionJson);
+            var layoutTemplate = await Task.Run(() =>
+            {
+                var json = Encoding.Default.GetString(layoutDefinitionJson);
 
-                                                    var layoutDefinition = JsonConvert.DeserializeObject<IEnumerable<KeyTemplate>>(json);
+                var layoutDefinition = JsonConvert.DeserializeObject<IEnumerable<KeyTemplate>>(json);
 
-                                                    return layoutDefinition;
-                                                });
+                return layoutDefinition;
+            });
 
             Logger.DebugOutputParam(nameof(layoutTemplate), layoutTemplate);
 
