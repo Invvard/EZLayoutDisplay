@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvvardDev.EZLayoutDisplay.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvvardDev.EZLayoutDisplay.Tests", "InvvardDev.EZLayoutDisplay.Tests\InvvardDev.EZLayoutDisplay.Tests.csproj", "{82704A9A-B010-4A00-8CF4-00D33F4E23DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvvardDev.EZLayoutDisplay.Tool.KeyDefinitionProvider", "InvvardDev.EZLayoutDisplay.Tool.KeyDefinitionProvider\InvvardDev.EZLayoutDisplay.Tool.KeyDefinitionProvider.csproj", "{48997597-4E97-4FC9-B22B-00A64CFCE56C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InvvardDev.EZLayoutDisplay.Tool.KeyDefinitionProvider", "InvvardDev.EZLayoutDisplay.Tool.KeyDefinitionProvider\InvvardDev.EZLayoutDisplay.Tool.KeyDefinitionProvider.csproj", "{48997597-4E97-4FC9-B22B-00A64CFCE56C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
