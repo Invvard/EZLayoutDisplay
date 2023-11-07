@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace InvvardDev.EZLayoutDisplay.Desktop.Model
+namespace InvvardDev.EZLayoutDisplay.Desktop.Model.ZsaModels
 {
     public class ErgodoxModifiers
     {

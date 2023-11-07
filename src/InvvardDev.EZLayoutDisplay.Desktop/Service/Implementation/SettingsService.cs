@@ -23,6 +23,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
 
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly Settings _settings;
+        private readonly JsonSerializerSettings _serializerSettings;
 
         #endregion
 
@@ -34,6 +35,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
 
             _settings = settings;
             _defaultHotkey = new Hotkey(Keys.Space, ModifierKeys.Alt, ModifierKeys.Control, ModifierKeys.Shift, ModifierKeys.WindowsKey);
+
+            _serializerSettings = new JsonSerializerSettings { TypeNameHandling= TypeNameHandling.Objects };
         }
 
         #endregion
@@ -116,7 +119,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
 
                     ezLayout = string.IsNullOrWhiteSpace(setting)
                                    ? new EZLayout()
-                                   : JsonConvert.DeserializeObject<EZLayout>(setting);
+                                   : JsonConvert.DeserializeObject<EZLayout>(setting, _serializerSettings);
                     Logger.Debug("Loaded Layout = {@ezLayout}", ezLayout);
                 }
                 catch (Exception ex)
@@ -135,7 +138,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
                 Logger.TraceMethod();
                 Logger.DebugInputParam(nameof(EZLayout), value);
 
-                var setting = JsonConvert.SerializeObject(value);
+                var setting = JsonConvert.SerializeObject(value, _serializerSettings);
                 _settings[SettingsName.EZLayout] = setting;
             }
         }
@@ -155,10 +158,6 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.Service.Implementation
             Logger.TraceMethod();
             _settings.Reload();
         }
-
-        #endregion
-
-        #region Private methods
 
         #endregion
     }

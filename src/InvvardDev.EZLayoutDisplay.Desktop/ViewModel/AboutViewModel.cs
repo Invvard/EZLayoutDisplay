@@ -70,7 +70,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         public string AppVersionLabel
         {
-            get => _appVersionLabel;
+            get => $"{_appVersionLabel}-Beta";
             set => Set(ref _appVersionLabel, value);
         }
 

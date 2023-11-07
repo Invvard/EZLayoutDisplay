@@ -70,50 +70,43 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         /// Open tag search command.
         /// </summary>
         public ICommand OpenTagSearchCommand =>
-            _openTagSearchCommand
-            ?? (_openTagSearchCommand = new RelayCommand<string>(OpenTagSearchUrl));
+            _openTagSearchCommand ??= new RelayCommand<string>(OpenTagSearchUrl);
 
         /// <summary>
         /// Download HEX file.
         /// </summary>
         public ICommand DownloadHexFileCommand =>
-            _downloadHexFileCommand
-            ?? (_downloadHexFileCommand = new RelayCommand(DownloadHexFile, LayoutIsCompiled));
+            _downloadHexFileCommand ??= new RelayCommand(DownloadHexFile, LayoutIsCompiled);
 
         /// <summary>
         /// Download Sources ZIP.
         /// </summary>
         public ICommand DownloadSourcesCommand =>
-            _downloadSourcesCommand
-            ?? (_downloadSourcesCommand = new RelayCommand(DownloadSources, LayoutIsCompiled));
+            _downloadSourcesCommand ??= new RelayCommand(DownloadSources, LayoutIsCompiled);
 
         /// <summary>
         /// Cancel settings edition.
         /// </summary>
         public ICommand CancelSettingsCommand =>
-            _cancelSettingsCommand
-            ?? (_cancelSettingsCommand = new RelayCommand(CancelSettings, IsDirty));
+            _cancelSettingsCommand ??= new RelayCommand(CancelSettings, IsDirty);
 
         /// <summary>
         /// Applies the settings.
         /// </summary>
         public ICommand ApplySettingsCommand =>
-            _applySettingsCommand
-            ?? (_applySettingsCommand = new RelayCommand(SaveSettings, IsDirty));
+            _applySettingsCommand ??= new RelayCommand(SaveSettings, IsDirty);
 
         /// <summary>
         /// Update the layout from Ergodox website.
         /// </summary>
         public ICommand UpdateLayoutCommand =>
-            _updateLayoutCommand
-            ?? (_updateLayoutCommand = new RelayCommand(SaveSettings));
+            _updateLayoutCommand ??= new RelayCommand(SaveSettings);
 
         /// <summary>
         /// Closes the settings window.
         /// </summary>
         public ICommand CloseSettingsCommand =>
-            _closeSettingsCommand
-            ?? (_closeSettingsCommand = new RelayCommand(CloseSettingsWindow));
+            _closeSettingsCommand ??= new RelayCommand(CloseSettingsWindow);
 
         #endregion
 
@@ -179,13 +172,13 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         public ObservableCollection<string> Tags
         {
-            get => _tags ?? (_tags = new ObservableCollection<string>());
+            get => _tags ??= new ObservableCollection<string>();
             private set => Set(ref _tags, value);
         }
 
         public ObservableCollection<string> Layers
         {
-            get => _layers ?? (_layers = new ObservableCollection<string>());
+            get => _layers ??= new ObservableCollection<string>();
             private set => Set(ref _layers, value);
         }
 
@@ -382,8 +375,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
         {
             Logger.TraceMethod();
 
-            ((RelayCommand) ApplySettingsCommand).RaiseCanExecuteChanged();
-            ((RelayCommand) CancelSettingsCommand).RaiseCanExecuteChanged();
+            ((RelayCommand)ApplySettingsCommand).RaiseCanExecuteChanged();
+            ((RelayCommand)CancelSettingsCommand).RaiseCanExecuteChanged();
         }
 
         private bool IsDirty()
@@ -451,7 +444,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             LayoutTitle = "";
             KeyboardModel = "";
             LayoutStatus = "";
-            
+
             _layoutIsCompiled = false;
         }
 
@@ -478,27 +471,13 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
         private string GetKeyBoardDescription(string keyboardGeometry, string revisionModel)
         {
-            string keyboardDescription;
-
-            switch (keyboardGeometry)
+            string keyboardDescription = keyboardGeometry switch
             {
-                case "ergodox-ez":
-                    keyboardDescription = "ErgoDox EZ ";
-
-                    break;
-                case "planck-ez":
-                    keyboardDescription = "Planck EZ ";
-
-                    break;
-                case "moonlander":
-                    keyboardDescription = "Moonlander ";
-                    break;
-                default:
-                    keyboardDescription = $"{keyboardGeometry} ";
-
-                    break;
-            }
-
+                "ergodox-ez" => "ErgoDox EZ ",
+                "planck-ez" => "Planck EZ ",
+                "moonlander" => "Moonlander ",
+                _ => $"{keyboardGeometry} ",
+            };
             keyboardDescription += char.ToUpper(revisionModel[0]) + revisionModel.Substring(1);
 
             return keyboardDescription;
@@ -510,8 +489,8 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
 
             _layoutIsCompiled = Uri.IsWellFormedUriString(revision.HexUrl, UriKind.Absolute) && Uri.IsWellFormedUriString(revision.SourcesUrl, UriKind.Absolute);
 
-            ((RelayCommand) DownloadHexFileCommand).RaiseCanExecuteChanged();
-            ((RelayCommand) DownloadSourcesCommand).RaiseCanExecuteChanged();
+            ((RelayCommand)DownloadHexFileCommand).RaiseCanExecuteChanged();
+            ((RelayCommand)DownloadSourcesCommand).RaiseCanExecuteChanged();
 
             _hexFileUri = revision.HexUrl;
             _sourcesZipUri = revision.SourcesUrl;
@@ -568,7 +547,7 @@ namespace InvvardDev.EZLayoutDisplay.Desktop.ViewModel
             }
 
             Logger.Debug($"Layout URL = {layoutUrl}");
-            Logger.Debug($"Layout URL has {(match.Success ? "": "NOT ")}been matched");
+            Logger.Debug($"Layout URL has {(match.Success ? "" : "NOT ")}been matched");
             Logger.Debug($"Layout Hash ID = {CurrentLayoutHashId}");
             Logger.Debug($"Keyboard geometry = {CurrentGeometry}");
             Logger.Debug($"Layout Revision ID = {CurrentLayoutRevisionId}");

@@ -3,35 +3,40 @@
                     xmlns:helper="clr-namespace:InvvardDev.EZLayoutDisplay.Desktop.Helper"
                     xmlns:converter="clr-namespace:InvvardDev.EZLayoutDisplay.Desktop.View.Converter">
 
-    <FontFamily x:Key="LatoFontFamily">/InvvardDev.EZLayoutDisplay.Desktop;component/Skins/Fonts/#Lato</FontFamily>
-    <FontFamily x:Key="OryxFontFamily">/InvvardDev.EZLayoutDisplay.Desktop;component/Skins/Fonts/#Oryx</FontFamily>
+    <FontFamily x:Key="InterFontFamily">/Skins/Fonts/#Inter</FontFamily>
+    <FontFamily x:Key="OryxFontFamily">/Skins/Fonts/#Oryx</FontFamily>
 
-    <SolidColorBrush x:Key="BaseDefaultBackgroundBrush" Color="#f4f4f4" />
-    <SolidColorBrush x:Key="BaseDualFunctionBackgroundBrush" Color="#d5e1f9" />
-    <SolidColorBrush x:Key="BaseModifierBackgroundBrush" Color="#e1f5d7" />
-    <SolidColorBrush x:Key="BaseShineBackgroundBrush" Color="#f1e5b6" />
+    <SolidColorBrush x:Key="KeyLabelForeground" Color="#323546" />
+    <SolidColorBrush x:Key="LayerIdForegroundBrush" Color="#F7F8F8" />
+    <SolidColorBrush x:Key="DefaultBackgroundBrush" Color="#FFFFFF" />
+    <SolidColorBrush x:Key="ColorControlBackgroundBrush" Color="#FFF1BA" />
+    <SolidColorBrush x:Key="CustomLabelBackgroundBrush" Color="#FFBFA3" />
+    <SolidColorBrush x:Key="DualFunctionBackgroundBrush" Color="#E1EBFF" />
+    <SolidColorBrush x:Key="MacroBackgroundBrush" Color="#E0DBFF" />
+    <SolidColorBrush x:Key="ModifierBackgroundBrush" Color="#EBFFE1" />
 
-    <SolidColorBrush x:Key="TopDefaultBackgroundBrush" Color="#fcfcfc" />
-    <SolidColorBrush x:Key="TopDualFunctionBackgroundBrush" Color="#e1ebff" />
-    <SolidColorBrush x:Key="TopModifierBackgroundBrush" Color="#ebffe1" />
-    <SolidColorBrush x:Key="TopShineBackgroundBrush" Color="#fff1ba" />
+    <converter:KeyCategoryToBrushConverter x:Key="KeyCategoryToBrushConverter"
+                                           DefaultBackgroundBrush="{StaticResource DefaultBackgroundBrush}"
+                                           ColorControlBackgroundBrush="{StaticResource ColorControlBackgroundBrush}"
+                                           ComplexFeatureBackgroundBrush="{StaticResource DualFunctionBackgroundBrush}"
+                                           CustomLabelBackgroundBrush="{StaticResource CustomLabelBackgroundBrush}"
+                                           DualFunctionBackgroundBrush="{StaticResource DualFunctionBackgroundBrush}"
+                                           MacroBackgroundBrush="{StaticResource MacroBackgroundBrush}"
+                                           ModifierBackgroundBrush="{StaticResource ModifierBackgroundBrush}"/>
 
-    <converter:KeyCategoryToBrushConverter x:Key="KeyCategoryToBaseBrushConverter"
-                                           DefaultBackgroundBrush="{StaticResource BaseDefaultBackgroundBrush}"
-                                           DualFunctionBackgroundBrush="{StaticResource BaseDualFunctionBackgroundBrush}"
-                                           ModifierBackgroundBrush="{StaticResource BaseModifierBackgroundBrush}"
-                                           ShineBackgroundBrush="{StaticResource BaseShineBackgroundBrush}"/>
-    <converter:KeyCategoryToBrushConverter x:Key="KeyCategoryToTopBrushConverter"
-                                           DefaultBackgroundBrush="{StaticResource TopDefaultBackgroundBrush}"
-                                           DualFunctionBackgroundBrush="{StaticResource TopDualFunctionBackgroundBrush}"
-                                           ModifierBackgroundBrush="{StaticResource TopModifierBackgroundBrush}"
-                                           ShineBackgroundBrush="{StaticResource TopShineBackgroundBrush}" />
+    <SolidColorBrush x:Key="KeyBorderColorBrush" Color="#c7c7c7" />
 
-    <SolidColorBrush x:Key="KeyBaseBorderColorBrush" Color="#c7c7c7" />
-    <SolidColorBrush x:Key="KeyTopBorderColorBrush" Color="#1affffff" />
-
-    <Style TargetType="Rectangle" x:Key="BaseKey">
+    <Style TargetType="Rectangle" x:Key="KeyBase">
+        <Setter Property="RadiusX" Value="5" />
+        <Setter Property="RadiusY" Value="5" />
+        <Setter Property="Fill" Value="{Binding Key.DisplayMode, Converter={StaticResource KeyCategoryToBrushConverter}}" />
+        <Setter Property="Stroke" Value="{StaticResource KeyBorderColorBrush}" />
+        <Setter Property="Canvas.Top" Value="{Binding BaseKeyY}" />
+        <Setter Property="Canvas.Left" Value="{Binding BaseKeyX}" />
+        <Setter Property="Height" Value="{Binding BaseKeyHeight}" />
+        <Setter Property="Width" Value="{Binding BaseKeyWidth}" />
         <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="RenderTransformOrigin" Value="{Binding RotationOrigin}" />
         <Setter Property="RenderTransform">
             <Setter.Value>
                 <TransformGroup>
@@ -39,69 +44,30 @@
                 </TransformGroup>
             </Setter.Value>
         </Setter>
-        <Setter Property="RenderTransformOrigin" Value="{Binding RotationOrigin}" />
     </Style>
 
-    <Style TargetType="Rectangle" BasedOn="{StaticResource BaseKey}" x:Key="KeyBase">
-        <Setter Property="RadiusX" Value="5" />
-        <Setter Property="RadiusY" Value="5" />
-        <Setter Property="Fill" Value="{Binding EZKey.KeyCategory, Converter={StaticResource KeyCategoryToBaseBrushConverter}}" />
-        <Setter Property="Stroke" Value="{StaticResource KeyBaseBorderColorBrush}" />
-        <Setter Property="Canvas.Top" Value="{Binding BaseKeyY}" />
-        <Setter Property="Canvas.Left" Value="{Binding BaseKeyX}" />
-        <Setter Property="Height" Value="{Binding BaseKeyHeight}" />
-        <Setter Property="Width" Value="{Binding BaseKeyWidth}" />
-    </Style>
-
-    <Style TargetType="Rectangle" BasedOn="{StaticResource BaseKey}" x:Key="KeyTop">
-        <Setter Property="RadiusX" Value="3" />
-        <Setter Property="RadiusY" Value="3" />
-        <Setter Property="Fill" Value="{Binding EZKey.KeyCategory, Converter={StaticResource KeyCategoryToTopBrushConverter}}" />
-        <Setter Property="Stroke" Value="{StaticResource KeyTopBorderColorBrush}" />
-        <Setter Property="Canvas.Top" Value="{Binding TopKeyY}" />
-        <Setter Property="Canvas.Left" Value="{Binding TopKeyX}" />
-        <Setter Property="Height" Value="{Binding TopKeyHeight}" />
-        <Setter Property="Width" Value="{Binding TopKeyWidth}" />
-    </Style>
-
-    <Style TargetType="Label" x:Key="LabelStyle">
-        <Style.Triggers>
-            <DataTrigger Binding="{Binding EZKey.Label.IsGlyph}" Value="true">
-                <Setter Property="FontFamily" Value="{StaticResource OryxFontFamily}" />
-                <Setter Property="FontSize" Value="18" />
-                <Setter Property="Foreground" Value="{Binding EZKey.Color}" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding EZKey.Label.IsGlyph}" Value="false">
-                <Setter Property="FontFamily" Value="{StaticResource LatoFontFamily}" />
-                <Setter Property="FontSize" Value="22" />
-                <Setter Property="FontWeight" Value="Bold" />
-                <Setter Property="Foreground" Value="{Binding EZKey.Color}" />
-            </DataTrigger>
-        </Style.Triggers>
-    </Style>
-
-    <DataTemplate x:Key="KeyBaseDataTemplate">
-        <Canvas>
-            <Rectangle x:Name="KeyBaseRect" Style="{DynamicResource KeyBase}" />
-            <Rectangle x:Name="KeyTopRect" Style="{DynamicResource KeyTop}" />
-        </Canvas>
-    </DataTemplate>
-
-    <Style TargetType="TextBlock" x:Key="InternationalHint">
-        <Setter Property="FontSize" Value="10" />
+    <Style TargetType="Ellipse" x:Key="ColorPickerAccentStyle">
+        <Setter Property="Width" Value="10" />
+        <Setter Property="Height" Value="10" />
+        <Setter Property="VerticalAlignment" Value="Top" />
         <Setter Property="HorizontalAlignment" Value="Right" />
-        <Setter Property="Margin" Value="0 -2 2 0" />
+        <Setter Property="Margin" Value="0 -4 -3 0" />
     </Style>
 
     <Style TargetType="Viewbox" x:Key="LabelViewBox">
-        <Setter Property="Height" Value="30" />
-        <Setter Property="Margin" Value="3 0" />
+        <Setter Property="Height" Value="40" />
         <Setter Property="Stretch" Value="Uniform" />
-        <Setter Property="StretchDirection" Value="Both" />
+        <Setter Property="StretchDirection" Value="DownOnly" />
+        <Setter Property="VerticalAlignment" Value="Center" />
     </Style>
 
-    <Style TargetType="Viewbox" x:Key="ModifierViewBox" BasedOn="{StaticResource LabelViewBox}">
-        <Setter Property="Height" Value="18" />
+    <Style TargetType="Viewbox" x:Key="ModifiedLabelViewBox" BasedOn="{StaticResource LabelViewBox}">
+        <Setter Property="StretchDirection" Value="Both" />
+        <Setter Property="Margin" Value="0 -5 0 0" />
+    </Style>
+
+    <Style TargetType="Viewbox" x:Key="ModifierViewBox" BasedOn="{StaticResource ModifiedLabelViewBox}">
+        <Setter Property="Height" Value="20" />
     </Style>
 
     <Style TargetType="Grid" x:Key="ContentGridBase">
@@ -119,59 +85,146 @@
         </Setter>
     </Style>
 
-    <!-- ReSharper disable Xaml.BindingWithContextNotResolved -->
+    <Style TargetType="Grid" x:Key="LayerGrid">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+    </Style>
+
+    <Style TargetType="TextBlock" x:Key="BaseTag">
+        <Setter Property="FontSize" Value="10" />
+        <Setter Property="Foreground" Value="{StaticResource KeyLabelForeground}" />
+        <Setter Property="Margin" Value="0 -2 2 0" />
+        <Setter Property="Canvas.Right" Value="0" />
+    </Style>
+
+    <Style TargetType="TextBlock" x:Key="PrimaryTag" BasedOn="{StaticResource BaseTag}">
+        <Setter Property="Canvas.Top" Value="0" />
+    </Style>
+
+    <Style TargetType="TextBlock" x:Key="SecondaryTag" BasedOn="{StaticResource BaseTag}">
+        <Setter Property="Canvas.Bottom" Value="0" />
+    </Style>
+    <Style TargetType="Label" x:Key="BaseLabelStyle">
+        <Setter Property="Foreground" Value="{StaticResource KeyLabelForeground}" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="LabelStyle" BasedOn="{StaticResource BaseLabelStyle}">
+        <Setter Property="FontFamily" Value="{StaticResource InterFontFamily}" />
+        <Setter Property="FontSize" Value="20" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="GlyphStyle" BasedOn="{StaticResource BaseLabelStyle}">
+        <Setter Property="FontFamily" Value="{StaticResource OryxFontFamily}" />
+        <Setter Property="FontSize" Value="22" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="LayerGlyphStyle" BasedOn="{StaticResource GlyphStyle}">
+        <Setter Property="FontSize" Value="25" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="LayerIdLabel" BasedOn="{StaticResource LabelStyle}">
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="Foreground" Value="{StaticResource LayerIdForegroundBrush}" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="FontSize" Value="11" />
+        <Setter Property="Margin" Value="-1 2 0 0" />
+    </Style>
+
+    <DataTemplate x:Key="KeyDataTemplate">
+        <Canvas>
+            <Rectangle x:Name="KeyRect" Style="{DynamicResource KeyBase}" />
+        </Canvas>
+    </DataTemplate>
+
     <DataTemplate x:Key="SimpleLabelDataTemplate">
+        <Viewbox Style="{StaticResource LabelViewBox}">
+            <Label Style="{StaticResource LabelStyle}" Content="{Binding Label}" />
+        </Viewbox>
+    </DataTemplate>
+
+    <DataTemplate x:Key="GlyphDataTemplate">
+        <Viewbox Style="{StaticResource LabelViewBox}">
+            <Label Style="{StaticResource GlyphStyle}" Content="{Binding Label}" />
+        </Viewbox>
+    </DataTemplate>
+
+    <DataTemplate x:Key="ModdedGlyphDataTemplate">
+        <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+            <Viewbox Style="{StaticResource ModifierViewBox}">
+                <Label Style="{StaticResource LabelStyle}" Content="{Binding Modifier}" />
+            </Viewbox>
+            <Viewbox Style="{StaticResource ModifiedLabelViewBox}">
+                <Label Style="{StaticResource GlyphStyle}" Content="{Binding Label}" />
+            </Viewbox>
+        </StackPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="LayerDataTemplate">
+        <Viewbox Style="{StaticResource LabelViewBox}">
+            <Grid Style="{StaticResource LayerGrid}" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Label Style="{StaticResource LayerGlyphStyle}" Content="{Binding Label}" />
+                <Label Style="{StaticResource LayerIdLabel}" Content="{Binding Id}" />
+            </Grid>
+        </Viewbox>
+    </DataTemplate>
+
+    <DataTemplate x:Key="ColorPickerDataTemplate">
+        <Viewbox Style="{StaticResource LabelViewBox}">
+            <Grid>
+                <Ellipse Style="{StaticResource ColorPickerAccentStyle}" Fill="{Binding ColorCode}" />
+                <Label Style="{StaticResource GlyphStyle}" Content="{Binding Label}" FontSize="30"/>
+            </Grid>
+        </Viewbox>
+    </DataTemplate>
+
+    <helper:KeyFeatureTemplateSelector x:Key="KeyFeatureTemplateSelector"
+                                       SimpleLabelDataTemplate = "{StaticResource SimpleLabelDataTemplate}"
+                                       GlyphDataTemplate = "{StaticResource GlyphDataTemplate}"
+                                       ModdedGlyphDataTemplate = "{StaticResource ModdedGlyphDataTemplate}"
+                                       LayerDataTemplate = "{StaticResource LayerDataTemplate}"
+                                       ColorPickerDataTemplate = "{StaticResource ColorPickerDataTemplate}" />
+
+    <DataTemplate x:Key="SingleFeatureDataTemplate">
         <Canvas>
-            <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource KeyBaseDataTemplate}" />
+            <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource KeyDataTemplate}" />
             <Grid Style="{StaticResource ContentGridBase}">
-                <TextBlock Style="{StaticResource InternationalHint}" Text="{Binding EZKey.InternationalHint}" />
-                <Viewbox Style="{StaticResource LabelViewBox}" Grid.Column="0" Grid.Row="0">
-                    <Label Style="{StaticResource LabelStyle}" Content="{Binding EZKey.Label.Content}" />
+                <Viewbox VerticalAlignment="Top" HorizontalAlignment="Right" Stretch="None">
+                    <TextBlock Style="{StaticResource PrimaryTag}" Text="{Binding Key.Primary.Tag}" />
                 </Viewbox>
+                <ContentControl ContentTemplateSelector="{StaticResource KeyFeatureTemplateSelector}" Content="{Binding Key.Primary}" />
             </Grid>
         </Canvas>
     </DataTemplate>
 
-    <DataTemplate x:Key="ModifierOnTopDataTemplate">
+    <DataTemplate x:Key="DoubleFeatureDataTemplate">
         <Canvas>
-            <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource KeyBaseDataTemplate}" />
+            <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource KeyDataTemplate}" />
             <Grid Style="{StaticResource ContentGridBase}">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height=".6*"/>
-                    <RowDefinition/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Viewbox Style="{StaticResource ModifierViewBox}" VerticalAlignment="Bottom" Grid.Column="0" Grid.Row="0">
-                    <Label Style="{StaticResource LabelStyle}" Content="{Binding EZKey.Modifier.Content}" />
+                <Viewbox Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Right" Stretch="None">
+                    <TextBlock Style="{StaticResource PrimaryTag}" Text="{Binding Key.Primary.Tag}" />
                 </Viewbox>
-                <Viewbox Style="{StaticResource LabelViewBox}" VerticalAlignment="Top" Grid.Column="0" Grid.Row="1">
-                    <Label Style="{StaticResource LabelStyle}" Content="{Binding EZKey.Label.Content}" />
+                <Viewbox Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Stretch="Uniform" Width="17">
+                    <TextBlock Style="{StaticResource SecondaryTag}" Text="{Binding Key.Secondary.Tag}" />
                 </Viewbox>
-            </Grid>
-        </Canvas>
-    </DataTemplate>
 
-    <DataTemplate x:Key="ModifierUnderDataTemplate">
-        <Canvas>
-            <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource KeyBaseDataTemplate}" />
-            <Grid Style="{StaticResource ContentGridBase}">
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition Height=".6*"/>
-                </Grid.RowDefinitions>
-                <Viewbox Style="{StaticResource LabelViewBox}" VerticalAlignment="Bottom" Grid.Column="0" Grid.Row="0">
-                    <Label Style="{StaticResource LabelStyle}" Content="{Binding EZKey.Label.Content}" />
-                </Viewbox>
-                <Viewbox Style="{StaticResource ModifierViewBox}" VerticalAlignment="Top" Grid.Column="0" Grid.Row="1">
-                    <Label Style="{StaticResource LabelStyle}" Content="{Binding EZKey.Modifier.Content}" />
-                </Viewbox>
+                <ContentControl ContentTemplateSelector="{StaticResource KeyFeatureTemplateSelector}"
+                                Content="{Binding Key.Primary}"
+                                Grid.Column="0" Grid.Row="0" />
+                <ContentControl ContentTemplateSelector="{StaticResource KeyFeatureTemplateSelector}"
+                                Content="{Binding Key.Secondary}"
+                                Grid.Column="0" Grid.Row="1" />
             </Grid>
         </Canvas>
     </DataTemplate>
-    <!-- ReSharper restore Xaml.BindingWithContextNotResolved -->
 
     <helper:KeyContentTemplateSelector x:Key="KeyContentTemplateSelector"
-                                       SimpleLabelDataTemplate="{StaticResource SimpleLabelDataTemplate}"
-                                       ModifierOnTopDataTemplate="{StaticResource ModifierOnTopDataTemplate}"
-                                       ModifierUnderDataTemplate="{StaticResource ModifierUnderDataTemplate}" />
+                                       SingleFeatureDataTemplate="{StaticResource SingleFeatureDataTemplate}"
+                                       DoubleFeatureDataTemplate="{StaticResource DoubleFeatureDataTemplate}" />
 
 </ResourceDictionary>
