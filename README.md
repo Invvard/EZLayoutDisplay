@@ -1,9 +1,14 @@
 # EZ Layout Display
-[![Azure DevOps builds](https://img.shields.io/azure-devops/build/invvard/ce17fcf7-f4dd-4c72-bba3-8d6415a27144/15.svg)](https://dev.azure.com/invvard/GitHub.InvvardDev.EZLayoutDisplay/_build?definitionId=15) 
-[![Azure DevOps tests](https://img.shields.io/azure-devops/tests/invvard/GitHub.InvvardDev.EZLayoutDisplay/15.svg?label=Tests)](https://dev.azure.com/invvard/GitHub.InvvardDev.EZLayoutDisplay/_test/analytics?definitionId=15&contextType=build)
-[![GitHub release](https://img.shields.io/github/release/invvard/ezlayoutdisplay.svg?label=Latest%20release)](https://github.com/Invvard/EZLayoutDisplay/releases/latest)
-[![GitHub Releases](https://img.shields.io/github/downloads/invvard/ezlayoutdisplay/latest/total.svg?label=Latest%20downloads)](https://github.com/Invvard/EZLayoutDisplay/releases/latest)
-[![GitHub All Releases](https://img.shields.io/github/downloads/invvard/ezlayoutdisplay/total.svg?label=Total%20downloads)](https://github.com/Invvard/EZLayoutDisplay/releases)
+
+## Archived project
+This project has been retired.
+
+After 3 years of development, 2 years of support and the public release of a similar app called [Keymapp](https://www.zsa.io/flash) by ZSA, it's time for me to put an end to this project.
+I have enjoyed developing it, learned a lot and discovered what it's like to maintain and support an open-source project.
+Thank you all for your support, suggestions and help throughout the years. I'm sure Keymapp will help all the new comers to ZSA keyboards as well to the seasoned users.
+
+EZLayoutDisplay is dead, long live Keymapp!
+
 ## Presentation
 _EZ Layout Display_ is a Windows application for ErgoDox EZ enthusiasts and new comers, that displays your configured layout right from your desktop.
 
