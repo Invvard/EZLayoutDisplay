@@ -1,9 +1,18 @@
 # EZ Layout Display
-[![Azure DevOps builds](https://img.shields.io/azure-devops/build/invvard/ce17fcf7-f4dd-4c72-bba3-8d6415a27144/15.svg)](https://dev.azure.com/invvard/GitHub.InvvardDev.EZLayoutDisplay/_build?definitionId=15) 
-[![Azure DevOps tests](https://img.shields.io/azure-devops/tests/invvard/GitHub.InvvardDev.EZLayoutDisplay/15.svg?label=Tests)](https://dev.azure.com/invvard/GitHub.InvvardDev.EZLayoutDisplay/_test/analytics?definitionId=15&contextType=build)
-[![GitHub release](https://img.shields.io/github/release/invvard/ezlayoutdisplay.svg?label=Latest%20release)](https://github.com/Invvard/EZLayoutDisplay/releases/latest)
-[![GitHub Releases](https://img.shields.io/github/downloads/invvard/ezlayoutdisplay/latest/total.svg?label=Latest%20downloads)](https://github.com/Invvard/EZLayoutDisplay/releases/latest)
-[![GitHub All Releases](https://img.shields.io/github/downloads/invvard/ezlayoutdisplay/total.svg?label=Total%20downloads)](https://github.com/Invvard/EZLayoutDisplay/releases)
+
+## Archived project
+**This project has been retired and won't get any more update**
+
+The last release will remain the [1.3.0-beta](https://github.com/Invvard/EZLayoutDisplay/releases/tag/1.3.0-beta) as unit tests were never updated.
+
+After 3 years of development, 2 years of support and the public release of a similar app called [Keymapp](https://www.zsa.io/flash) by ZSA, it's time for me to put an end to this project.
+I have enjoyed developing it, learned a lot and discovered what it's like to maintain and support an open-source project.
+Thank you all for your support, suggestions and help throughout the years. I'm sure Keymapp will help all the new comers to ZSA keyboards as well to the seasoned users.
+
+Before shutting down for good, I'd like to thank [@vladzaharia](https://github.com/vladzaharia) for his contribution supporting the Moonlander Mk1 in the app.
+
+EZLayoutDisplay is dead, long live Keymapp!
+
 ## Presentation
 _EZ Layout Display_ is a Windows application for ErgoDox EZ enthusiasts and new comers, that displays your configured layout right from your desktop.
 
@@ -12,7 +21,7 @@ You can find the archive with all the necessary files in the [release section](h
 
 Just unzip the archive to the desired location.
 
-When it's done, start the app and you'll see the icon below appear in the notification center :
+When it's done, start the app and you'll see the icon below appear in the system tray :
 
 ![EZ Layout Display logo](https://github.com/Invvard/EZLayoutDisplay/blob/master/resources/Images/EZLayoutDisplay_TrayIcon_Small.png)
 
@@ -26,11 +35,3 @@ By pressing **Hyper + Space** (or one left click on the tray icon), you'll insta
 You can browse the different layers by hitting the **Space** bar.
 
 It is designed to be a quick reminder of your layout, so as soon as it loses focus or if you hit the **Escape** key, the layout window will disappear.
-
-## Roadmap 
-Right now, settings and customisation are a bit scarce but I've a lot of [ToDos and ideas](https://github.com/Invvard/EZLayoutDisplay/projects/1) to implement.
-
-## Contributors
-Of course, your inputs, ideas and contributions are very much welcome !
-
-Don't hesitate to reach out either on the Reddit channel [r/EZLayoutDisplay/](https://www.reddit.com/r/EZLayoutDisplay/) or on Twitter [@Invvard](https://twitter.com/invvard).
